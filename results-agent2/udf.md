@@ -22,6 +22,11 @@ Each variant processes 10 million synthetic inputs and checks the result count, 
 | sail | udtf | timeout | 0 | — | —/—/— |
 
 Separate sessions measured `SELECT 1` idle and during the CPU-heavy scalar query.
+On Sail, p95 was 7.053 ms idle and 6.941 ms across 80 probes that
+started while the heavy query was active. On Spark, p95 was 105.315 ms
+idle and 9,966.971 ms across seven overlapping probes. The Sail heavy
+query matched Spark and took 31.138 wall seconds and 31.957 CPU-seconds.
+The single overlap trial and uneven sample counts limit the comparison.
 
 | Engine | Phase | Samples | P50 s | P95 s | Heavy matches Spark |
 | --- | --- | --- | --- | --- | --- |
@@ -30,7 +35,12 @@ Separate sessions measured `SELECT 1` idle and during the CPU-heavy scalar query
 | sail | idle | 30 | 0.006007 | 0.007053 | — |
 | sail | overlap | 80 | 0.005885 | 0.006941 | True |
 
-Support was also tested with a 1,000-row UDTF before the full case. The small-case Spark match was spark `True`, sail `True`. Cells without a warm timing have insufficient successful and validated samples.
+Both engines matched the 1,000-row UDTF reference. Sail's
+10-million-row UDTF timed out at the 900-second deadline. By that
+deadline its cgroup had used 1,402.912 CPU-seconds and the sampled
+peak was 200.0 MiB. A completed Sail UDTF throughput at that scale
+remains unverified. [Earlier 180-second attempt](https://github.com/unikdahal/poc/blob/137486c15dfdaeddd606810c6935d0e7cb38b492/agent2-udf/udf.json)
+
 ## Anomalies and log excerpts
 
 ```text

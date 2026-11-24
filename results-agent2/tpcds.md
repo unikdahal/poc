@@ -8,9 +8,17 @@ Recorded versions include spark 3.5.10, iceberg 1.12.0, comet 1.2.0, python 3.11
 
 The raw JSON records engine settings, runner details and individual attempts.
 
-The suite generates 24 synthetic SF1 tables with the signed TPC-DS extension and loads Parquet into format v2 tables. Each timing cell contains median warm wall seconds, CPU-seconds and sampled peak MiB after comparison with Spark. Dashes indicate unavailable measurements.
+The suite generated all 24 synthetic SF1 tables with DuckDB and the
+packaged TPC-DS extension at 1.4.4. It streamed the generated rows
+through PyArrow 17.0.0 into Snappy Parquet without dictionary encoding,
+then loaded format v2 tables. The Spark reference and both test engines
+completed all 99 query files. Each timing cell contains median warm wall seconds, CPU-seconds and sampled peak MiB after comparison with Spark. Dashes indicate unavailable measurements.
 
-**Verdicts.** 78 match, 21 values differ.
+Sail matched Spark on 78 queries and differed on 21. Spark+Comet
+matched Spark on 98 and differed on Q77. The Sail differences all
+preserved row counts. The recorded fingerprints establish a difference
+under the harness comparison. They leave individual values and tie
+ordering within those differences unresolved.
 
 | Query | Sail verdict | Comet verdict | Spark wall/CPU/MiB | Spark+Comet wall/CPU/MiB | Sail wall/CPU/MiB |
 | --- | --- | --- | --- | --- | --- |
@@ -115,5 +123,13 @@ The suite generates 24 synthetic SF1 tables with the signed TPC-DS extension and
 | 99 | match | match | 0.358/0.645/4,805.7 | 0.298/0.490/5,872.6 | 0.082/0.088/485.9 |
 
 The reports cover the 99 SF1 query files and compare the rows returned by each statement. Cases without a validated warm timing have an empty timing cell. Larger scale factors were outside this run.
+
+Earlier runs exposed a hosted extension download HTTP 403, a Parquet
+`Invalid bit-packed run` read error, and a Sail namespace selection
+error. The packaged extension, PyArrow export and shared catalog
+helper resolved those setup failures for this run.
+[Download failure](https://github.com/unikdahal/poc/actions/runs/45491870821) ·
+[Parquet failure](https://github.com/unikdahal/poc/actions/runs/45492749749) ·
+[Namespace failure](https://github.com/unikdahal/poc/actions/runs/45493612852)
 
 [Raw JSON](https://github.com/unikdahal/poc/blob/87cbf25ce191ccb07db2560561bc3289077aff8e/agent2-tpcds/tpcds.json) · [Result files](https://github.com/unikdahal/poc/tree/87cbf25ce191ccb07db2560561bc3289077aff8e/agent2-tpcds) · [Workflow run](https://github.com/unikdahal/poc/actions/runs/45496222083)

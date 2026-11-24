@@ -10,6 +10,6 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 | [concurrency](concurrency.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490383284) |
 | [udf](udf.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490669445) |
 | [catalog](catalog.md) | 2,000 tables; expired-token retry verified | [Run](https://github.com/unikdahal/poc/actions/runs/45492229100) |
-| [flight-leak](flight-leak.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45492104693) |
+| [flight-leak](flight-leak.md) | Run success without publishing its raw results | [Run](https://github.com/unikdahal/poc/actions/runs/45492104693) |
 | [celeborn](celeborn.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45491448770) |
 | [release-vs-main](release-vs-main.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45491701924) |

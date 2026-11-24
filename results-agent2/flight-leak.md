@@ -25,3 +25,5 @@ later, compared with 0.001 during the idle control. The workload was still
 active at the last sample. A rerun with a readiness probe is collecting the
 ticket series and Flight cancellation control.
 [Initial raw results](https://github.com/unikdahal/poc/blob/afe03a6b5d75e77f2358997215cfe23df39e3b3d/agent2-flight-leak/flight-leak.json)
+
+Run 45492104693 ended without publishing its raw results. [Workflow run](https://github.com/unikdahal/poc/actions/runs/45492104693)

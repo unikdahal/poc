@@ -1,14 +1,10 @@
 """Run the 99 SF1 queries against independently started engines."""
 
 import argparse
-import gzip
-import hashlib
 import re
-import shutil
 import tempfile
 from importlib.metadata import version
 from pathlib import Path
-from urllib.request import urlopen
 
 from harness import common as base
 from harness.agent2.common import attempt, begin, bounded, collect, engine, fingerprint, median, save
@@ -17,18 +13,15 @@ QUERIES = base.ROOT / "harness" / "queries" / "tpcds"
 NAMESPACE = "polaris.tpcds_sf1"
 
 
-def generate_and_load(spark, path, result):
+def generate_and_load(spark, path):
     import duckdb
+    from duckdb_extensions import import_extension
+
+    import_extension("tpcds")
 
     generator = duckdb.connect()
     generator.execute("SET threads=4")
-    platform = generator.execute("PRAGMA platform").fetchone()[0]
-    extension = path / "tpcds.duckdb_extension"
-    url = f"https://extensions.duckdb.org/v{version('duckdb')}/{platform}/{extension.name}.gz"
-    with urlopen(url, timeout=60) as download, gzip.GzipFile(fileobj=download) as payload, extension.open("wb") as output:
-        shutil.copyfileobj(payload, output)
-    result["extension"] = {"url": url, "sha256": hashlib.sha256(extension.read_bytes()).hexdigest()}
-    generator.execute(f"LOAD '{extension}'")
+    generator.execute("LOAD tpcds")
     generator.execute("CALL dsdgen(sf=1)")
     tables = [row[0] for row in generator.execute("SHOW TABLES").fetchall()]
     if len(tables) != 24:
@@ -68,7 +61,8 @@ def main():
         parser.error("at least two repetitions and a positive timeout are required")
     result = begin("tpcds")
     result["measurement"].update({"warm_samples": args.reps - 1, "query_timeout_s": args.timeout})
-    result["versions"]["duckdb"] = version("duckdb")
+    result["versions"].update({package: version(package) for package in
+                               ("duckdb", "duckdb-extensions", "duckdb-extension-tpcds")})
     result["query_source_sha"] = result["versions"]["sail_sha"]
     result["queries"] = {
         str(query): {"verdict": "unverified", "runs": {}}
@@ -83,7 +77,7 @@ def main():
             with engine(result, name, label=label, output_name="tpcds") as (case, spark, stats, _):
                 if name == "spark" and not result.get("table_rows"):
                     with tempfile.TemporaryDirectory(prefix="agent2-dsdgen-") as path:
-                        result["table_rows"] = generate_and_load(spark, Path(path), result)
+                        result["table_rows"] = generate_and_load(spark, Path(path))
                 if not result.get("table_rows"):
                     raise RuntimeError("reference data load was incomplete")
                 collect(spark, f"USE {NAMESPACE}")

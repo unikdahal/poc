@@ -11,5 +11,5 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 | [udf](udf.md) | 7/8 engine/UDF pairs with validated warm timings | [Run](https://github.com/unikdahal/poc/actions/runs/45490669445) |
 | [catalog](catalog.md) | 2,000 tables; expired-token retry verified | [Run](https://github.com/unikdahal/poc/actions/runs/45492229100) |
 | [flight-leak](flight-leak.md) | 300/300 tickets issued; 37 memory samples | [Run](https://github.com/unikdahal/poc/actions/runs/45492104693) |
-| [celeborn](celeborn.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45491448770) |
+| [celeborn](celeborn.md) | 7 shuffle treatments attempted; worker loss error; 9.080× Flight shuffle on 18 paired queries | [Run](https://github.com/unikdahal/poc/actions/runs/45491448770) |
 | [release-vs-main](release-vs-main.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45491701924) |

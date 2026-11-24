@@ -20,8 +20,32 @@ All timings use paired queries that matched Spark on both the treatment and the 
 | celeborn-0.6.3-two-workers | 2 | lz4 | 1073741824 | 18 | 39.053 | 14.669 | 2,353.0 | 8.531 | 0 |
 | celeborn-0.7.0-default | 1 | lz4 | 1073741824 | 18 | 41.059 | 12.191 | 1,980.3 | 8.969 | 0 |
 
+Celeborn's default wall time was 9.08× the Flight control, while total
+engine-plus-shuffle CPU was 1.63× the Flight CPU across the same 18 queries.
+Removing compression or adding a worker reduced some wall time, and a
+16 MiB split threshold changed little. Q1, Q8, Q14 and Q17 were excluded
+because at least one result differed from Spark.
+
+The pinned planner makes Celeborn shuffle output blocking. Producers
+serialize RecordBatches, wait for push acknowledgments and report mapper
+completion before dependent reducers can start. Flight shuffle pipelines
+the producer and consumer stages. A sample of 175 matching worker log
+entries put the median slot-reservation-to-commit-start interval at
+166 ms and the median final commit at 5 ms. The former includes upstream
+work and transfer time, so the measurements leave the individual costs
+of those operations unresolved.
+[Stage planner](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-execution/src/job_graph/planner.rs#L1213) ·
+[Shuffle writer](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-execution/src/stream/celeborn/core.rs#L182)
+
 Worker kill probe. Active at injection `True`. Query status `error`. Subsequent SELECT 1 correct `True`.
 
-The info-level logs and worker metric snapshots are linked with the raw results. The stage records include planner timestamps and task start-to-stop proxies for Q5, Q9, Q18 and Q21. The comparison varies one setting at a time. Untested interactions and traces without stage evidence remain unverified.
+The worker returned exit code 137 immediately after the intentional kill.
+Q9 failed with `Connection refused (os error 111)`. A subsequent
+`SELECT 1` succeeded. A distributed query after worker loss remains unverified.
+
+The original instrumentation returned no stage rows and HTTP 404 for
+the worker metrics endpoint. A rerun enables the metrics servlet and
+resolves the client session ID to the server session ID before querying
+for stage events.
 
 [Raw JSON](https://github.com/unikdahal/poc/blob/68f208d1cfa9ca0073fc83dbe363dfb512758e67/agent2-celeborn/celeborn.json) · [Result files](https://github.com/unikdahal/poc/tree/68f208d1cfa9ca0073fc83dbe363dfb512758e67/agent2-celeborn) · [Workflow run](https://github.com/unikdahal/poc/actions/runs/45491448770)

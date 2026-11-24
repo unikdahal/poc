@@ -12,6 +12,15 @@ Flight SQL uses a 120-second session timeout. The synthetic query returns 20,000
 
 Issued 300 tickets, of which 300 had distinct ticket bytes. The initial and fresh controls matched Spark `True` and `—`. The late fetch status was `ok`.
 
+Memory rose from 68.0 MiB before issuance to 412.5 MiB at the first
+ten-second sample and remained at 412.3 MiB around six minutes. The
+oldest ticket still returned the 20,000 rows matching Spark. A fresh
+ticket request failed with `session flight-default is not running`.
+The pinned server stores query streams in a service-wide map that
+`DoGet` removes by ticket. This run tested one late fetch, and memory
+sampling measures all container allocations.
+[Flight query state](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/state.rs#L42)
+
 | Seconds from issuance start | Issuance complete | Cgroup MiB |
 | --- | --- | --- |
 | 0.0 | False | 68.0 |

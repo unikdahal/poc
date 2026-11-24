@@ -10,6 +10,19 @@ The raw JSON records engine settings, runner details and individual attempts.
 
 Each row uses a fresh server. The fair pool is limited to half the container limit. Comet uses the indicated driver heap plus one quarter as configured off-heap memory.
 
+The runner attempted all 54 cases. Forty-one produced three results
+that matched Spark, including all 18 Spark+Comet cases. Four
+unbounded Sail containers were OOM-killed on SF30 Q18 and Q21 at
+2 GiB and 4 GiB. The client hit its 300-second deadline in all four
+cases, and Docker's `OOMKilled` field distinguishes the server exit
+from the client timeout.
+
+The fair pool returned nine allocation errors and had zero recorded
+container OOM kills. At SF30, Q18 completed under the 8 GiB container
+with a 4 GiB fair pool and sampled up to 1,041.7 MiB of spill files.
+Q21 still failed allocation in the same fair pool. With an unbounded
+pool at 8 GiB, all three SF30 queries completed.
+
 | SF | Q | Engine | GiB | Pool | Attempts | OOMKilled | Spark matches | Warm wall s/CPU s/peak MiB | Local files | Peak local MiB | Spark disk-spill MiB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 10 | 9 | sail | 2 | unbounded | ok, ok, ok | False | 3 | 4.570/11.742/1,557.2 | 0 | 0.0 | — |
@@ -67,7 +80,9 @@ Each row uses a fresh server. The fair pool is limited to half the container lim
 | 30 | 18 | comet | 8 | driver | ok, ok, ok | — | 3 | 40.241/140.650/4,754.0 | 869 | 2,738.5 | 6,579.6 |
 | 30 | 21 | comet | 8 | driver | ok, ok, ok | — | 3 | 89.249/314.935/4,144.2 | 1122 | 4,136.6 | 7,575.2 |
 
-Local spill sampling can miss temporary files created and removed between observations. The Spark driver runs on the host, where the configured heap does not impose a container memory limit.
+Local spill sampling can miss temporary files created and removed between observations.
+Spark local-directory files can also contain ordinary shuffle data.
+The event-log column uses Spark's reported disk-spill bytes. The Spark driver runs on the host, where the configured heap does not impose a container memory limit.
 ## Anomalies and log excerpts
 
 ```text

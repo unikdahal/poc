@@ -68,3 +68,19 @@ jobs:
       - uses: ./.github/actions/publish
         if: always()
         with: {name: agent2-memory, fast-forward: "true"}
+
+  concurrency:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[concurrency]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',concurrency,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Measure concurrent SF10 streams
+        continue-on-error: true
+        timeout-minutes: 310
+        run: python -m harness.agent2.concurrency
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-concurrency, fast-forward: "true"}

@@ -15,7 +15,7 @@ def generate(sf: float, root: Path) -> Path:
     if not (d / "lineitem.parquet").exists() and not (d / "lineitem").exists():
         d.mkdir(parents=True, exist_ok=True)
         log(f"generating TPC-H sf={sf:g} into {d}")
-        subprocess.run(["tpchgen-cli", "-s", f"{sf:g}", "--format", "parquet", "--output-dir", str(d)],
+        subprocess.run(["tpchgen-cli", "parquet", "-s", f"{sf:g}", f"--output-dir={d}"],
                        check=True)
     return d
 

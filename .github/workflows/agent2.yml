@@ -84,3 +84,27 @@ jobs:
       - uses: ./.github/actions/publish
         if: always()
         with: {name: agent2-concurrency, fast-forward: "true"}
+
+  udf:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[udf]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',udf,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - uses: actions/setup-python@v5
+        id: udf-python
+        with:
+          python-version: "3.14"
+          update-environment: false
+      - name: Compare Python evaluation paths
+        continue-on-error: true
+        timeout-minutes: 90
+        run: |
+          "${{ steps.udf-python.outputs.python-path }}" -m venv "$RUNNER_TEMP/agent2-udf"
+          "$RUNNER_TEMP/agent2-udf/bin/python" -m pip install "pyspark-client==4.2.1" requests psutil
+          python -m harness.agent2.udf --sail-python "$RUNNER_TEMP/agent2-udf/bin/python"
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-udf, fast-forward: "true"}

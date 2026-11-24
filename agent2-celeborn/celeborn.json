@@ -1,0 +1,4752 @@
+{
+  "task": "celeborn",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.agent2.celeborn"
+  ],
+  "revision": "b0039138cd4b1b699c9a905473026d41840d1a36",
+  "run_id": "45491448770",
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d",
+    "sail_image_digest": "[\"ghcr.io/unikdahal/poc/sail@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767\"]",
+    "infra_images": "{\"Command\":\"\\\"/entrypoint.sh rust\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:30:25 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"24d6af7e6465\",\"Image\":\"rustfs/rustfs:1.0.0-beta.8\",\"Labels\":\"name=RustFS,summary=High-performance distributed object storage system compatible with S3 API,build-date=,com.docker.compose.container-number=1,com.docker.compose.depends_on=,com.docker.compose.project=poc,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,description=RustFS is a distributed object storage system written in Rust, supporting erasure coding, multi-tenant management, and observability.,license=Apache-2.0,release=1.0.0-beta.8,com.docker.compose.image=sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3,maintainer=RustFS Team \\u003cdev@rustfs.com\\u003e,url=https://rustfs.com,vendor=RustFS Team,version=v1.0.0-beta.8,com.docker.compose.oneoff=False,com.docker.compose.service=minio,com.docker.compose.version=5.1.3,org.opencontainers.image.title=RustFS,org.opencontainers.image.description=RustFS distributed object storage system,org.opencontainers.image.version=1.0.0-beta.8,org.opencontainers.image.revision=64c0ede0261eeb7ccd415221d6f102aa70829b6a,org.opencontainers.image.source=https://github.com/rustfs/rustfs,org.opencontainers.image.created=2026-06-10T10:22:17Z,org.opencontainers.image.build-type=prerelease,vcs-ref=,com.docker.compose.config-hash=23bdcebd18c8e9ef15f1d9eca851868fb5013fd2e2e4ec8889eb631048bccea1,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml\",\"LocalVolumes\":\"1\",\"Mounts\":\"029f3bbeb56579\u2026\",\"Name\":\"poc-minio-1\",\"Names\":\"poc-minio-1\",\"Networks\":\"poc\",\"Ports\":\"0.0.0.0:9000-\\u003e9000/tcp, [::]:9000-\\u003e9000/tcp, 9001/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"0.0.0.0\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":9001,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"38 seconds ago\",\"Service\":\"minio\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 26 seconds (healthy)\"}\n{\"Command\":\"\\\"/opt/jboss/containe\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:30:37 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"5ebea7dae497\",\"Image\":\"apache/polaris:latest\",\"Labels\":\"com.redhat.license_terms=https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI,cpe=cpe:/a:redhat:enterprise_linux:9::appstream,io.openshift.tags=java,maintainer=Red Hat OpenJDK \\u003copenjdk@redhat.com\\u003e,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,description=Image for Red Hat OpenShift providing OpenJDK 21 runtime,org.opencontainers.image.created=2026-10-29T05:53:50Z,org.opencontainers.image.description=Apache Polaris,org.opencontainers.image.revision=ubi9,usage=https://rh-openjdk.github.io/redhat-openjdk-containers/,vcs-type=git,com.docker.compose.image=sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0,distribution-scope=public,io.k8s.display-name=Java Applications,name=ubi9/openjdk-21-runtime,org.opencontainers.image.licenses=Apache-2.0,url=https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/openjdk-21-runtime/images/1.24-3.1793323798,version=1.24,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml,com.redhat.component=openjdk-21-runtime-ubi9-container,io.openshift.expose-services=,org.jboss.product.openjdk.version=21,com.docker.compose.depends_on=minio-setup:service_completed_successfully:false,io.k8s.description=Platform for running plain Java applications (fat-jar and flat classpath),org.jboss.product=openjdk,org.jboss.product.version=21,org.opencontainers.image.source=https://github.com/apache/polaris,release=3.1793323798,vendor=Red Hat, Inc.,com.docker.compose.container-number=1,io.cekit.version=4.13.0.dev0,org.opencontainers.image.documentation=https://rh-openjdk.github.io/redhat-openjdk-containers/,summary=Image for Red Hat OpenShift providing OpenJDK 21 runtime,com.docker.compose.project=poc,com.docker.compose.service=polaris,com.docker.compose.version=5.1.3,io.buildah.version=1.33.14,vcs-ref=f74d5e7c1c24af798478dbc512f9ddf0ffc4c411,architecture=x86_64,build-date=2026-10-30T03:03:13,com.docker.compose.config-hash=ccd97af12a7b70c621335cca3c29fa55893c9b7cd710485098da572aa30bd4bd,com.docker.compose.oneoff=False\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"poc-polaris-1\",\"Names\":\"poc-polaris-1\",\"Networks\":\"poc\",\"Ports\":\"8080/tcp, 8443/tcp, 0.0.0.0:8181-8182-\\u003e8181-8182/tcp, [::]:8181-8182-\\u003e8181-8182/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"\",\"TargetPort\":8080,\"PublishedPort\":0,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":8443,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"26 seconds ago\",\"Service\":\"polaris\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 20 seconds (healthy)\"}"
+  },
+  "runner": {
+    "cpus": 4,
+    "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.43",
+    "memory_bytes": 16759431168
+  },
+  "measurement": {
+    "cpu": "container cgroup v2 or Spark process tree",
+    "memory": "sampled at 100 ms",
+    "warm_samples": 2,
+    "query_timeout_s": 180
+  },
+  "engines": {
+    "spark-reference-sf1": {
+      "config": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "comet_off_heap_default": null,
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 8.010417461395264,
+      "queries": {
+        "1": {
+          "status": "ok",
+          "wall_s": 3.801911
+        },
+        "2": {
+          "status": "ok",
+          "wall_s": 2.113839
+        },
+        "3": {
+          "status": "ok",
+          "wall_s": 1.985954
+        },
+        "4": {
+          "status": "ok",
+          "wall_s": 1.727175
+        },
+        "5": {
+          "status": "ok",
+          "wall_s": 2.137861
+        },
+        "6": {
+          "status": "ok",
+          "wall_s": 0.629369
+        },
+        "7": {
+          "status": "ok",
+          "wall_s": 2.228712
+        },
+        "8": {
+          "status": "ok",
+          "wall_s": 1.586377
+        },
+        "9": {
+          "status": "ok",
+          "wall_s": 2.615504
+        },
+        "10": {
+          "status": "ok",
+          "wall_s": 1.597474
+        },
+        "11": {
+          "status": "ok",
+          "wall_s": 1.080783
+        },
+        "12": {
+          "status": "ok",
+          "wall_s": 1.032961
+        },
+        "13": {
+          "status": "ok",
+          "wall_s": 1.396611
+        },
+        "14": {
+          "status": "ok",
+          "wall_s": 0.777933
+        },
+        "15": {
+          "status": "ok",
+          "wall_s": 1.336116
+        },
+        "16": {
+          "status": "ok",
+          "wall_s": 1.070095
+        },
+        "17": {
+          "status": "ok",
+          "wall_s": 1.912795
+        },
+        "18": {
+          "status": "ok",
+          "wall_s": 2.606946
+        },
+        "19": {
+          "status": "ok",
+          "wall_s": 0.763767
+        },
+        "20": {
+          "status": "ok",
+          "wall_s": 1.113602
+        },
+        "21": {
+          "status": "ok",
+          "wall_s": 3.298565
+        },
+        "22": {
+          "status": "ok",
+          "wall_s": 0.977907
+        }
+      },
+      "log_excerpt": "hedSize(13860,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(13683,3) maxCachedUntilProduced=CachedSize(13683,3)\n26/11/24 21:32:11 INFO ExecuteResponseObserver: Release all for opId=db749f2b-47b2-4d09-b9ee-60e8069637d1. Execution stats: total=CachedSize(13860,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(13683,3) maxCachedUntilProduced=CachedSize(13683,3)\n26/11/24 21:32:11 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO\n26/11/24 21:32:11 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO\n26/11/24 21:32:11 INFO SparkContext: Invoking stop() from shutdown hook\n26/11/24 21:32:11 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/24 21:32:11 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/24 21:32:11 INFO MemoryStore: MemoryStore cleared\n26/11/24 21:32:11 INFO BlockManager: BlockManager stopped\n26/11/24 21:32:11 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/24 21:32:11 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/24 21:32:11 INFO SparkContext: Successfully stopped SparkContext\n26/11/24 21:32:11 INFO ShutdownHookManager: Shutdown hook called\n26/11/24 21:32:11 INFO ShutdownHookManager: Deleting directory /tmp/spark-1fd8c103-3f1e-4e5b-abb2-eb75ef2c2e2a\n26/11/24 21:32:11 INFO ShutdownHookManager: Deleting directory /tmp/spark-6b4f0489-2f1e-4a1c-b142-d77623d1de10\n26/11/24 21:32:11 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-6464ed54-7bd2-4005-a0bf-d4e2274891b2\n"
+    },
+    "local": {
+      "config": {
+        "mode": "local",
+        "environment": {
+          "RUST_LOG": "info"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.16136598587036133,
+      "resource_scope": [
+        "agent2-sail"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 0.301544,
+            "cpu_s": 0.678235,
+            "peak_bytes": 199626752,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301416,
+            "cpu_s": 0.636697,
+            "peak_bytes": 233492480,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301535,
+            "cpu_s": 0.640482,
+            "peak_bytes": 258686976,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 0.201104,
+            "cpu_s": 0.108046,
+            "peak_bytes": 280477696,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201187,
+            "cpu_s": 0.104889,
+            "peak_bytes": 295596032,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201046,
+            "cpu_s": 0.095086,
+            "peak_bytes": 310358016,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 0.30168,
+            "cpu_s": 0.294758,
+            "peak_bytes": 344178688,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201061,
+            "cpu_s": 0.290738,
+            "peak_bytes": 354799616,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.202282,
+            "cpu_s": 0.33643,
+            "peak_bytes": 384327680,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 0.200983,
+            "cpu_s": 0.175002,
+            "peak_bytes": 390692864,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.200983,
+            "cpu_s": 0.167793,
+            "peak_bytes": 390848512,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201072,
+            "cpu_s": 0.183519,
+            "peak_bytes": 390848512,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 0.301405,
+            "cpu_s": 0.379249,
+            "peak_bytes": 399118336,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301297,
+            "cpu_s": 0.377861,
+            "peak_bytes": 383766528,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301321,
+            "cpu_s": 0.3802,
+            "peak_bytes": 394555392,
+            "matches_spark": true
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.100756,
+            "cpu_s": 0.193775,
+            "peak_bytes": 402997248,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.100685,
+            "cpu_s": 0.184033,
+            "peak_bytes": 403128320,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.200965,
+            "cpu_s": 0.195102,
+            "peak_bytes": 403230720,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 0.301481,
+            "cpu_s": 0.313328,
+            "peak_bytes": 403681280,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301744,
+            "cpu_s": 0.328795,
+            "peak_bytes": 405520384,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.30244,
+            "cpu_s": 0.315983,
+            "peak_bytes": 435392512,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 0.301464,
+            "cpu_s": 0.377919,
+            "peak_bytes": 435392512,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301356,
+            "cpu_s": 0.354928,
+            "peak_bytes": 453808128,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.302351,
+            "cpu_s": 0.371484,
+            "peak_bytes": 455958528,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 0.301351,
+            "cpu_s": 0.518708,
+            "peak_bytes": 487776256,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301606,
+            "cpu_s": 0.527997,
+            "peak_bytes": 523378688,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301595,
+            "cpu_s": 0.5373,
+            "peak_bytes": 527671296,
+            "matches_spark": true
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 0.301466,
+            "cpu_s": 0.370721,
+            "peak_bytes": 527671296,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301553,
+            "cpu_s": 0.359822,
+            "peak_bytes": 458731520,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301601,
+            "cpu_s": 0.383016,
+            "peak_bytes": 476143616,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 0.201186,
+            "cpu_s": 0.08166,
+            "peak_bytes": 476250112,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201276,
+            "cpu_s": 0.084158,
+            "peak_bytes": 476516352,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201137,
+            "cpu_s": 0.085139,
+            "peak_bytes": 476516352,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 0.201103,
+            "cpu_s": 0.314238,
+            "peak_bytes": 550395904,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201049,
+            "cpu_s": 0.318709,
+            "peak_bytes": 550662144,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201065,
+            "cpu_s": 0.317273,
+            "peak_bytes": 550662144,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 0.201056,
+            "cpu_s": 0.270399,
+            "peak_bytes": 550797312,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201236,
+            "cpu_s": 0.285463,
+            "peak_bytes": 551112704,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201183,
+            "cpu_s": 0.286133,
+            "peak_bytes": 551112704,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 0.201585,
+            "cpu_s": 0.210454,
+            "peak_bytes": 551112704,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201195,
+            "cpu_s": 0.212635,
+            "peak_bytes": 551559168,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201142,
+            "cpu_s": 0.224703,
+            "peak_bytes": 555384832,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 0.201292,
+            "cpu_s": 0.306758,
+            "peak_bytes": 556916736,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.200708,
+            "cpu_s": 0.287663,
+            "peak_bytes": 557707264,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.200746,
+            "cpu_s": 0.292981,
+            "peak_bytes": 558010368,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 0.26735,
+            "cpu_s": 0.084593,
+            "peak_bytes": 557752320,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.30143,
+            "cpu_s": 0.091919,
+            "peak_bytes": 557727744,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.22655,
+            "cpu_s": 0.085071,
+            "peak_bytes": 446025728,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 0.30156,
+            "cpu_s": 0.582978,
+            "peak_bytes": 481714176,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401594,
+            "cpu_s": 0.616523,
+            "peak_bytes": 491216896,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301339,
+            "cpu_s": 0.615176,
+            "peak_bytes": 502079488,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 0.30148,
+            "cpu_s": 0.73523,
+            "peak_bytes": 600363008,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.302284,
+            "cpu_s": 0.73531,
+            "peak_bytes": 609239040,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301426,
+            "cpu_s": 0.721181,
+            "peak_bytes": 613298176,
+            "matches_spark": true
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.201959,
+            "cpu_s": 0.464354,
+            "peak_bytes": 613376000,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201118,
+            "cpu_s": 0.456143,
+            "peak_bytes": 613376000,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301336,
+            "cpu_s": 0.466071,
+            "peak_bytes": 613453824,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 0.201078,
+            "cpu_s": 0.282384,
+            "peak_bytes": 613453824,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201103,
+            "cpu_s": 0.286414,
+            "peak_bytes": 613920768,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201145,
+            "cpu_s": 0.280509,
+            "peak_bytes": 613904384,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 0.301555,
+            "cpu_s": 0.56868,
+            "peak_bytes": 731729920,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.30149,
+            "cpu_s": 0.573948,
+            "peak_bytes": 688025600,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301424,
+            "cpu_s": 0.563694,
+            "peak_bytes": 689704960,
+            "matches_spark": true
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 0.100811,
+            "cpu_s": 0.084729,
+            "peak_bytes": 689831936,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.100785,
+            "cpu_s": 0.08724,
+            "peak_bytes": 689831936,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.100764,
+            "cpu_s": 0.083257,
+            "peak_bytes": 689684480,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 0.201117,
+          "median_cpu_s": 0.099988,
+          "median_peak_bytes": 302977024.0
+        },
+        "3": {
+          "median_wall_s": 0.201672,
+          "median_cpu_s": 0.313584,
+          "median_peak_bytes": 369563648.0
+        },
+        "4": {
+          "median_wall_s": 0.201027,
+          "median_cpu_s": 0.175656,
+          "median_peak_bytes": 390848512.0
+        },
+        "5": {
+          "median_wall_s": 0.301309,
+          "median_cpu_s": 0.37903,
+          "median_peak_bytes": 389160960.0
+        },
+        "6": {
+          "median_wall_s": 0.150825,
+          "median_cpu_s": 0.189567,
+          "median_peak_bytes": 403179520.0
+        },
+        "7": {
+          "median_wall_s": 0.302092,
+          "median_cpu_s": 0.322389,
+          "median_peak_bytes": 420456448.0
+        },
+        "9": {
+          "median_wall_s": 0.3016,
+          "median_cpu_s": 0.532649,
+          "median_peak_bytes": 525524992.0
+        },
+        "10": {
+          "median_wall_s": 0.301577,
+          "median_cpu_s": 0.371419,
+          "median_peak_bytes": 467437568.0
+        },
+        "11": {
+          "median_wall_s": 0.201207,
+          "median_cpu_s": 0.084649,
+          "median_peak_bytes": 476516352.0
+        },
+        "12": {
+          "median_wall_s": 0.201057,
+          "median_cpu_s": 0.317991,
+          "median_peak_bytes": 550662144.0
+        },
+        "13": {
+          "median_wall_s": 0.201209,
+          "median_cpu_s": 0.285798,
+          "median_peak_bytes": 551112704.0
+        },
+        "15": {
+          "median_wall_s": 0.200727,
+          "median_cpu_s": 0.290322,
+          "median_peak_bytes": 557858816.0
+        },
+        "16": {
+          "median_wall_s": 0.26399,
+          "median_cpu_s": 0.088495,
+          "median_peak_bytes": 501876736.0
+        },
+        "18": {
+          "median_wall_s": 0.301855,
+          "median_cpu_s": 0.728245,
+          "median_peak_bytes": 611268608.0
+        },
+        "19": {
+          "median_wall_s": 0.251227,
+          "median_cpu_s": 0.461107,
+          "median_peak_bytes": 613414912.0
+        },
+        "20": {
+          "median_wall_s": 0.201124,
+          "median_cpu_s": 0.283462,
+          "median_peak_bytes": 613912576.0
+        },
+        "21": {
+          "median_wall_s": 0.301457,
+          "median_cpu_s": 0.568821,
+          "median_peak_bytes": 688865280.0
+        },
+        "22": {
+          "median_wall_s": 0.100775,
+          "median_cpu_s": 0.085249,
+          "median_peak_bytes": 689758208.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5668,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:32:12.574529453Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "[2026-11-24T21:32:12Z INFO sail_cli::spark::server] Starting the Spark Connect server on 0.0.0.0:50051...\n[2026-11-24T21:32:13Z INFO sail_session::session_manager::actor::handler] creating session runner:a33e1247-d7b6-4db8-987c-0917b533a69e:8bdbee32-e16b-419c-9a57-eac4981934e3\n"
+    },
+    "cluster-flight": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8",
+          "RUST_LOG": "info",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE": "flight"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.15838170051574707,
+      "resource_scope": [
+        "agent2-sail"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 0.401652,
+            "cpu_s": 0.677785,
+            "peak_bytes": 236519424,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.302725,
+            "cpu_s": 0.653859,
+            "peak_bytes": 293965824,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.30131,
+            "cpu_s": 0.648184,
+            "peak_bytes": 302268416,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 0.20111,
+            "cpu_s": 0.169569,
+            "peak_bytes": 391618560,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201063,
+            "cpu_s": 0.152662,
+            "peak_bytes": 451112960,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201152,
+            "cpu_s": 0.153558,
+            "peak_bytes": 479412224,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 0.301638,
+            "cpu_s": 0.540024,
+            "peak_bytes": 665600000,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301446,
+            "cpu_s": 0.525162,
+            "peak_bytes": 675299328,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301501,
+            "cpu_s": 0.50426,
+            "peak_bytes": 681418752,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 0.201167,
+            "cpu_s": 0.247363,
+            "peak_bytes": 681418752,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201122,
+            "cpu_s": 0.259085,
+            "peak_bytes": 683388928,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201077,
+            "cpu_s": 0.246559,
+            "peak_bytes": 683384832,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 0.401663,
+            "cpu_s": 0.953269,
+            "peak_bytes": 846823424,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401788,
+            "cpu_s": 0.96267,
+            "peak_bytes": 860594176,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.402598,
+            "cpu_s": 0.975462,
+            "peak_bytes": 866344960,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.201379,
+            "cpu_s": 0.238883,
+            "peak_bytes": 852946944,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.10077,
+            "cpu_s": 0.212001,
+            "peak_bytes": 699305984,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.100731,
+            "cpu_s": 0.198598,
+            "peak_bytes": 701136896,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 0.301582,
+            "cpu_s": 0.464123,
+            "peak_bytes": 740638720,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301387,
+            "cpu_s": 0.451779,
+            "peak_bytes": 769032192,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.30141,
+            "cpu_s": 0.411336,
+            "peak_bytes": 780595200,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 0.302516,
+            "cpu_s": 0.44495,
+            "peak_bytes": 791744512,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301641,
+            "cpu_s": 0.427938,
+            "peak_bytes": 793788416,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.302996,
+            "cpu_s": 0.439857,
+            "peak_bytes": 793845760,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 0.401778,
+            "cpu_s": 0.787669,
+            "peak_bytes": 871837696,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401836,
+            "cpu_s": 0.761208,
+            "peak_bytes": 905101312,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.40349,
+            "cpu_s": 0.77826,
+            "peak_bytes": 931868672,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 0.301341,
+            "cpu_s": 0.460554,
+            "peak_bytes": 931930112,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301919,
+            "cpu_s": 0.463942,
+            "peak_bytes": 936636416,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.302093,
+            "cpu_s": 0.466751,
+            "peak_bytes": 935874560,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 0.100807,
+            "cpu_s": 0.104817,
+            "peak_bytes": 789483520,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.100714,
+            "cpu_s": 0.099901,
+            "peak_bytes": 790360064,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.100753,
+            "cpu_s": 0.104247,
+            "peak_bytes": 793165824,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 0.201061,
+            "cpu_s": 0.405967,
+            "peak_bytes": 802811904,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201113,
+            "cpu_s": 0.41146,
+            "peak_bytes": 824336384,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201116,
+            "cpu_s": 0.41459,
+            "peak_bytes": 827981824,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 0.201196,
+            "cpu_s": 0.366034,
+            "peak_bytes": 828301312,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201145,
+            "cpu_s": 0.378237,
+            "peak_bytes": 838197248,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201218,
+            "cpu_s": 0.369568,
+            "peak_bytes": 844484608,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 0.201105,
+            "cpu_s": 0.26157,
+            "peak_bytes": 872415232,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201148,
+            "cpu_s": 0.271121,
+            "peak_bytes": 874930176,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201093,
+            "cpu_s": 0.270141,
+            "peak_bytes": 878174208,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 0.201133,
+            "cpu_s": 0.354551,
+            "peak_bytes": 881938432,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.202373,
+            "cpu_s": 0.357133,
+            "peak_bytes": 885448704,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201827,
+            "cpu_s": 0.363962,
+            "peak_bytes": 885448704,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 0.201221,
+            "cpu_s": 0.159283,
+            "peak_bytes": 891121664,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.234109,
+            "cpu_s": 0.152396,
+            "peak_bytes": 891121664,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.271397,
+            "cpu_s": 0.162529,
+            "peak_bytes": 891686912,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 0.302422,
+            "cpu_s": 0.792984,
+            "peak_bytes": 914755584,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301405,
+            "cpu_s": 0.771287,
+            "peak_bytes": 914755584,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.301408,
+            "cpu_s": 0.821518,
+            "peak_bytes": 870801408,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 0.401785,
+            "cpu_s": 1.108701,
+            "peak_bytes": 1086480384,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401967,
+            "cpu_s": 1.14083,
+            "peak_bytes": 1096744960,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401815,
+            "cpu_s": 1.151171,
+            "peak_bytes": 1111269376,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.201752,
+            "cpu_s": 0.482321,
+            "peak_bytes": 1101713408,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201076,
+            "cpu_s": 0.484615,
+            "peak_bytes": 1101697024,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201572,
+            "cpu_s": 0.474808,
+            "peak_bytes": 1101963264,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 0.201531,
+            "cpu_s": 0.374517,
+            "peak_bytes": 1102299136,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201168,
+            "cpu_s": 0.367774,
+            "peak_bytes": 1102356480,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201213,
+            "cpu_s": 0.360528,
+            "peak_bytes": 1102356480,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 0.403853,
+            "cpu_s": 1.055535,
+            "peak_bytes": 1233031168,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.402051,
+            "cpu_s": 1.078477,
+            "peak_bytes": 1253654528,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401717,
+            "cpu_s": 1.042599,
+            "peak_bytes": 1248706560,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 0.100739,
+            "cpu_s": 0.1587,
+            "peak_bytes": 1134276608,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201106,
+            "cpu_s": 0.156676,
+            "peak_bytes": 1134276608,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.201033,
+            "cpu_s": 0.154557,
+            "peak_bytes": 1134186496,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 0.201107,
+          "median_cpu_s": 0.15311,
+          "median_peak_bytes": 465262592.0
+        },
+        "3": {
+          "median_wall_s": 0.301474,
+          "median_cpu_s": 0.514711,
+          "median_peak_bytes": 678359040.0
+        },
+        "4": {
+          "median_wall_s": 0.201099,
+          "median_cpu_s": 0.252822,
+          "median_peak_bytes": 683386880.0
+        },
+        "5": {
+          "median_wall_s": 0.402193,
+          "median_cpu_s": 0.969066,
+          "median_peak_bytes": 863469568.0
+        },
+        "6": {
+          "median_wall_s": 0.10075,
+          "median_cpu_s": 0.205299,
+          "median_peak_bytes": 700221440.0
+        },
+        "7": {
+          "median_wall_s": 0.301399,
+          "median_cpu_s": 0.431557,
+          "median_peak_bytes": 774813696.0
+        },
+        "9": {
+          "median_wall_s": 0.402663,
+          "median_cpu_s": 0.769734,
+          "median_peak_bytes": 918484992.0
+        },
+        "10": {
+          "median_wall_s": 0.302006,
+          "median_cpu_s": 0.465346,
+          "median_peak_bytes": 936255488.0
+        },
+        "11": {
+          "median_wall_s": 0.100734,
+          "median_cpu_s": 0.102074,
+          "median_peak_bytes": 791762944.0
+        },
+        "12": {
+          "median_wall_s": 0.201114,
+          "median_cpu_s": 0.413025,
+          "median_peak_bytes": 826159104.0
+        },
+        "13": {
+          "median_wall_s": 0.201182,
+          "median_cpu_s": 0.373903,
+          "median_peak_bytes": 841340928.0
+        },
+        "15": {
+          "median_wall_s": 0.2021,
+          "median_cpu_s": 0.360548,
+          "median_peak_bytes": 885448704.0
+        },
+        "16": {
+          "median_wall_s": 0.252753,
+          "median_cpu_s": 0.157463,
+          "median_peak_bytes": 891404288.0
+        },
+        "18": {
+          "median_wall_s": 0.401891,
+          "median_cpu_s": 1.146,
+          "median_peak_bytes": 1104007168.0
+        },
+        "19": {
+          "median_wall_s": 0.201324,
+          "median_cpu_s": 0.479712,
+          "median_peak_bytes": 1101830144.0
+        },
+        "20": {
+          "median_wall_s": 0.20119,
+          "median_cpu_s": 0.364151,
+          "median_peak_bytes": 1102356480.0
+        },
+        "21": {
+          "median_wall_s": 0.401884,
+          "median_cpu_s": 1.060538,
+          "median_peak_bytes": 1251180544.0
+        },
+        "22": {
+          "median_wall_s": 0.20107,
+          "median_cpu_s": 0.155616,
+          "median_peak_bytes": 1134231552.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6545,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:32:30.312638604Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "er_pool::core] starting worker 1\n[2026-11-24T21:32:35Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:32:35Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 46615\n[2026-11-24T21:32:35Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 39971\n[2026-11-24T21:32:35Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:46615\n[2026-11-24T21:32:35Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:32:35Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:39971\n[2026-11-24T21:32:35Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:32:35Z INFO sail_session::session_manager::actor::handler] creating session runner:5e8143bd-5e5c-487a-8256-f3038a369301:70329680-aa7d-4314-9ea0-f80f3a827d66\n[2026-11-24T21:32:35Z INFO sail_execution::driver::actor::handler] activating driver 2\n[2026-11-24T21:32:35Z INFO sail_execution::driver::worker_pool::core] starting worker 1\n[2026-11-24T21:32:35Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:32:35Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 39319\n[2026-11-24T21:32:35Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 38055\n[2026-11-24T21:32:35Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:39319\n[2026-11-24T21:32:35Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:32:35Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:38055\n[2026-11-24T21:32:35Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n"
+    },
+    "celeborn-0.6.3-default": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8",
+          "RUST_LOG": "info",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE": "celeborn",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__MASTER_ENDPOINTS": "[\"celeborn-master:12097\"]",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__COMPRESSION": "lz4",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__PARTITION_SPLIT_THRESHOLD": "1073741824"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.2005753517150879,
+      "resource_scope": [
+        "agent2-sail",
+        "celeborn-master",
+        "celeborn-worker-1"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 1.004243,
+            "cpu_s": 0.979301,
+            "peak_bytes": 924979200,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.003563,
+            "cpu_s": 0.737126,
+            "peak_bytes": 952233984,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.003608,
+            "cpu_s": 0.740756,
+            "peak_bytes": 993505280,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 2.507618,
+            "cpu_s": 0.586148,
+            "peak_bytes": 1050288128,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.307218,
+            "cpu_s": 0.513573,
+            "peak_bytes": 1094828032,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.508154,
+            "cpu_s": 0.455023,
+            "peak_bytes": 1102819328,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 1.405297,
+            "cpu_s": 1.601298,
+            "peak_bytes": 1281769472,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.406639,
+            "cpu_s": 1.137636,
+            "peak_bytes": 1369739264,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.406013,
+            "cpu_s": 1.081206,
+            "peak_bytes": 1413513216,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 1.505221,
+            "cpu_s": 0.616984,
+            "peak_bytes": 1413513216,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.505273,
+            "cpu_s": 0.602168,
+            "peak_bytes": 1373327360,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.505917,
+            "cpu_s": 0.775819,
+            "peak_bytes": 1412800512,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 3.111605,
+            "cpu_s": 1.826886,
+            "peak_bytes": 1657880576,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.110976,
+            "cpu_s": 1.825719,
+            "peak_bytes": 1798455296,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.111104,
+            "cpu_s": 2.335955,
+            "peak_bytes": 1891463168,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.401891,
+            "cpu_s": 0.244393,
+            "peak_bytes": 1477337088,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401945,
+            "cpu_s": 0.235628,
+            "peak_bytes": 1299378176,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401964,
+            "cpu_s": 0.232223,
+            "peak_bytes": 1305899008,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 3.009991,
+            "cpu_s": 0.70823,
+            "peak_bytes": 1347682304,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.009962,
+            "cpu_s": 0.676724,
+            "peak_bytes": 1364783104,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.110611,
+            "cpu_s": 0.743504,
+            "peak_bytes": 1399754752,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 2.709214,
+            "cpu_s": 0.625502,
+            "peak_bytes": 1498419200,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.708426,
+            "cpu_s": 0.545673,
+            "peak_bytes": 1498787840,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.708904,
+            "cpu_s": 0.553389,
+            "peak_bytes": 1480159232,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 4.613429,
+            "cpu_s": 1.134176,
+            "peak_bytes": 1572900864,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.511036,
+            "cpu_s": 1.152578,
+            "peak_bytes": 1636077568,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.612565,
+            "cpu_s": 1.153649,
+            "peak_bytes": 1647140864,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 1.504241,
+            "cpu_s": 0.471488,
+            "peak_bytes": 1507987456,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504205,
+            "cpu_s": 0.492717,
+            "peak_bytes": 1515364352,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.50412,
+            "cpu_s": 0.5155,
+            "peak_bytes": 1514684416,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 2.004861,
+            "cpu_s": 0.186293,
+            "peak_bytes": 1492688896,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.005102,
+            "cpu_s": 0.191466,
+            "peak_bytes": 1493209088,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.004801,
+            "cpu_s": 0.189562,
+            "peak_bytes": 1395040256,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 1.504221,
+            "cpu_s": 0.636931,
+            "peak_bytes": 1496895488,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504497,
+            "cpu_s": 0.57945,
+            "peak_bytes": 1528295424,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404045,
+            "cpu_s": 0.692645,
+            "peak_bytes": 1561669632,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 2.705997,
+            "cpu_s": 0.488846,
+            "peak_bytes": 1589682176,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706716,
+            "cpu_s": 0.493136,
+            "peak_bytes": 1612673024,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.705949,
+            "cpu_s": 0.547925,
+            "peak_bytes": 1571504128,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 1.305908,
+            "cpu_s": 0.344716,
+            "peak_bytes": 1621749760,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303376,
+            "cpu_s": 0.429369,
+            "peak_bytes": 1621118976,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303889,
+            "cpu_s": 0.324792,
+            "peak_bytes": 1460035584,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 2.205117,
+            "cpu_s": 0.430115,
+            "peak_bytes": 1468616704,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.305341,
+            "cpu_s": 0.479129,
+            "peak_bytes": 1468813312,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.205011,
+            "cpu_s": 0.421383,
+            "peak_bytes": 1466585088,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 1.814782,
+            "cpu_s": 0.247253,
+            "peak_bytes": 1471500288,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704835,
+            "cpu_s": 0.258736,
+            "peak_bytes": 1485107200,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.805025,
+            "cpu_s": 0.247173,
+            "peak_bytes": 1495666688,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 1.704739,
+            "cpu_s": 0.792542,
+            "peak_bytes": 1524027392,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704717,
+            "cpu_s": 0.790732,
+            "peak_bytes": 1557041152,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.705247,
+            "cpu_s": 0.833724,
+            "peak_bytes": 1566699520,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 2.407833,
+            "cpu_s": 1.904291,
+            "peak_bytes": 1741479936,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.409158,
+            "cpu_s": 1.739659,
+            "peak_bytes": 1902792704,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.307576,
+            "cpu_s": 1.834866,
+            "peak_bytes": 2045140992,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.802585,
+            "cpu_s": 0.447598,
+            "peak_bytes": 2048544768,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.802899,
+            "cpu_s": 0.483565,
+            "peak_bytes": 1831927808,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.802717,
+            "cpu_s": 0.487506,
+            "peak_bytes": 1852977152,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 3.508149,
+            "cpu_s": 0.600368,
+            "peak_bytes": 1883795456,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.308329,
+            "cpu_s": 0.504198,
+            "peak_bytes": 1523941376,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.407764,
+            "cpu_s": 0.490894,
+            "peak_bytes": 1544065024,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 4.109851,
+            "cpu_s": 1.606353,
+            "peak_bytes": 1854615552,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.109981,
+            "cpu_s": 1.520577,
+            "peak_bytes": 1933115392,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.209863,
+            "cpu_s": 1.554792,
+            "peak_bytes": 2027151360,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 2.706043,
+            "cpu_s": 0.282071,
+            "peak_bytes": 2006585344,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.806181,
+            "cpu_s": 0.281951,
+            "peak_bytes": 1717473280,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706148,
+            "cpu_s": 0.349145,
+            "peak_bytes": 1701621760,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 2.407686,
+          "median_cpu_s": 0.484298,
+          "median_peak_bytes": 1098823680.0
+        },
+        "3": {
+          "median_wall_s": 1.406326,
+          "median_cpu_s": 1.109421,
+          "median_peak_bytes": 1391626240.0
+        },
+        "4": {
+          "median_wall_s": 1.505595,
+          "median_cpu_s": 0.688994,
+          "median_peak_bytes": 1393063936.0
+        },
+        "5": {
+          "median_wall_s": 3.11104,
+          "median_cpu_s": 2.080837,
+          "median_peak_bytes": 1844959232.0
+        },
+        "6": {
+          "median_wall_s": 0.401954,
+          "median_cpu_s": 0.233926,
+          "median_peak_bytes": 1302638592.0
+        },
+        "7": {
+          "median_wall_s": 3.060287,
+          "median_cpu_s": 0.710114,
+          "median_peak_bytes": 1382268928.0
+        },
+        "9": {
+          "median_wall_s": 4.561801,
+          "median_cpu_s": 1.153113,
+          "median_peak_bytes": 1641609216.0
+        },
+        "10": {
+          "median_wall_s": 1.504163,
+          "median_cpu_s": 0.504108,
+          "median_peak_bytes": 1515024384.0
+        },
+        "11": {
+          "median_wall_s": 2.004951,
+          "median_cpu_s": 0.190514,
+          "median_peak_bytes": 1444124672.0
+        },
+        "12": {
+          "median_wall_s": 1.454271,
+          "median_cpu_s": 0.636047,
+          "median_peak_bytes": 1544982528.0
+        },
+        "13": {
+          "median_wall_s": 2.706333,
+          "median_cpu_s": 0.520531,
+          "median_peak_bytes": 1592088576.0
+        },
+        "15": {
+          "median_wall_s": 2.255176,
+          "median_cpu_s": 0.450256,
+          "median_peak_bytes": 1467699200.0
+        },
+        "16": {
+          "median_wall_s": 1.75493,
+          "median_cpu_s": 0.252955,
+          "median_peak_bytes": 1490386944.0
+        },
+        "18": {
+          "median_wall_s": 2.358367,
+          "median_cpu_s": 1.787263,
+          "median_peak_bytes": 1973966848.0
+        },
+        "19": {
+          "median_wall_s": 0.802808,
+          "median_cpu_s": 0.485536,
+          "median_peak_bytes": 1842452480.0
+        },
+        "20": {
+          "median_wall_s": 3.358046,
+          "median_cpu_s": 0.497546,
+          "median_peak_bytes": 1534003200.0
+        },
+        "21": {
+          "median_wall_s": 4.159922,
+          "median_cpu_s": 1.537685,
+          "median_peak_bytes": 1980133376.0
+        },
+        "22": {
+          "median_wall_s": 2.756165,
+          "median_cpu_s": 0.315548,
+          "median_peak_bytes": 1709547520.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8235,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:33:07.875996724Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "-11-24T21:33:09Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 46709\n[2026-11-24T21:33:09Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 45407\n[2026-11-24T21:33:09Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:45407\n[2026-11-24T21:33:09Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:33:09Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:46709\n[2026-11-24T21:33:09Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:33:09Z INFO sail_session::session_manager::actor::handler] creating session runner:46b8aa26-27b6-486e-8a27-589689728e1a:8287d05d-e20a-4ada-9822-41efd2cc9d6f\n[2026-11-24T21:33:09Z INFO sail_execution::driver::actor::handler] activating driver 2\n[2026-11-24T21:33:09Z INFO sail_execution::driver::worker_pool::core] starting worker 1\n[2026-11-24T21:33:09Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:33:09Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 34347\n[2026-11-24T21:33:09Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 36193\n[2026-11-24T21:33:09Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:34347\n[2026-11-24T21:33:09Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:33:09Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:36193\n[2026-11-24T21:33:09Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:33:57Z WARN sail_execution::driver::actor::handler] job 74 stage 1 partition 0 attempt 0 sequence 710 is stale\n"
+    },
+    "celeborn-0.6.3-uncompressed": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8",
+          "RUST_LOG": "info",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE": "celeborn",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__MASTER_ENDPOINTS": "[\"celeborn-master:12097\"]",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__COMPRESSION": "none",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__PARTITION_SPLIT_THRESHOLD": "1073741824"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.13256096839904785,
+      "resource_scope": [
+        "agent2-sail",
+        "celeborn-master",
+        "celeborn-worker-1"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 0.702995,
+            "cpu_s": 0.955745,
+            "peak_bytes": 917602304,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.602221,
+            "cpu_s": 0.702418,
+            "peak_bytes": 955596800,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.70241,
+            "cpu_s": 0.756109,
+            "peak_bytes": 979349504,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 2.506568,
+            "cpu_s": 0.546198,
+            "peak_bytes": 1053114368,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.507392,
+            "cpu_s": 0.508447,
+            "peak_bytes": 1082605568,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.307148,
+            "cpu_s": 0.484544,
+            "peak_bytes": 1102602240,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 1.605868,
+            "cpu_s": 1.703147,
+            "peak_bytes": 1448660992,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.606219,
+            "cpu_s": 1.328874,
+            "peak_bytes": 1633320960,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.50572,
+            "cpu_s": 1.097726,
+            "peak_bytes": 1821241344,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 1.505844,
+            "cpu_s": 0.704664,
+            "peak_bytes": 1821523968,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.506399,
+            "cpu_s": 0.581194,
+            "peak_bytes": 1793449984,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504276,
+            "cpu_s": 0.586027,
+            "peak_bytes": 1839087616,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 3.811789,
+            "cpu_s": 1.981461,
+            "peak_bytes": 2356228096,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.710216,
+            "cpu_s": 2.236869,
+            "peak_bytes": 2714267648,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.713081,
+            "cpu_s": 2.688781,
+            "peak_bytes": 3051155456,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.401652,
+            "cpu_s": 0.229737,
+            "peak_bytes": 1859481600,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.40154,
+            "cpu_s": 0.218467,
+            "peak_bytes": 1859526656,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401592,
+            "cpu_s": 0.23018,
+            "peak_bytes": 1859522560,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 2.506782,
+            "cpu_s": 0.607879,
+            "peak_bytes": 1727524864,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.506336,
+            "cpu_s": 0.618997,
+            "peak_bytes": 1782370304,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.606878,
+            "cpu_s": 0.641946,
+            "peak_bytes": 1800704000,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 2.707354,
+            "cpu_s": 0.541036,
+            "peak_bytes": 1830199296,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706918,
+            "cpu_s": 0.506181,
+            "peak_bytes": 1836720128,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706607,
+            "cpu_s": 0.510863,
+            "peak_bytes": 1840230400,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 3.309836,
+            "cpu_s": 1.215112,
+            "peak_bytes": 1999372288,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.308779,
+            "cpu_s": 1.112888,
+            "peak_bytes": 2111774720,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.408978,
+            "cpu_s": 1.049603,
+            "peak_bytes": 2194669568,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 1.504387,
+            "cpu_s": 0.511561,
+            "peak_bytes": 1461063680,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504859,
+            "cpu_s": 0.519072,
+            "peak_bytes": 1533480960,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504485,
+            "cpu_s": 0.490399,
+            "peak_bytes": 1582489600,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 2.005021,
+            "cpu_s": 0.199694,
+            "peak_bytes": 1583824896,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.004948,
+            "cpu_s": 0.19418,
+            "peak_bytes": 1582907392,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.004747,
+            "cpu_s": 0.191349,
+            "peak_bytes": 1445089280,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 1.404118,
+            "cpu_s": 0.625383,
+            "peak_bytes": 1579286528,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404073,
+            "cpu_s": 0.552311,
+            "peak_bytes": 1610514432,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.40417,
+            "cpu_s": 0.602022,
+            "peak_bytes": 1654837248,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 2.708287,
+            "cpu_s": 0.485002,
+            "peak_bytes": 1672499200,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.709294,
+            "cpu_s": 0.472298,
+            "peak_bytes": 1640026112,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706612,
+            "cpu_s": 0.468435,
+            "peak_bytes": 1669976064,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 1.30364,
+            "cpu_s": 0.388627,
+            "peak_bytes": 1694629888,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303686,
+            "cpu_s": 0.382825,
+            "peak_bytes": 1708978176,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303477,
+            "cpu_s": 0.329074,
+            "peak_bytes": 1728868352,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 2.205088,
+            "cpu_s": 0.453241,
+            "peak_bytes": 1738727424,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.205224,
+            "cpu_s": 0.524323,
+            "peak_bytes": 1733427200,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.205361,
+            "cpu_s": 0.461343,
+            "peak_bytes": 1483239424,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 1.704731,
+            "cpu_s": 0.254745,
+            "peak_bytes": 1502879744,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704693,
+            "cpu_s": 0.262004,
+            "peak_bytes": 1504677888,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.805216,
+            "cpu_s": 0.260515,
+            "peak_bytes": 1532461056,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 1.706223,
+            "cpu_s": 0.8388,
+            "peak_bytes": 1600876544,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.805515,
+            "cpu_s": 0.878795,
+            "peak_bytes": 1619087360,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704849,
+            "cpu_s": 0.772797,
+            "peak_bytes": 1656446976,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 2.609258,
+            "cpu_s": 1.881281,
+            "peak_bytes": 2118172672,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.508499,
+            "cpu_s": 1.901378,
+            "peak_bytes": 2530914304,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.411651,
+            "cpu_s": 1.835074,
+            "peak_bytes": 2846658560,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.803011,
+            "cpu_s": 0.472918,
+            "peak_bytes": 2849783808,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.803028,
+            "cpu_s": 0.470049,
+            "peak_bytes": 2848960512,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.803108,
+            "cpu_s": 0.471553,
+            "peak_bytes": 2675118080,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 2.907336,
+            "cpu_s": 0.50314,
+            "peak_bytes": 2724388864,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.907477,
+            "cpu_s": 0.649903,
+            "peak_bytes": 2774007808,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.907718,
+            "cpu_s": 0.506332,
+            "peak_bytes": 1616936960,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 3.308895,
+            "cpu_s": 1.628923,
+            "peak_bytes": 2099355648,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.210065,
+            "cpu_s": 1.604616,
+            "peak_bytes": 2278498304,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.208944,
+            "cpu_s": 1.506672,
+            "peak_bytes": 2453483520,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 2.806041,
+            "cpu_s": 0.252771,
+            "peak_bytes": 2453925888,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.806361,
+            "cpu_s": 0.265546,
+            "peak_bytes": 2157920256,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.806266,
+            "cpu_s": 0.278262,
+            "peak_bytes": 2146123776,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 2.40727,
+          "median_cpu_s": 0.496495,
+          "median_peak_bytes": 1092603904.0
+        },
+        "3": {
+          "median_wall_s": 1.55597,
+          "median_cpu_s": 1.2133,
+          "median_peak_bytes": 1727281152.0
+        },
+        "4": {
+          "median_wall_s": 1.505337,
+          "median_cpu_s": 0.583611,
+          "median_peak_bytes": 1816268800.0
+        },
+        "5": {
+          "median_wall_s": 3.711648,
+          "median_cpu_s": 2.462825,
+          "median_peak_bytes": 2882711552.0
+        },
+        "6": {
+          "median_wall_s": 0.401566,
+          "median_cpu_s": 0.224324,
+          "median_peak_bytes": 1859524608.0
+        },
+        "7": {
+          "median_wall_s": 2.556607,
+          "median_cpu_s": 0.630472,
+          "median_peak_bytes": 1791537152.0
+        },
+        "9": {
+          "median_wall_s": 3.358878,
+          "median_cpu_s": 1.081246,
+          "median_peak_bytes": 2153222144.0
+        },
+        "10": {
+          "median_wall_s": 1.504672,
+          "median_cpu_s": 0.504736,
+          "median_peak_bytes": 1557985280.0
+        },
+        "11": {
+          "median_wall_s": 2.004848,
+          "median_cpu_s": 0.192765,
+          "median_peak_bytes": 1513998336.0
+        },
+        "12": {
+          "median_wall_s": 1.404122,
+          "median_cpu_s": 0.577166,
+          "median_peak_bytes": 1632675840.0
+        },
+        "13": {
+          "median_wall_s": 2.707953,
+          "median_cpu_s": 0.470367,
+          "median_peak_bytes": 1655001088.0
+        },
+        "15": {
+          "median_wall_s": 2.205292,
+          "median_cpu_s": 0.492833,
+          "median_peak_bytes": 1608333312.0
+        },
+        "16": {
+          "median_wall_s": 1.754954,
+          "median_cpu_s": 0.261259,
+          "median_peak_bytes": 1518569472.0
+        },
+        "18": {
+          "median_wall_s": 2.460075,
+          "median_cpu_s": 1.868226,
+          "median_peak_bytes": 2688786432.0
+        },
+        "19": {
+          "median_wall_s": 0.803068,
+          "median_cpu_s": 0.470801,
+          "median_peak_bytes": 2762039296.0
+        },
+        "20": {
+          "median_wall_s": 2.907598,
+          "median_cpu_s": 0.578118,
+          "median_peak_bytes": 2195472384.0
+        },
+        "21": {
+          "median_wall_s": 3.209504,
+          "median_cpu_s": 1.555644,
+          "median_peak_bytes": 2365990912.0
+        },
+        "22": {
+          "median_wall_s": 2.806313,
+          "median_cpu_s": 0.271904,
+          "median_peak_bytes": 2152022016.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 12018,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:35:43.562958143Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "er_pool::core] starting worker 1\n[2026-11-24T21:35:44Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:35:44Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 42679\n[2026-11-24T21:35:44Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 42573\n[2026-11-24T21:35:44Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:42679\n[2026-11-24T21:35:44Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:35:44Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:42573\n[2026-11-24T21:35:44Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:35:44Z INFO sail_session::session_manager::actor::handler] creating session runner:d3c87712-8f7f-4425-9eed-7992f9b09f66:82c4082f-9bc4-4390-a3be-55e34cdc0846\n[2026-11-24T21:35:44Z INFO sail_execution::driver::actor::handler] activating driver 2\n[2026-11-24T21:35:44Z INFO sail_execution::driver::worker_pool::core] starting worker 1\n[2026-11-24T21:35:44Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:35:44Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 45125\n[2026-11-24T21:35:44Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 35481\n[2026-11-24T21:35:44Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:45125\n[2026-11-24T21:35:44Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:35:44Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:35481\n[2026-11-24T21:35:44Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n"
+    },
+    "celeborn-0.6.3-small-split": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8",
+          "RUST_LOG": "info",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE": "celeborn",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__MASTER_ENDPOINTS": "[\"celeborn-master:12097\"]",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__COMPRESSION": "lz4",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__PARTITION_SPLIT_THRESHOLD": "16777216"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.13559556007385254,
+      "resource_scope": [
+        "agent2-sail",
+        "celeborn-master",
+        "celeborn-worker-1"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 1.004424,
+            "cpu_s": 0.953337,
+            "peak_bytes": 925933568,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.003236,
+            "cpu_s": 0.726712,
+            "peak_bytes": 973996032,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.002973,
+            "cpu_s": 0.733059,
+            "peak_bytes": 1015734272,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 2.507163,
+            "cpu_s": 0.562815,
+            "peak_bytes": 1036890112,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.507727,
+            "cpu_s": 0.506121,
+            "peak_bytes": 1064378368,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.508162,
+            "cpu_s": 0.426559,
+            "peak_bytes": 1071595520,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 1.404968,
+            "cpu_s": 1.588061,
+            "peak_bytes": 1256353792,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404638,
+            "cpu_s": 1.19764,
+            "peak_bytes": 1322237952,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404308,
+            "cpu_s": 1.03754,
+            "peak_bytes": 1384173568,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 1.504197,
+            "cpu_s": 0.558012,
+            "peak_bytes": 1401094144,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504054,
+            "cpu_s": 0.623194,
+            "peak_bytes": 1392394240,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.50453,
+            "cpu_s": 0.581784,
+            "peak_bytes": 1370812416,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 3.00838,
+            "cpu_s": 1.791142,
+            "peak_bytes": 1645662208,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.008231,
+            "cpu_s": 1.752318,
+            "peak_bytes": 1791381504,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.010067,
+            "cpu_s": 2.040569,
+            "peak_bytes": 1916678144,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.401604,
+            "cpu_s": 0.229155,
+            "peak_bytes": 1501978624,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401668,
+            "cpu_s": 0.217879,
+            "peak_bytes": 1331040256,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401688,
+            "cpu_s": 0.212269,
+            "peak_bytes": 1339383808,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 3.007459,
+            "cpu_s": 0.628707,
+            "peak_bytes": 1402306560,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.007334,
+            "cpu_s": 0.610063,
+            "peak_bytes": 1402073088,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.007544,
+            "cpu_s": 0.657547,
+            "peak_bytes": 1387683840,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 2.706799,
+            "cpu_s": 0.557743,
+            "peak_bytes": 1450319872,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.7066,
+            "cpu_s": 0.485165,
+            "peak_bytes": 1451061248,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706979,
+            "cpu_s": 0.523688,
+            "peak_bytes": 1460609024,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 4.511855,
+            "cpu_s": 1.091103,
+            "peak_bytes": 1516752896,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.612301,
+            "cpu_s": 1.216514,
+            "peak_bytes": 1599074304,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.410851,
+            "cpu_s": 1.162437,
+            "peak_bytes": 1646776320,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 1.504568,
+            "cpu_s": 0.488677,
+            "peak_bytes": 1520369664,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.50457,
+            "cpu_s": 0.482338,
+            "peak_bytes": 1523847168,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504513,
+            "cpu_s": 0.476312,
+            "peak_bytes": 1542828032,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 2.004928,
+            "cpu_s": 0.198453,
+            "peak_bytes": 1542524928,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.004863,
+            "cpu_s": 0.185441,
+            "peak_bytes": 1423753216,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.004999,
+            "cpu_s": 0.201943,
+            "peak_bytes": 1415139328,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 1.403915,
+            "cpu_s": 0.553203,
+            "peak_bytes": 1462714368,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404194,
+            "cpu_s": 0.559599,
+            "peak_bytes": 1506095104,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.405807,
+            "cpu_s": 0.705547,
+            "peak_bytes": 1518387200,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 2.70626,
+            "cpu_s": 0.48861,
+            "peak_bytes": 1567232000,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.705838,
+            "cpu_s": 0.52197,
+            "peak_bytes": 1566203904,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706183,
+            "cpu_s": 0.50725,
+            "peak_bytes": 1570803712,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 1.303606,
+            "cpu_s": 0.348316,
+            "peak_bytes": 1592213504,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.304964,
+            "cpu_s": 0.367413,
+            "peak_bytes": 1599877120,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303902,
+            "cpu_s": 0.408581,
+            "peak_bytes": 1603780608,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 2.205214,
+            "cpu_s": 0.448829,
+            "peak_bytes": 1452376064,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.305632,
+            "cpu_s": 0.445241,
+            "peak_bytes": 1452580864,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.205669,
+            "cpu_s": 0.432896,
+            "peak_bytes": 1439981568,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 1.7043,
+            "cpu_s": 0.254865,
+            "peak_bytes": 1440866304,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704655,
+            "cpu_s": 0.249182,
+            "peak_bytes": 1466564608,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.80536,
+            "cpu_s": 0.258608,
+            "peak_bytes": 1483780096,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 1.704939,
+            "cpu_s": 0.802085,
+            "peak_bytes": 1511956480,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704952,
+            "cpu_s": 0.782924,
+            "peak_bytes": 1526157312,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.704545,
+            "cpu_s": 0.827266,
+            "peak_bytes": 1551003648,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 2.307035,
+            "cpu_s": 1.824352,
+            "peak_bytes": 1783681024,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.206833,
+            "cpu_s": 1.773762,
+            "peak_bytes": 1891532800,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.309628,
+            "cpu_s": 1.971655,
+            "peak_bytes": 2052767744,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.80282,
+            "cpu_s": 0.474867,
+            "peak_bytes": 2053087232,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.802784,
+            "cpu_s": 0.491281,
+            "peak_bytes": 1842929664,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.802709,
+            "cpu_s": 0.488034,
+            "peak_bytes": 1847558144,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 3.508279,
+            "cpu_s": 0.598178,
+            "peak_bytes": 1882365952,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.307731,
+            "cpu_s": 0.536043,
+            "peak_bytes": 1488031744,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.307649,
+            "cpu_s": 0.496968,
+            "peak_bytes": 1509376000,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 4.21095,
+            "cpu_s": 1.581621,
+            "peak_bytes": 1796329472,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.110238,
+            "cpu_s": 1.550328,
+            "peak_bytes": 1870188544,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.110327,
+            "cpu_s": 1.566685,
+            "peak_bytes": 1944838144,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 2.806209,
+            "cpu_s": 0.276727,
+            "peak_bytes": 1950957568,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.80609,
+            "cpu_s": 0.267604,
+            "peak_bytes": 1671798784,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.806457,
+            "cpu_s": 0.343897,
+            "peak_bytes": 1680691200,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 2.507944,
+          "median_cpu_s": 0.46634,
+          "median_peak_bytes": 1067986944.0
+        },
+        "3": {
+          "median_wall_s": 1.404473,
+          "median_cpu_s": 1.11759,
+          "median_peak_bytes": 1353205760.0
+        },
+        "4": {
+          "median_wall_s": 1.504292,
+          "median_cpu_s": 0.602489,
+          "median_peak_bytes": 1381603328.0
+        },
+        "5": {
+          "median_wall_s": 3.009149,
+          "median_cpu_s": 1.896444,
+          "median_peak_bytes": 1854029824.0
+        },
+        "6": {
+          "median_wall_s": 0.401678,
+          "median_cpu_s": 0.215074,
+          "median_peak_bytes": 1335212032.0
+        },
+        "7": {
+          "median_wall_s": 3.007439,
+          "median_cpu_s": 0.633805,
+          "median_peak_bytes": 1394878464.0
+        },
+        "9": {
+          "median_wall_s": 4.511576,
+          "median_cpu_s": 1.189475,
+          "median_peak_bytes": 1622925312.0
+        },
+        "10": {
+          "median_wall_s": 1.504541,
+          "median_cpu_s": 0.479325,
+          "median_peak_bytes": 1533337600.0
+        },
+        "11": {
+          "median_wall_s": 2.004931,
+          "median_cpu_s": 0.193692,
+          "median_peak_bytes": 1419446272.0
+        },
+        "12": {
+          "median_wall_s": 1.405,
+          "median_cpu_s": 0.632573,
+          "median_peak_bytes": 1512241152.0
+        },
+        "13": {
+          "median_wall_s": 2.70601,
+          "median_cpu_s": 0.51461,
+          "median_peak_bytes": 1568503808.0
+        },
+        "15": {
+          "median_wall_s": 2.25565,
+          "median_cpu_s": 0.439068,
+          "median_peak_bytes": 1446281216.0
+        },
+        "16": {
+          "median_wall_s": 1.755008,
+          "median_cpu_s": 0.253895,
+          "median_peak_bytes": 1475172352.0
+        },
+        "18": {
+          "median_wall_s": 2.25823,
+          "median_cpu_s": 1.872708,
+          "median_peak_bytes": 1972150272.0
+        },
+        "19": {
+          "median_wall_s": 0.802747,
+          "median_cpu_s": 0.489658,
+          "median_peak_bytes": 1845243904.0
+        },
+        "20": {
+          "median_wall_s": 3.30769,
+          "median_cpu_s": 0.516506,
+          "median_peak_bytes": 1498703872.0
+        },
+        "21": {
+          "median_wall_s": 4.110283,
+          "median_cpu_s": 1.558507,
+          "median_peak_bytes": 1907513344.0
+        },
+        "22": {
+          "median_wall_s": 2.806274,
+          "median_cpu_s": 0.305751,
+          "median_peak_bytes": 1676244992.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 15691,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:38:14.31105834Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "er_pool::core] starting worker 1\n[2026-11-24T21:38:15Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:38:15Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 34949\n[2026-11-24T21:38:15Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 46409\n[2026-11-24T21:38:15Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:46409\n[2026-11-24T21:38:15Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:38:15Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:34949\n[2026-11-24T21:38:15Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:38:15Z INFO sail_session::session_manager::actor::handler] creating session runner:df8862d8-4506-4d62-8089-64ec1a219d39:8795c60f-97e7-457d-9d6c-fa5b3dd3e60f\n[2026-11-24T21:38:15Z INFO sail_execution::driver::actor::handler] activating driver 2\n[2026-11-24T21:38:15Z INFO sail_execution::driver::worker_pool::core] starting worker 1\n[2026-11-24T21:38:15Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:38:15Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 41815\n[2026-11-24T21:38:15Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 45269\n[2026-11-24T21:38:15Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:45269\n[2026-11-24T21:38:15Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:38:15Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:41815\n[2026-11-24T21:38:15Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n"
+    },
+    "celeborn-0.6.3-two-workers": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8",
+          "RUST_LOG": "info",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE": "celeborn",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__MASTER_ENDPOINTS": "[\"celeborn-master:12097\"]",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__COMPRESSION": "lz4",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__PARTITION_SPLIT_THRESHOLD": "1073741824"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.14675188064575195,
+      "resource_scope": [
+        "agent2-sail",
+        "celeborn-master",
+        "celeborn-worker-1",
+        "celeborn-worker-2"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 0.904169,
+            "cpu_s": 1.038964,
+            "peak_bytes": 1270456320,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.903106,
+            "cpu_s": 0.762493,
+            "peak_bytes": 1312014336,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.903296,
+            "cpu_s": 0.733875,
+            "peak_bytes": 1332477952,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 2.206615,
+            "cpu_s": 0.685064,
+            "peak_bytes": 1398915072,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.407193,
+            "cpu_s": 0.568674,
+            "peak_bytes": 1433665536,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.407135,
+            "cpu_s": 0.538927,
+            "peak_bytes": 1446006784,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 1.606696,
+            "cpu_s": 1.334812,
+            "peak_bytes": 1606787072,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.405271,
+            "cpu_s": 1.5513,
+            "peak_bytes": 1683013632,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.405291,
+            "cpu_s": 1.091338,
+            "peak_bytes": 1730850816,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 1.60494,
+            "cpu_s": 0.806954,
+            "peak_bytes": 1752203264,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.505004,
+            "cpu_s": 0.702338,
+            "peak_bytes": 1752719360,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.70604,
+            "cpu_s": 1.217981,
+            "peak_bytes": 1775337472,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 2.911958,
+            "cpu_s": 2.052171,
+            "peak_bytes": 1942290432,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.909843,
+            "cpu_s": 1.781255,
+            "peak_bytes": 2062082048,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.109977,
+            "cpu_s": 1.949718,
+            "peak_bytes": 2264088576,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.40191,
+            "cpu_s": 0.232004,
+            "peak_bytes": 1930457088,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401827,
+            "cpu_s": 0.225876,
+            "peak_bytes": 1766264832,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401748,
+            "cpu_s": 0.229281,
+            "peak_bytes": 1770500096,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 2.807937,
+            "cpu_s": 0.78454,
+            "peak_bytes": 1841934336,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.908441,
+            "cpu_s": 0.835676,
+            "peak_bytes": 1841713152,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.70801,
+            "cpu_s": 0.829272,
+            "peak_bytes": 1871499264,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 2.406555,
+            "cpu_s": 0.568243,
+            "peak_bytes": 1878253568,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.406937,
+            "cpu_s": 0.516772,
+            "peak_bytes": 1882284032,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.607438,
+            "cpu_s": 0.546767,
+            "peak_bytes": 1891020800,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 4.011186,
+            "cpu_s": 1.16727,
+            "peak_bytes": 1991155712,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.011421,
+            "cpu_s": 1.24966,
+            "peak_bytes": 2105430016,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.112181,
+            "cpu_s": 1.346397,
+            "peak_bytes": 2151161856,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 1.605159,
+            "cpu_s": 0.530341,
+            "peak_bytes": 1954320384,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.605741,
+            "cpu_s": 0.590859,
+            "peak_bytes": 1973493760,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.606431,
+            "cpu_s": 0.527476,
+            "peak_bytes": 1972301824,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 2.005434,
+            "cpu_s": 0.223528,
+            "peak_bytes": 1948913664,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.905125,
+            "cpu_s": 0.202763,
+            "peak_bytes": 1948659712,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.905674,
+            "cpu_s": 0.263167,
+            "peak_bytes": 1900011520,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 1.605302,
+            "cpu_s": 0.663014,
+            "peak_bytes": 1982226432,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.604908,
+            "cpu_s": 0.594786,
+            "peak_bytes": 2034106368,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.604904,
+            "cpu_s": 0.600759,
+            "peak_bytes": 2034696192,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 2.207411,
+            "cpu_s": 0.79075,
+            "peak_bytes": 2077392896,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.006165,
+            "cpu_s": 0.523317,
+            "peak_bytes": 2042470400,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.206015,
+            "cpu_s": 0.523061,
+            "peak_bytes": 2055548928,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 1.303987,
+            "cpu_s": 0.341765,
+            "peak_bytes": 2088849408,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404606,
+            "cpu_s": 0.353861,
+            "peak_bytes": 2099863552,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.403994,
+            "cpu_s": 0.337599,
+            "peak_bytes": 2098786304,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 2.105621,
+            "cpu_s": 0.49347,
+            "peak_bytes": 2104893440,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.306293,
+            "cpu_s": 0.573908,
+            "peak_bytes": 2105016320,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.305818,
+            "cpu_s": 0.497593,
+            "peak_bytes": 1979523072,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 1.905176,
+            "cpu_s": 0.260271,
+            "peak_bytes": 1997979648,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.005927,
+            "cpu_s": 0.274915,
+            "peak_bytes": 1997033472,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.971154,
+            "cpu_s": 0.276667,
+            "peak_bytes": 1974960128,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 1.705829,
+            "cpu_s": 0.882609,
+            "peak_bytes": 2023342080,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.80546,
+            "cpu_s": 0.790419,
+            "peak_bytes": 2041847808,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.605141,
+            "cpu_s": 0.759851,
+            "peak_bytes": 2055147520,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 2.208657,
+            "cpu_s": 2.293923,
+            "peak_bytes": 2224721920,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.307666,
+            "cpu_s": 2.055522,
+            "peak_bytes": 2396487680,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.207631,
+            "cpu_s": 1.874078,
+            "peak_bytes": 2536050688,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.803026,
+            "cpu_s": 0.458765,
+            "peak_bytes": 2536456192,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.802948,
+            "cpu_s": 0.466162,
+            "peak_bytes": 2535960576,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.8038,
+            "cpu_s": 0.459634,
+            "peak_bytes": 2369638400,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 2.609783,
+            "cpu_s": 0.511511,
+            "peak_bytes": 2413387776,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.808953,
+            "cpu_s": 0.648884,
+            "peak_bytes": 2425233408,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.707486,
+            "cpu_s": 0.555112,
+            "peak_bytes": 2029756416,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 3.311302,
+            "cpu_s": 1.691369,
+            "peak_bytes": 2333659136,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.50982,
+            "cpu_s": 1.579071,
+            "peak_bytes": 2421837824,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.309765,
+            "cpu_s": 1.527354,
+            "peak_bytes": 2512789504,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 2.606819,
+            "cpu_s": 0.289587,
+            "peak_bytes": 2224218112,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.607319,
+            "cpu_s": 0.295676,
+            "peak_bytes": 2230181888,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.606688,
+            "cpu_s": 0.309333,
+            "peak_bytes": 2231664640,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 2.407164,
+          "median_cpu_s": 0.553801,
+          "median_peak_bytes": 1439836160.0
+        },
+        "3": {
+          "median_wall_s": 1.405281,
+          "median_cpu_s": 1.321319,
+          "median_peak_bytes": 1706932224.0
+        },
+        "4": {
+          "median_wall_s": 1.605522,
+          "median_cpu_s": 0.96016,
+          "median_peak_bytes": 1764028416.0
+        },
+        "5": {
+          "median_wall_s": 3.00991,
+          "median_cpu_s": 1.865487,
+          "median_peak_bytes": 2163085312.0
+        },
+        "6": {
+          "median_wall_s": 0.401787,
+          "median_cpu_s": 0.227579,
+          "median_peak_bytes": 1768382464.0
+        },
+        "7": {
+          "median_wall_s": 2.808225,
+          "median_cpu_s": 0.832474,
+          "median_peak_bytes": 1856606208.0
+        },
+        "9": {
+          "median_wall_s": 4.061801,
+          "median_cpu_s": 1.298029,
+          "median_peak_bytes": 2128295936.0
+        },
+        "10": {
+          "median_wall_s": 1.606086,
+          "median_cpu_s": 0.559168,
+          "median_peak_bytes": 1972897792.0
+        },
+        "11": {
+          "median_wall_s": 1.9054,
+          "median_cpu_s": 0.232965,
+          "median_peak_bytes": 1924335616.0
+        },
+        "12": {
+          "median_wall_s": 1.604906,
+          "median_cpu_s": 0.597773,
+          "median_peak_bytes": 2034401280.0
+        },
+        "13": {
+          "median_wall_s": 2.10609,
+          "median_cpu_s": 0.523189,
+          "median_peak_bytes": 2049009664.0
+        },
+        "15": {
+          "median_wall_s": 2.306056,
+          "median_cpu_s": 0.535751,
+          "median_peak_bytes": 2042269696.0
+        },
+        "16": {
+          "median_wall_s": 1.988541,
+          "median_cpu_s": 0.275791,
+          "median_peak_bytes": 1985996800.0
+        },
+        "18": {
+          "median_wall_s": 2.257649,
+          "median_cpu_s": 1.9648,
+          "median_peak_bytes": 2466269184.0
+        },
+        "19": {
+          "median_wall_s": 0.803374,
+          "median_cpu_s": 0.462898,
+          "median_peak_bytes": 2452799488.0
+        },
+        "20": {
+          "median_wall_s": 2.75822,
+          "median_cpu_s": 0.601998,
+          "median_peak_bytes": 2227494912.0
+        },
+        "21": {
+          "median_wall_s": 3.409793,
+          "median_cpu_s": 1.553212,
+          "median_peak_bytes": 2467313664.0
+        },
+        "22": {
+          "median_wall_s": 2.607004,
+          "median_cpu_s": 0.302505,
+          "median_peak_bytes": 2230923264.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 19710,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:40:50.339691264Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "er_pool::core] starting worker 1\n[2026-11-24T21:40:51Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:40:51Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 43611\n[2026-11-24T21:40:51Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 43141\n[2026-11-24T21:40:51Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:43611\n[2026-11-24T21:40:51Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:40:51Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:43141\n[2026-11-24T21:40:51Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:40:51Z INFO sail_session::session_manager::actor::handler] creating session runner:16609c7d-cdaf-4718-bf33-d1e223df0ce1:41e077ab-b0d2-4930-854a-cbbe27895f2a\n[2026-11-24T21:40:51Z INFO sail_execution::driver::actor::handler] activating driver 2\n[2026-11-24T21:40:51Z INFO sail_execution::driver::worker_pool::core] starting worker 1\n[2026-11-24T21:40:51Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:40:51Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 37081\n[2026-11-24T21:40:51Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 34973\n[2026-11-24T21:40:51Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:34973\n[2026-11-24T21:40:51Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:40:51Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:37081\n[2026-11-24T21:40:51Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n"
+    },
+    "celeborn-0.7.0-default": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8",
+          "RUST_LOG": "info",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE": "celeborn",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__MASTER_ENDPOINTS": "[\"celeborn-master:12097\"]",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__COMPRESSION": "lz4",
+          "SAIL_CLUSTER__SHUFFLE_BACKEND__CELEBORN__PARTITION_SPLIT_THRESHOLD": "1073741824"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.14055633544921875,
+      "resource_scope": [
+        "agent2-sail",
+        "celeborn-master",
+        "celeborn-worker-1"
+      ],
+      "queries": {
+        "1": [
+          {
+            "status": "ok",
+            "wall_s": 1.003513,
+            "cpu_s": 0.93125,
+            "peak_bytes": 1071976448,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.003038,
+            "cpu_s": 0.723456,
+            "peak_bytes": 1118294016,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.003023,
+            "cpu_s": 0.733014,
+            "peak_bytes": 1155653632,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "status": "ok",
+            "wall_s": 2.30619,
+            "cpu_s": 0.502754,
+            "peak_bytes": 1200230400,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.506622,
+            "cpu_s": 0.649906,
+            "peak_bytes": 1263804416,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.306035,
+            "cpu_s": 0.396458,
+            "peak_bytes": 1276755968,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "status": "ok",
+            "wall_s": 1.404309,
+            "cpu_s": 1.069449,
+            "peak_bytes": 1423310848,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.304149,
+            "cpu_s": 0.984176,
+            "peak_bytes": 1499054080,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404219,
+            "cpu_s": 0.919591,
+            "peak_bytes": 1533091840,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "status": "ok",
+            "wall_s": 1.504034,
+            "cpu_s": 0.548706,
+            "peak_bytes": 1554800640,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504022,
+            "cpu_s": 0.503061,
+            "peak_bytes": 1568321536,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.503863,
+            "cpu_s": 0.650394,
+            "peak_bytes": 1571696640,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "status": "ok",
+            "wall_s": 2.909147,
+            "cpu_s": 1.434063,
+            "peak_bytes": 1824641024,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.907892,
+            "cpu_s": 1.55201,
+            "peak_bytes": 1908842496,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.008385,
+            "cpu_s": 1.506909,
+            "peak_bytes": 2005618688,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "6": [
+          {
+            "status": "ok",
+            "wall_s": 0.401677,
+            "cpu_s": 0.219661,
+            "peak_bytes": 1594134528,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401741,
+            "cpu_s": 0.22965,
+            "peak_bytes": 1598701568,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.401685,
+            "cpu_s": 0.214727,
+            "peak_bytes": 1600929792,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "status": "ok",
+            "wall_s": 3.108854,
+            "cpu_s": 0.642592,
+            "peak_bytes": 1617899520,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.007255,
+            "cpu_s": 0.602485,
+            "peak_bytes": 1503285248,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.008822,
+            "cpu_s": 0.630703,
+            "peak_bytes": 1525121024,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "status": "ok",
+            "wall_s": 2.606349,
+            "cpu_s": 0.562829,
+            "peak_bytes": 1544216576,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706759,
+            "cpu_s": 0.504007,
+            "peak_bytes": 1547464704,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.707068,
+            "cpu_s": 0.482605,
+            "peak_bytes": 1548984320,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "status": "ok",
+            "wall_s": 4.511506,
+            "cpu_s": 1.254365,
+            "peak_bytes": 1654329344,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.410342,
+            "cpu_s": 1.056882,
+            "peak_bytes": 1749434368,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.511026,
+            "cpu_s": 1.08262,
+            "peak_bytes": 1751552000,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "10": [
+          {
+            "status": "ok",
+            "wall_s": 1.504517,
+            "cpu_s": 0.477922,
+            "peak_bytes": 1604554752,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504544,
+            "cpu_s": 0.460502,
+            "peak_bytes": 1619079168,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.504327,
+            "cpu_s": 0.462479,
+            "peak_bytes": 1633030144,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "status": "ok",
+            "wall_s": 2.004854,
+            "cpu_s": 0.197171,
+            "peak_bytes": 1632448512,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.004889,
+            "cpu_s": 0.185622,
+            "peak_bytes": 1573171200,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.00489,
+            "cpu_s": 0.204808,
+            "peak_bytes": 1573203968,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "status": "ok",
+            "wall_s": 1.404012,
+            "cpu_s": 0.543913,
+            "peak_bytes": 1627291648,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.40644,
+            "cpu_s": 0.538803,
+            "peak_bytes": 1631539200,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.404842,
+            "cpu_s": 0.612759,
+            "peak_bytes": 1645924352,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "status": "ok",
+            "wall_s": 2.706205,
+            "cpu_s": 0.472756,
+            "peak_bytes": 1685647360,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706301,
+            "cpu_s": 0.595186,
+            "peak_bytes": 1685872640,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.605851,
+            "cpu_s": 0.455938,
+            "peak_bytes": 1671311360,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "status": "ok",
+            "wall_s": 1.303526,
+            "cpu_s": 0.338166,
+            "peak_bytes": 1698062336,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303476,
+            "cpu_s": 0.324374,
+            "peak_bytes": 1714712576,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.303983,
+            "cpu_s": 0.303506,
+            "peak_bytes": 1736486912,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "status": "ok",
+            "wall_s": 2.205342,
+            "cpu_s": 0.522453,
+            "peak_bytes": 1738682368,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.205093,
+            "cpu_s": 0.422186,
+            "peak_bytes": 1561739264,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.306212,
+            "cpu_s": 0.423838,
+            "peak_bytes": 1562161152,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "status": "ok",
+            "wall_s": 1.704724,
+            "cpu_s": 0.23617,
+            "peak_bytes": 1583554560,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.805098,
+            "cpu_s": 0.257942,
+            "peak_bytes": 1582620672,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.705017,
+            "cpu_s": 0.234114,
+            "peak_bytes": 1596964864,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "status": "ok",
+            "wall_s": 1.805029,
+            "cpu_s": 0.792526,
+            "peak_bytes": 1662242816,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.805088,
+            "cpu_s": 0.776941,
+            "peak_bytes": 1655410688,
+            "matches_spark": false
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.805718,
+            "cpu_s": 0.819769,
+            "peak_bytes": 1674448896,
+            "matches_spark": false
+          }
+        ],
+        "18": [
+          {
+            "status": "ok",
+            "wall_s": 2.106952,
+            "cpu_s": 1.73103,
+            "peak_bytes": 1860280320,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.107187,
+            "cpu_s": 1.592216,
+            "peak_bytes": 2017071104,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.307147,
+            "cpu_s": 1.700053,
+            "peak_bytes": 2136006656,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "19": [
+          {
+            "status": "ok",
+            "wall_s": 0.802719,
+            "cpu_s": 0.472965,
+            "peak_bytes": 2137116672,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.803817,
+            "cpu_s": 0.505999,
+            "peak_bytes": 2137288704,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.802775,
+            "cpu_s": 0.439321,
+            "peak_bytes": 1937178624,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "status": "ok",
+            "wall_s": 3.407996,
+            "cpu_s": 0.584529,
+            "peak_bytes": 1977315328,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.507743,
+            "cpu_s": 0.542789,
+            "peak_bytes": 1601576960,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.407496,
+            "cpu_s": 0.468999,
+            "peak_bytes": 1634631680,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "status": "ok",
+            "wall_s": 4.213716,
+            "cpu_s": 1.484524,
+            "peak_bytes": 1902174208,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.210269,
+            "cpu_s": 1.399676,
+            "peak_bytes": 1982947328,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.209964,
+            "cpu_s": 1.362781,
+            "peak_bytes": 2062172160,
+            "matches_spark": true,
+            "stages": []
+          }
+        ],
+        "22": [
+          {
+            "status": "ok",
+            "wall_s": 2.705975,
+            "cpu_s": 0.275179,
+            "peak_bytes": 2061512704,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.706145,
+            "cpu_s": 0.251952,
+            "peak_bytes": 1811914752,
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.705736,
+            "cpu_s": 0.2846,
+            "peak_bytes": 1811652608,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "median_wall_s": 2.406328,
+          "median_cpu_s": 0.523182,
+          "median_peak_bytes": 1270280192.0
+        },
+        "3": {
+          "median_wall_s": 1.354184,
+          "median_cpu_s": 0.951884,
+          "median_peak_bytes": 1516072960.0
+        },
+        "4": {
+          "median_wall_s": 1.503942,
+          "median_cpu_s": 0.576728,
+          "median_peak_bytes": 1570009088.0
+        },
+        "5": {
+          "median_wall_s": 2.958139,
+          "median_cpu_s": 1.529459,
+          "median_peak_bytes": 1957230592.0
+        },
+        "6": {
+          "median_wall_s": 0.401713,
+          "median_cpu_s": 0.222189,
+          "median_peak_bytes": 1599815680.0
+        },
+        "7": {
+          "median_wall_s": 3.008038,
+          "median_cpu_s": 0.616594,
+          "median_peak_bytes": 1514203136.0
+        },
+        "9": {
+          "median_wall_s": 4.460684,
+          "median_cpu_s": 1.069751,
+          "median_peak_bytes": 1750493184.0
+        },
+        "10": {
+          "median_wall_s": 1.504436,
+          "median_cpu_s": 0.461491,
+          "median_peak_bytes": 1626054656.0
+        },
+        "11": {
+          "median_wall_s": 2.004889,
+          "median_cpu_s": 0.195215,
+          "median_peak_bytes": 1573187584.0
+        },
+        "12": {
+          "median_wall_s": 1.405641,
+          "median_cpu_s": 0.575781,
+          "median_peak_bytes": 1638731776.0
+        },
+        "13": {
+          "median_wall_s": 2.656076,
+          "median_cpu_s": 0.525562,
+          "median_peak_bytes": 1678592000.0
+        },
+        "15": {
+          "median_wall_s": 2.255653,
+          "median_cpu_s": 0.423012,
+          "median_peak_bytes": 1561950208.0
+        },
+        "16": {
+          "median_wall_s": 1.755057,
+          "median_cpu_s": 0.246028,
+          "median_peak_bytes": 1589792768.0
+        },
+        "18": {
+          "median_wall_s": 2.207167,
+          "median_cpu_s": 1.646135,
+          "median_peak_bytes": 2076538880.0
+        },
+        "19": {
+          "median_wall_s": 0.803296,
+          "median_cpu_s": 0.47266,
+          "median_peak_bytes": 2037233664.0
+        },
+        "20": {
+          "median_wall_s": 3.457619,
+          "median_cpu_s": 0.505894,
+          "median_peak_bytes": 1618104320.0
+        },
+        "21": {
+          "median_wall_s": 4.210116,
+          "median_cpu_s": 1.381228,
+          "median_peak_bytes": 2022559744.0
+        },
+        "22": {
+          "median_wall_s": 2.70594,
+          "median_cpu_s": 0.268276,
+          "median_peak_bytes": 1811783680.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 23863,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:43:31.113398741Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "log_excerpt": "er_pool::core] starting worker 1\n[2026-11-24T21:43:32Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:43:32Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 42853\n[2026-11-24T21:43:32Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 34367\n[2026-11-24T21:43:32Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:34367\n[2026-11-24T21:43:32Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:43:32Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:42853\n[2026-11-24T21:43:32Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T21:43:32Z INFO sail_session::session_manager::actor::handler] creating session runner:b1a252c0-380d-434b-8c40-b8608a0f4f7c:4b505dc4-f27d-41af-8723-4f52839a44a4\n[2026-11-24T21:43:32Z INFO sail_execution::driver::actor::handler] activating driver 2\n[2026-11-24T21:43:32Z INFO sail_execution::driver::worker_pool::core] starting worker 1\n[2026-11-24T21:43:32Z INFO sail_execution::driver::worker_pool::core] starting worker 2\n[2026-11-24T21:43:32Z INFO sail_execution::worker::actor::handler] worker 2 server is ready on port 44211\n[2026-11-24T21:43:32Z INFO sail_execution::worker::actor::handler] worker 1 server is ready on port 35155\n[2026-11-24T21:43:32Z INFO sail_execution::driver::actor::handler] worker 2 is available at 127.0.0.1:44211\n[2026-11-24T21:43:32Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T21:43:32Z INFO sail_execution::driver::actor::handler] worker 1 is available at 127.0.0.1:35155\n[2026-11-24T21:43:32Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n"
+    }
+  },
+  "data_load": {
+    "1": {
+      "nation": {
+        "rows": 25,
+        "seconds": 2.93
+      },
+      "region": {
+        "rows": 5,
+        "seconds": 0.57
+      },
+      "part": {
+        "rows": 200000,
+        "seconds": 1.08
+      },
+      "supplier": {
+        "rows": 10000,
+        "seconds": 0.59
+      },
+      "partsupp": {
+        "rows": 800000,
+        "seconds": 1.21
+      },
+      "customer": {
+        "rows": 150000,
+        "seconds": 0.83
+      },
+      "orders": {
+        "rows": 1500000,
+        "seconds": 1.64
+      },
+      "lineitem": {
+        "rows": 6001215,
+        "seconds": 5.29
+      }
+    }
+  },
+  "treatments": {
+    "local": {
+      "image_tag": null,
+      "workers": 0,
+      "compression": null,
+      "partition_split_bytes": null
+    },
+    "cluster-flight": {
+      "image_tag": null,
+      "workers": 0,
+      "compression": null,
+      "partition_split_bytes": null
+    },
+    "celeborn-0.6.3-default": {
+      "image_tag": "0.6.3",
+      "workers": 1,
+      "compression": "lz4",
+      "partition_split_bytes": 1073741824
+    },
+    "celeborn-0.6.3-uncompressed": {
+      "image_tag": "0.6.3",
+      "workers": 1,
+      "compression": "none",
+      "partition_split_bytes": 1073741824
+    },
+    "celeborn-0.6.3-small-split": {
+      "image_tag": "0.6.3",
+      "workers": 1,
+      "compression": "lz4",
+      "partition_split_bytes": 16777216
+    },
+    "celeborn-0.6.3-two-workers": {
+      "image_tag": "0.6.3",
+      "workers": 2,
+      "compression": "lz4",
+      "partition_split_bytes": 1073741824
+    },
+    "celeborn-0.7.0-default": {
+      "image_tag": "0.7.0",
+      "workers": 1,
+      "compression": "lz4",
+      "partition_split_bytes": 1073741824
+    }
+  },
+  "backends": {
+    "celeborn-0.6.3-default": {
+      "image": "apache/celeborn:0.6.3",
+      "digest": "[\"apache/celeborn@sha256:814857a042172d60f8fda7fe5e0cb28b30d51391430405a9a6430a8545fa5283\"]",
+      "config": "celeborn.master.ha.enabled false\nceleborn.master.endpoints celeborn-master:12097\nceleborn.master.host celeborn-master\nceleborn.master.port 12097\nceleborn.master.http.host 0.0.0.0\nceleborn.master.http.port 12098\n\nceleborn.worker.rpc.port 12000\nceleborn.worker.push.port 12001\nceleborn.worker.fetch.port 12002\nceleborn.worker.replicate.port 12003\nceleborn.worker.http.host 0.0.0.0\nceleborn.worker.http.port 12096\nceleborn.worker.storage.dirs /tmp/celeborn-data:capacity=6g:disktype=HDD:flushthread=1\nceleborn.worker.storage.disk.reserve.size 1m\n"
+    },
+    "celeborn-0.6.3-uncompressed": {
+      "image": "apache/celeborn:0.6.3",
+      "digest": "[\"apache/celeborn@sha256:814857a042172d60f8fda7fe5e0cb28b30d51391430405a9a6430a8545fa5283\"]",
+      "config": "celeborn.master.ha.enabled false\nceleborn.master.endpoints celeborn-master:12097\nceleborn.master.host celeborn-master\nceleborn.master.port 12097\nceleborn.master.http.host 0.0.0.0\nceleborn.master.http.port 12098\n\nceleborn.worker.rpc.port 12000\nceleborn.worker.push.port 12001\nceleborn.worker.fetch.port 12002\nceleborn.worker.replicate.port 12003\nceleborn.worker.http.host 0.0.0.0\nceleborn.worker.http.port 12096\nceleborn.worker.storage.dirs /tmp/celeborn-data:capacity=6g:disktype=HDD:flushthread=1\nceleborn.worker.storage.disk.reserve.size 1m\n"
+    },
+    "celeborn-0.6.3-small-split": {
+      "image": "apache/celeborn:0.6.3",
+      "digest": "[\"apache/celeborn@sha256:814857a042172d60f8fda7fe5e0cb28b30d51391430405a9a6430a8545fa5283\"]",
+      "config": "celeborn.master.ha.enabled false\nceleborn.master.endpoints celeborn-master:12097\nceleborn.master.host celeborn-master\nceleborn.master.port 12097\nceleborn.master.http.host 0.0.0.0\nceleborn.master.http.port 12098\n\nceleborn.worker.rpc.port 12000\nceleborn.worker.push.port 12001\nceleborn.worker.fetch.port 12002\nceleborn.worker.replicate.port 12003\nceleborn.worker.http.host 0.0.0.0\nceleborn.worker.http.port 12096\nceleborn.worker.storage.dirs /tmp/celeborn-data:capacity=6g:disktype=HDD:flushthread=1\nceleborn.worker.storage.disk.reserve.size 1m\n"
+    },
+    "celeborn-0.6.3-two-workers": {
+      "image": "apache/celeborn:0.6.3",
+      "digest": "[\"apache/celeborn@sha256:814857a042172d60f8fda7fe5e0cb28b30d51391430405a9a6430a8545fa5283\"]",
+      "config": "celeborn.master.ha.enabled false\nceleborn.master.endpoints celeborn-master:12097\nceleborn.master.host celeborn-master\nceleborn.master.port 12097\nceleborn.master.http.host 0.0.0.0\nceleborn.master.http.port 12098\n\nceleborn.worker.rpc.port 12000\nceleborn.worker.push.port 12001\nceleborn.worker.fetch.port 12002\nceleborn.worker.replicate.port 12003\nceleborn.worker.http.host 0.0.0.0\nceleborn.worker.http.port 12096\nceleborn.worker.storage.dirs /tmp/celeborn-data:capacity=6g:disktype=HDD:flushthread=1\nceleborn.worker.storage.disk.reserve.size 1m\n"
+    },
+    "celeborn-0.7.0-default": {
+      "image": "apache/celeborn:0.7.0",
+      "digest": "[\"apache/celeborn@sha256:c2897868ecb5a815e688dd59c01f1d7c2d5527fafc85189fe34b0c77306b0627\"]",
+      "config": "celeborn.master.ha.enabled false\nceleborn.master.endpoints celeborn-master:12097\nceleborn.master.host celeborn-master\nceleborn.master.port 12097\nceleborn.master.http.host 0.0.0.0\nceleborn.master.http.port 12098\n\nceleborn.worker.rpc.port 12000\nceleborn.worker.push.port 12001\nceleborn.worker.fetch.port 12002\nceleborn.worker.replicate.port 12003\nceleborn.worker.http.host 0.0.0.0\nceleborn.worker.http.port 12096\nceleborn.worker.storage.dirs /tmp/celeborn-data:capacity=6g:disktype=HDD:flushthread=1\nceleborn.worker.storage.disk.reserve.size 1m\n"
+    }
+  },
+  "worker_kill": {
+    "worker": "celeborn-worker-1",
+    "query": 9,
+    "query_active_at_kill": true,
+    "kill_at_wall_s": 0.5005990909999127,
+    "query_result": {
+      "status": "error",
+      "error": "SparkRuntimeException: Connection refused (os error 111)",
+      "wall_s": 0.566297
+    },
+    "worker_state": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-11-24T21:40:45.690684499Z\",\"FinishedAt\":\"2026-11-24T21:43:13.77997306Z\"}",
+    "client_still_active": false,
+    "subsequent_query": {
+      "status": "ok",
+      "wall_s": 0.005062,
+      "correct": true
+    }
+  }
+}

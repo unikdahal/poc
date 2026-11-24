@@ -4,7 +4,7 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 
 | Task | Run outcome | Hosted run |
 | --- | --- | --- |
-| [tpcds](tpcds.md) | 99 unverified | [Run](https://github.com/unikdahal/poc/actions/runs/45493612852) |
+| [tpcds](tpcds.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45496222083) |
 | [ingest](ingest.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490127635) |
 | [memory](memory.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490267308) |
 | [concurrency](concurrency.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490383284) |

@@ -150,6 +150,7 @@ def token_probe(result):
     token_path = base.TOKEN_DIR / "expiry"
     replace_token(token_path, old)
     rotated = {"token": None}
+    rotation_lock = threading.Lock()
 
     class Proxy(BaseHTTPRequestHandler):
         def log_message(self, *_):
@@ -165,9 +166,12 @@ def token_probe(result):
                 "old_token": authorization == f"Bearer {old}",
                 "rotated_token": rotated["token"] is not None and authorization == f'Bearer {rotated["token"]}',
             })
-            if response.status_code == 401 and rotated["token"] is None:
-                rotated["token"] = issue_token()["access_token"]
-                replace_token(token_path, rotated["token"])
+            if response.status_code == 401:
+                with rotation_lock:
+                    if rotated["token"] is None:
+                        replacement = issue_token()["access_token"]
+                        replace_token(token_path, replacement)
+                        rotated["token"] = replacement
             self.send_response(response.status_code)
             self.send_header("Content-Type", response.headers.get("Content-Type", "application/json"))
             self.send_header("Content-Length", str(len(response.content)))
@@ -197,10 +201,12 @@ def token_probe(result):
                 after = measure(spark, "show", queries(0)["show"], None)
                 observation["after_expiry"] = after
                 trace = observation["requests"][start:]
+                expired_paths = {entry["path"] for entry in trace if entry["old_token"] and entry["status"] == 401}
+                retried_paths = {entry["path"] for entry in trace if entry["rotated_token"] and entry["status"] == 200}
+                observation["retried_paths"] = sorted(expired_paths & retried_paths)
                 observation["retry_verified"] = (
                     status == 401 and after.get("output") is not None and after["output"] == before.get("output")
-                    and any(a["old_token"] and a["status"] == 401 and b["rotated_token"] and b["status"] == 200
-                            and a["path"] == b["path"] for a, b in zip(trace, trace[1:]))
+                    and bool(expired_paths) and expired_paths <= retried_paths
                 )
         finally:
             proxy.shutdown()

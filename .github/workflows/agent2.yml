@@ -1,0 +1,38 @@
+name: agent2
+
+on:
+  push:
+    branches: [agent2]
+    paths: [".github/workflows/agent2.yml"]
+  workflow_dispatch:
+    inputs:
+      tasks:
+        description: "Comma-separated task names, or all"
+        default: all
+
+permissions:
+  contents: write
+  packages: read
+
+env:
+  SAIL_TAG: 790c622e5c4d
+
+jobs:
+  tpcds:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[tpcds]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',tpcds,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Generate SF1 and compare 99 queries
+        continue-on-error: true
+        timeout-minutes: 310
+        run: |
+          python -m pip install "duckdb==1.4.4"
+          python -c "import duckdb; duckdb.sql(\"SET custom_extension_repository='https://extensions.duckdb.org'\"); duckdb.sql('INSTALL tpcds')"
+          python -m harness.agent2.tpcds
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-tpcds, fast-forward: "true"}

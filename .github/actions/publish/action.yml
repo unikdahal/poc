@@ -3,6 +3,9 @@ description: Push out/ to the results/<name> branch so results can be read witho
 inputs:
   name:
     required: true
+  fast-forward:
+    description: Preserve results branch history and reject concurrent updates
+    default: "false"
 runs:
   using: composite
   steps:
@@ -18,5 +21,17 @@ runs:
         cd "$D"
         git init -q
         git config user.name "poc-bot"; git config user.email "poc-bot@users.noreply.github.com"
-        git add -A && git commit -q -m "results ${{ inputs.name }} run $GITHUB_RUN_ID"
-        git push -q -f "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/results/${{ inputs.name }}
+        REMOTE="https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git"
+        REF="refs/heads/results/${{ inputs.name }}"
+        git add -A
+        if [[ "${{ inputs.fast-forward }}" == "true" ]]; then
+          if git ls-remote --exit-code "$REMOTE" "$REF" >/dev/null; then
+            git fetch -q "$REMOTE" "$REF"
+            git update-ref HEAD FETCH_HEAD
+          fi
+          git commit -q -m "results ${{ inputs.name }} run $GITHUB_RUN_ID"
+          git push -q "$REMOTE" "HEAD:$REF"
+        else
+          git commit -q -m "results ${{ inputs.name }} run $GITHUB_RUN_ID"
+          git push -q -f "$REMOTE" "HEAD:$REF"
+        fi

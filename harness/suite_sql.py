@@ -11,7 +11,8 @@ def run(spark, sql):
     try:
         df = spark.sql(sql)
         rows = df.collect()
-        return {"ok": True, "schema": df.schema.simpleString(), "rows": [[canon(v) for v in r] for r in rows]}
+        return {"ok": True, "schema": df.schema.simpleString(), "types": [f.dataType.simpleString() for f in df.schema.fields],
+                "names": df.columns, "rows": [[canon(v) for v in r] for r in rows]}
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "error": str(e).split("\n")[0][:400]}
 
@@ -24,7 +25,9 @@ def compare(a, b, ordered=True):
     if not a["ok"]:
         return "spark_error"
     if same_rows(a["rows"], b["rows"], ordered):
-        return "match" if a["schema"] == b["schema"] else "match_values_type_differs"
+        if a.get("types", a["schema"]) != b.get("types", b["schema"]):
+            return "match_values_type_differs"
+        return "match" if a.get("names") == b.get("names") else "match_column_names_differ"
     if decimal_loose(a["rows"], b["rows"], ordered):
         return "value_repr_differs"
     return "mismatch"

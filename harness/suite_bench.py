@@ -7,6 +7,7 @@ The first repetition is a warm-up and is reported separately.
 
 import argparse
 import json
+import math
 import time
 
 from harness import tpch
@@ -21,24 +22,33 @@ CLUSTER = {
 }
 
 
-def bench_engine(name, spark, stats, ns, reps, ref):
+def bench_engine(name, spark, stats, ns, reps, ref, *, query_runner=tpch.run_query,
+                 validate_all=False, on_sample=None):
     res = {"queries": {}}
     for rep in range(reps):
         for q in range(1, 23):
             c0 = stats.cpu_seconds()
             try:
                 with PeakSampler(stats) as ps:
-                    rows, cols, secs = tpch.run_query(spark, q, ns)
-                r = {"s": round(secs, 3), "cpu_s": round(stats.cpu_seconds() - c0, 2), "peak_mb": round(ps.peak / 2**20)}
-                if rep == 0:
+                    rows, cols, secs = query_runner(spark, q, ns)
+                cpu = stats.cpu_seconds() - c0
+                r = {"s": round(secs, 3), "cpu_s": round(cpu, 2) if math.isfinite(cpu) else None,
+                     "peak_mb": round(ps.peak / 2**20) if ps.peak > 0 else None}
+                if rep == 0 or validate_all:
                     cr = tpch.canon_rows(rows)
-                    if name == "spark":
+                    if name == "spark" and rep == 0:
                         ref[q] = cr
                     elif q in ref:
                         r["matches_spark"] = same_rows(cr, ref[q], tpch.ordered(q))
             except Exception as e:  # noqa: BLE001
                 r = {"error": str(e).split("\n")[0][:300]}
+                if isinstance(e, TimeoutError):
+                    r["timeout"] = True
             res["queries"].setdefault(q, []).append(r)
+            if on_sample:
+                on_sample(res)
+                if r.get("timeout") and "client still active: True" in r["error"]:
+                    return res
             log(f"{name} {ns} rep{rep} q{q}: {r}")
     return res
 
@@ -137,9 +147,9 @@ def main():
                 ok = False
                 continue
             ss = sorted(x["s"] for x in meas)
-            cs = sorted(x["cpu_s"] for x in meas)
+            cs = sorted(x["cpu_s"] for x in meas if x["cpu_s"] is not None)
             tot_s += ss[len(ss) // 2]
-            tot_cpu += cs[len(cs) // 2]
+            tot_cpu += cs[len(cs) // 2] if cs else 0
         summ[eng] = {"total_wall_s": round(tot_s, 2), "total_cpu_s": round(tot_cpu, 2), "all_queries_ran": ok,
                      "errors": [q for q, v in r["queries"].items() if "error" in v[0]],
                      "mismatches": [q for q, v in r["queries"].items() if v[0].get("matches_spark") is False]}

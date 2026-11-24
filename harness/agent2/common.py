@@ -14,7 +14,7 @@ import sys
 import tempfile
 import threading
 import time
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from decimal import Decimal
 from pathlib import Path
 
@@ -74,24 +74,20 @@ def collect(session, sql, seconds=TIMEOUT):
 
 
 def attempt(fn, stats=None):
-    started = time.perf_counter()
     initial_cpu = stats.cpu_seconds() if stats else None
-    sample = None
-    try:
-        if stats:
-            with base.PeakSampler(stats) as sample:
-                result = fn()
-        else:
+    with (base.PeakSampler(stats) if stats else nullcontext()) as sample:
+        started = time.perf_counter()
+        try:
             result = fn()
-        record = {"status": "ok"}
-    except Exception as exc:
-        result = None
-        record = {"status": "timeout" if isinstance(exc, TimeoutError) else "error", "error": error(exc)}
-    record["wall_s"] = round(time.perf_counter() - started, 6)
+            record = {"status": "ok"}
+        except Exception as exc:
+            result = None
+            record = {"status": "timeout" if isinstance(exc, TimeoutError) else "error", "error": error(exc)}
+        record["wall_s"] = round(time.perf_counter() - started, 6)
     if stats:
         cpu = stats.cpu_seconds() - initial_cpu
         record["cpu_s"] = round(cpu, 6) if math.isfinite(cpu) and cpu >= 0 else None
-        record["peak_bytes"] = sample.peak if sample and sample.peak > 0 else None
+        record["peak_bytes"] = sample.peak if sample.peak > 0 else None
     return record, result
 
 
@@ -145,7 +141,7 @@ def wait_ready(session):
 
 @contextmanager
 def engine(result, name, *, label=None, memory=None, extra=None, mode=None, server="spark",
-           run_options=None, output_name=None):
+           run_options=None, output_name=None, image=None):
     """Run one engine and retain its effective configuration and logs on exit."""
     label = label or name
     case = result.setdefault("engines", {}).setdefault(label, {})
@@ -159,7 +155,8 @@ def engine(result, name, *, label=None, memory=None, extra=None, mode=None, serv
             env = (CLUSTER if mode == "local-cluster" else {}) | (extra or {})
             memory = memory or "12g"
             port = SAIL_PORT if server == "spark" else 32010
-            case["config"] = {"mode": mode, "environment": env, "cpus": 4, "memory": memory,
+            image = image or base.SAIL_IMAGE
+            case["config"] = {"mode": mode, "environment": env, "image": image, "cpus": 4, "memory": memory,
                               "server": server, "docker_options": run_options or []}
             if run_options:
                 # For bind-mounted spill directories.
@@ -170,11 +167,11 @@ def engine(result, name, *, label=None, memory=None, extra=None, mode=None, serv
                     args.extend(("-e", f"{key}={value}"))
                 base.stop_container(SAIL_CONTAINER)
                 started = time.monotonic()
-                command(*args, base.SAIL_IMAGE, server, "server", "--ip", "0.0.0.0", "--port", str(port))
+                command(*args, image, server, "server", "--ip", "0.0.0.0", "--port", str(port))
                 base.wait_port(port, timeout=75)
                 case["boot_s"] = time.monotonic() - started
             else:
-                case["boot_s"] = base.start_sail(SAIL_CONTAINER, server, port, mode, env, "4", memory)
+                case["boot_s"] = base.start_sail(SAIL_CONTAINER, server, port, mode, env, "4", memory, image=image)
             stats = base.CgroupStats(SAIL_CONTAINER)
         else:
             memory = memory or ("8g" if name == "comet" else "9g")

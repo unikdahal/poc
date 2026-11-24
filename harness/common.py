@@ -187,7 +187,8 @@ def sail_env(mode: str = "local", extra: dict | None = None) -> dict:
 
 
 def start_sail(name: str = "sail", server: str = "spark", port: int = 50051, mode: str = "local",
-               extra_env: dict | None = None, cpus: str | None = None, memory: str | None = None) -> float:
+               extra_env: dict | None = None, cpus: str | None = None, memory: str | None = None,
+               image: str | None = None) -> float:
     """Start a Sail server container on the `poc` network. Returns seconds until the port opened."""
     stop_container(name)
     env = sail_env(mode, extra_env)
@@ -196,7 +197,7 @@ def start_sail(name: str = "sail", server: str = "spark", port: int = 50051, mod
     inner = 50051 if server == "spark" else 32010
     t0 = time.time()
     sh(f"docker run -d --name {name} --network poc -p {port}:{inner} {limits}"
-       f"-v {TOKEN_DIR}:/tokens:ro {envs} {SAIL_IMAGE} {server} server --ip 0.0.0.0 --port {inner}")
+       f"-v {TOKEN_DIR}:/tokens:ro {envs} {image or SAIL_IMAGE} {server} server --ip 0.0.0.0 --port {inner}")
     wait_port(port)
     # The port opens before the server is ready to plan; a trivial round trip is done by callers.
     return time.time() - t0
@@ -289,7 +290,7 @@ class PeakSampler:
         def run():
             while not self._stop.is_set():
                 self.peak = max(self.peak, self.stats.mem_current())
-                time.sleep(0.1)
+                self._stop.wait(0.1)
 
         self._t = threading.Thread(target=run, daemon=True)
         self._t.start()
@@ -368,8 +369,13 @@ def start_spark_connect(port: int = 15002, comet: bool = False, memory: str = "6
     logf = open(OUT / f"spark-connect-{port}{'-comet' if comet else ''}.log", "w")
     env = dict(os.environ, SPARK_HOME=str(spark_home), AWS_REGION=S3["region"])
     t0 = time.time()
-    proc = subprocess.Popen(args, stdout=logf, stderr=subprocess.STDOUT, env=env)
-    wait_port(port, timeout=600)
+    with logf:
+        proc = subprocess.Popen(args, stdout=logf, stderr=subprocess.STDOUT, env=env)
+    try:
+        wait_port(port, timeout=600)
+    except BaseException:
+        stop_proc(proc)
+        raise
     return proc, time.time() - t0
 
 

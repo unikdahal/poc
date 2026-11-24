@@ -159,3 +159,19 @@ jobs:
       - uses: ./.github/actions/publish
         if: always()
         with: {name: agent2-celeborn, fast-forward: "true"}
+
+  release-vs-main:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[release-vs-main]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',release-vs-main,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Compare SF10 main and release builds
+        continue-on-error: true
+        timeout-minutes: 310
+        run: python -m harness.agent2.release_vs_main
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-release-vs-main, fast-forward: "true"}

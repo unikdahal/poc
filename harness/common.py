@@ -179,6 +179,7 @@ def sail_env(mode: str = "local", extra: dict | None = None) -> dict:
         "AWS_SECRET_ACCESS_KEY": S3["secret"],
         "AWS_REGION": S3["region"],
         "AWS_ENDPOINT": "http://minio:9000",
+        "AWS_ALLOW_HTTP": "true",
         "RUST_LOG": os.environ.get("SAIL_RUST_LOG", "warn"),
     }
     env.update(extra or {})

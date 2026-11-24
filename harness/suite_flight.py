@@ -58,6 +58,14 @@ def main():
     cur = conn.cursor()
 
     def q(sql):
+        c = conn.cursor()  # fresh cursor: a failed probe must not leave state behind
+        try:
+            c.execute(sql)
+            return c.fetchall()
+        finally:
+            c.close()
+
+    def qlat(sql):
         cur.execute(sql)
         return cur.fetchall()
 
@@ -72,12 +80,12 @@ def main():
     probe("dml/read-back", lambda: q("SELECT count(*) FROM polaris.flight.t"))
 
     def execute_update():
-        st = cur.adbc_statement
+        st = conn.cursor().adbc_statement
         st.set_sql_query("INSERT INTO polaris.flight.t VALUES (3, 'c')")
         return st.execute_update()
     probe("adbc/execute_update (CommandStatementUpdate)", execute_update)
-    probe("adbc/parameterized-query (prepared statement)", lambda: (cur.execute("SELECT ? AS p", parameters=(41,)), cur.fetchall())[1])
-    probe("adbc/prepare", lambda: (cur.adbc_prepare("SELECT 1"), "prepared")[1])
+    probe("adbc/parameterized-query (prepared statement)", lambda: (lambda c: (c.execute("SELECT ? AS p", parameters=(41,)), c.fetchall())[1])(conn.cursor()))
+    probe("adbc/prepare", lambda: (conn.cursor().adbc_prepare("SELECT 1"), "prepared")[1])
     probe("adbc/get_info", lambda: {str(k): str(v)[:60] for k, v in list(conn.adbc_get_info().items())[:12]})
     probe("adbc/get_table_types", lambda: conn.adbc_get_table_types())
     probe("adbc/get_objects(depth=tables)", lambda: conn.adbc_get_objects(depth="tables").read_all().num_rows)
@@ -88,15 +96,13 @@ def main():
     c2 = conn2.cursor()
 
     def isolation():
-        cur.execute("CREATE OR REPLACE TEMPORARY VIEW only_on_conn1 AS SELECT 42 AS v")
-        cur.fetchall()
+        q("CREATE OR REPLACE TEMPORARY VIEW only_on_conn1 AS SELECT 42 AS v")
         c2.execute("SELECT v FROM only_on_conn1")
         return {"conn2_sees_conn1_temp_view": c2.fetchall()}
     probe("isolation/temp-view-visible-across-connections", isolation)
 
     def set_leak():
-        cur.execute("SET datafusion.execution.batch_size = 1234")
-        cur.fetchall()
+        q("SET datafusion.execution.batch_size = 1234")
         c2.execute("SET datafusion.execution.batch_size")
         return c2.fetchall()
     probe("isolation/set-visible-across-connections", set_leak)
@@ -122,8 +128,8 @@ def main():
     probe("concurrency/8-connections-x20", concurrent)
 
     # latency
-    R["latency/select-1"] = lat(lambda: q("SELECT 1"), 200)
-    R["latency/iceberg-point-lookup"] = lat(lambda: q("SELECT * FROM polaris.tpch_sf1.nation WHERE n_nationkey = 7"), 50)
+    R["latency/select-1"] = lat(lambda: qlat("SELECT 1"), 200)
+    R["latency/iceberg-point-lookup"] = lat(lambda: qlat("SELECT * FROM polaris.tpch_sf1.nation WHERE n_nationkey = 7"), 50)
     log(f"latency: {R['latency/select-1']} {R['latency/iceberg-point-lookup']}")
 
     # cancellation of a long query
@@ -181,12 +187,14 @@ def main():
     def big_result():
         with PeakSampler(stats) as ps:
             t0 = time.perf_counter()
-            cur.execute("SELECT * FROM polaris.tpch_sf1.lineitem")
-            tbl = cur.fetch_arrow_table()
+            c = conn.cursor()
+            c.execute("SELECT * FROM polaris.tpch_sf1.lineitem")
+            tbl = c.fetch_arrow_table()
             secs = time.perf_counter() - t0
         return {"rows": tbl.num_rows, "seconds": round(secs, 2), "rows_per_s": int(tbl.num_rows / secs),
                 "arrow_mb": round(tbl.nbytes / 2**20, 1), "sail_peak_mem_mb": round(ps.peak / 2**20, 1)}
     probe("stream/lineitem-sf1-full-scan", big_result)
+    probe("isolation/set-after-sessions", lambda: q("SELECT 1"))
     write_json("flight-sql", R)
 
 

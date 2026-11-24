@@ -15,9 +15,25 @@ def statements(q: int) -> list[str]:
     return [s.strip() for s in text.split(";") if s.strip()]
 
 
+_USE_FALLBACK: dict = {}
+
+
+def use(spark, namespace: str) -> None:
+    """Spark accepts `USE catalog.namespace`; fall back to the catalog API where that fails."""
+    key = id(spark)
+    if not _USE_FALLBACK.get(key):
+        try:
+            spark.sql(f"USE polaris.{namespace}")
+            return
+        except Exception:  # noqa: BLE001
+            _USE_FALLBACK[key] = True
+    spark.catalog.setCurrentCatalog("polaris")
+    spark.catalog.setCurrentDatabase(namespace)
+
+
 def run_query(spark, q: int, namespace: str):
     """Returns (rows, columns, seconds). Seconds covers planning + execution + full collect."""
-    spark.sql(f"USE polaris.{namespace}")
+    use(spark, namespace)
     stmts = statements(q)
     rows, cols = None, None
     t0 = time.perf_counter()

@@ -50,7 +50,7 @@ def manifest(image: str, backend: str, polaris_ip: str, s3_ip: str) -> str:
                                f'warehouse="{CATALOG}", bearer_access_token_file="/tokens/polaris"}}]'),
         "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
         "AWS_ACCESS_KEY_ID": S3["key"], "AWS_SECRET_ACCESS_KEY": S3["secret"], "AWS_REGION": S3["region"],
-        "AWS_ENDPOINT": f"http://{s3_ip}:9000",
+        "AWS_ENDPOINT": f"http://{s3_ip}:9000", "AWS_ALLOW_HTTP": "true",
     }
     if backend == "storage":
         env["SAIL_CLUSTER__SHUFFLE_BACKEND__STORAGE__PATH"] = "s3://shuffle/k8s"

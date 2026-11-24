@@ -61,7 +61,7 @@ def main():
                 stats = PidStats(jvm_pid(proc))
                 if eng == "comet":
                     try:
-                        s.sql(f"USE polaris.{ns}")
+                        tpch.use(s, ns)
                         out["comet_explain_q1"] = "\n".join(r[0] for r in s.sql("EXPLAIN FORMATTED " + tpch.statements(1)[0]).collect())[:8000]
                     except Exception as e:  # noqa: BLE001
                         out["comet_explain_q1"] = str(e)[:500]

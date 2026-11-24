@@ -62,6 +62,16 @@ def main():
     for s in (ref, sail):
         s.conf.set("spark.sql.ansi.enabled", "false")
 
+    stmts = []
+    for sql in ["USE polaris.tpch_sf1", "USE NAMESPACE polaris.tpch_sf1", "USE polaris", "SHOW TABLES IN polaris.tpch_sf1",
+                "SHOW NAMESPACES IN polaris", "DESCRIBE TABLE polaris.tpch_sf1.nation", "DESCRIBE TABLE EXTENDED polaris.tpch_sf1.nation",
+                "SHOW CREATE TABLE polaris.tpch_sf1.nation", "SHOW TBLPROPERTIES polaris.tpch_sf1.nation",
+                "SHOW COLUMNS IN polaris.tpch_sf1.nation", "SELECT current_catalog(), current_database()",
+                "CREATE OR REPLACE TEMPORARY VIEW tv AS SELECT 1 AS a", "CACHE TABLE tv", "UNCACHE TABLE tv",
+                "ANALYZE TABLE polaris.tpch_sf1.nation COMPUTE STATISTICS", "EXPLAIN SELECT * FROM polaris.tpch_sf1.nation"]:
+        a, b = run(ref, sql), run(sail, sql)
+        stmts.append({"sql": sql, "spark_ok": a["ok"], "sail_ok": b["ok"], "sail_error": b.get("error"),
+                      "spark_error": a.get("error")})
     tp = []
     for q in range(1, 23):
         try:
@@ -83,7 +93,7 @@ def main():
     summary = {}
     for r in results:
         summary[r["verdict"]] = summary.get(r["verdict"], 0) + 1
-    write_json("sql-compat", {"defaults": defaults, "summary": summary, "corpus": results, "ansi": ansi, "tpch_sf1": tp})
+    write_json("sql-compat", {"defaults": defaults, "summary": summary, "corpus": results, "ansi": ansi, "statements": stmts, "tpch_sf1": tp})
 
 
 if __name__ == "__main__":

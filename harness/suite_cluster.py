@@ -62,7 +62,7 @@ def run_backend(name, mode, env, ref, sf_ns):
     st = CgroupStats("sail")
     out = {"boot_s": round(boot, 2), "first_query_s": round(first, 2), "queries": {}}
     try:
-        s.sql(f"USE polaris.{sf_ns}")
+        tpch.use(s, sf_ns)
         out["explain_q5"] = "\n".join(r[0] for r in s.sql(
             "EXPLAIN " + tpch.statements(5)[0]).collect())[:6000]
     except Exception as e:  # noqa: BLE001

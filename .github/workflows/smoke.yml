@@ -1,0 +1,29 @@
+name: smoke
+on:
+  workflow_dispatch:
+  push:
+    paths: ["harness/**", "compose/**", ".github/actions/**", ".github/workflows/smoke.yml", "scripts/**"]
+defaults:
+  run:
+    shell: bash
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          pull-sail: "false"
+      - name: Spark reference + TPC-H sf1
+        run: python -m harness.smoke
+      - name: Diagnostics
+        if: always()
+        run: |
+          docker compose -f compose/docker-compose.yml logs --tail 80 > out/compose-logs.txt 2>&1 || true
+          tail -n 120 out/spark-connect-*.log || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke
+          path: out/

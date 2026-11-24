@@ -1,0 +1,79 @@
+name: poc-setup
+description: Free disk, install Python deps, resolve versions, start MinIO + Polaris, bootstrap the catalog.
+inputs:
+  celeborn:
+    description: also start Celeborn
+    default: "false"
+  pull-sail:
+    description: pull the Sail image
+    default: "true"
+  sail-tag:
+    description: Sail image tag
+    default: "latest"
+runs:
+  using: composite
+  steps:
+    - name: Free disk space
+      shell: bash
+      run: |
+        sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost || true
+        df -h /
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: "17"
+
+    - name: Resolve versions
+      shell: bash
+      run: |
+        python scripts/resolve_versions.py
+        echo "SPARK_VERSION=$(jq -r .spark versions.json)" >> "$GITHUB_ENV"
+
+    - name: Install Python deps
+      shell: bash
+      run: |
+        python -m pip install -q --upgrade pip
+        python -m pip install -q "pyspark[connect]==${SPARK_VERSION}" requests psutil pyyaml \
+          tpchgen-cli adbc-driver-flightsql adbc-driver-manager "pyarrow>=15" "pandas<3" "numpy<3"
+        python -m pip freeze > pip-freeze.txt
+
+    - name: Start MinIO + Polaris
+      shell: bash
+      run: |
+        PROFILE=""
+        if [ "${{ inputs.celeborn }}" = "true" ]; then PROFILE="--profile celeborn"; fi
+        docker compose -f compose/docker-compose.yml $PROFILE up -d || {
+          docker compose -f compose/docker-compose.yml $PROFILE ps -a; docker compose -f compose/docker-compose.yml $PROFILE logs --tail 100; exit 1; }
+        for i in $(seq 1 120); do curl -sf http://localhost:8182/q/health >/dev/null && break; sleep 2; done
+        curl -sf http://localhost:8182/q/health || { docker compose -f compose/docker-compose.yml $PROFILE logs --tail 200; exit 1; }
+        docker compose -f compose/docker-compose.yml $PROFILE ps -a
+        echo "PYTHONPATH=$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+        echo "POC_OUT=$GITHUB_WORKSPACE/out" >> "$GITHUB_ENV"
+
+    - name: Bootstrap Polaris
+      shell: bash
+      run: |
+        PYTHONPATH=. python -c "import json;from harness.common import polaris_bootstrap,write_json;i=polaris_bootstrap();print(json.dumps(i,indent=2,default=str));write_json('polaris-bootstrap',i)"
+
+    - name: Pull Sail image
+      if: inputs.pull-sail == 'true'
+      shell: bash
+      run: |
+        echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+        IMG="ghcr.io/${GITHUB_REPOSITORY,,}/sail:${{ inputs.sail-tag }}"
+        docker pull -q "$IMG"
+        echo "SAIL_IMAGE=$IMG" >> "$GITHUB_ENV"
+        docker run --rm --entrypoint cat "$IMG" /SAIL_SHA | tee sail-sha.txt
+
+    - name: Record environment
+      shell: bash
+      run: |
+        mkdir -p out
+        { echo "runner: $(nproc) vCPU, $(free -g | awk '/Mem/{print $2}') GiB"; uname -r; docker --version;
+          docker image ls --digests | grep -E 'polaris|minio|celeborn|sail' ; cat versions.json; cat sail-sha.txt 2>/dev/null; } | tee out/environment.txt
+        cp versions.json pip-freeze.txt out/ 2>/dev/null || true

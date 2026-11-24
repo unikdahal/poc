@@ -1,0 +1,75 @@
+# Shared infrastructure for the POC. All engines reach it on the `poc` network
+# (Sail containers) or through published ports on localhost (Spark on the host).
+name: poc
+networks:
+  default:
+    name: poc
+
+services:
+  minio:
+    image: minio/minio:${MINIO_TAG:-latest}
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password
+    ports: ["9000:9000", "9001:9001"]
+
+  minio-setup:
+    image: minio/mc:${MC_TAG:-latest}
+    depends_on: [minio]
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >-
+        until mc alias set local http://minio:9000 admin password; do sleep 1; done &&
+        mc mb -p local/warehouse local/shuffle local/raw &&
+        echo buckets-ready
+
+  polaris:
+    image: apache/polaris:${POLARIS_TAG:-latest}
+    depends_on:
+      minio-setup: {condition: service_completed_successfully}
+    environment:
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: admin
+      AWS_SECRET_ACCESS_KEY: password
+      POLARIS_BOOTSTRAP_CREDENTIALS: POLARIS,root,s3cr3t
+      polaris.realm-context.realms: POLARIS
+      quarkus.otel.sdk.disabled: "true"
+      polaris.features."SKIP_CREDENTIAL_SUBSCOPING_INDIRECTION": "true"
+    ports: ["8181:8181", "8182:8182"]
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8182/q/health"]
+      interval: 2s
+      retries: 60
+
+  celeborn-master:
+    image: apache/celeborn:${CELEBORN_TAG:-0.6.3}
+    hostname: celeborn-master
+    environment:
+      CELEBORN_LOCAL_HOSTNAME: celeborn-master
+      CELEBORN_MASTER_MEMORY: 512m
+      CELEBORN_NO_DAEMONIZE: "1"
+    command: ["start-master.sh", "--host", "celeborn-master", "--port", "12097"]
+    volumes:
+      - ./celeborn-defaults.conf:/opt/celeborn/conf/celeborn-defaults.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/celeborn-master/12097'"]
+      start_period: 15s
+      interval: 5s
+      retries: 12
+    profiles: [celeborn]
+
+  celeborn-worker:
+    image: apache/celeborn:${CELEBORN_TAG:-0.6.3}
+    hostname: celeborn-worker
+    depends_on:
+      celeborn-master: {condition: service_healthy}
+    environment:
+      CELEBORN_LOCAL_HOSTNAME: celeborn-worker
+      CELEBORN_NO_DAEMONIZE: "1"
+      CELEBORN_WORKER_MEMORY: 1g
+      CELEBORN_WORKER_OFFHEAP_MEMORY: 1g
+    command: ["start-worker.sh", "--host", "celeborn-worker", "--port", "12000", "celeborn://celeborn-master:12097"]
+    volumes:
+      - ./celeborn-defaults.conf:/opt/celeborn/conf/celeborn-defaults.conf:ro
+    profiles: [celeborn]

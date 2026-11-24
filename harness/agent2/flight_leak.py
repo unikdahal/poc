@@ -72,8 +72,13 @@ def ticket_lifecycle(result, client, stats, reference):
         if tickets:
             record, late = attempt(lambda: read_ticket(client, tickets[0], options))
             observation["late_fetch"] = record | {"matches_spark": late == reference if late else None}
-        fresh = client.get_flight_info(desc, options).endpoints[0].ticket
-        observation["fresh_fetch_matches_spark"] = read_ticket(client, fresh, options) == reference
+        def fresh_fetch():
+            fresh = client.get_flight_info(desc, options).endpoints[0].ticket
+            return read_ticket(client, fresh, options)
+
+        record, fresh = attempt(fresh_fetch)
+        observation["fresh_fetch"] = record
+        observation["fresh_fetch_matches_spark"] = fresh == reference if fresh is not None else None
     finally:
         stop_monitor.set()
         watcher.join()
@@ -125,7 +130,22 @@ def main():
         if reference:
             with flight.FlightClient(uri) as client:
                 ticket_lifecycle(result, client, stats, reference)
+    with engine(result, "sail", label="sail-flight-cancel", server="flight", memory="8g",
+                output_name=TASK) as (_, _, stats, port):
+        uri = f"grpc://localhost:{port}"
         try:
+            ready = False
+            deadline = time.monotonic() + 45
+            while not ready:
+                try:
+                    with flightsql.connect(uri) as conn:
+                        with conn.cursor() as cursor:
+                            cursor.execute("SELECT 1")
+                            ready = cursor.fetchall() == [(1,)]
+                except Exception:
+                    if time.monotonic() >= deadline:
+                        raise
+                    time.sleep(.5)
             conn = flightsql.connect(uri)
             cursor = conn.cursor()
 

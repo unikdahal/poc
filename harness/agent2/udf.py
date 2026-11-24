@@ -29,7 +29,7 @@ def cpu_heavy(value):
     return value
 
 
-def workload(spark, variant):
+def workload(spark, variant, rows=ROWS):
     from pyspark.sql import functions as f
 
     if variant == "udtf":
@@ -39,13 +39,13 @@ def workload(spark, variant):
                 yield value, (value * 3 + 7) % 1000003
 
         spark.udtf.register("agent2_transform", Transform)
-        return spark.sql(f"SELECT input_id AS id, v FROM range(0, {ROWS}, 1, {PARTITIONS}) r, "
+        return spark.sql(f"SELECT input_id AS id, v FROM range(0, {rows}, 1, {PARTITIONS}) r, "
                          "LATERAL agent2_transform(r.id)")
     if variant == "pandas":
         function = f.pandas_udf(formula, "long")
     else:
         function = f.udf(formula, "long", useArrow=variant == "arrow")
-    return spark.range(0, ROWS, 1, PARTITIONS).select("id", function("id").alias("v"))
+    return spark.range(0, rows, 1, PARTITIONS).select("id", function("id").alias("v"))
 
 
 def aggregate(frame):
@@ -81,9 +81,9 @@ def interference(heavy_session, other, stats):
     time.sleep(.3)
     while thread.is_alive() and len(small_under_load) < 500:
         record, rows = attempt(lambda: collect(other, "SELECT 1", 15))
-        if thread.is_alive():
-            record["correct"] = rows is not None and rows[0][0] == 1
-            small_under_load.append(record)
+        record["correct"] = rows is not None and rows[0][0] == 1
+        record["ended_before_heavy"] = thread.is_alive()
+        small_under_load.append(record)
     thread.join(DEADLINE + 10)
     return {"heavy": heavy, "idle": small_samples, "overlap": small_under_load}
 
@@ -100,7 +100,34 @@ def run_engine(result, name):
         baseline = spark.range(0, ROWS, 1, PARTITIONS).selectExpr("id", "pmod(id * 3 + 7, 1000003) AS v")
         if name == "spark":
             result["spark_reference"] = bounded(lambda: aggregate(baseline), DEADLINE, spark.interruptAll)
+        other = base.connect(port)
+        wait_ready(other)
+        case["interference"] = interference(spark, other, stats)
+        for series in ("idle", "overlap"):
+            samples = case["interference"][series]
+            case["interference"][series + "_latency"] = latency(r["wall_s"] for r in samples if r["correct"])
+        heavy = case["interference"]["heavy"]
+        if name == "spark" and heavy.get("status") == "ok":
+            result["spark_heavy_sum"] = heavy["result_sum"]
+        heavy["matches_spark"] = result.get("spark_heavy_sum") == heavy.get("result_sum") and heavy.get("status") == "ok"
+
+        save(TASK, result)
+        small_ref, expected = attempt(lambda: bounded(
+            lambda: aggregate(spark.range(0, 1000, 1, PARTITIONS).selectExpr(
+                "id", "pmod(id * 3 + 7, 1000003) AS v")),
+            40, spark.interruptAll,
+        ))
+        if name == "spark" and small_ref["status"] == "ok":
+            result["spark_small_udtf_reference"] = expected
         for variant in VARIANTS:
+            if variant == "udtf":
+                record, value = attempt(lambda: bounded(lambda: aggregate(workload(spark, variant, 1000)),
+                                                        40, spark.interruptAll), stats)
+                case["udtf_1000"] = record | {"output": value, "matches_spark": value is not None and
+                                             value == result.get("spark_small_udtf_reference")}
+                save(TASK, result)
+                if record["status"] == "timeout":
+                    raise TimeoutError(record["error"])
             samples = variants[variant] = []
             for _ in range(3):
                 record, output = attempt(lambda: bounded(lambda: aggregate(workload(spark, variant)),
@@ -117,16 +144,6 @@ def run_engine(result, name):
                 metrics["input_rows_per_s"] = ROWS / metrics["median_wall_s"]
                 case.setdefault("validated_metrics", {})[variant] = metrics
 
-        other = base.connect(port)
-        wait_ready(other)
-        case["interference"] = interference(spark, other, stats)
-        for series in ("idle", "overlap"):
-            samples = case["interference"][series]
-            case["interference"][series + "_latency"] = latency(r["wall_s"] for r in samples if r["correct"])
-        heavy = case["interference"]["heavy"]
-        if name == "spark" and heavy.get("status") == "ok":
-            result["spark_heavy_sum"] = heavy["result_sum"]
-        heavy["matches_spark"] = result.get("spark_heavy_sum") == heavy.get("result_sum") and heavy.get("status") == "ok"
 
 
 def main():

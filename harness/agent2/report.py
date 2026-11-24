@@ -232,6 +232,9 @@ def udf(d):
             metrics = interference.get(phase + "_latency", {}) if phase == "idle" or heavy.get("matches_spark") else {}
             hol.append((name, phase, len(interference.get(phase, [])), fmt(metrics.get("p50_s"), 6), fmt(metrics.get("p95_s"), 6),
                         heavy.get("matches_spark") if phase == "overlap" else None))
+        support = case.get("udtf_1000", {})
+        if support.get("error"):
+            errors.append(f"{name} 1,000-row UDTF | {support['error'].splitlines()[0]}")
     if d.get("sail_client_error"):
         errors.append(d["sail_client_error"])
     CURRENT["udf"] = f"{sum(r[4] != '—' for r in rows)}/8 engine/UDF pairs with validated warm timings"
@@ -241,7 +244,11 @@ def udf(d):
         table(("Engine", "Variant", "Attempts", "Spark matches", "Input rows/s", "Warm wall s/CPU s/peak MiB"), rows),
         "Separate sessions measured `SELECT 1` idle and during the CPU-heavy scalar query.",
         table(("Engine", "Phase", "Samples", "P50 s", "P95 s", "Heavy matches Spark"), hol),
-        "Cells without a warm timing have insufficient successful and validated samples."
+        "Support was also tested with a 1,000-row UDTF before the full case. "
+        "The small-case Spark match was " + ", ".join(
+            f"{name} `{text(d.get('engines', {}).get(name, {}).get('udtf_1000', {}).get('matches_spark'))}`"
+            for name in ("spark", "sail")
+        ) + ". Cells without a warm timing have insufficient successful and validated samples."
     ]) + anomalies(d, errors)
 
 
@@ -308,6 +315,8 @@ def flight_leak(d):
         excerpts.append(tickets["late_fetch"]["error"])
     if tickets.get("errors"):
         excerpts.extend(row["error"] for row in tickets["errors"])
+    if tickets.get("fresh_fetch", {}).get("error"):
+        excerpts.append(tickets["fresh_fetch"]["error"])
     CURRENT["flight-leak"] = f"{tickets.get('issued', 0)}/300 tickets issued; {len(memory_rows)} memory samples"
     return "\n\n".join([
         "Flight SQL uses a 120-second session timeout. The synthetic query returns 20,000 rows. "
@@ -413,6 +422,12 @@ def render(task, run):
     folder = f"agent2-{task}"
     manifest = read(branch, f"{folder}/run.json")
     report = ROOT / "results-agent2" / f"{task}.md"
+    if manifest and str(json.loads(manifest)["run_id"]) != run:
+        previous = git("log", "-1", "--format=%H", "--fixed-strings",
+                       f"--grep=results {folder} run {run}", branch).strip()
+        manifest = read(previous, f"{folder}/run.json") if previous else ""
+        if manifest and str(json.loads(manifest)["run_id"]) == run:
+            branch = previous
     if not manifest or str(json.loads(manifest)["run_id"]) != run:
         status = run_status(run)
         if not status or status[0] != "completed":

@@ -7,7 +7,8 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from harness import tpch
-from harness.agent2.common import attempt, begin, engine, fingerprint, median, query_h, save, tpch_reference
+from harness.agent2.common import (EngineStartError, attempt, begin, engine, fingerprint, median,
+                                   query_h, save, tpch_reference)
 
 TASK = "memory"
 QUERIES = (9, 18, 21)
@@ -90,8 +91,9 @@ def run_case(result, scale, name, memory, pool, query, reference):
             extra = {"spark.memory.offHeap.size": f"{memory * 256}m", "spark.local.dir": str(spill),
                      "spark.eventLog.enabled": "true", "spark.eventLog.dir": events.as_uri(),
                      "spark.eventLog.compress": "false"}
+        port = 17000 + scale * 50 + memory * 25 + query if name == "comet" else None
         with engine(result, name, label=label, memory=f"{memory}g", extra=extra,
-                    run_options=run_options) as (case, spark, stats, _):
+                    run_options=run_options, port=port) as (case, spark, stats, _):
             case["samples"] = records = []
             for _ in range(3):
                 with SpillSampler(spill) as sampler:
@@ -126,7 +128,10 @@ def main():
             for memory in (2, 4, 8):
                 for pool in pools:
                     for query in QUERIES:
-                        run_case(result, scale, name, memory, pool, query, reference.get(query))
+                        try:
+                            run_case(result, scale, name, memory, pool, query, reference.get(query))
+                        except EngineStartError:
+                            save(TASK, result)
 
 
 if __name__ == "__main__":

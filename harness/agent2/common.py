@@ -139,16 +139,20 @@ def wait_ready(session):
     bounded(lambda: base.warm(session, tries=15), 60, session.interruptAll)
 
 
+class EngineStartError(RuntimeError):
+    pass
+
+
 @contextmanager
 def engine(result, name, *, label=None, memory=None, extra=None, mode=None, server="spark",
-           run_options=None, output_name=None, image=None):
+           run_options=None, output_name=None, image=None, port=None):
     """Run one engine and retain its effective configuration and logs on exit."""
     label = label or name
     case = result.setdefault("engines", {}).setdefault(label, {})
     process = None
-    port = SPARK_PORT
     use_sail = name.startswith("sail")
     record = None
+    entered = False
     try:
         if use_sail:
             mode = mode or ("local-cluster" if name == "sail-cluster" else "local")
@@ -157,25 +161,26 @@ def engine(result, name, *, label=None, memory=None, extra=None, mode=None, serv
             port = SAIL_PORT if server == "spark" else 32010
             image = image or base.SAIL_IMAGE
             case["config"] = {"mode": mode, "environment": env, "image": image, "cpus": 4, "memory": memory,
-                              "server": server, "docker_options": run_options or []}
+                              "server": server, "port": port, "docker_options": run_options or []}
             if run_options:
                 # For bind-mounted spill directories.
                 args = ["docker", "run", "-d", "--name", SAIL_CONTAINER, "--network", "poc",
-                        "-p", f"{port}:{port}", "--cpus", "4", "--memory", memory, *run_options,
+                        "-p", f"{port}:{inner}", "--cpus", "4", "--memory", memory, *run_options,
                         "-v", f"{base.TOKEN_DIR}:/tokens:ro"]
                 for key, value in base.sail_env(mode, env).items():
                     args.extend(("-e", f"{key}={value}"))
                 base.stop_container(SAIL_CONTAINER)
                 started = time.monotonic()
-                command(*args, image, server, "server", "--ip", "0.0.0.0", "--port", str(port))
+                command(*args, image, server, "server", "--ip", "0.0.0.0", "--port", str(inner))
                 base.wait_port(port, timeout=75)
                 case["boot_s"] = time.monotonic() - started
             else:
                 case["boot_s"] = base.start_sail(SAIL_CONTAINER, server, port, mode, env, "4", memory, image=image)
             stats = base.CgroupStats(SAIL_CONTAINER)
         else:
+            port = port or SPARK_PORT
             memory = memory or ("8g" if name == "comet" else "9g")
-            case["config"] = {"comet": name == "comet", "cores": 4, "driver_memory": memory,
+            case["config"] = {"comet": name == "comet", "cores": 4, "driver_memory": memory, "port": port,
                               "comet_off_heap_default": "4g" if name == "comet" else None,
                               "overrides": extra or {}, "table_cache": False}
             process, case["boot_s"] = base.start_spark_connect(port, name == "comet", memory, extra_conf=extra)
@@ -183,10 +188,13 @@ def engine(result, name, *, label=None, memory=None, extra=None, mode=None, serv
         session = base.connect(port) if server == "spark" else None
         if session:
             wait_ready(session)
+        entered = True
         yield case, session, stats, port
     except Exception as exc:
         case["error"] = error(exc)
         base.log(f"{label}: {case['error']}")
+        if not entered:
+            raise EngineStartError(f"{label}: {case['error']}") from exc
     finally:
         if use_sail:
             record = base.container_logs(SAIL_CONTAINER, 2000)

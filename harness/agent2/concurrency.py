@@ -5,7 +5,8 @@ import statistics
 import threading
 
 from harness import common as base, tpch
-from harness.agent2.common import attempt, begin, engine, fingerprint, latency, query_h, save, tpch_reference, wait_ready
+from harness.agent2.common import (EngineStartError, attempt, begin, engine, fingerprint, latency,
+                                   query_h, save, tpch_reference, wait_ready)
 
 TASK = "concurrency"
 QUERIES = tuple(range(1, 23))
@@ -61,31 +62,41 @@ def main():
     reference = tpch_reference(result, 10, QUERIES, TASK)
     if not result.get("data_load"):
         return
-    for name in ("sail", "sail-cluster", "comet"):
+    for engine_index, name in enumerate(("comet", "sail", "sail-cluster")):
         for streams in SETS:
             label = f"{name}-{streams}"
-            with engine(result, name, label=label, output_name=TASK) as (case, first, stats, port):
-                sessions = [first] + [base.connect(port) for _ in range(streams - 1)]
-                for session in sessions:
-                    wait_ready(session)
-                    query_h(session, "tpch_sf10", 6, DEADLINE)
-                case["trials"] = trials = []
-                for index in range(2):
-                    trial = run_trial(sessions, stats, reference, 2179 + index * 100)
-                    trials.append(trial)
-                    save(TASK, result)
-                    if any(row["status"] == "timeout" and "client still active: True" in row["error"]
-                           for stream_results in trial["stream_results"] for row in stream_results):
-                        case["trial_stopped_after_timeout"] = True
-                        break
-                if len(trials) == 2 and all(trial["attempted"] == trial["expected"] for trial in trials):
-                    keys = ("wall_s", "cpu_s", "peak_bytes", "queries_per_hour", "p50_s", "p95_s")
-                    case["warm_medians"] = {
-                        key: statistics.median(trial[key] for trial in trials)
-                        if all(trial[key] is not None for trial in trials) else None
-                        for key in keys
-                    }
+            # Timed-out clients can keep channels alive after their server exits.
+            # A new listening port isolates the next treatment from those channels.
+            port = 16000 + engine_index * 100 + streams
+            try:
+                run_case(result, name, label, streams, reference, port)
+            except EngineStartError:
+                continue
     save(TASK, result)
+
+
+def run_case(result, name, label, streams, reference, port):
+    with engine(result, name, label=label, output_name=TASK, port=port) as (case, first, stats, port):
+        sessions = [first] + [base.connect(port) for _ in range(streams - 1)]
+        for session in sessions:
+            wait_ready(session)
+            query_h(session, "tpch_sf10", 6, DEADLINE)
+        case["trials"] = trials = []
+        for index in range(2):
+            trial = run_trial(sessions, stats, reference, 2179 + index * 100)
+            trials.append(trial)
+            save(TASK, result)
+            if any(row["status"] == "timeout" and "client still active: True" in row["error"]
+                   for stream_results in trial["stream_results"] for row in stream_results):
+                case["trial_stopped_after_timeout"] = True
+                break
+        if len(trials) == 2 and all(trial["attempted"] == trial["expected"] for trial in trials):
+            keys = ("wall_s", "cpu_s", "peak_bytes", "queries_per_hour", "p50_s", "p95_s")
+            case["warm_medians"] = {
+                key: statistics.median(trial[key] for trial in trials)
+                if all(trial[key] is not None for trial in trials) else None
+                for key in keys
+            }
 
 
 if __name__ == "__main__":

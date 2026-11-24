@@ -25,10 +25,25 @@ Each session warmed with Q6 and then ran the same 22 queries in a deterministic 
 | comet | 8 | 0 | 0 | 0 | 0 | 0 | — | — | — | — | — |
 | comet | 16 | 0 | 0 | 0 | 0 | 0 | — | — | — | — | — |
 
-Incomplete trials and completed executions without a Spark reference are visible in the raw results.
+Sail local completed both trials at 1, 4 and 8 streams. Its highest
+observed validated goodput in this run was 1,932.2 queries/hour at
+four streams. P95 latency was 4.577 s at one stream and 45.167 s at
+eight streams. Q1, Q8 and Q14 differed from Spark under the harness
+comparison. At 16 streams, both Sail modes recorded 16 timeouts
+and halted the remaining work in the trial.
+
+The first Spark+Comet run hit the Q5 deadline at one stream. The
+four-stream server then timed out during readiness. The harness
+aborted the suite before reaching eight or sixteen streams. Those
+configurations and steady-state comparisons against Spark+Comet
+remain unverified in this run. The follow-up uses fresh listening
+ports and records startup failures without aborting later treatments.
+[Follow-up run](https://github.com/unikdahal/poc/actions/runs/45501158882)
 ## Anomalies and log excerpts
 
 ```text
+Spark+Comet readiness | TimeoutError: deadline of 60s exceeded (client still active: True)
+Harness after startup failure | RuntimeError: generator didn't yield
 sail/16 Q21 | TimeoutError: deadline of 180s exceeded (client still active: True)
 sail/16 Q5 | TimeoutError: deadline of 180s exceeded (client still active: True)
 sail/16 Q4 | TimeoutError: deadline of 180s exceeded (client still active: True)

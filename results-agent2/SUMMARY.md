@@ -7,7 +7,7 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 | [tpcds](tpcds.md) | 78 match, 21 values differ | [Run](https://github.com/unikdahal/poc/actions/runs/45496222083) |
 | [ingest](ingest.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490127635) |
 | [memory](memory.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490267308) |
-| [concurrency](concurrency.md) | 6/12 stream configurations with two complete trials | [Run](https://github.com/unikdahal/poc/actions/runs/45490383284) |
+| [concurrency](concurrency.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45501158882) |
 | [udf](udf.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45498374264) |
 | [catalog](catalog.md) | 2,000 tables; expired-token retry verified | [Run](https://github.com/unikdahal/poc/actions/runs/45492229100) |
 | [flight-leak](flight-leak.md) | 300/300 tickets issued; 37 memory samples | [Run](https://github.com/unikdahal/poc/actions/runs/45494537059) |

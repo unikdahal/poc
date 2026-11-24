@@ -290,7 +290,7 @@ def catalog(d):
     ]) + anomalies(d, [*errors, *trace])
 
 
-def flight(d):
+def flight_leak(d):
     tickets = d.get("unfetched", {})
     memory_rows = [(fmt(row["elapsed_s"], 1), row["issuance_done"], kib(row["bytes"])) for row in tickets.get("memory", [])]
     rows = []

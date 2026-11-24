@@ -52,3 +52,19 @@ jobs:
       - uses: ./.github/actions/publish
         if: always()
         with: {name: agent2-ingest, fast-forward: "true"}
+
+  memory:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[memory]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',memory,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Run spill and memory-limit cases
+        continue-on-error: true
+        timeout-minutes: 310
+        run: python -m harness.agent2.memory
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-memory, fast-forward: "true"}

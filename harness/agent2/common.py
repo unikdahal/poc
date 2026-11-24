@@ -252,3 +252,27 @@ def begin(task):
         base.start_token_refresher()
     save(task, result)
     return result
+
+
+def load_h(spark, scale):
+    with tempfile.TemporaryDirectory(prefix=f"agent2-tpch-sf{scale}-") as path:
+        directory = base.ROOT / path
+        from harness import data
+
+        generated = data.generate(scale, directory)
+        return bounded(lambda: data.load(spark, scale, generated, f"tpch_sf{scale}"),
+                       3600, spark.interruptAll)
+
+
+def tpch_reference(result, scale, queries, task, load=True):
+    reference = {}
+    with engine(result, "spark", label=f"spark-reference-sf{scale}", output_name=task) as (case, spark, _, _):
+        if load:
+            result.setdefault("data_load", {})[str(scale)] = load_h(spark, scale)
+        case["queries"] = {}
+        for query in queries:
+            record, rows = attempt(lambda: query_h(spark, f"tpch_sf{scale}", query))
+            case["queries"][str(query)] = record
+            if rows is not None:
+                reference[query] = fingerprint(rows, tpch.ordered(query))
+    return reference

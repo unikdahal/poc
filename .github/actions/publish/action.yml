@@ -1,0 +1,22 @@
+name: publish-results
+description: Push out/ to the results/<name> branch so results can be read without artifact storage.
+inputs:
+  name:
+    required: true
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -x
+        D=$(mktemp -d)
+        mkdir -p "$D/${{ inputs.name }}"
+        rsync -a --exclude '*.log' --max-size=20m out/ "$D/${{ inputs.name }}/" || cp -r out/. "$D/${{ inputs.name }}/"
+        mkdir -p "$D/${{ inputs.name }}/logs"
+        for f in out/*.log; do [ -f "$f" ] && tail -c 2000000 "$f" > "$D/${{ inputs.name }}/logs/$(basename $f)"; done
+        echo "{\"run_id\": \"$GITHUB_RUN_ID\", \"sha\": \"$GITHUB_SHA\", \"job\": \"$GITHUB_JOB\", \"at\": \"$(date -u +%FT%TZ)\"}" > "$D/${{ inputs.name }}/run.json"
+        cd "$D"
+        git init -q
+        git config user.name "poc-bot"; git config user.email "poc-bot@users.noreply.github.com"
+        git add -A && git commit -q -m "results ${{ inputs.name }} run $GITHUB_RUN_ID"
+        git push -q -f "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/results/${{ inputs.name }}

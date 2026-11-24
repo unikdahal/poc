@@ -47,7 +47,6 @@ services:
       POLARIS_BOOTSTRAP_CREDENTIALS: POLARIS,root,s3cr3t
       polaris.realm-context.realms: POLARIS
       quarkus.otel.sdk.disabled: "true"
-      polaris.features."SKIP_CREDENTIAL_SUBSCOPING_INDIRECTION": "true"
     ports: ["8181:8181", "8182:8182"]
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:8182/q/health"]

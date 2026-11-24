@@ -13,7 +13,7 @@ on:
     paths: [".github/run-poc"]
 
 permissions:
-  contents: read
+  contents: write
   packages: read
 
 defaults:
@@ -70,6 +70,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: functional, path: out/}
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: functional}
 
   cluster:
     if: contains(github.event.inputs.suites || 'functional,cluster,k8s,bench1,bench10', 'cluster')
@@ -101,6 +104,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: cluster, path: out/}
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: cluster}
 
   k8s:
     if: contains(github.event.inputs.suites || 'functional,cluster,k8s,bench1,bench10', 'k8s')
@@ -143,6 +149,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: k8s, path: out/}
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: k8s}
 
   bench:
     strategy:
@@ -178,3 +187,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always() && steps.want.outputs.run == 'true'
         with: {name: "bench-sf${{ matrix.sf }}", path: out/}
+      - uses: ./.github/actions/publish
+        if: always() && steps.want.outputs.run == 'true'
+        with: {name: "bench-sf${{ matrix.sf }}"}

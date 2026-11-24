@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   push:
     paths: ["harness/**", "compose/**", ".github/actions/**", ".github/workflows/smoke.yml", "scripts/**"]
+permissions:
+  contents: write
+
 defaults:
   run:
     shell: bash
@@ -27,3 +30,6 @@ jobs:
         with:
           name: smoke
           path: out/
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: smoke}

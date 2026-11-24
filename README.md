@@ -19,3 +19,7 @@ Everything runs on GitHub-hosted runners. All data is synthetic (TPC-H generated
 | `results/` | Collected results from CI runs |
 
 See `REPORT.md` for findings once runs have completed.
+
+## Report
+
+The written report of everything verified here: https://claude.ai/artifact/QDhSkD5gJQEsoXDE8mSok8 (raw JSON in `results/`).

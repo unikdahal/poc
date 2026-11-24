@@ -9,17 +9,22 @@ on:
       tasks:
         description: "Comma-separated task names, or all"
         default: all
+      report_runs:
+        description: "Optional JSON mapping of task names to runner IDs for report collection"
+        type: string
+        default: ""
 
 permissions:
   contents: write
   packages: read
+  actions: read
 
 env:
   SAIL_TAG: 790c622e5c4d
 
 jobs:
   tpcds:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[tpcds]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',tpcds,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[tpcds]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',tpcds,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -37,7 +42,7 @@ jobs:
         with: {name: agent2-tpcds, fast-forward: "true"}
 
   ingest:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[ingest]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',ingest,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[ingest]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',ingest,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -53,7 +58,7 @@ jobs:
         with: {name: agent2-ingest, fast-forward: "true"}
 
   memory:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[memory]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',memory,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[memory]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',memory,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -69,7 +74,7 @@ jobs:
         with: {name: agent2-memory, fast-forward: "true"}
 
   concurrency:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[concurrency]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',concurrency,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[concurrency]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',concurrency,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -85,7 +90,7 @@ jobs:
         with: {name: agent2-concurrency, fast-forward: "true"}
 
   udf:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[udf]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',udf,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[udf]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',udf,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -109,7 +114,7 @@ jobs:
         with: {name: agent2-udf, fast-forward: "true"}
 
   catalog:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[catalog]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',catalog,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[catalog]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',catalog,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     env:
@@ -128,7 +133,7 @@ jobs:
         with: {name: agent2-catalog, fast-forward: "true"}
 
   flight-leak:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[flight-leak]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',flight-leak,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[flight-leak]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',flight-leak,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -144,7 +149,7 @@ jobs:
         with: {name: agent2-flight-leak, fast-forward: "true"}
 
   celeborn:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[celeborn]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',celeborn,'))
+    if: github.ref == 'refs/heads/agent2' && inputs.report_runs == '' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[celeborn]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',celeborn,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
@@ -160,17 +165,26 @@ jobs:
         with: {name: agent2-celeborn, fast-forward: "true"}
 
   release-vs-main:
-    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[release-vs-main]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',release-vs-main,'))
+    if: github.ref == 'refs/heads/agent2' && (inputs.report_runs != '' || github.event_name == 'push' && contains(github.event.head_commit.message, '[release-vs-main]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',release-vs-main,'))
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
+      - name: Collect completed reports
+        if: inputs.report_runs != ''
+        env:
+          AGENT2_REPORT_RUNS: ${{ inputs.report_runs }}
+          GH_TOKEN: ${{ github.token }}
+        timeout-minutes: 340
+        run: python -m harness.agent2.report
       - uses: ./.github/actions/setup
+        if: inputs.report_runs == ''
         with: {sail-tag: "${{ env.SAIL_TAG }}"}
       - name: Compare SF10 main and release builds
+        if: inputs.report_runs == ''
         continue-on-error: true
         timeout-minutes: 310
         run: python -m harness.agent2.release_vs_main
       - uses: ./.github/actions/publish
-        if: always()
+        if: always() && inputs.report_runs == ''
         with: {name: agent2-release-vs-main, fast-forward: "true"}

@@ -43,11 +43,47 @@ def bench_engine(name, spark, stats, ns, reps, ref):
     return res
 
 
+def throughput(port, ns, streams, stats):
+    """`streams` concurrent sessions each run all 22 queries in a different order."""
+    import random
+    import threading
+
+    lat, errs = [], []
+    sessions = [connect(port) for _ in range(streams)]
+    for x in sessions:
+        warm(x)
+
+    def stream(i, sp):
+        order = list(range(1, 23))
+        random.Random(i).shuffle(order)
+        for q in order:
+            t0 = time.perf_counter()
+            try:
+                tpch.run_query(sp, q, ns)
+                lat.append(time.perf_counter() - t0)
+            except Exception as e:  # noqa: BLE001
+                errs.append(f"q{q}: {str(e)[:150]}")
+    c0 = stats.cpu_seconds()
+    t0 = time.perf_counter()
+    with PeakSampler(stats) as ps:
+        ths = [threading.Thread(target=stream, args=(i, sp)) for i, sp in enumerate(sessions)]
+        [t.start() for t in ths]
+        [t.join() for t in ths]
+    wall = time.perf_counter() - t0
+    lat.sort()
+    n = len(lat)
+    return {"streams": streams, "wall_s": round(wall, 2), "queries": n, "queries_per_hour": round(n / wall * 3600),
+            "cpu_s": round(stats.cpu_seconds() - c0, 1), "peak_mb": round(ps.peak / 2**20),
+            "latency_p50_s": round(lat[n // 2], 2) if n else None, "latency_p95_s": round(lat[int(n * .95) - 1], 2) if n else None,
+            "errors": errs[:5], "error_count": len(errs)}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sf", default="1")
     ap.add_argument("--engines", default="spark,comet,sail,sail-cluster")
     ap.add_argument("--reps", type=int, default=3)
+    ap.add_argument("--throughput", type=int, default=0, help="also run N concurrent query streams per engine")
     a = ap.parse_args()
     ns = f"tpch_sf{a.sf}"
     out, ref = {}, {}
@@ -67,6 +103,9 @@ def main():
                         out["comet_explain_q1"] = str(e)[:500]
                 out[eng] = bench_engine(eng, s, stats, ns, a.reps, ref)
                 out[eng]["boot_s"] = round(boot, 1)
+                if a.throughput:
+                    out[eng]["throughput"] = throughput(15010, ns, a.throughput, stats)
+                    log(f"{eng} throughput: {out[eng]['throughput']}")
             finally:
                 stop_proc(proc)
                 sh("pkill -f SparkConnectServer", check=False)
@@ -79,6 +118,9 @@ def main():
                 warm(s)
                 out[eng] = bench_engine(eng, s, CgroupStats("sail-bench"), ns, a.reps, ref)
                 out[eng]["boot_s"] = round(boot, 1)
+                if a.throughput:
+                    out[eng]["throughput"] = throughput(50061, ns, a.throughput, CgroupStats("sail-bench"))
+                    log(f"{eng} throughput: {out[eng]['throughput']}")
             finally:
                 stop_container("sail-bench")
         write_json(f"bench-sf{a.sf}", out)

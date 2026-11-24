@@ -205,7 +205,7 @@ def basic_rw(ref, sail):
     try_sql(sail, "SET spark.sql.sources.partitionOverwriteMode=static")
 
 
-def types_roundtrip(ref, sail):
+def types_roundtrip(ref, sail, suffix=""):
     sel = """SELECT cast(id AS int) AS i, id AS l, cast(id / 7.0 AS double) AS d, cast(id / 3.0 AS float) AS f,
         cast(id * 1234567.123456789 AS decimal(38,10)) AS dec38,
         timestamp'2024-03-10 01:30:00' + make_interval(0, 0, 0, 0, cast(id AS int), 0, 0) AS ts,
@@ -215,11 +215,11 @@ def types_roundtrip(ref, sail):
         array(id, id + 1, NULL) AS arr, map('k', id) AS mp, cast(concat('x', cast(id AS string)) AS binary) AS bin
         FROM range(1, 201)"""
     for writer, reader, wname in ((sail, ref, "sail"), (ref, sail, "spark")):
-        t = f"{NS}.types_by_{wname}"
+        t = f"{NS}.types_by_{wname}{suffix}"
         try_sql(writer, f"DROP TABLE IF EXISTS {t}")
         ok, r, _ = try_sql(writer, f"CREATE TABLE {t} USING iceberg AS {sel}")
         if not ok:
-            rec(f"types/{wname}-writes", "fail", error=r)
+            rec(f"types{suffix}/{wname}-writes", "fail", error=r)
             continue
         try:
             a = [[canon(v) for v in x] for x in writer.sql(f"SELECT * FROM {t} ORDER BY l").collect()]
@@ -227,10 +227,10 @@ def types_roundtrip(ref, sail):
             sch_w = writer.table(t).schema.simpleString()
             sch_r = reader.table(t).schema.simpleString()
             d = diff(a, b)
-            rec(f"types/{wname}-writes-other-reads", "pass" if d is None and sch_w == sch_r else "fail",
+            rec(f"types{suffix}/{wname}-writes-other-reads", "pass" if d is None and sch_w == sch_r else "fail",
                 diff=d, schema_writer=sch_w, schema_reader=sch_r)
         except Exception as e:  # noqa: BLE001
-            rec(f"types/{wname}-writes-other-reads", "error", error=str(e)[:400])
+            rec(f"types{suffix}/{wname}-writes-other-reads", "error", error=str(e)[:400])
 
 
 def schema_partition_evolution(ref, sail):
@@ -249,9 +249,12 @@ def schema_partition_evolution(ref, sail):
     ok, r, _ = try_sql(sail, f"ALTER TABLE {t} ADD COLUMNS (added_by_sail int)")
     ok2, r2, _ = try_sql(sail, f"INSERT INTO {t} SELECT id + 5000, region, amount, qty, updated, flag, note, 's', 7 FROM {NS}.src0 WHERE id <= 10")
     if ok and ok2:
-        got = ref.sql(f"SELECT count(*), sum(added_by_sail) FROM {t}").collect()[0]
-        rec("evolution/sail-adds-column-and-inserts-spark-reads", "pass" if canon(got[1]) == 70 else "fail",
-            got=[canon(v) for v in got])
+        try:
+            got = ref.sql(f"SELECT count(*), sum(added_by_sail) FROM {t}").collect()[0]
+            rec("evolution/sail-adds-column-and-inserts-spark-reads", "pass" if canon(got[1]) == 70 else "fail",
+                got=[canon(v) for v in got])
+        except Exception as e:  # noqa: BLE001
+            rec("evolution/sail-adds-column-and-inserts-spark-reads", "fail", error=str(e)[:300])
     else:
         rec("evolution/sail-adds-column-and-inserts-spark-reads", "fail", alter_error=None if ok else r,
             insert_error=None if ok2 else r2)
@@ -346,6 +349,14 @@ def main():
         ref.sql(f"DROP TABLE IF EXISTS {NS}.{t}")
     ref.sql(SRC_SQL)
     ref.sql(MSRC_SQL)
+    try:
+        sail_tz = sail.conf.get("spark.sql.session.timeZone")
+    except Exception as e:  # noqa: BLE001
+        sail_tz = str(e)[:100]
+    rec("info/sail-default-session-timezone", "info", value=sail_tz)
+    types_roundtrip(ref, sail, "_default_tz")
+    sail.conf.set("spark.sql.session.timeZone", "UTC")
+    ref.conf.set("spark.sql.session.timeZone", "UTC")
     for fn in (basic_rw, types_roundtrip, schema_partition_evolution, time_travel_and_metadata, maintenance, dml_matrix):
         try:
             fn(ref, sail)

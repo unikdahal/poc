@@ -334,6 +334,9 @@ def start_spark_connect(port: int = 15002, comet: bool = False, memory: str = "6
         f"spark.sql.catalog.{SQL_CATALOG}.s3.access-key-id": S3["key"],
         f"spark.sql.catalog.{SQL_CATALOG}.s3.secret-access-key": S3["secret"],
         f"spark.sql.catalog.{SQL_CATALOG}.client.region": S3["region"],
+        # Iceberg's SparkCatalog caches loaded tables (30 s by default), which hides commits made by
+        # another engine. Disabled so every read sees the catalog's current snapshot.
+        f"spark.sql.catalog.{SQL_CATALOG}.cache-enabled": "false",
         "spark.sql.defaultCatalog": SQL_CATALOG,
         "spark.sql.session.timeZone": "UTC",
         "spark.driver.memory": memory,

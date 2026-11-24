@@ -80,7 +80,8 @@ def main():
     probe("dml/read-back", lambda: q("SELECT count(*) FROM polaris.flight.t"))
 
     def execute_update():
-        st = conn.cursor().adbc_statement
+        from adbc_driver_manager import AdbcStatement
+        st = AdbcStatement(conn.adbc_connection)
         st.set_sql_query("INSERT INTO polaris.flight.t VALUES (3, 'c')")
         return st.execute_update()
     probe("adbc/execute_update (CommandStatementUpdate)", execute_update)
@@ -153,7 +154,16 @@ def main():
         except Exception as e:  # noqa: BLE001
             err["cancel_call"] = str(e)[:200]
         t.join(timeout=60)
-        err["still_running_after_60s"] = t.is_alive()
+        err["client_thread_still_running_after_60s"] = t.is_alive()
+        # is the server still burning CPU on the cancelled query?
+        st = CgroupStats("sail-flight")
+        c0 = st.cpu_seconds()
+        time.sleep(10)
+        err["server_cpu_seconds_in_10s_after_cancel"] = round(st.cpu_seconds() - c0, 2)
+        time.sleep(50)
+        c1 = st.cpu_seconds()
+        time.sleep(10)
+        err["server_cpu_seconds_in_10s_one_minute_later"] = round(st.cpu_seconds() - c1, 2)
         return err
     probe("adbc/cancel-long-query", cancel)
 
@@ -181,7 +191,10 @@ def main():
                 any_cmd_statement_query("SELECT * FROM polaris.tpch_sf1.orders LIMIT 20000")))
         time.sleep(5)
         m1 = stats.mem_current()
-        return {"mem_before_mb": round(m0 / 2**20, 1), "mem_after_300_unfetched_mb": round(m1 / 2**20, 1)}
+        time.sleep(120)
+        m2 = stats.mem_current()
+        return {"mem_before_mb": round(m0 / 2**20, 1), "mem_after_300_unfetched_mb": round(m1 / 2**20, 1),
+                "mem_after_further_120s_mb": round(m2 / 2**20, 1)}
     probe("flight/abandoned-tickets-memory", abandoned)
 
     def big_result():

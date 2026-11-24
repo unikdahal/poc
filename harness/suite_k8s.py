@@ -184,7 +184,7 @@ def wait_no_workers(timeout=240):
 
 def heavy_sql():
     return ("SELECT count(*), sum(a.l_extendedprice * b.l_discount) FROM polaris.tpch_sf1.lineitem a "
-            "JOIN polaris.tpch_sf1.lineitem b ON a.l_suppkey = b.l_suppkey WHERE a.l_orderkey < 1000000")
+            "JOIN polaris.tpch_sf1.lineitem b ON a.l_suppkey = b.l_suppkey WHERE a.l_orderkey < 3000000")
 
 
 def run_backend(image, backend, pip, sip):
@@ -238,8 +238,11 @@ def run_backend(image, backend, pip, sip):
     # failure injection: kill one worker pod during a long query
     def kill_worker_during(sql, delay):
         out = {}
+        before = {p for p, _, _ in PodWatcher().pods()}
         sess2 = connect(50051)
-        sess2.sql("SELECT 1").collect()
+        sess2.sql("SELECT count(*) FROM polaris.tpch_sf1.orders").collect()
+        own = [(p, m) for p, ph, m in PodWatcher().pods() if p not in before]
+        own_mgr = own[0][1] if own else None
 
         def run():
             t0 = time.time()
@@ -253,8 +256,9 @@ def run_backend(image, backend, pip, sip):
         t = threading.Thread(target=run)
         t.start()
         time.sleep(delay)
-        pods = [p for p, ph, _ in PodWatcher().pods() if ph == "Running"]
-        out["running_workers_at_kill"] = len(pods)
+        pods = [p for p, ph, m in PodWatcher().pods() if ph == "Running" and m == own_mgr]
+        out["query_still_running_at_kill"] = t.is_alive()
+        out["own_session_workers_at_kill"] = len(pods)
         if pods:
             kc(f"delete pod {pods[0]} --grace-period=0 --force", check=False)
             out["killed"] = pods[0]
@@ -290,6 +294,12 @@ def run_backend(image, backend, pip, sip):
         s_idle.sql("SELECT count(*) FROM polaris.tpch_sf1.orders").collect()
         time.sleep(180)
     res["idle_open_session_timeline"] = w.timeline[::10]
+    t0 = time.perf_counter()
+    s_idle.sql("SELECT count(*) FROM polaris.tpch_sf1.orders").collect()
+    res["query_after_workers_reaped_s"] = round(time.perf_counter() - t0, 2)
+    allp = json.loads(kc("get pods -o json", check=False) or "{}").get("items", [])
+    res["pod_objects_in_namespace_by_phase"] = {ph: sum(1 for p in allp if p["status"].get("phase") == ph)
+                                                for ph in {p["status"].get("phase") for p in allp}}
     try:
         s_idle.stop()
     except Exception:  # noqa: BLE001

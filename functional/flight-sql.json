@@ -1,0 +1,189 @@
+{
+  "query/select-1": {
+    "ok": true,
+    "result": [
+      [
+        1
+      ]
+    ],
+    "seconds": 0.0056
+  },
+  "query/iceberg-count": {
+    "ok": true,
+    "result": [
+      [
+        6001215
+      ]
+    ],
+    "seconds": 0.036
+  },
+  "query/tpch-q6-style": {
+    "ok": true,
+    "result": [
+      [
+        "123141078.2283"
+      ]
+    ],
+    "seconds": 0.1417
+  },
+  "ddl/create-namespace-via-execute": {
+    "ok": true,
+    "result": [
+      [
+        true
+      ]
+    ],
+    "seconds": 0.0143
+  },
+  "ddl/create-table-via-execute": {
+    "ok": true,
+    "result": [
+      [
+        true
+      ]
+    ],
+    "seconds": 0.0269
+  },
+  "dml/insert-via-execute": {
+    "ok": true,
+    "result": [],
+    "seconds": 0.0547
+  },
+  "dml/read-back": {
+    "ok": true,
+    "result": [
+      [
+        2
+      ]
+    ],
+    "seconds": 0.0152
+  },
+  "adbc/execute_update (CommandStatementUpdate)": {
+    "ok": false,
+    "error": "NotSupportedError: NOT_IMPLEMENTED: [FlightSQL] do_put_statement_update has no default implementation (Unimplemented; ExecuteUpdate)"
+  },
+  "adbc/parameterized-query (prepared statement)": {
+    "ok": false,
+    "error": "ProgrammingError: INVALID_STATE: [Flight SQL Statement] must set IngestTargetTable before bulk ingestion"
+  },
+  "adbc/prepare": {
+    "ok": false,
+    "error": "ProgrammingError: INVALID_STATE: [Flight SQL Statement] must call Prepare before GetParameterSchema"
+  },
+  "adbc/get_info": {
+    "ok": true,
+    "result": {
+      "vendor_name": "Flight SQL",
+      "vendor_version": "(unknown or development build)",
+      "vendor_arrow_version": "(unknown or development build)",
+      "driver_name": "ADBC Flight SQL Driver - Go",
+      "driver_version": "(unknown or development build)",
+      "driver_arrow_version": "v18.8.0",
+      "driver_adbc_version": "1001000"
+    },
+    "seconds": 0.0015
+  },
+  "adbc/get_table_types": {
+    "ok": false,
+    "error": "NotSupportedError: NOT_IMPLEMENTED: [FlightSQL] get_flight_info_table_types has no default implementation (Unimplemented; GetTableTypes)"
+  },
+  "adbc/get_objects(depth=tables)": {
+    "ok": false,
+    "error": "NotSupportedError: NOT_IMPLEMENTED: [FlightSQL] get_flight_info_schemas has no default implementation (Unimplemented; GetObjects(GetDBSchemas))"
+  },
+  "adbc/get_table_schema": {
+    "ok": false,
+    "error": "NotSupportedError: NOT_IMPLEMENTED: [FlightSQL] get_flight_info_tables has no default implementation (Unimplemented; GetTableSchema(GetTables))"
+  },
+  "isolation/temp-view-visible-across-connections": {
+    "ok": true,
+    "result": {
+      "conn2_sees_conn1_temp_view": [
+        [
+          42
+        ]
+      ]
+    },
+    "seconds": 0.0066
+  },
+  "isolation/set-visible-across-connections": {
+    "ok": false,
+    "error": "ProgrammingError: INVALID_ARGUMENT: [FlightSQL] plan conversion error: not implemented: show property (InvalidArgument; ExecuteQuery)"
+  },
+  "concurrency/8-connections-x20": {
+    "ok": true,
+    "result": {
+      "wrong_results": 0,
+      "errors": 0,
+      "sample_error": []
+    },
+    "seconds": 0.1979
+  },
+  "latency/select-1": {
+    "n": 200,
+    "p50_ms": 2.15,
+    "p95_ms": 2.63,
+    "p99_ms": 3.03,
+    "mean_ms": 2.23
+  },
+  "latency/iceberg-point-lookup": {
+    "n": 50,
+    "p50_ms": 16.5,
+    "p95_ms": 19.79,
+    "p99_ms": 20.28,
+    "mean_ms": 16.79
+  },
+  "adbc/cancel-long-query": {
+    "ok": true,
+    "result": {
+      "cancel_call": "ok",
+      "error": "CANCELLED: [FlightSQL] context canceled (Canceled; DoGet: endpoint 0: [])",
+      "client_thread_still_running_after_60s": false,
+      "server_cpu_seconds_in_10s_after_cancel": 38.92,
+      "server_cpu_seconds_in_10s_one_minute_later": 29.81
+    },
+    "seconds": 73.0777
+  },
+  "flight/ticket-single-use": {
+    "ok": true,
+    "result": {
+      "first_do_get": [
+        {
+          "v": 7
+        }
+      ],
+      "second_do_get": "Flight returned not found error, with message: query handle not found or already consumed: 1756e2ec-05c1-4a23-aabc-0eefadee1eaf. gRPC client debug context: UNKN",
+      "endpoints": 1
+    },
+    "seconds": 0.008
+  },
+  "flight/abandoned-tickets-memory": {
+    "ok": true,
+    "result": {
+      "mem_before_mb": 329.3,
+      "mem_after_300_unfetched_mb": 2136.0,
+      "mem_after_further_120s_mb": 2135.9
+    },
+    "seconds": 136.596
+  },
+  "stream/lineitem-sf1-full-scan": {
+    "ok": true,
+    "result": {
+      "rows": 6001215,
+      "seconds": 5.09,
+      "rows_per_s": 1178887,
+      "arrow_mb": 966.0,
+      "sail_peak_mem_mb": 2330.7
+    },
+    "seconds": 5.6505
+  },
+  "isolation/set-after-sessions": {
+    "ok": true,
+    "result": [
+      [
+        1
+      ]
+    ],
+    "seconds": 0.0335
+  }
+}

@@ -1,0 +1,768 @@
+[
+  {
+    "test": "info/sail-default-session-timezone",
+    "status": "info",
+    "value": "Etc/UTC"
+  },
+  {
+    "test": "types_default_tz/sail-writes",
+    "status": "fail",
+    "error": "error in DataFusion: Error during planning: Unsupported timezone for Iceberg Timestamptz conversion: Etc/UTC. Timezone must be UTC or +00:00"
+  },
+  {
+    "test": "types_default_tz/spark-writes-other-reads",
+    "status": "pass",
+    "diff": null,
+    "schema_writer": "struct<i:int,l:bigint,d:double,f:float,dec38:decimal(38,10),ts:timestamp,tsntz:timestamp_ntz,dt:date,st:struct<a:bigint,b:string>,arr:array<bigint>,mp:map<string,bigint>,bin:binary>",
+    "schema_reader": "struct<i:int,l:bigint,d:double,f:float,dec38:decimal(38,10),ts:timestamp,tsntz:timestamp_ntz,dt:date,st:struct<a:bigint,b:string>,arr:array<bigint>,mp:map<string,bigint>,bin:binary>"
+  },
+  {
+    "test": "rw/sail-ctas-days-transform",
+    "status": "pass",
+    "seconds": 0.668
+  },
+  {
+    "test": "rw/spark-reads-sail-ctas",
+    "status": "pass",
+    "diff": null,
+    "partitions": 365
+  },
+  {
+    "test": "rw/sail-insert-overwrite-dynamic",
+    "status": "pass",
+    "got": [
+      [
+        "R0",
+        2000,
+        "943850.00"
+      ],
+      [
+        "R1",
+        2000,
+        "1885780.00"
+      ],
+      [
+        "R2",
+        2000,
+        "943630.00"
+      ],
+      [
+        "R3",
+        2000,
+        "943370.00"
+      ],
+      [
+        "R4",
+        2000,
+        "943110.00"
+      ]
+    ],
+    "expected": [
+      [
+        "R0",
+        2000,
+        "943850.00"
+      ],
+      [
+        "R1",
+        2000,
+        "1885780.00"
+      ],
+      [
+        "R2",
+        2000,
+        "943630.00"
+      ],
+      [
+        "R3",
+        2000,
+        "943370.00"
+      ],
+      [
+        "R4",
+        2000,
+        "943110.00"
+      ]
+    ]
+  },
+  {
+    "test": "types/sail-writes-other-reads",
+    "status": "pass",
+    "diff": null,
+    "schema_writer": "struct<i:int,l:bigint,d:double,f:float,dec38:decimal(38,10),ts:timestamp,tsntz:timestamp_ntz,dt:date,st:struct<a:bigint,b:string>,arr:array<bigint>,mp:map<string,bigint>,bin:binary>",
+    "schema_reader": "struct<i:int,l:bigint,d:double,f:float,dec38:decimal(38,10),ts:timestamp,tsntz:timestamp_ntz,dt:date,st:struct<a:bigint,b:string>,arr:array<bigint>,mp:map<string,bigint>,bin:binary>"
+  },
+  {
+    "test": "types/spark-writes-other-reads",
+    "status": "pass",
+    "diff": null,
+    "schema_writer": "struct<i:int,l:bigint,d:double,f:float,dec38:decimal(38,10),ts:timestamp,tsntz:timestamp_ntz,dt:date,st:struct<a:bigint,b:string>,arr:array<bigint>,mp:map<string,bigint>,bin:binary>",
+    "schema_reader": "struct<i:int,l:bigint,d:double,f:float,dec38:decimal(38,10),ts:timestamp,tsntz:timestamp_ntz,dt:date,st:struct<a:bigint,b:string>,arr:array<bigint>,mp:map<string,bigint>,bin:binary>"
+  },
+  {
+    "test": "evolution/sail-reads-after-spark-schema+partition-evolution",
+    "status": "pass",
+    "got": [
+      2000,
+      1000,
+      1820,
+      "370370.00"
+    ],
+    "expected": [
+      2000,
+      1000,
+      1820,
+      "370370.00"
+    ]
+  },
+  {
+    "test": "evolution/sail-adds-column-and-inserts-spark-reads",
+    "status": "pass",
+    "got": [
+      2010,
+      70
+    ]
+  },
+  {
+    "test": "timetravel/version-as-of-snapshot-id",
+    "status": "pass",
+    "got": 100
+  },
+  {
+    "test": "timetravel/timestamp-as-of",
+    "status": "pass",
+    "got": 100,
+    "ts": "2026-11-24 20:10:44.007000"
+  },
+  {
+    "test": "timetravel/tag",
+    "status": "pass",
+    "got": 100
+  },
+  {
+    "test": "metadata/snapshots",
+    "status": "pass",
+    "sail": 2,
+    "spark": 2
+  },
+  {
+    "test": "metadata/history",
+    "status": "pass",
+    "sail": 2,
+    "spark": 2
+  },
+  {
+    "test": "metadata/files",
+    "status": "pass",
+    "sail": 2,
+    "spark": 2
+  },
+  {
+    "test": "metadata/manifests",
+    "status": "pass",
+    "sail": 2,
+    "spark": 2
+  },
+  {
+    "test": "metadata/refs",
+    "status": "pass",
+    "sail": 2,
+    "spark": 2
+  },
+  {
+    "test": "metadata/metadata_log_entries",
+    "status": "pass",
+    "sail": 3,
+    "spark": 3
+  },
+  {
+    "test": "metadata/entries",
+    "status": "unsupported",
+    "sail": "Iceberg metadata table 'entries' is recognized but not implemented",
+    "spark": 2
+  },
+  {
+    "test": "metadata/partitions",
+    "status": "unsupported",
+    "sail": "Iceberg metadata table 'partitions' is recognized but not implemented",
+    "spark": 1
+  },
+  {
+    "test": "metadata/all_data_files",
+    "status": "unsupported",
+    "sail": "Iceberg metadata table 'all_data_files' is recognized but not implemented",
+    "spark": 2
+  },
+  {
+    "test": "metadata/all_manifests",
+    "status": "unsupported",
+    "sail": "Iceberg metadata table 'all_manifests' is recognized but not implemented",
+    "spark": 3
+  },
+  {
+    "test": "metadata/data_files",
+    "status": "unsupported",
+    "sail": "Iceberg metadata table 'data_files' is recognized but not implemented",
+    "spark": 2
+  },
+  {
+    "test": "metadata/delete_files",
+    "status": "unsupported",
+    "sail": "Iceberg metadata table 'delete_files' is recognized but not implemented",
+    "spark": 0
+  },
+  {
+    "test": "maintenance/sail-rewrite_data_files",
+    "status": "pass",
+    "result": [
+      [
+        11,
+        1,
+        30163,
+        0,
+        0
+      ]
+    ],
+    "files_before": 11,
+    "files_after": 1,
+    "data_equal": true
+  },
+  {
+    "test": "maintenance/sail-expire_snapshots",
+    "status": "pass",
+    "result": [
+      [
+        11,
+        0,
+        0,
+        11,
+        11,
+        0
+      ]
+    ],
+    "snapshots_before": 12,
+    "snapshots_after": 1
+  },
+  {
+    "test": "maintenance/sail-remove_orphan_files",
+    "status": "unsupported",
+    "detail": "Iceberg system procedure 'remove_orphan_files' is recognized but not implemented"
+  },
+  {
+    "test": "maintenance/sail-rewrite_manifests",
+    "status": "pass",
+    "detail": null
+  },
+  {
+    "test": "maintenance/sail-rewrite_position_delete_files",
+    "status": "unsupported",
+    "detail": "Iceberg system procedure 'rewrite_position_delete_files' is recognized but not implemented"
+  },
+  {
+    "test": "dml/v2_cow_part",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.798,
+        "sail_s": 0.133,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.487,
+        "sail_s": 0.106,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.772,
+        "sail_s": 0.148,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.379,
+        "sail_s": 0.147,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          10,
+          11044
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          10,
+          11044
+        ]
+      ]
+    }
+  },
+  {
+    "test": "dml/v2_cow_unpart",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.471,
+        "sail_s": 0.12,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.473,
+        "sail_s": 0.104,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.457,
+        "sail_s": 0.159,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.225,
+        "sail_s": 0.117,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          2,
+          11044
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          2,
+          11044
+        ]
+      ]
+    }
+  },
+  {
+    "test": "dml/v2_mor_part",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.595,
+        "sail_s": 0.131,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.908,
+        "sail_s": 0.107,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.793,
+        "sail_s": 0.135,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.314,
+        "sail_s": 0.105,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          16,
+          14872
+        ],
+        [
+          1,
+          "PARQUET",
+          6,
+          3828
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          19,
+          14872
+        ],
+        [
+          1,
+          "PARQUET",
+          11,
+          3828
+        ]
+      ]
+    }
+  },
+  {
+    "test": "dml/v2_mor_unpart",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.246,
+        "sail_s": 0.078,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.312,
+        "sail_s": 0.089,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.502,
+        "sail_s": 0.121,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.221,
+        "sail_s": 0.081,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          4,
+          14872
+        ],
+        [
+          1,
+          "PARQUET",
+          2,
+          3828
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          5,
+          14872
+        ],
+        [
+          1,
+          "PARQUET",
+          4,
+          3828
+        ]
+      ]
+    }
+  },
+  {
+    "test": "dml/v3_cow_part",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.484,
+        "sail_s": 0.107,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.324,
+        "sail_s": 0.088,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.578,
+        "sail_s": 0.134,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.256,
+        "sail_s": 0.098,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          10,
+          11044
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          10,
+          11044
+        ]
+      ]
+    }
+  },
+  {
+    "test": "dml/v3_mor_part",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.274,
+        "sail_s": 0.104,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.287,
+        "sail_s": 0.091,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.599,
+        "sail_s": 0.135,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.26,
+        "sail_s": 0.099,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          16,
+          14872
+        ],
+        [
+          1,
+          "PUFFIN",
+          6,
+          3828
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          19,
+          14872
+        ],
+        [
+          1,
+          "PUFFIN",
+          6,
+          3828
+        ]
+      ]
+    }
+  },
+  {
+    "test": "dml/v3_mor_unpart",
+    "status": "pass",
+    "created_by": "spark",
+    "steps": [
+      {
+        "op": "delete",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.211,
+        "sail_s": 0.083,
+        "equal_after_op": true
+      },
+      {
+        "op": "update",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.295,
+        "sail_s": 0.087,
+        "equal_after_op": true
+      },
+      {
+        "op": "merge",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.452,
+        "sail_s": 0.126,
+        "equal_after_op": true
+      },
+      {
+        "op": "insert",
+        "spark_ok": true,
+        "sail_ok": true,
+        "spark_s": 0.206,
+        "sail_s": 0.084,
+        "equal_after_op": true
+      }
+    ],
+    "cross": {
+      "spark_reads_sail_written_equal_to_spark_written": true,
+      "sail_reads_spark_written_equal_to_spark_reads": true,
+      "sail_reads_sail_written_equal_to_spark_reads": true,
+      "rows": 11044
+    },
+    "files": {
+      "spark_written": [
+        [
+          0,
+          "PARQUET",
+          4,
+          14872
+        ],
+        [
+          1,
+          "PUFFIN",
+          2,
+          3828
+        ]
+      ],
+      "sail_written": [
+        [
+          0,
+          "PARQUET",
+          7,
+          14872
+        ],
+        [
+          1,
+          "PUFFIN",
+          2,
+          3828
+        ]
+      ]
+    }
+  },
+  {
+    "test": "concurrency/3-writers-x10-appends",
+    "status": "pass",
+    "rows": 3100,
+    "expected_rows_from_successful_commits": 3100,
+    "successful_commits": 30,
+    "errors": {
+      "sail_a": [],
+      "sail_b": [],
+      "spark": []
+    },
+    "error_counts": {
+      "sail_a": 0,
+      "sail_b": 0,
+      "spark": 0
+    },
+    "seconds": 3.8
+  }
+]

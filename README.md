@@ -18,7 +18,7 @@ Everything runs on GitHub-hosted runners. All data is synthetic (TPC-H generated
 | `.github/workflows/` | `build-sail` (image) and `poc` (all suites) |
 | `results/` | Collected results from CI runs |
 
-See `REPORT.md` for findings once runs have completed.
+Findings: see the Report section below.
 
 ## Report
 

@@ -75,5 +75,5 @@ runs:
       run: |
         mkdir -p out
         { echo "runner: $(nproc) vCPU, $(free -g | awk '/Mem/{print $2}') GiB"; uname -r; docker --version;
-          docker image ls --digests | grep -E 'polaris|minio|celeborn|sail' ; cat versions.json; cat sail-sha.txt 2>/dev/null; } | tee out/environment.txt
+          docker image ls --digests | grep -E "polaris|rustfs|aws-cli|celeborn|sail" ; cat versions.json; cat sail-sha.txt 2>/dev/null; } | tee out/environment.txt
         cp versions.json pip-freeze.txt out/ 2>/dev/null || true

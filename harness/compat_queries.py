@@ -42,7 +42,7 @@ Q = [
     ("str_concat_null", "string", "SELECT concat('a', NULL), concat_ws('-', 'a', NULL, 'b'), 'a' || 'b', concat_ws(',', array('x', 'y'))"),
     ("str_instr_locate", "string", "SELECT instr('hello', 'l'), locate('l', 'hello', 4), position('z' IN 'hello'), replace('aaa', 'a', 'bb'), translate('abc', 'ab', 'x')"),
     ("str_split", "string", "SELECT split('a,b,,c', ','), split('a1b22c', '[0-9]+'), split_part('a.b.c', '.', 2), size(split('', ','))"),
-    ("str_format_number", "string", "SELECT format_number(1234567.891, 2), format_number(0.5, 0), format_string('%05d|%.3f|%s', 42, 3.14159, 'x')"),
+    ("str_format_number", "string", "SELECT format_number(1234567.891, 2), format_number(0.5, 0), format_string('%05d|%.3f|%s', 42, CAST(3.14159 AS DOUBLE), 'x')"),
     ("str_repeat_reverse", "string", "SELECT repeat('ab', 3), reverse('abc'), ascii('A'), chr(66), base64('hi'), hex('A'), md5('a'), sha2('a', 256)"),
     ("regexp_extract", "regex", "SELECT regexp_extract('order-123-x', '([a-z]+)-(\\\\d+)', 2), regexp_extract('abc', '(\\\\d+)', 1)"),
     ("regexp_replace", "regex", "SELECT regexp_replace('a1b22c333', '\\\\d+', '#'), regexp_replace('John Smith', '(\\\\w+) (\\\\w+)', '$2, $1')"),

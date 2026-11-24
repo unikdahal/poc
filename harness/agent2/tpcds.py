@@ -15,6 +15,7 @@ NAMESPACE = "polaris.tpcds_sf1"
 
 def generate_and_load(spark, path):
     import duckdb
+    import pyarrow.parquet as parquet
     from duckdb_extensions import import_extension
 
     import_extension("tpcds")
@@ -27,7 +28,11 @@ def generate_and_load(spark, path):
     if len(tables) != 24:
         raise RuntimeError(f"expected 24 generated tables, got {len(tables)}")
     for table in tables:
-        generator.execute(f"COPY {table} TO '{path / table}.parquet' (FORMAT parquet)")
+        reader = generator.execute(f"SELECT * FROM {table}").fetch_record_batch(rows_per_batch=128_000)
+        with parquet.ParquetWriter(path / f"{table}.parquet", reader.schema,
+                                   compression="snappy", use_dictionary=False, data_page_version="1.0") as writer:
+            for batch in reader:
+                writer.write_batch(batch)
     generator.close()
     collect(spark, f"CREATE NAMESPACE IF NOT EXISTS {NAMESPACE}")
     rows = {}
@@ -62,8 +67,10 @@ def main():
     result = begin("tpcds")
     result["measurement"].update({"warm_samples": args.reps - 1, "query_timeout_s": args.timeout})
     result["versions"].update({package: version(package) for package in
-                               ("duckdb", "duckdb-extensions", "duckdb-extension-tpcds")})
+                               ("duckdb", "duckdb-extensions", "duckdb-extension-tpcds", "pyarrow")})
     result["query_source_sha"] = result["versions"]["sail_sha"]
+    result["parquet_export"] = {"compression": "snappy", "dictionary": False, "data_page_version": "1.0",
+                                "batch_rows": 128_000}
     result["queries"] = {
         str(query): {"verdict": "unverified", "runs": {}}
         for query in range(1, 100)
@@ -111,10 +118,12 @@ def compare(query, repetitions):
     runs = query["runs"]
     reference = runs.get("spark", [{}])[0].get("result")
     sail = runs.get("sail", [{}])[0].get("result")
-    query["verdict"] = ("Spark error" if "spark" in runs and reference is None else
-                        "Sail error" if "sail" in runs and sail is None else
-                        "unverified" if reference is None or sail is None else
-                        "match" if sail == reference else "values differ")
+    query["verdict"] = (
+        "Spark error" if any(sample["status"] != "ok" for sample in runs.get("spark", [])) else
+        "Sail error" if any(sample["status"] != "ok" for sample in runs.get("sail", [])) else
+        "unverified" if reference is None or sail is None else
+        "values differ" if any(sample["result"] != reference for sample in runs["sail"]) else "match"
+    )
     query["validated_metrics"] = {}
     for name, samples in runs.items():
         if reference is not None and len(samples) == repetitions and all(r.get("result") == reference for r in samples):

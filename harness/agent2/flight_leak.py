@@ -24,7 +24,15 @@ def read_ticket(client, ticket, options):
 def ticket_lifecycle(result, client, stats, reference):
     options = flight.FlightCallOptions(timeout=15)
     desc = flight.FlightDescriptor.for_command(any_cmd_statement_query(TICKET_SQL))
-    control = client.get_flight_info(desc, options).endpoints[0].ticket
+    deadline = time.monotonic() + 45
+    while True:
+        try:
+            control = client.get_flight_info(desc, options).endpoints[0].ticket
+            break
+        except (flight.FlightUnavailableError, flight.FlightTimedOutError):
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(.5)
     observation = result["unfetched"] = {
         "query": TICKET_SQL, "configured_timeout_s": 120, "requested_tickets": 300,
         "control_matches_spark": read_ticket(client, control, options) == reference,
@@ -55,6 +63,7 @@ def ticket_lifecycle(result, client, stats, reference):
                 if isinstance(exc, (flight.FlightTimedOutError, flight.FlightUnavailableError)):
                     break
         observation["issued"] = len(tickets)
+        observation["unique_tickets"] = len({ticket.ticket for ticket in tickets})
         observation["issuance_finished_elapsed_s"] = round(time.monotonic() - start, 3)
         issuance_done.set()
         for _ in range(36):
@@ -100,6 +109,8 @@ def cancel_probe(stats, run, cancel):
     time.sleep(50)
     result["after_one_minute"] = cpu_window(stats, 10)
     result["client_active_after_70s"] = thread.is_alive()
+    if thread.is_alive():
+        query["status"] = "still running at last sample"
     return result
 
 

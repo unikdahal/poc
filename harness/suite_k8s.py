@@ -135,7 +135,8 @@ class PodWatcher:
         except Exception:  # noqa: BLE001
             return []
         return [(p["metadata"]["name"], p["status"].get("phase"),
-                 p["metadata"]["labels"].get("sail.lakesail.com/worker-manager")) for p in items]
+                 p["metadata"]["labels"].get("sail.lakesail.com/worker-manager")) for p in items
+                if not p["metadata"].get("deletionTimestamp")]
 
     def __enter__(self):
         self.t0 = time.time()
@@ -144,7 +145,8 @@ class PodWatcher:
             while not self._stop.is_set():
                 ps = self.pods()
                 self.timeline.append((round(time.time() - self.t0, 1), len(ps),
-                                      len({m for _, _, m in ps}), sum(1 for _, ph, _ in ps if ph == "Running")))
+                                      len({m for _, _, m in ps}), sum(1 for _, ph, _ in ps if ph == "Running"),
+                                      sorted({ph for _, ph, _ in ps})))
                 time.sleep(1)
         self.th = threading.Thread(target=run, daemon=True)
         self.th.start()
@@ -181,9 +183,8 @@ def wait_no_workers(timeout=240):
 
 
 def heavy_sql():
-    return ("SELECT count(*) FROM polaris.tpch_sf1.lineitem a JOIN polaris.tpch_sf1.orders o "
-            "ON a.l_orderkey = o.o_orderkey JOIN polaris.tpch_sf1.lineitem b ON b.l_orderkey = o.o_orderkey "
-            "WHERE a.l_quantity + b.l_quantity > 10")
+    return ("SELECT count(*), sum(a.l_extendedprice * b.l_discount) FROM polaris.tpch_sf1.lineitem a "
+            "JOIN polaris.tpch_sf1.lineitem b ON a.l_suppkey = b.l_suppkey WHERE a.l_orderkey < 1000000")
 
 
 def run_backend(image, backend, pip, sip):
@@ -235,7 +236,7 @@ def run_backend(image, backend, pip, sip):
     res["three_sessions_pods_peak_and_managers"] = w.peak()
 
     # failure injection: kill one worker pod during a long query
-    def kill_worker_during(sql, delay=6):
+    def kill_worker_during(sql, delay):
         out = {}
         sess2 = connect(50051)
         sess2.sql("SELECT 1").collect()
@@ -261,24 +262,38 @@ def run_backend(image, backend, pip, sip):
         out["hung"] = t.is_alive()
         return out
 
+    baseline = None
     try:
         baseline = connect(50051)
         t0 = time.time()
         expected = baseline.sql(heavy_sql()).collect()[0][0]
         res["heavy_query_baseline_s"] = round(time.time() - t0, 1)
-        k = kill_worker_during(heavy_sql())
+        k = kill_worker_during(heavy_sql(), max(3.0, res["heavy_query_baseline_s"] * 0.4))
         k["correct_result"] = k.get("result") == expected if "result" in k else None
         res["kill_worker_mid_query"] = k
     except Exception as e:  # noqa: BLE001
         res["kill_worker_mid_query"] = {"error": str(e)[:300]}
 
-    # idle reaping
-    for x in [s] + sess:
+    # idle reaping: close every session, then watch pods for 4 minutes
+    for x in [y for y in [s] + sess + [baseline] if y is not None]:
         try:
             x.stop()
         except Exception:  # noqa: BLE001
             pass
-    res["seconds_until_no_worker_pods_after_idle"] = wait_no_workers(300)
+    with PodWatcher() as w:
+        time.sleep(240)
+    res["idle_timeline_after_sessions_closed"] = w.timeline[::10]
+    res["seconds_until_no_worker_pods_after_idle"] = next((t for t, n, *_ in w.timeline if n == 0), None)
+    # one session left open but idle
+    with PodWatcher() as w:
+        s_idle = connect(50051)
+        s_idle.sql("SELECT count(*) FROM polaris.tpch_sf1.orders").collect()
+        time.sleep(180)
+    res["idle_open_session_timeline"] = w.timeline[::10]
+    try:
+        s_idle.stop()
+    except Exception:  # noqa: BLE001
+        pass
 
     # server pod killed during a query: what happens to the client and the workers
     try:
@@ -295,7 +310,8 @@ def run_backend(image, backend, pip, sip):
                 out["error"] = str(e).split("\n")[0][:300]
         t = threading.Thread(target=run)
         t.start()
-        time.sleep(6)
+        time.sleep(max(3.0, res.get("heavy_query_baseline_s", 10) * 0.4))
+        out["query_still_running_at_kill"] = t.is_alive()
         out["workers_before_kill"] = len(PodWatcher().pods())
         server = kc("get pods -l app=sail-server -o jsonpath={.items[0].metadata.name}").strip()
         kc(f"delete pod {server} --grace-period=0 --force", check=False)

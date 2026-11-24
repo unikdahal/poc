@@ -16,6 +16,9 @@ from harness.common import (OUT, CgroupStats, PeakSampler, canon, connect, log, 
                             stop_container, warm, write_json)
 
 NS = "tpch_sf1"
+# ~1.5M x ~600 matches per supplier key: tens of seconds on 4 vCPU
+HEAVY = (f"SELECT count(*), sum(a.l_extendedprice * b.l_discount) FROM polaris.{NS}.lineitem a "
+         f"JOIN polaris.{NS}.lineitem b ON a.l_suppkey = b.l_suppkey WHERE a.l_orderkey < 1000000")
 CLUSTER = {
     "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
     "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
@@ -48,7 +51,68 @@ def ref_results():
     return res
 
 
-def run_backend(name, mode, env, ref, sf_ns):
+def run_with_timeout(spark, q, ns, timeout):
+    """Run a query; on timeout interrupt it and report a hang instead of blocking the suite."""
+    box = {}
+
+    def target():
+        try:
+            box["res"] = tpch.run_query(spark, q, ns)
+        except Exception as e:  # noqa: BLE001
+            box["err"] = e
+    t = threading.Thread(target=target, daemon=True)
+    t.start()
+    t.join(timeout)
+    if t.is_alive():
+        try:
+            spark.interruptAll()
+        except Exception:  # noqa: BLE001
+            pass
+        t.join(30)
+        raise TimeoutError(f"query did not finish within {timeout}s (interrupt {'worked' if not t.is_alive() else 'did not stop it'})")
+    if "err" in box:
+        raise box["err"]
+    return box["res"]
+
+
+class ObjectSampler:
+    """Counts objects under s3://shuffle every 0.5 s while a query runs (peak = intermediate data)."""
+
+    def __init__(self):
+        import boto3
+        self.s3 = boto3.client("s3", endpoint_url="http://localhost:9000", aws_access_key_id="admin",
+                               aws_secret_access_key="password", region_name="us-east-1")
+        self.peak_objects = 0
+        self.peak_bytes = 0
+        self._stop = threading.Event()
+
+    def count(self):
+        n = b = 0
+        for page in self.s3.get_paginator("list_objects_v2").paginate(Bucket="shuffle"):
+            for o in page.get("Contents", []):
+                n += 1
+                b += o["Size"]
+        return n, b
+
+    def __enter__(self):
+        def run():
+            while not self._stop.is_set():
+                try:
+                    n, b = self.count()
+                    self.peak_objects, self.peak_bytes = max(self.peak_objects, n), max(self.peak_bytes, b)
+                except Exception:  # noqa: BLE001
+                    pass
+                time.sleep(0.5)
+        self.t = threading.Thread(target=run, daemon=True)
+        self.t.start()
+        return self
+
+    def __exit__(self, *a):
+        self._stop.set()
+        self.t.join()
+
+
+def run_backend(name, mode, env, ref, sf_ns, reps=3, timeout=180):
     stop_container("sail")
     try:
         boot = start_sail("sail", "spark", 50051, mode, env, cpus="4", memory="12g")
@@ -67,31 +131,56 @@ def run_backend(name, mode, env, ref, sf_ns):
             "EXPLAIN " + tpch.statements(5)[0]).collect())[:6000]
     except Exception as e:  # noqa: BLE001
         out["explain_q5"] = f"error: {e}"
-    for rep in range(2):
+    hangs = []
+    for rep in range(reps):
         for q in range(1, 23):
             c0 = st.cpu_seconds()
-            objs = None
+            sampler = ObjectSampler() if name == "cluster-storage" else None
             try:
                 with PeakSampler(st) as ps:
-                    rows, cols, secs = tpch.run_query(s, q, sf_ns)
+                    if sampler:
+                        with sampler:
+                            rows, cols, secs = run_with_timeout(s, q, sf_ns, timeout)
+                    else:
+                        rows, cols, secs = run_with_timeout(s, q, sf_ns, timeout)
                 rec = {"s": round(secs, 3), "cpu_s": round(st.cpu_seconds() - c0, 3), "peak_mb": round(ps.peak / 2**20)}
                 if rep == 0 and ref and q in ref:
                     rec["matches_spark"] = same_rows(tpch.canon_rows(rows), ref[q], tpch.ordered(q))
             except Exception as e:  # noqa: BLE001
                 rec = {"error": str(e).split("\n")[0][:400]}
-            if name == "cluster-storage" and rep == 0:
-                objs = shuffle_objects()
-                rec["shuffle_objects_after"] = objs
+                if isinstance(e, TimeoutError):
+                    hangs.append({"rep": rep, "q": q, "log_tail": sh("docker logs --tail 60 sail 2>&1", check=False)[-5000:]})
+                    # a hung job can hold the session: start a fresh one
+                    try:
+                        s = connect(50051)
+                        warm(s, tries=10)
+                    except Exception:  # noqa: BLE001
+                        stop_container("sail")
+                        start_sail("sail", "spark", 50051, mode, env, cpus="4", memory="12g")
+                        s = connect(50051)
+                        warm(s)
+                        st = CgroupStats("sail")
+            if sampler:
+                rec["shuffle_peak_objects"] = sampler.peak_objects
+                rec["shuffle_peak_mb"] = round(sampler.peak_bytes / 2**20, 1)
+                rec["shuffle_objects_after"] = sampler.count()[0]
             out["queries"].setdefault(q, []).append(rec)
             log(f"{name} rep{rep} q{q}: {rec}")
-    out["total_s_rep2"] = round(sum(v[-1].get("s", 0) for v in out["queries"].values()), 2)
-    out["total_cpu_s_rep2"] = round(sum(v[-1].get("cpu_s", 0) for v in out["queries"].values()), 2)
+    out["hangs"] = hangs
+    def med(v, key):
+        xs = sorted(x[key] for x in v[1:] if key in x)
+        return xs[len(xs) // 2] if xs else 0
+    out["total_s_median_warm"] = round(sum(med(v, "s") for v in out["queries"].values()), 2)
+    out["total_cpu_s_median_warm"] = round(sum(med(v, "cpu_s") for v in out["queries"].values()), 2)
     out["errors"] = sum(1 for v in out["queries"].values() if "error" in v[0])
     out["mismatches"] = [q for q, v in out["queries"].items() if v[0].get("matches_spark") is False]
-    s.stop()
+    try:
+        s.stop()
+    except Exception:  # noqa: BLE001
+        pass
     if name == "cluster-storage":
         time.sleep(3)
-        out["shuffle_objects_after_session_stop"] = shuffle_objects()
+        out["shuffle_objects_after_session_stop"] = ObjectSampler().count()[0]
     out["sail_log_tail"] = sh("docker logs --tail 30 sail 2>&1", check=False)[-2500:]
     return out
 
@@ -149,7 +238,7 @@ def overhead_and_hol(mode, env, label):
     res["flight_iceberg_point"] = latency(lambda: fq(point), 50)
 
     # head-of-line blocking: a heavy query and a stream of small ones on the same server
-    heavy = f"SELECT count(*) FROM polaris.{NS}.lineitem a JOIN polaris.{NS}.orders o ON a.l_orderkey = o.o_orderkey JOIN polaris.{NS}.lineitem b ON b.l_orderkey = o.o_orderkey"
+    heavy = HEAVY
 
     def under_load(small_fn, heavy_fn):
         done = {}

@@ -38,7 +38,7 @@ runs:
       shell: bash
       run: |
         python -m pip install -q --upgrade pip
-        python -m pip install -q "pyspark[connect]==${SPARK_VERSION}" requests psutil pyyaml setuptools \
+        python -m pip install -q "pyspark[connect]==${SPARK_VERSION}" requests psutil pyyaml setuptools boto3 \
           tpchgen-cli adbc-driver-flightsql adbc-driver-manager "pyarrow>=15,<18" "pandas<2.3" "numpy<2"
         python -m pip freeze > pip-freeze.txt
 

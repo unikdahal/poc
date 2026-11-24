@@ -9,6 +9,9 @@ on:
       sail_tag:
         description: "Sail image tag (commit SHA prefix or latest)"
         default: "latest"
+      bench_engines:
+        description: "engines for the bench jobs"
+        default: "spark,comet,sail,sail-cluster"
   push:
     paths: [".github/run-poc"]
 
@@ -186,7 +189,7 @@ jobs:
       - name: Benchmark
         if: steps.want.outputs.run == 'true'
         continue-on-error: true
-        run: python -m harness.suite_bench --sf ${{ matrix.sf }} --reps ${{ matrix.sf == '1' && 3 || 2 }} --throughput ${{ matrix.sf == '10' && 4 || 0 }}
+        run: python -m harness.suite_bench --sf ${{ matrix.sf }} --reps ${{ matrix.sf == '1' && 3 || 2 }} --throughput ${{ matrix.sf == '10' && 4 || 0 }} --engines "${{ github.event.inputs.bench_engines || 'spark,comet,sail,sail-cluster' }}"
       - uses: actions/upload-artifact@v4
         if: always() && steps.want.outputs.run == 'true'
         with: {name: "bench-sf${{ matrix.sf }}", path: out/}

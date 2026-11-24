@@ -38,6 +38,10 @@ def bench_engine(name, spark, stats, ns, reps, ref):
                         r["matches_spark"] = same_rows(cr, ref[q], tpch.ordered(q))
             except Exception as e:  # noqa: BLE001
                 r = {"error": str(e).split("\n")[0][:300]}
+                if "UNAVAILABLE" in str(e) or "Connection refused" in str(e):
+                    res["queries"].setdefault(q, []).append(r)
+                    res["aborted"] = f"server unreachable at rep{rep} q{q}"
+                    return res
             res["queries"].setdefault(q, []).append(r)
             log(f"{name} {ns} rep{rep} q{q}: {r}")
     return res
@@ -122,6 +126,11 @@ def main():
                     out[eng]["throughput"] = throughput(50061, ns, a.throughput, CgroupStats("sail-bench"))
                     log(f"{eng} throughput: {out[eng]['throughput']}")
             finally:
+                st = sh("docker inspect -f '{{.State.Status}} oom={{.State.OOMKilled}} exit={{.State.ExitCode}} "
+                        "finished={{.State.FinishedAt}}' sail-bench", check=False).strip()
+                out.setdefault(eng, {})["container_state_at_end"] = st
+                out[eng]["container_log_tail"] = sh("docker logs --tail 40 sail-bench 2>&1", check=False)[-4000:]
+                log(f"{eng} container: {st}")
                 stop_container("sail-bench")
         write_json(f"bench-sf{a.sf}", out)
     # summary: medians of reps 2..n

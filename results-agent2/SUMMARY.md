@@ -4,7 +4,7 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 
 | Task | Run outcome | Hosted run |
 | --- | --- | --- |
-| [tpcds](tpcds.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45496222083) |
+| [tpcds](tpcds.md) | 78 match, 21 values differ | [Run](https://github.com/unikdahal/poc/actions/runs/45496222083) |
 | [ingest](ingest.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490127635) |
 | [memory](memory.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490267308) |
 | [concurrency](concurrency.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45490383284) |
@@ -12,4 +12,4 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 | [catalog](catalog.md) | 2,000 tables; expired-token retry verified | [Run](https://github.com/unikdahal/poc/actions/runs/45492229100) |
 | [flight-leak](flight-leak.md) | 300/300 tickets issued; 37 memory samples | [Run](https://github.com/unikdahal/poc/actions/runs/45494537059) |
 | [celeborn](celeborn.md) | 7 shuffle treatments attempted; worker loss error; 7.773× Flight shuffle on 18 paired queries | [Run](https://github.com/unikdahal/poc/actions/runs/45494813690) |
-| [release-vs-main](release-vs-main.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45495413240) |
+| [release-vs-main](release-vs-main.md) | 19/22 queries validated on both builds; release/main wall 1.122× | [Run](https://github.com/unikdahal/poc/actions/runs/45495413240) |

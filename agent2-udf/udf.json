@@ -1,0 +1,669 @@
+{
+  "task": "udf",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.agent2.udf",
+    "--sail-python",
+    "/home/runner/work/_temp/agent2-udf/bin/python"
+  ],
+  "revision": "d65c398e3f09b82bd1b44ce4681929986b95f798",
+  "run_id": "45490669445",
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d",
+    "sail_image_digest": "[\"ghcr.io/unikdahal/poc/sail@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767\"]",
+    "infra_images": "{\"Command\":\"\\\"/entrypoint.sh rust\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:26:06 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"5d7447da74a6\",\"Image\":\"rustfs/rustfs:1.0.0-beta.8\",\"Labels\":\"summary=High-performance distributed object storage system compatible with S3 API,url=https://rustfs.com,name=RustFS,vcs-ref=,vendor=RustFS Team,maintainer=RustFS Team \\u003cdev@rustfs.com\\u003e,build-date=,com.docker.compose.container-number=1,com.docker.compose.oneoff=False,com.docker.compose.project=poc,org.opencontainers.image.title=RustFS,org.opencontainers.image.description=RustFS distributed object storage system,org.opencontainers.image.version=1.0.0-beta.8,org.opencontainers.image.revision=64c0ede0261eeb7ccd415221d6f102aa70829b6a,org.opencontainers.image.source=https://github.com/rustfs/rustfs,org.opencontainers.image.created=2026-06-10T10:22:17Z,org.opencontainers.image.build-type=prerelease,version=v1.0.0-beta.8,com.docker.compose.config-hash=23bdcebd18c8e9ef15f1d9eca851868fb5013fd2e2e4ec8889eb631048bccea1,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml,com.docker.compose.service=minio,description=RustFS is a distributed object storage system written in Rust, supporting erasure coding, multi-tenant management, and observability.,license=Apache-2.0,com.docker.compose.depends_on=,com.docker.compose.image=sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,com.docker.compose.version=5.1.3,release=1.0.0-beta.8\",\"LocalVolumes\":\"1\",\"Mounts\":\"9403dc33aef1bb\u2026\",\"Name\":\"poc-minio-1\",\"Names\":\"poc-minio-1\",\"Networks\":\"poc\",\"Ports\":\"0.0.0.0:9000-\\u003e9000/tcp, [::]:9000-\\u003e9000/tcp, 9001/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"0.0.0.0\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":9001,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"49 seconds ago\",\"Service\":\"minio\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 45 seconds (healthy)\"}\n{\"Command\":\"\\\"/opt/jboss/containe\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:26:09 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"4d116470ad2c\",\"Image\":\"apache/polaris:latest\",\"Labels\":\"com.docker.compose.depends_on=minio-setup:service_completed_successfully:false,com.docker.compose.oneoff=False,io.cekit.version=4.13.0.dev0,io.k8s.description=Platform for running plain Java applications (fat-jar and flat classpath),org.opencontainers.image.description=Apache Polaris,vcs-type=git,vendor=Red Hat, Inc.,com.docker.compose.service=polaris,description=Image for Red Hat OpenShift providing OpenJDK 21 runtime,io.openshift.expose-services=,io.openshift.tags=java,org.opencontainers.image.licenses=Apache-2.0,vcs-ref=f74d5e7c1c24af798478dbc512f9ddf0ffc4c411,maintainer=Red Hat OpenJDK \\u003copenjdk@redhat.com\\u003e,name=ubi9/openjdk-21-runtime,org.jboss.product.openjdk.version=21,org.opencontainers.image.revision=ubi9,version=1.24,com.docker.compose.container-number=1,distribution-scope=public,summary=Image for Red Hat OpenShift providing OpenJDK 21 runtime,url=https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/openjdk-21-runtime/images/1.24-3.1793323798,build-date=2026-10-30T03:03:13,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml,com.redhat.component=openjdk-21-runtime-ubi9-container,com.redhat.license_terms=https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI,org.jboss.product=openjdk,org.jboss.product.version=21,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,io.buildah.version=1.33.14,org.opencontainers.image.source=https://github.com/apache/polaris,architecture=x86_64,com.docker.compose.config-hash=d7ea8dbea3647cc7f0120a26b514c25fc6d16a7b36b4bc663d4721896b4ff286,com.docker.compose.version=5.1.3,cpe=cpe:/a:redhat:enterprise_linux:9::appstream,org.opencontainers.image.documentation=https://rh-openjdk.github.io/redhat-openjdk-containers/,usage=https://rh-openjdk.github.io/redhat-openjdk-containers/,com.docker.compose.image=sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0,com.docker.compose.project=poc,io.k8s.display-name=Java Applications,org.opencontainers.image.created=2026-10-29T05:53:50Z,release=3.1793323798\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"poc-polaris-1\",\"Names\":\"poc-polaris-1\",\"Networks\":\"poc\",\"Ports\":\"8080/tcp, 8443/tcp, 0.0.0.0:8181-8182-\\u003e8181-8182/tcp, [::]:8181-8182-\\u003e8181-8182/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"\",\"TargetPort\":8080,\"PublishedPort\":0,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":8443,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"46 seconds ago\",\"Service\":\"polaris\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 38 seconds (healthy)\"}"
+  },
+  "runner": {
+    "cpus": 4,
+    "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.43",
+    "memory_bytes": 16759435264
+  },
+  "measurement": {
+    "cpu": "container cgroup v2 or Spark process tree",
+    "memory": "sampled at 100 ms",
+    "warm_samples": 2,
+    "query_timeout_s": 180
+  },
+  "workload": {
+    "input_rows": 10000000,
+    "partitions": 8,
+    "heavy_rows": 500000,
+    "heavy_iterations_per_row": 512
+  },
+  "client_versions": {
+    "spark": {
+      "python": "3.11.18",
+      "pyspark": "3.5.10",
+      "pyarrow": "17.0.0",
+      "pandas": "2.2.3",
+      "numpy": "1.26.4"
+    },
+    "sail": {
+      "python": "3.14.10",
+      "pyspark-client": "4.2.1",
+      "pyarrow": "26.0.1",
+      "pandas": "3.1.1",
+      "numpy": "2.5.5"
+    }
+  },
+  "engines": {
+    "spark": {
+      "config": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "comet_off_heap_default": null,
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 8.014114379882812,
+      "variants": {
+        "scalar": [
+          {
+            "status": "ok",
+            "wall_s": 10.02069,
+            "cpu_s": 35.05,
+            "peak_bytes": 2586832896,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 7.69383,
+            "cpu_s": 27.95,
+            "peak_bytes": 2595590144,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 7.399942,
+            "cpu_s": 27.19,
+            "peak_bytes": 2601373696,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ],
+        "pandas": [
+          {
+            "status": "ok",
+            "wall_s": 2.640885,
+            "cpu_s": 9.47,
+            "peak_bytes": 3062558720,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 2.061022,
+            "cpu_s": 7.44,
+            "peak_bytes": 3067461632,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 1.777441,
+            "cpu_s": 6.54,
+            "peak_bytes": 3071926272,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ],
+        "arrow": [
+          {
+            "status": "ok",
+            "wall_s": 3.672559,
+            "cpu_s": 13.08,
+            "peak_bytes": 3071942656,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.467562,
+            "cpu_s": 12.36,
+            "peak_bytes": 3076108288,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 3.704935,
+            "cpu_s": 13.24,
+            "peak_bytes": 3098923008,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ],
+        "udtf": [
+          {
+            "status": "ok",
+            "wall_s": 31.306371,
+            "cpu_s": 115.78,
+            "peak_bytes": 3096158208,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 30.74656,
+            "cpu_s": 114.25,
+            "peak_bytes": 3102838784,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 31.377505,
+            "cpu_s": 114.62,
+            "peak_bytes": 3112902656,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "scalar": {
+          "median_wall_s": 7.546886,
+          "median_cpu_s": 27.57,
+          "median_peak_bytes": 2598481920.0,
+          "input_rows_per_s": 1325049.8284988008
+        },
+        "pandas": {
+          "median_wall_s": 1.919231,
+          "median_cpu_s": 6.99,
+          "median_peak_bytes": 3069693952.0,
+          "input_rows_per_s": 5210420.215179934
+        },
+        "arrow": {
+          "median_wall_s": 3.586248,
+          "median_cpu_s": 12.8,
+          "median_peak_bytes": 3087515648.0,
+          "input_rows_per_s": 2788429.5787686743
+        },
+        "udtf": {
+          "median_wall_s": 31.062033,
+          "median_cpu_s": 114.435,
+          "median_peak_bytes": 3107870720.0,
+          "input_rows_per_s": 321936.42959557736
+        }
+      },
+      "interference": {
+        "heavy": {
+          "status": "ok",
+          "wall_s": 10.795741,
+          "cpu_s": 40.95,
+          "peak_bytes": 3161985024,
+          "result_sum": 1073740902797680,
+          "matches_spark": true
+        },
+        "idle": [
+          {
+            "status": "ok",
+            "wall_s": 0.048673,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.048248,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.055709,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.049556,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.051513,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.053157,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.060448,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.089617,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.048,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.045783,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.044054,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.047465,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.042565,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.044802,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.043033,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.054047,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.05241,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.051691,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.042849,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.0462,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.044407,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.049037,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.045175,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.072899,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.04826,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.046987,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.042366,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.042117,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.079114,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.043728,
+            "correct": true
+          }
+        ],
+        "overlap": [
+          {
+            "status": "ok",
+            "wall_s": 10.047072,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.074029,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.063283,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.05913,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.067864,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.049711,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.06571,
+            "correct": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 0.045569,
+            "correct": true
+          }
+        ],
+        "idle_latency": {
+          "p50_s": 0.048124,
+          "p95_s": 0.079114
+        },
+        "overlap_latency": {
+          "p50_s": 0.06449650000000001,
+          "p95_s": 10.047072
+        }
+      },
+      "log_excerpt": "ey(runner,df4fef17-6f39-4cb9-a537-5bb1cc97f99a,c2ead47a-b37e-4ecd-855b-810eed3b4767) is removed.\n26/11/24 21:29:37 INFO ExecuteResponseObserver: Release all for opId=c2ead47a-b37e-4ecd-855b-810eed3b4767. Execution stats: total=CachedSize(956,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(828,3) maxCachedUntilProduced=CachedSize(828,3)\n26/11/24 21:29:37 INFO ExecuteResponseObserver: Release all for opId=c2ead47a-b37e-4ecd-855b-810eed3b4767. Execution stats: total=CachedSize(956,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(828,3) maxCachedUntilProduced=CachedSize(828,3)\n26/11/24 21:29:37 INFO SparkContext: Invoking stop() from shutdown hook\n26/11/24 21:29:37 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/24 21:29:37 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/24 21:29:37 INFO MemoryStore: MemoryStore cleared\n26/11/24 21:29:37 INFO BlockManager: BlockManager stopped\n26/11/24 21:29:37 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/24 21:29:37 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/24 21:29:37 INFO SparkContext: Successfully stopped SparkContext\n26/11/24 21:29:37 INFO ShutdownHookManager: Shutdown hook called\n26/11/24 21:29:37 INFO ShutdownHookManager: Deleting directory /tmp/spark-b3191753-49b8-4cd8-b9ff-85531310f886\n26/11/24 21:29:37 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-fdc3600c-2665-4874-996b-62dd5eca555a\n26/11/24 21:29:37 INFO ShutdownHookManager: Deleting directory /tmp/spark-7ace9677-ffc8-4c94-b910-5b82fa1fb6aa\n"
+    },
+    "sail": {
+      "config": {
+        "mode": "local",
+        "environment": {},
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.19701242446899414,
+      "variants": {
+        "scalar": [
+          {
+            "status": "ok",
+            "wall_s": 18.64423,
+            "cpu_s": 20.093685,
+            "peak_bytes": 144113664,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 17.439676,
+            "cpu_s": 18.486661,
+            "peak_bytes": 144691200,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 17.239715,
+            "cpu_s": 18.339573,
+            "peak_bytes": 146870272,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ],
+        "pandas": [
+          {
+            "status": "ok",
+            "wall_s": 6.818555,
+            "cpu_s": 8.706971,
+            "peak_bytes": 149991424,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 6.919691,
+            "cpu_s": 8.844447,
+            "peak_bytes": 152330240,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 7.020435,
+            "cpu_s": 8.895232,
+            "peak_bytes": 156393472,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ],
+        "arrow": [
+          {
+            "status": "ok",
+            "wall_s": 4.413098,
+            "cpu_s": 5.628293,
+            "peak_bytes": 157089792,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.413601,
+            "cpu_s": 5.733239,
+            "peak_bytes": 157097984,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          },
+          {
+            "status": "ok",
+            "wall_s": 4.413231,
+            "cpu_s": 5.678661,
+            "peak_bytes": 159412224,
+            "output": {
+              "rows": 10000000,
+              "input_sum": 49999995000000,
+              "output_sum": 4999997001131,
+              "incorrect": 0
+            },
+            "matches_spark": true
+          }
+        ],
+        "udtf": [
+          {
+            "status": "timeout",
+            "error": "TimeoutError: deadline of 180s exceeded (client still active: False)",
+            "wall_s": 180.107912,
+            "cpu_s": 297.300334,
+            "peak_bytes": 188002304,
+            "output": null,
+            "matches_spark": false
+          }
+        ]
+      },
+      "validated_metrics": {
+        "scalar": {
+          "median_wall_s": 17.339695,
+          "median_cpu_s": 18.413117,
+          "median_peak_bytes": 145780736.0,
+          "input_rows_per_s": 576711.4127439958
+        },
+        "pandas": {
+          "median_wall_s": 6.970063,
+          "median_cpu_s": 8.86984,
+          "median_peak_bytes": 154361856.0,
+          "input_rows_per_s": 1434707.261612987
+        },
+        "arrow": {
+          "median_wall_s": 4.413416,
+          "median_cpu_s": 5.70595,
+          "median_peak_bytes": 158255104.0,
+          "input_rows_per_s": 2265818.585875431
+        }
+      },
+      "error": "TimeoutError: TimeoutError: deadline of 180s exceeded (client still active: False)",
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8074,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:29:38.511663296Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    }
+  },
+  "spark_reference": {
+    "rows": 10000000,
+    "input_sum": 49999995000000,
+    "output_sum": 4999997001131,
+    "incorrect": 0
+  },
+  "spark_heavy_sum": 1073740902797680,
+  "sail_client_command": [
+    "/home/runner/work/_temp/agent2-udf/bin/python",
+    "-m",
+    "harness.agent2.udf",
+    "--sail-only"
+  ]
+}

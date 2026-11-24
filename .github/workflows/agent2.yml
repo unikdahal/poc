@@ -108,3 +108,22 @@ jobs:
       - uses: ./.github/actions/publish
         if: always()
         with: {name: agent2-udf, fast-forward: "true"}
+
+  catalog:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[catalog]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',catalog,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      POLARIS_ACCESS_LOG: "true"
+      POLARIS_TOKEN_LIFETIME: PT90S
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Measure catalog scale and token refresh
+        continue-on-error: true
+        timeout-minutes: 310
+        run: python -m harness.agent2.catalog
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-catalog, fast-forward: "true"}

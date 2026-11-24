@@ -47,6 +47,9 @@ services:
       POLARIS_BOOTSTRAP_CREDENTIALS: POLARIS,root,s3cr3t
       polaris.realm-context.realms: POLARIS
       quarkus.otel.sdk.disabled: "true"
+      quarkus.http.access-log.enabled: "${POLARIS_ACCESS_LOG:-false}"
+      quarkus.http.access-log.pattern: "agent2-access %m %U %s"
+      polaris.authentication.token-broker.max-token-generation: "${POLARIS_TOKEN_LIFETIME:-PT1H}"
     ports: ["8181:8181", "8182:8182"]
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:8182/q/health"]

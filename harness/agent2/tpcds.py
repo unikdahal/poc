@@ -6,7 +6,7 @@ import tempfile
 from importlib.metadata import version
 from pathlib import Path
 
-from harness import common as base
+from harness import common as base, tpch
 from harness.agent2.common import attempt, begin, bounded, collect, engine, fingerprint, median, save
 
 QUERIES = base.ROOT / "harness" / "queries" / "tpcds"
@@ -87,7 +87,7 @@ def main():
                         result["table_rows"] = generate_and_load(spark, Path(path))
                 if not result.get("table_rows"):
                     raise RuntimeError("reference data load was incomplete")
-                collect(spark, f"USE {NAMESPACE}")
+                bounded(lambda: tpch.use(spark, NAMESPACE.split(".")[1]), 60, spark.interruptAll)
                 for index, query in remaining:
                     sql = statements(int(index))
                     samples = []

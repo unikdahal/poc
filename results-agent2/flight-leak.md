@@ -12,6 +12,15 @@ Flight SQL uses a 120-second session timeout. The synthetic query returns 20,000
 
 Issued 300 tickets, of which 300 had distinct ticket bytes. The initial and fresh controls matched Spark `True` and `—`. The late fetch status was `ok`.
 
+Memory rose from 63.6 MiB before issuance to 416.3 MiB by the
+ten-second sample and stayed at 416.3 MiB around six minutes. The oldest
+ticket still returned 20,000 rows matching Spark. A fresh ticket
+request failed because the default session had stopped. The pinned
+server keeps query streams in a service-wide map and removes a stream
+when its ticket is fetched. The run sampled one old ticket after
+the watch period.
+[Flight query state](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/state.rs#L42)
+
 | Seconds from issuance start | Issuance complete | Cgroup MiB |
 | --- | --- | --- |
 | 0.0 | False | 63.6 |
@@ -57,7 +66,14 @@ Issued 300 tickets, of which 300 had distinct ticket bytes. The initial and fres
 | flight_cancel | True | ok | 0.0 | 19.461 | 32.201 | 39.004 | False |
 | connect_interrupt | True | timeout | 0.0 | 19.475 | 37.405 | 37.273 | True |
 
-Cgroup memory contains all server allocations and cache. Ticket expiry and memory returning to baseline address different aspects of result cleanup. The test observes one six-minute window.
+Flight SQL cancellation returned promptly and the client received
+`CANCELLED` while the server continued to consume CPU. The Spark Connect
+interrupt RPC timed out at 10 seconds. Both servers were still using
+more than 37 CPU-seconds in the final 10-second window. The observation
+covers this long query and the sampled windows. Other query shapes
+and eventual termination after the last sample remain unverified.
+
+Cgroup memory includes all server allocations and cache, so the memory series cannot account for individual tickets.
 ## Anomalies and log excerpts
 
 ```text

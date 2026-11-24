@@ -31,7 +31,6 @@ jobs:
         timeout-minutes: 310
         run: |
           python -m pip install "duckdb==1.4.4"
-          python -c "import duckdb; duckdb.sql(\"SET custom_extension_repository='https://extensions.duckdb.org'\"); duckdb.sql('INSTALL tpcds')"
           python -m harness.agent2.tpcds
       - uses: ./.github/actions/publish
         if: always()

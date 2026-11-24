@@ -1,0 +1,86 @@
+name: build-sail
+
+# Builds the Sail CLI image from a pinned lakehq/sail commit and pushes it to GHCR.
+# Every POC job pulls the image by its commit SHA, so all results trace to one build.
+
+on:
+  workflow_dispatch:
+    inputs:
+      sail_ref:
+        description: "lakehq/sail branch, tag or commit SHA"
+        default: "main"
+  push:
+    paths:
+      - "docker/sail/**"
+      - ".github/workflows/build-sail.yml"
+
+permissions:
+  contents: read
+  packages: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          docker system prune -af
+          df -h /
+
+      - name: Resolve Sail commit
+        id: ref
+        run: |
+          REF="${{ github.event.inputs.sail_ref || 'main' }}"
+          if [[ "$REF" =~ ^[0-9a-f]{40}$ ]]; then SHA="$REF"; else
+            SHA=$(git ls-remote https://github.com/lakehq/sail.git "$REF" "refs/heads/$REF" "refs/tags/$REF" | head -1 | cut -f1); fi
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "short=${SHA:0:12}" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/${GITHUB_REPOSITORY,,}/sail" >> "$GITHUB_OUTPUT"
+          echo "Sail commit: $SHA"
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Skip if image exists
+        id: exists
+        run: |
+          if docker manifest inspect "${{ steps.ref.outputs.image }}:${{ steps.ref.outputs.short }}" >/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"; echo "Image already built"; else echo "found=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Build
+        if: steps.exists.outputs.found != 'true'
+        run: |
+          start=$(date +%s)
+          docker build --progress=plain \
+            --build-arg SAIL_SHA=${{ steps.ref.outputs.sha }} \
+            -t "${{ steps.ref.outputs.image }}:${{ steps.ref.outputs.short }}" \
+            -t "${{ steps.ref.outputs.image }}:latest" docker/sail 2>&1 | tail -n 200
+          echo "build_seconds=$(( $(date +%s) - start ))" | tee build-time.txt
+
+      - name: Push
+        if: steps.exists.outputs.found != 'true'
+        run: |
+          docker push "${{ steps.ref.outputs.image }}:${{ steps.ref.outputs.short }}"
+          docker push "${{ steps.ref.outputs.image }}:latest"
+
+      - name: Record build info
+        run: |
+          mkdir -p out
+          docker pull -q "${{ steps.ref.outputs.image }}:${{ steps.ref.outputs.short }}" || true
+          docker run --rm --entrypoint sh "${{ steps.ref.outputs.image }}:${{ steps.ref.outputs.short }}" -c \
+            'echo "sail_sha=$(cat /SAIL_SHA)"; sail --version || true; python3 --version; pip show pyspark-client | head -2; ls -la /usr/local/bin/sail' | tee out/build-info.txt
+          cat build-time.txt >> out/build-info.txt 2>/dev/null || true
+          docker image ls "${{ steps.ref.outputs.image }}" | tee -a out/build-info.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-info
+          path: out/

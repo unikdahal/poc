@@ -22,6 +22,13 @@ Each variant processes 10 million synthetic inputs and checks the result count, 
 | sail | udtf | timeout | 0 | — | —/—/— |
 
 Separate sessions measured `SELECT 1` idle and during the CPU-heavy scalar query.
+The Sail p95 moved from 6.558 ms to 6.781 ms across 57 probes that
+started while the heavy query was active. Spark's corresponding p95
+moved from 103.888 ms to 11,453.662 ms with six overlapping probes.
+The heavy query matched Spark across engines. That query took 12.191 s
+wall and 45.240 CPU-seconds on Spark and 37.622 s wall and 38.306
+CPU-seconds on Sail. The single overlap trial per engine limits how
+far the latency result can be generalized.
 
 | Engine | Phase | Samples | P50 s | P95 s | Heavy matches Spark |
 | --- | --- | --- | --- | --- | --- |
@@ -30,7 +37,10 @@ Separate sessions measured `SELECT 1` idle and during the CPU-heavy scalar query
 | sail | idle | 30 | 0.006033 | 0.006558 | — |
 | sail | overlap | 57 | 0.005752 | 0.006781 | True |
 
-Support was also tested with a 1,000-row UDTF before the full case. The small-case Spark match was spark `True`, sail `True`. Cells without a warm timing have insufficient successful and validated samples.
+Both engines matched the Spark reference on a 1,000-row UDTF.
+The 10-million-row Sail UDTF hit the 180-second timeout, leaving
+throughput at that scale unverified.
+
 ## Anomalies and log excerpts
 
 ```text

@@ -16,6 +16,7 @@ ROWS = 10_000_000
 PARTITIONS = 8
 LOAD_ROWS = 500_000
 DEADLINE = 180
+UDTF_DEADLINE = 900
 VARIANTS = ("scalar", "pandas", "arrow", "udtf")
 
 
@@ -129,9 +130,10 @@ def run_engine(result, name):
                 if record["status"] == "timeout":
                     raise TimeoutError(record["error"])
             samples = variants[variant] = []
+            timeout = UDTF_DEADLINE if variant == "udtf" else DEADLINE
             for _ in range(3):
                 record, output = attempt(lambda: bounded(lambda: aggregate(workload(spark, variant)),
-                                                          DEADLINE, spark.interruptAll), stats)
+                                                          timeout, spark.interruptAll), stats)
                 samples.append(record | {"output": output, "matches_spark": output is not None and
                                          output == result.get("spark_reference")})
                 save(TASK, result)
@@ -157,14 +159,14 @@ def main():
         run_engine(result, "sail")
         return
     result = begin(TASK)
-    result["measurement"]["query_timeout_s"] = DEADLINE
+    result["measurement"].update({"query_timeout_s": DEADLINE, "large_udtf_timeout_s": UDTF_DEADLINE})
     result["workload"] = {"input_rows": ROWS, "partitions": PARTITIONS, "heavy_rows": LOAD_ROWS,
                           "heavy_iterations_per_row": 512}
     run_engine(result, "spark")
     if args.sail_python:
         try:
             subprocess.run([args.sail_python, "-m", "harness.agent2.udf", "--sail-only"],
-                           check=True, timeout=1200)
+                           check=True, timeout=3 * UDTF_DEADLINE + 9 * DEADLINE + 600)
         except (subprocess.SubprocessError, OSError) as exc:
             result = json.loads((base.OUT / "udf.json").read_text())
             result["sail_client_error"] = error(exc)

@@ -127,3 +127,19 @@ jobs:
       - uses: ./.github/actions/publish
         if: always()
         with: {name: agent2-catalog, fast-forward: "true"}
+
+  flight-leak:
+    if: github.ref == 'refs/heads/agent2' && (github.event_name == 'push' && contains(github.event.head_commit.message, '[flight-leak]') || inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',flight-leak,'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Observe ticket expiry and cancellation
+        continue-on-error: true
+        timeout-minutes: 90
+        run: python -m harness.agent2.flight_leak
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: agent2-flight-leak, fast-forward: "true"}

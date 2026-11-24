@@ -380,6 +380,9 @@ def release_vs_main(d):
     rows = []
     errors = []
     versions = d.get("versions", {}).get("release", {})
+    direct = d.get("engines", {}).get("release-direct-probe", {}).get("direct_read", {})
+    if direct.get("error"):
+        errors.append(f"Release direct catalog read | {direct['error'].splitlines()[0]}")
     for name in ("main", "release-0.7.3", "spark"):
         case = d.get("engines", {}).get(name, {})
         for q, samples in case.get("queries", {}).items():
@@ -387,7 +390,9 @@ def release_vs_main(d):
                 if sample.get("error"):
                     errors.append(f"{name} Q{q} | {sample['error']}")
         metrics = d.get("paired_comparison", {}).get("release" if name.startswith("release") else name, {})
-        rows.append((name, len(case.get("validated_metrics", {})),
+        mismatches = [int(q) for q, samples in case.get("queries", {}).items()
+                      if any(r.get("matches_spark") is False for r in samples)]
+        rows.append((name, len(case.get("validated_metrics", {})), ", ".join(map(str, sorted(mismatches))) or "—",
                      fmt(metrics.get("wall_s")), fmt(metrics.get("cpu_s")), fmt(metrics.get("peak_mib"), 1)))
     paired = d.get("paired_queries", [])
     pair = d.get("paired_comparison", {})
@@ -399,11 +404,14 @@ def release_vs_main(d):
         f"Release tag commit `{versions.get('upstream_tag_commit', 'unavailable')}`. Wheel "
         f"`{versions.get('wheel_sha256', 'unavailable')}`. The benchmark uses the same SF10 "
         "tables, resource settings and query loop for the release wheel and main image.",
-        table(("Engine", "Validated warm queries", "Paired wall s", "Paired CPU s", "Paired peak MiB"), rows),
+        f"Catalog routing during the measured build comparison was {d.get('catalog_routing', 'direct')}.",
+        table(("Engine", "Validated warm queries", "Queries with value differences", "Paired wall s", "Paired CPU s",
+               "Paired peak MiB"), rows),
         f"The release/main paired wall ratio was {fmt(ratio)}× across {len(paired)} queries."
         if paired else "The run has no complete paired comparison.",
         "Source revision and LTO profile both differ. Their individual effects require a same-revision build comparison. "
-        "Queries with missing or unequal results are excluded from the paired totals."
+        "Queries with missing or unequal results are excluded from the paired totals. A comparison through "
+        "the shared catalog proxy does not establish timings for a direct release connection."
     ]) + anomalies(d, errors)
 
 

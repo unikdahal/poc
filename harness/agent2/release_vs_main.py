@@ -1,9 +1,14 @@
 """Use the SF10 benchmark loop to compare the upstream wheel and prebuilt main."""
 
 import statistics
+import threading
+from contextlib import contextmanager, nullcontext
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+import requests
 
 from harness import common as base, tpch
-from harness.agent2.common import begin, bounded, command, engine, load_h, save
+from harness.agent2.common import attempt, begin, bounded, collect, command, engine, load_h, save
 from harness.suite_bench import bench_engine
 
 TASK = "release-vs-main"
@@ -30,6 +35,54 @@ def summarize(case):
         }
 
 
+def check_delegation(result):
+    route = f"{base.POLARIS}/api/catalog/v1/poc/namespaces/tpch_sf10/tables/orders"
+    headers = {"Authorization": f"Bearer {base.polaris_token()}", "Polaris-Realm": base.REALM}
+    result["direct_catalog_probe"] = observed = {}
+    for label, extra in (("default", {}), ("vended", {"X-Iceberg-Access-Delegation": "vended-credentials"})):
+        response = requests.get(route, headers=headers | extra, timeout=15)
+        observed[label] = {"status": response.status_code, "error": response.text[:400] if not response.ok else None}
+    return observed["default"]["status"] == 200 and observed["vended"]["status"] == 400
+
+
+@contextmanager
+def catalog_proxy():
+    """Give both builds the same read-only catalog path when vending is unavailable."""
+    calls = []
+    port = 18181
+
+    class Proxy(BaseHTTPRequestHandler):
+        def log_message(self, *_):
+            pass
+
+        def forward(self):
+            headers = {}
+            for key in ("Authorization", "Polaris-Realm", "Accept", "User-Agent"):
+                if key in self.headers:
+                    headers[key] = self.headers[key]
+            response = requests.request(self.command, base.POLARIS + self.path,
+                                        headers=headers, timeout=20, allow_redirects=False)
+            calls.append({"method": self.command, "status": response.status_code,
+                          "removed_delegation": self.headers.get("X-Iceberg-Access-Delegation") is not None})
+            self.send_response(response.status_code)
+            self.send_header("Content-Type", response.headers.get("Content-Type", "application/json"))
+            self.send_header("Content-Length", str(len(response.content)))
+            self.end_headers()
+            if self.command == "GET":
+                self.wfile.write(response.content)
+
+        do_HEAD = do_GET = forward
+
+    with ThreadingHTTPServer(("0.0.0.0", port), Proxy) as proxy:
+        thread = threading.Thread(target=proxy.serve_forever, daemon=True)
+        thread.start()
+        try:
+            yield calls
+        finally:
+            proxy.shutdown()
+            thread.join()
+
+
 def main():
     result = begin(TASK)
     result["versions"]["release"] = {
@@ -45,25 +98,47 @@ def main():
     result["versions"]["main_python"] = command("docker", "run", "--rm", "--entrypoint", "python",
                                                base.SAIL_IMAGE, "--version")
     reference = {}
-    for name, label, image in (("spark", "spark", None), ("sail", "release-0.7.3", RELEASE_IMAGE),
-                               ("sail", "main", None)):
-        with engine(result, name, label=label, image=image, output_name=TASK) as (case, spark, stats, _):
-            if name == "spark":
-                result["data_load"] = load_h(spark, 10)
-            if not result.get("data_load"):
-                raise RuntimeError("SF10 reference data load incomplete")
 
-            def checkpoint(output):
-                case.update(output)
-                save(TASK, result)
+    def benchmark(name, spark, stats, case):
+        def checkpoint(output):
+            case.update(output)
+            save(TASK, result)
 
-            case.update(bench_engine(name, spark, stats, "tpch_sf10", REPS, reference,
-                                     query_runner=runner, validate_all=True, on_sample=checkpoint))
-            if name == "spark":
-                for query, records in case["queries"].items():
-                    records[0]["matches_spark"] = query in reference
-            summarize(case)
+        case.update(bench_engine(name, spark, stats, "tpch_sf10", REPS, reference,
+                                 query_runner=runner, validate_all=True, on_sample=checkpoint))
+        if name == "spark":
+            for query, records in case["queries"].items():
+                records[0]["matches_spark"] = query in reference
+        summarize(case)
 
+    with engine(result, "spark", output_name=TASK) as (case, spark, stats, _):
+        result["data_load"] = load_h(spark, 10)
+        benchmark("spark", spark, stats, case)
+    if not result.get("data_load"):
+        return
+    needs_proxy = check_delegation(result)
+    with engine(result, "sail", label="release-direct-probe", image=RELEASE_IMAGE,
+                output_name=TASK) as (case, spark, _, _):
+        sql = "SELECT count(*) FROM polaris.tpch_sf10.nation"
+        record, rows = attempt(lambda: collect(spark, sql, 60))
+        case["direct_read"] = record | {"expected_rows": rows is not None and rows[0][0] == 25}
+
+    extra = None
+    run_options = None
+    if needs_proxy:
+        extra = {"SAIL_CATALOG__LIST": base.sail_env()["SAIL_CATALOG__LIST"].replace(
+            "http://polaris:8181", "http://host.docker.internal:18181"
+        )}
+        run_options = ["--add-host=host.docker.internal:host-gateway"]
+    result["catalog_routing"] = "shared read-only proxy omitting delegation headers" if needs_proxy else "direct"
+    with (catalog_proxy() if needs_proxy else nullcontext([])) as calls:
+        for label, image in (("release-0.7.3", RELEASE_IMAGE), ("main", None)):
+            with engine(result, "sail", label=label, image=image, extra=extra, run_options=run_options,
+                        output_name=TASK) as (case, spark, stats, _):
+                offset = len(calls)
+                benchmark("sail", spark, stats, case)
+                case["catalog_requests"] = len(calls[offset:]) if needs_proxy else None
+                case["catalog_requests_with_delegation_removed"] = sum(c["removed_delegation"] for c in calls[offset:])
     tested = result["engines"]
     main_metrics = tested["main"].get("validated_metrics", {})
     release_metrics = tested["release-0.7.3"].get("validated_metrics", {})

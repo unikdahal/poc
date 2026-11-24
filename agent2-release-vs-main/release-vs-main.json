@@ -1,0 +1,1481 @@
+{
+  "task": "release-vs-main",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.agent2.release_vs_main"
+  ],
+  "revision": "93af83585ba1c738e1b25a01dc6d149fa59017e0",
+  "run_id": "45491701924",
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d",
+    "sail_image_digest": "[\"ghcr.io/unikdahal/poc/sail@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767\"]",
+    "infra_images": "{\"Command\":\"\\\"/entrypoint.sh rust\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:31:57 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"1059daa1f5cc\",\"Image\":\"rustfs/rustfs:1.0.0-beta.8\",\"Labels\":\"com.docker.compose.container-number=1,com.docker.compose.image=sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3,com.docker.compose.oneoff=False,com.docker.compose.service=minio,description=RustFS is a distributed object storage system written in Rust, supporting erasure coding, multi-tenant management, and observability.,license=Apache-2.0,name=RustFS,url=https://rustfs.com,build-date=,com.docker.compose.config-hash=23bdcebd18c8e9ef15f1d9eca851868fb5013fd2e2e4ec8889eb631048bccea1,com.docker.compose.depends_on=,com.docker.compose.project=poc,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,vcs-ref=,vendor=RustFS Team,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml,release=1.0.0-beta.8,version=v1.0.0-beta.8,com.docker.compose.version=5.1.3,maintainer=RustFS Team \\u003cdev@rustfs.com\\u003e,org.opencontainers.image.title=RustFS,org.opencontainers.image.description=RustFS distributed object storage system,org.opencontainers.image.version=1.0.0-beta.8,org.opencontainers.image.revision=64c0ede0261eeb7ccd415221d6f102aa70829b6a,org.opencontainers.image.source=https://github.com/rustfs/rustfs,org.opencontainers.image.created=2026-06-10T10:22:17Z,org.opencontainers.image.build-type=prerelease,summary=High-performance distributed object storage system compatible with S3 API\",\"LocalVolumes\":\"1\",\"Mounts\":\"5a5826801d6f04\u2026\",\"Name\":\"poc-minio-1\",\"Names\":\"poc-minio-1\",\"Networks\":\"poc\",\"Ports\":\"0.0.0.0:9000-\\u003e9000/tcp, [::]:9000-\\u003e9000/tcp, 9001/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"0.0.0.0\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":9001,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"33 seconds ago\",\"Service\":\"minio\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 24 seconds (healthy)\"}\n{\"Command\":\"\\\"/opt/jboss/containe\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:32:06 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"f124fa5521c8\",\"Image\":\"apache/polaris:latest\",\"Labels\":\"build-date=2026-10-30T03:03:13,io.buildah.version=1.33.14,io.openshift.expose-services=,io.openshift.tags=java,org.jboss.product=openjdk,org.jboss.product.openjdk.version=21,url=https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/openjdk-21-runtime/images/1.24-3.1793323798,usage=https://rh-openjdk.github.io/redhat-openjdk-containers/,name=ubi9/openjdk-21-runtime,org.opencontainers.image.licenses=Apache-2.0,release=3.1793323798,vendor=Red Hat, Inc.,architecture=x86_64,description=Image for Red Hat OpenShift providing OpenJDK 21 runtime,com.docker.compose.image=sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0,com.redhat.license_terms=https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI,vcs-ref=f74d5e7c1c24af798478dbc512f9ddf0ffc4c411,com.docker.compose.project=poc,com.docker.compose.service=polaris,distribution-scope=public,io.k8s.description=Platform for running plain Java applications (fat-jar and flat classpath),org.opencontainers.image.source=https://github.com/apache/polaris,com.docker.compose.config-hash=ccd97af12a7b70c621335cca3c29fa55893c9b7cd710485098da572aa30bd4bd,com.docker.compose.container-number=1,cpe=cpe:/a:redhat:enterprise_linux:9::appstream,io.k8s.display-name=Java Applications,org.opencontainers.image.revision=ubi9,vcs-type=git,com.docker.compose.depends_on=minio-setup:service_completed_successfully:false,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,com.redhat.component=openjdk-21-runtime-ubi9-container,io.cekit.version=4.13.0.dev0,maintainer=Red Hat OpenJDK \\u003copenjdk@redhat.com\\u003e,org.opencontainers.image.created=2026-10-29T05:53:50Z,org.opencontainers.image.description=Apache Polaris,com.docker.compose.oneoff=False,com.docker.compose.version=5.1.3,org.jboss.product.version=21,org.opencontainers.image.documentation=https://rh-openjdk.github.io/redhat-openjdk-containers/,summary=Image for Red Hat OpenShift providing OpenJDK 21 runtime,version=1.24\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"poc-polaris-1\",\"Names\":\"poc-polaris-1\",\"Networks\":\"poc\",\"Ports\":\"8080/tcp, 8443/tcp, 0.0.0.0:8181-8182-\\u003e8181-8182/tcp, [::]:8181-8182-\\u003e8181-8182/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"\",\"TargetPort\":8080,\"PublishedPort\":0,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":8443,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"24 seconds ago\",\"Service\":\"polaris\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 17 seconds (healthy)\"}",
+    "release": {
+      "version": "0.7.3",
+      "upstream_tag_commit": "ac4690078021cf2a5402dc5c7b38a886f1916c73",
+      "profile": "fat LTO",
+      "image": "agent2-release:0.7.3",
+      "wheel_sha256": "b9a308f8216b65c15f0e3666482ba602e962ec25408d42570a18b35f090dfdda  pysail-0.7.3-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "image_id": "sha256:2caee02c222f217bf21a98a0dd6ed357d7aacbf89e98374b2674312d66aafca7",
+      "python": "Python 3.14.10"
+    },
+    "main_profile": "thin LTO",
+    "main_python": "Python 3.14.10"
+  },
+  "runner": {
+    "cpus": 4,
+    "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.43",
+    "memory_bytes": 16759422976
+  },
+  "measurement": {
+    "cpu": "container cgroup v2 or Spark process tree",
+    "memory": "sampled at 100 ms",
+    "warm_samples": 2,
+    "query_timeout_s": 240
+  },
+  "engines": {
+    "spark": {
+      "config": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "comet_off_heap_default": null,
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 9.013233184814453,
+      "queries": {
+        "1": [
+          {
+            "s": 26.912,
+            "cpu_s": 94.82,
+            "peak_mb": 5101,
+            "matches_spark": true
+          },
+          {
+            "s": 26.4,
+            "cpu_s": 92.1,
+            "peak_mb": 10388,
+            "matches_spark": true
+          },
+          {
+            "s": 26.382,
+            "cpu_s": 92.04,
+            "peak_mb": 10434,
+            "matches_spark": true
+          }
+        ],
+        "2": [
+          {
+            "s": 6.053,
+            "cpu_s": 20.29,
+            "peak_mb": 5150,
+            "matches_spark": true
+          },
+          {
+            "s": 3.653,
+            "cpu_s": 11.77,
+            "peak_mb": 5376,
+            "matches_spark": true
+          },
+          {
+            "s": 3.514,
+            "cpu_s": 11.52,
+            "peak_mb": 5650,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "s": 10.475,
+            "cpu_s": 37.3,
+            "peak_mb": 4305,
+            "matches_spark": true
+          },
+          {
+            "s": 9.432,
+            "cpu_s": 31.28,
+            "peak_mb": 5390,
+            "matches_spark": true
+          },
+          {
+            "s": 8.963,
+            "cpu_s": 30.23,
+            "peak_mb": 5653,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "s": 7.854,
+            "cpu_s": 27.36,
+            "peak_mb": 5351,
+            "matches_spark": true
+          },
+          {
+            "s": 6.912,
+            "cpu_s": 23.75,
+            "peak_mb": 6371,
+            "matches_spark": true
+          },
+          {
+            "s": 6.387,
+            "cpu_s": 21.65,
+            "peak_mb": 6382,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "s": 17.44,
+            "cpu_s": 56.55,
+            "peak_mb": 7215,
+            "matches_spark": true
+          },
+          {
+            "s": 15.142,
+            "cpu_s": 53.95,
+            "peak_mb": 7032,
+            "matches_spark": true
+          },
+          {
+            "s": 15.509,
+            "cpu_s": 54.39,
+            "peak_mb": 7116,
+            "matches_spark": true
+          }
+        ],
+        "6": [
+          {
+            "s": 3.762,
+            "cpu_s": 6.76,
+            "peak_mb": 8361,
+            "matches_spark": true
+          },
+          {
+            "s": 2.074,
+            "cpu_s": 5.71,
+            "peak_mb": 8148,
+            "matches_spark": true
+          },
+          {
+            "s": 2.173,
+            "cpu_s": 5.57,
+            "peak_mb": 8709,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "s": 15.262,
+            "cpu_s": 46.36,
+            "peak_mb": 8835,
+            "matches_spark": true
+          },
+          {
+            "s": 14.33,
+            "cpu_s": 49.24,
+            "peak_mb": 8902,
+            "matches_spark": true
+          },
+          {
+            "s": 13.292,
+            "cpu_s": 44.79,
+            "peak_mb": 9039,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "s": 15.652,
+            "cpu_s": 47.08,
+            "peak_mb": 8891,
+            "matches_spark": true
+          },
+          {
+            "s": 13.17,
+            "cpu_s": 45.37,
+            "peak_mb": 5360,
+            "matches_spark": true
+          },
+          {
+            "s": 13.422,
+            "cpu_s": 45.28,
+            "peak_mb": 9276,
+            "matches_spark": true
+          }
+        ],
+        "9": [
+          {
+            "s": 22.359,
+            "cpu_s": 77.69,
+            "peak_mb": 4098,
+            "matches_spark": true
+          },
+          {
+            "s": 21.594,
+            "cpu_s": 76.39,
+            "peak_mb": 4110,
+            "matches_spark": true
+          },
+          {
+            "s": 22.371,
+            "cpu_s": 78.4,
+            "peak_mb": 4562,
+            "matches_spark": true
+          }
+        ],
+        "10": [
+          {
+            "s": 8.525,
+            "cpu_s": 27.33,
+            "peak_mb": 4630,
+            "matches_spark": true
+          },
+          {
+            "s": 7.416,
+            "cpu_s": 24.98,
+            "peak_mb": 4633,
+            "matches_spark": true
+          },
+          {
+            "s": 8.285,
+            "cpu_s": 27.98,
+            "peak_mb": 4577,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "s": 2.231,
+            "cpu_s": 6.66,
+            "peak_mb": 4636,
+            "matches_spark": true
+          },
+          {
+            "s": 1.689,
+            "cpu_s": 4.8,
+            "peak_mb": 4634,
+            "matches_spark": true
+          },
+          {
+            "s": 2.259,
+            "cpu_s": 6.79,
+            "peak_mb": 4174,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "s": 5.135,
+            "cpu_s": 15.36,
+            "peak_mb": 4645,
+            "matches_spark": true
+          },
+          {
+            "s": 4.826,
+            "cpu_s": 14.25,
+            "peak_mb": 4634,
+            "matches_spark": true
+          },
+          {
+            "s": 5.268,
+            "cpu_s": 15.77,
+            "peak_mb": 3477,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "s": 10.279,
+            "cpu_s": 30.71,
+            "peak_mb": 4653,
+            "matches_spark": true
+          },
+          {
+            "s": 10.614,
+            "cpu_s": 31.76,
+            "peak_mb": 4664,
+            "matches_spark": true
+          },
+          {
+            "s": 11.875,
+            "cpu_s": 35.04,
+            "peak_mb": 4737,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "s": 3.243,
+            "cpu_s": 10.01,
+            "peak_mb": 5720,
+            "matches_spark": true
+          },
+          {
+            "s": 2.81,
+            "cpu_s": 8.63,
+            "peak_mb": 5500,
+            "matches_spark": true
+          },
+          {
+            "s": 2.983,
+            "cpu_s": 9.08,
+            "peak_mb": 6150,
+            "matches_spark": true
+          }
+        ],
+        "15": [
+          {
+            "s": 6.281,
+            "cpu_s": 19.3,
+            "peak_mb": 5732,
+            "matches_spark": true
+          },
+          {
+            "s": 5.677,
+            "cpu_s": 17.3,
+            "peak_mb": 5502,
+            "matches_spark": true
+          },
+          {
+            "s": 6.19,
+            "cpu_s": 19.41,
+            "peak_mb": 6302,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "s": 3.998,
+            "cpu_s": 12.89,
+            "peak_mb": 5734,
+            "matches_spark": true
+          },
+          {
+            "s": 3.804,
+            "cpu_s": 11.89,
+            "peak_mb": 5506,
+            "matches_spark": true
+          },
+          {
+            "s": 4.437,
+            "cpu_s": 14.47,
+            "peak_mb": 6474,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "s": 27.055,
+            "cpu_s": 98.08,
+            "peak_mb": 5242,
+            "matches_spark": true
+          },
+          {
+            "s": 26.498,
+            "cpu_s": 95.68,
+            "peak_mb": 5512,
+            "matches_spark": true
+          },
+          {
+            "s": 27.462,
+            "cpu_s": 99.1,
+            "peak_mb": 6557,
+            "matches_spark": true
+          }
+        ],
+        "18": [
+          {
+            "s": 26.482,
+            "cpu_s": 94.06,
+            "peak_mb": 10420,
+            "matches_spark": true
+          },
+          {
+            "s": 25.585,
+            "cpu_s": 93.08,
+            "peak_mb": 9933,
+            "matches_spark": true
+          },
+          {
+            "s": 25.423,
+            "cpu_s": 92.37,
+            "peak_mb": 10071,
+            "matches_spark": true
+          }
+        ],
+        "19": [
+          {
+            "s": 3.819,
+            "cpu_s": 11.35,
+            "peak_mb": 10428,
+            "matches_spark": true
+          },
+          {
+            "s": 3.399,
+            "cpu_s": 10.2,
+            "peak_mb": 9953,
+            "matches_spark": true
+          },
+          {
+            "s": 3.677,
+            "cpu_s": 11.17,
+            "peak_mb": 10156,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "s": 4.799,
+            "cpu_s": 14.61,
+            "peak_mb": 10433,
+            "matches_spark": true
+          },
+          {
+            "s": 5.219,
+            "cpu_s": 16.09,
+            "peak_mb": 9964,
+            "matches_spark": true
+          },
+          {
+            "s": 4.915,
+            "cpu_s": 15.1,
+            "peak_mb": 10158,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "s": 29.544,
+            "cpu_s": 105.3,
+            "peak_mb": 10441,
+            "matches_spark": true
+          },
+          {
+            "s": 28.667,
+            "cpu_s": 101.95,
+            "peak_mb": 9968,
+            "matches_spark": true
+          },
+          {
+            "s": 28.66,
+            "cpu_s": 102.19,
+            "peak_mb": 10161,
+            "matches_spark": true
+          }
+        ],
+        "22": [
+          {
+            "s": 3.882,
+            "cpu_s": 11.81,
+            "peak_mb": 9586,
+            "matches_spark": true
+          },
+          {
+            "s": 3.842,
+            "cpu_s": 11.91,
+            "peak_mb": 9558,
+            "matches_spark": true
+          },
+          {
+            "s": 4.115,
+            "cpu_s": 12.59,
+            "peak_mb": 9896,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "1": {
+          "s": 26.391,
+          "cpu_s": 92.07,
+          "peak_mb": 10411.0
+        },
+        "2": {
+          "s": 3.5835,
+          "cpu_s": 11.645,
+          "peak_mb": 5513.0
+        },
+        "3": {
+          "s": 9.1975,
+          "cpu_s": 30.755000000000003,
+          "peak_mb": 5521.5
+        },
+        "4": {
+          "s": 6.6495,
+          "cpu_s": 22.7,
+          "peak_mb": 6376.5
+        },
+        "5": {
+          "s": 15.3255,
+          "cpu_s": 54.17,
+          "peak_mb": 7074.0
+        },
+        "6": {
+          "s": 2.1235,
+          "cpu_s": 5.640000000000001,
+          "peak_mb": 8428.5
+        },
+        "7": {
+          "s": 13.811,
+          "cpu_s": 47.015,
+          "peak_mb": 8970.5
+        },
+        "8": {
+          "s": 13.296,
+          "cpu_s": 45.325,
+          "peak_mb": 7318.0
+        },
+        "9": {
+          "s": 21.9825,
+          "cpu_s": 77.39500000000001,
+          "peak_mb": 4336.0
+        },
+        "10": {
+          "s": 7.8505,
+          "cpu_s": 26.48,
+          "peak_mb": 4605.0
+        },
+        "11": {
+          "s": 1.974,
+          "cpu_s": 5.795,
+          "peak_mb": 4404.0
+        },
+        "12": {
+          "s": 5.047,
+          "cpu_s": 15.01,
+          "peak_mb": 4055.5
+        },
+        "13": {
+          "s": 11.2445,
+          "cpu_s": 33.4,
+          "peak_mb": 4700.5
+        },
+        "14": {
+          "s": 2.8965,
+          "cpu_s": 8.855,
+          "peak_mb": 5825.0
+        },
+        "15": {
+          "s": 5.9335,
+          "cpu_s": 18.355,
+          "peak_mb": 5902.0
+        },
+        "16": {
+          "s": 4.1205,
+          "cpu_s": 13.18,
+          "peak_mb": 5990.0
+        },
+        "17": {
+          "s": 26.98,
+          "cpu_s": 97.39,
+          "peak_mb": 6034.5
+        },
+        "18": {
+          "s": 25.503999999999998,
+          "cpu_s": 92.725,
+          "peak_mb": 10002.0
+        },
+        "19": {
+          "s": 3.5380000000000003,
+          "cpu_s": 10.684999999999999,
+          "peak_mb": 10054.5
+        },
+        "20": {
+          "s": 5.067,
+          "cpu_s": 15.594999999999999,
+          "peak_mb": 10061.0
+        },
+        "21": {
+          "s": 28.6635,
+          "cpu_s": 102.07,
+          "peak_mb": 10064.5
+        },
+        "22": {
+          "s": 3.9785000000000004,
+          "cpu_s": 12.25,
+          "peak_mb": 9727.0
+        }
+      },
+      "log_excerpt": "hedSize(13917,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(13740,3) maxCachedUntilProduced=CachedSize(13740,3)\n26/11/24 21:48:13 INFO ExecuteResponseObserver: Release all for opId=8977f88f-defe-4733-bd60-d20bf33bc25b. Execution stats: total=CachedSize(13917,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(13740,3) maxCachedUntilProduced=CachedSize(13740,3)\n26/11/24 21:48:13 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO\n26/11/24 21:48:13 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO\n26/11/24 21:48:13 INFO SparkContext: Invoking stop() from shutdown hook\n26/11/24 21:48:13 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/24 21:48:13 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/24 21:48:13 INFO MemoryStore: MemoryStore cleared\n26/11/24 21:48:13 INFO BlockManager: BlockManager stopped\n26/11/24 21:48:13 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/24 21:48:13 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/24 21:48:13 INFO SparkContext: Successfully stopped SparkContext\n26/11/24 21:48:13 INFO ShutdownHookManager: Shutdown hook called\n26/11/24 21:48:13 INFO ShutdownHookManager: Deleting directory /tmp/spark-7d81ab82-1117-489d-bebe-6b529bfaf98d\n26/11/24 21:48:13 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-c5d7f93f-7927-45bb-a4d9-37128746f6bb\n26/11/24 21:48:13 INFO ShutdownHookManager: Deleting directory /tmp/spark-11c8bb85-0fa8-4554-b8e1-d5b420ad155c\n"
+    },
+    "release-0.7.3": {
+      "config": {
+        "mode": "local",
+        "environment": {},
+        "image": "agent2-release:0.7.3",
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.4594736099243164,
+      "queries": {
+        "1": [
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          }
+        ],
+        "2": [
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          }
+        ],
+        "3": [
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          }
+        ],
+        "4": [
+          {
+            "error": "Failed to load table tpch_sf10.orders: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.orders: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.orders: response error: status code 400 Bad Request"
+          }
+        ],
+        "5": [
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          }
+        ],
+        "6": [
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          }
+        ],
+        "7": [
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          }
+        ],
+        "8": [
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          }
+        ],
+        "9": [
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.part: response error: status code 400 Bad Request"
+          }
+        ],
+        "10": [
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          }
+        ],
+        "11": [
+          {
+            "error": "Failed to load table tpch_sf10.partsupp: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.partsupp: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.partsupp: response error: status code 400 Bad Request"
+          }
+        ],
+        "12": [
+          {
+            "error": "Failed to load table tpch_sf10.orders: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.orders: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.orders: response error: status code 400 Bad Request"
+          }
+        ],
+        "13": [
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          }
+        ],
+        "14": [
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          }
+        ],
+        "15": [
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          }
+        ],
+        "16": [
+          {
+            "error": "Failed to load table tpch_sf10.partsupp: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.partsupp: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.partsupp: response error: status code 400 Bad Request"
+          }
+        ],
+        "17": [
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          }
+        ],
+        "18": [
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          }
+        ],
+        "19": [
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.lineitem: response error: status code 400 Bad Request"
+          }
+        ],
+        "20": [
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          }
+        ],
+        "21": [
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.supplier: response error: status code 400 Bad Request"
+          }
+        ],
+        "22": [
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          },
+          {
+            "error": "Failed to load table tpch_sf10.customer: response error: status code 400 Bad Request"
+          }
+        ]
+      },
+      "validated_metrics": {},
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 21148,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:48:15.131837985Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    },
+    "main": {
+      "config": {
+        "mode": "local",
+        "environment": {},
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d",
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 1.1475856304168701,
+      "queries": {
+        "1": [
+          {
+            "s": 2.848,
+            "cpu_s": 8.87,
+            "peak_mb": 446,
+            "matches_spark": false
+          },
+          {
+            "s": 2.569,
+            "cpu_s": 8.99,
+            "peak_mb": 2337,
+            "matches_spark": false
+          },
+          {
+            "s": 2.583,
+            "cpu_s": 8.98,
+            "peak_mb": 2108,
+            "matches_spark": false
+          }
+        ],
+        "2": [
+          {
+            "s": 0.553,
+            "cpu_s": 1.03,
+            "peak_mb": 600,
+            "matches_spark": true
+          },
+          {
+            "s": 0.446,
+            "cpu_s": 1.09,
+            "peak_mb": 1248,
+            "matches_spark": true
+          },
+          {
+            "s": 0.433,
+            "cpu_s": 1.05,
+            "peak_mb": 1821,
+            "matches_spark": true
+          }
+        ],
+        "3": [
+          {
+            "s": 1.306,
+            "cpu_s": 3.79,
+            "peak_mb": 637,
+            "matches_spark": true
+          },
+          {
+            "s": 1.363,
+            "cpu_s": 3.99,
+            "peak_mb": 1330,
+            "matches_spark": true
+          },
+          {
+            "s": 1.375,
+            "cpu_s": 4.08,
+            "peak_mb": 1562,
+            "matches_spark": true
+          }
+        ],
+        "4": [
+          {
+            "s": 0.733,
+            "cpu_s": 2.08,
+            "peak_mb": 612,
+            "matches_spark": true
+          },
+          {
+            "s": 0.767,
+            "cpu_s": 2.14,
+            "peak_mb": 1346,
+            "matches_spark": true
+          },
+          {
+            "s": 0.74,
+            "cpu_s": 2.13,
+            "peak_mb": 1080,
+            "matches_spark": true
+          }
+        ],
+        "5": [
+          {
+            "s": 2.044,
+            "cpu_s": 5.95,
+            "peak_mb": 778,
+            "matches_spark": true
+          },
+          {
+            "s": 1.941,
+            "cpu_s": 6.03,
+            "peak_mb": 1391,
+            "matches_spark": true
+          },
+          {
+            "s": 1.979,
+            "cpu_s": 6.17,
+            "peak_mb": 1256,
+            "matches_spark": true
+          }
+        ],
+        "6": [
+          {
+            "s": 1.027,
+            "cpu_s": 2.49,
+            "peak_mb": 783,
+            "matches_spark": true
+          },
+          {
+            "s": 0.807,
+            "cpu_s": 2.48,
+            "peak_mb": 1410,
+            "matches_spark": true
+          },
+          {
+            "s": 0.818,
+            "cpu_s": 2.49,
+            "peak_mb": 1256,
+            "matches_spark": true
+          }
+        ],
+        "7": [
+          {
+            "s": 1.973,
+            "cpu_s": 4.59,
+            "peak_mb": 778,
+            "matches_spark": true
+          },
+          {
+            "s": 1.557,
+            "cpu_s": 4.54,
+            "peak_mb": 1455,
+            "matches_spark": true
+          },
+          {
+            "s": 1.619,
+            "cpu_s": 4.65,
+            "peak_mb": 1180,
+            "matches_spark": true
+          }
+        ],
+        "8": [
+          {
+            "s": 2.799,
+            "cpu_s": 6.91,
+            "peak_mb": 745,
+            "matches_spark": false
+          },
+          {
+            "s": 2.206,
+            "cpu_s": 6.79,
+            "peak_mb": 1297,
+            "matches_spark": false
+          },
+          {
+            "s": 2.287,
+            "cpu_s": 7.0,
+            "peak_mb": 1205,
+            "matches_spark": false
+          }
+        ],
+        "9": [
+          {
+            "s": 3.38,
+            "cpu_s": 9.71,
+            "peak_mb": 1635,
+            "matches_spark": true
+          },
+          {
+            "s": 3.002,
+            "cpu_s": 9.88,
+            "peak_mb": 2129,
+            "matches_spark": true
+          },
+          {
+            "s": 3.157,
+            "cpu_s": 10.44,
+            "peak_mb": 2351,
+            "matches_spark": true
+          }
+        ],
+        "10": [
+          {
+            "s": 1.516,
+            "cpu_s": 4.71,
+            "peak_mb": 1635,
+            "matches_spark": true
+          },
+          {
+            "s": 1.548,
+            "cpu_s": 4.76,
+            "peak_mb": 2191,
+            "matches_spark": true
+          },
+          {
+            "s": 1.652,
+            "cpu_s": 4.96,
+            "peak_mb": 2175,
+            "matches_spark": true
+          }
+        ],
+        "11": [
+          {
+            "s": 0.39,
+            "cpu_s": 0.79,
+            "peak_mb": 1428,
+            "matches_spark": true
+          },
+          {
+            "s": 0.307,
+            "cpu_s": 0.79,
+            "peak_mb": 2197,
+            "matches_spark": true
+          },
+          {
+            "s": 0.335,
+            "cpu_s": 0.8,
+            "peak_mb": 1429,
+            "matches_spark": true
+          }
+        ],
+        "12": [
+          {
+            "s": 1.401,
+            "cpu_s": 4.45,
+            "peak_mb": 1863,
+            "matches_spark": true
+          },
+          {
+            "s": 1.496,
+            "cpu_s": 4.62,
+            "peak_mb": 2515,
+            "matches_spark": true
+          },
+          {
+            "s": 1.517,
+            "cpu_s": 4.83,
+            "peak_mb": 2397,
+            "matches_spark": true
+          }
+        ],
+        "13": [
+          {
+            "s": 1.591,
+            "cpu_s": 4.73,
+            "peak_mb": 1871,
+            "matches_spark": true
+          },
+          {
+            "s": 1.61,
+            "cpu_s": 4.74,
+            "peak_mb": 2114,
+            "matches_spark": true
+          },
+          {
+            "s": 1.618,
+            "cpu_s": 4.89,
+            "peak_mb": 2494,
+            "matches_spark": true
+          }
+        ],
+        "14": [
+          {
+            "s": 0.966,
+            "cpu_s": 2.84,
+            "peak_mb": 1649,
+            "matches_spark": false
+          },
+          {
+            "s": 0.969,
+            "cpu_s": 2.8,
+            "peak_mb": 2175,
+            "matches_spark": false
+          },
+          {
+            "s": 0.982,
+            "cpu_s": 2.86,
+            "peak_mb": 1699,
+            "matches_spark": false
+          }
+        ],
+        "15": [
+          {
+            "s": 1.851,
+            "cpu_s": 5.57,
+            "peak_mb": 1651,
+            "matches_spark": true
+          },
+          {
+            "s": 1.867,
+            "cpu_s": 5.63,
+            "peak_mb": 2189,
+            "matches_spark": true
+          },
+          {
+            "s": 1.91,
+            "cpu_s": 5.76,
+            "peak_mb": 1469,
+            "matches_spark": true
+          }
+        ],
+        "16": [
+          {
+            "s": 0.554,
+            "cpu_s": 0.88,
+            "peak_mb": 1009,
+            "matches_spark": true
+          },
+          {
+            "s": 0.523,
+            "cpu_s": 0.86,
+            "peak_mb": 1400,
+            "matches_spark": true
+          },
+          {
+            "s": 0.575,
+            "cpu_s": 0.92,
+            "peak_mb": 1617,
+            "matches_spark": true
+          }
+        ],
+        "17": [
+          {
+            "s": 3.65,
+            "cpu_s": 12.98,
+            "peak_mb": 1009,
+            "matches_spark": true
+          },
+          {
+            "s": 3.696,
+            "cpu_s": 12.91,
+            "peak_mb": 1434,
+            "matches_spark": true
+          },
+          {
+            "s": 3.85,
+            "cpu_s": 13.58,
+            "peak_mb": 1217,
+            "matches_spark": true
+          }
+        ],
+        "18": [
+          {
+            "s": 4.366,
+            "cpu_s": 15.32,
+            "peak_mb": 3293,
+            "matches_spark": true
+          },
+          {
+            "s": 4.278,
+            "cpu_s": 15.26,
+            "peak_mb": 3728,
+            "matches_spark": true
+          },
+          {
+            "s": 4.495,
+            "cpu_s": 16.02,
+            "peak_mb": 3893,
+            "matches_spark": true
+          }
+        ],
+        "19": [
+          {
+            "s": 1.768,
+            "cpu_s": 5.79,
+            "peak_mb": 3294,
+            "matches_spark": true
+          },
+          {
+            "s": 1.827,
+            "cpu_s": 5.77,
+            "peak_mb": 2491,
+            "matches_spark": true
+          },
+          {
+            "s": 1.804,
+            "cpu_s": 5.89,
+            "peak_mb": 3431,
+            "matches_spark": true
+          }
+        ],
+        "20": [
+          {
+            "s": 1.471,
+            "cpu_s": 4.48,
+            "peak_mb": 1302,
+            "matches_spark": true
+          },
+          {
+            "s": 1.473,
+            "cpu_s": 4.55,
+            "peak_mb": 2802,
+            "matches_spark": true
+          },
+          {
+            "s": 1.527,
+            "cpu_s": 4.68,
+            "peak_mb": 1880,
+            "matches_spark": true
+          }
+        ],
+        "21": [
+          {
+            "s": 3.919,
+            "cpu_s": 12.85,
+            "peak_mb": 3176,
+            "matches_spark": true
+          },
+          {
+            "s": 3.891,
+            "cpu_s": 12.61,
+            "peak_mb": 3505,
+            "matches_spark": true
+          },
+          {
+            "s": 4.069,
+            "cpu_s": 13.18,
+            "peak_mb": 3407,
+            "matches_spark": true
+          }
+        ],
+        "22": [
+          {
+            "s": 0.381,
+            "cpu_s": 1.02,
+            "peak_mb": 2275,
+            "matches_spark": true
+          },
+          {
+            "s": 0.368,
+            "cpu_s": 0.96,
+            "peak_mb": 2108,
+            "matches_spark": true
+          },
+          {
+            "s": 0.365,
+            "cpu_s": 0.99,
+            "peak_mb": 2472,
+            "matches_spark": true
+          }
+        ]
+      },
+      "validated_metrics": {
+        "2": {
+          "s": 0.4395,
+          "cpu_s": 1.07,
+          "peak_mb": 1534.5
+        },
+        "3": {
+          "s": 1.369,
+          "cpu_s": 4.035,
+          "peak_mb": 1446.0
+        },
+        "4": {
+          "s": 0.7535000000000001,
+          "cpu_s": 2.135,
+          "peak_mb": 1213.0
+        },
+        "5": {
+          "s": 1.96,
+          "cpu_s": 6.1,
+          "peak_mb": 1323.5
+        },
+        "6": {
+          "s": 0.8125,
+          "cpu_s": 2.4850000000000003,
+          "peak_mb": 1333.0
+        },
+        "7": {
+          "s": 1.588,
+          "cpu_s": 4.595000000000001,
+          "peak_mb": 1317.5
+        },
+        "9": {
+          "s": 3.0795,
+          "cpu_s": 10.16,
+          "peak_mb": 2240.0
+        },
+        "10": {
+          "s": 1.6,
+          "cpu_s": 4.859999999999999,
+          "peak_mb": 2183.0
+        },
+        "11": {
+          "s": 0.321,
+          "cpu_s": 0.795,
+          "peak_mb": 1813.0
+        },
+        "12": {
+          "s": 1.5065,
+          "cpu_s": 4.725,
+          "peak_mb": 2456.0
+        },
+        "13": {
+          "s": 1.614,
+          "cpu_s": 4.8149999999999995,
+          "peak_mb": 2304.0
+        },
+        "15": {
+          "s": 1.8885,
+          "cpu_s": 5.695,
+          "peak_mb": 1829.0
+        },
+        "16": {
+          "s": 0.5489999999999999,
+          "cpu_s": 0.89,
+          "peak_mb": 1508.5
+        },
+        "17": {
+          "s": 3.773,
+          "cpu_s": 13.245000000000001,
+          "peak_mb": 1325.5
+        },
+        "18": {
+          "s": 4.3865,
+          "cpu_s": 15.64,
+          "peak_mb": 3810.5
+        },
+        "19": {
+          "s": 1.8155000000000001,
+          "cpu_s": 5.83,
+          "peak_mb": 2961.0
+        },
+        "20": {
+          "s": 1.5,
+          "cpu_s": 4.615,
+          "peak_mb": 2341.0
+        },
+        "21": {
+          "s": 3.98,
+          "cpu_s": 12.895,
+          "peak_mb": 3456.0
+        },
+        "22": {
+          "s": 0.3665,
+          "cpu_s": 0.975,
+          "peak_mb": 2290.0
+        }
+      },
+      "container_state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 21885,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:48:24.482322306Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      }
+    }
+  },
+  "data_load": {
+    "nation": {
+      "rows": 25,
+      "seconds": 4.44
+    },
+    "region": {
+      "rows": 5,
+      "seconds": 0.73
+    },
+    "part": {
+      "rows": 2000000,
+      "seconds": 3.85
+    },
+    "supplier": {
+      "rows": 100000,
+      "seconds": 1.05
+    },
+    "partsupp": {
+      "rows": 8000000,
+      "seconds": 7.92
+    },
+    "customer": {
+      "rows": 1500000,
+      "seconds": 3.01
+    },
+    "orders": {
+      "rows": 15000000,
+      "seconds": 15.94
+    },
+    "lineitem": {
+      "rows": 59986052,
+      "seconds": 61.41
+    }
+  },
+  "paired_queries": []
+}

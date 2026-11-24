@@ -1,0 +1,180 @@
+name: poc
+
+on:
+  workflow_dispatch:
+    inputs:
+      suites:
+        description: "comma-separated: functional,cluster,k8s,bench1,bench10"
+        default: "functional,cluster,k8s,bench1,bench10"
+      sail_tag:
+        description: "Sail image tag (commit SHA prefix or latest)"
+        default: "latest"
+  push:
+    paths: [".github/run-poc"]
+
+permissions:
+  contents: read
+  packages: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  SUITES: ${{ github.event.inputs.suites || 'functional,cluster,k8s,bench1,bench10' }}
+  SAIL_TAG: ${{ github.event.inputs.sail_tag || 'latest' }}
+
+jobs:
+  functional:
+    if: contains(github.event.inputs.suites || 'functional,cluster,k8s,bench1,bench10', 'functional')
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Token refresher
+        run: nohup bash -c 'while true; do sleep 900; python -m harness.services token; done' > out/token-refresher.log 2>&1 &
+      - name: Spark reference server
+        run: python -m harness.services spark
+      - name: Load TPC-H sf1 (written by Spark)
+        run: python -m harness.data --sf 1
+      - name: Sail servers (Spark Connect + Flight SQL, local mode)
+        run: |
+          python -m harness.services sail --name sail --server spark --port 50051
+          python -m harness.services sail --name sail-flight --server flight --port 32010
+      - name: Iceberg differential suite
+        continue-on-error: true
+        run: python -m harness.suite_iceberg
+      - name: SQL compatibility suite
+        continue-on-error: true
+        run: python -m harness.suite_sql
+      - name: Flight SQL / ADBC (Python) suite
+        continue-on-error: true
+        run: python -m harness.suite_flight
+      - name: Flight SQL / ADBC (Java) probe
+        continue-on-error: true
+        run: |
+          ADBC=$(curl -s https://repo1.maven.org/maven2/org/apache/arrow/adbc/adbc-driver-flight-sql/maven-metadata.xml | grep -o '<version>[^<]*' | tail -1 | cut -d'>' -f2)
+          echo "ADBC Java $ADBC"
+          cd java/adbc-probe && mvn -q -B package -Dadbc.version=$ADBC
+          java --add-opens=java.base/java.nio=ALL-UNNAMED -cp "target/adbc-probe-1.0.jar:target/lib/*" poc.Probe grpc+tcp://localhost:32010 ../../out/adbc-java.json
+          echo "{\"adbc_java\": \"$ADBC\"}" > ../../out/adbc-java-version.json
+      - name: Diagnostics
+        if: always()
+        run: |
+          docker logs sail > out/sail.log 2>&1 || true
+          docker logs sail-flight > out/sail-flight.log 2>&1 || true
+          docker logs poc-polaris-1 > out/polaris.log 2>&1 || true
+          df -h / > out/disk.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: functional, path: out/}
+
+  cluster:
+    if: contains(github.event.inputs.suites || 'functional,cluster,k8s,bench1,bench10', 'cluster')
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}", celeborn: "true"}
+      - name: Token refresher
+        run: nohup bash -c 'while true; do sleep 900; python -m harness.services token; done' > out/token-refresher.log 2>&1 &
+      - name: Spark reference
+        run: |
+          python -m harness.services spark
+          python -m harness.data --sf 1
+          python -m harness.ref_tpch tpch_sf1
+          python -m harness.suite_cluster spark-overhead
+          python -m harness.services stop-spark
+      - name: Shuffle backends (local, local-cluster x flight/storage/celeborn)
+        continue-on-error: true
+        run: python -m harness.suite_cluster backends
+      - name: Fixed overhead and head-of-line blocking
+        continue-on-error: true
+        run: python -m harness.suite_cluster overhead
+      - name: Diagnostics
+        if: always()
+        run: |
+          docker compose -f compose/docker-compose.yml --profile celeborn logs --tail 200 celeborn-master celeborn-worker > out/celeborn.log 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: cluster, path: out/}
+
+  k8s:
+    if: contains(github.event.inputs.suites || 'functional,cluster,k8s,bench1,bench10', 'k8s')
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Spark reference + data
+        run: |
+          python -m harness.services spark
+          python -m harness.data --sf 1
+          python -m harness.ref_tpch tpch_sf1
+          python -m harness.services stop-spark
+      - name: kind cluster
+        run: |
+          curl -sLo kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
+          cat > kind.yaml <<'EOF'
+          kind: Cluster
+          apiVersion: kind.x-k8s.io/v1alpha4
+          nodes:
+            - role: control-plane
+            - role: worker
+            - role: worker
+          EOF
+          kind create cluster --name poc --config kind.yaml --wait 180s
+          docker network connect kind poc-polaris-1
+          docker network connect kind poc-minio-1
+          kind load docker-image "$SAIL_IMAGE" --name poc
+          kubectl get nodes -o wide | tee out/k8s-nodes.txt
+      - name: Kubernetes suite (flight, storage)
+        continue-on-error: true
+        run: python -m harness.suite_k8s "$SAIL_IMAGE" flight,storage
+      - name: Diagnostics
+        if: always()
+        run: |
+          kubectl -n sail get pods -o wide > out/k8s-pods.txt 2>&1 || true
+          kubectl -n sail get events --sort-by=.lastTimestamp > out/k8s-events.txt 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: k8s, path: out/}
+
+  bench:
+    strategy:
+      fail-fast: false
+      matrix:
+        sf: ["1", "10"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - name: Skip if not requested
+        id: want
+        run: |
+          if [[ ",$SUITES," == *",bench${{ matrix.sf }},"* ]]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: ./.github/actions/setup
+        if: steps.want.outputs.run == 'true'
+        with: {sail-tag: "${{ env.SAIL_TAG }}"}
+      - name: Token refresher
+        if: steps.want.outputs.run == 'true'
+        run: nohup bash -c 'while true; do sleep 900; python -m harness.services token; done' > out/token-refresher.log 2>&1 &
+      - name: Load data with Spark
+        if: steps.want.outputs.run == 'true'
+        run: |
+          python -m harness.services spark --memory 10g
+          python -m harness.data --sf ${{ matrix.sf }}
+          python -m harness.services stop-spark
+          rm -rf /tmp/tpch
+          df -h /
+      - name: Benchmark
+        if: steps.want.outputs.run == 'true'
+        continue-on-error: true
+        run: python -m harness.suite_bench --sf ${{ matrix.sf }} --reps ${{ matrix.sf == '1' && 3 || 2 }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.want.outputs.run == 'true'
+        with: {name: "bench-sf${{ matrix.sf }}", path: out/}

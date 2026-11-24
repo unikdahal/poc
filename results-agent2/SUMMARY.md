@@ -12,4 +12,4 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 | [catalog](catalog.md) | 2,000 tables; expired-token retry verified | [Run](https://github.com/unikdahal/poc/actions/runs/45492229100) |
 | [flight-leak](flight-leak.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45494537059) |
 | [celeborn](celeborn.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45494813690) |
-| [release-vs-main](release-vs-main.md) | 0/22 queries validated on both builds | [Run](https://github.com/unikdahal/poc/actions/runs/45491701924) |
+| [release-vs-main](release-vs-main.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45495413240) |

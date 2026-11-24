@@ -18,7 +18,7 @@ from harness.common import (OUT, CgroupStats, PeakSampler, canon, connect, log, 
 NS = "tpch_sf1"
 # ~1.5M x ~600 matches per supplier key: tens of seconds on 4 vCPU
 HEAVY = (f"SELECT count(*), sum(a.l_extendedprice * b.l_discount) FROM polaris.{NS}.lineitem a "
-         f"JOIN polaris.{NS}.lineitem b ON a.l_suppkey = b.l_suppkey WHERE a.l_orderkey < 1000000")
+         f"JOIN polaris.{NS}.lineitem b ON a.l_suppkey = b.l_suppkey WHERE a.l_orderkey < 3000000")
 CLUSTER = {
     "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
     "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
@@ -295,6 +295,31 @@ def spark_overhead():
         s2.sql("SELECT 1").collect()
         xs.append(round(time.perf_counter() - t0, 3))
     r["spark_connect_new_session_first_query_s"] = xs
+    # head-of-line blocking on Spark: a heavy query in one session, point lookups in another
+    import threading as th
+    other = c(15002)
+    warm(other)
+    done = {}
+
+    def h():
+        t0 = time.perf_counter()
+        s.sql(HEAVY).collect()
+        done["heavy_s"] = round(time.perf_counter() - t0, 2)
+    t = th.Thread(target=h)
+    t.start()
+    time.sleep(1.0)
+    xs = []
+    while t.is_alive() and len(xs) < 400:
+        t0 = time.perf_counter()
+        other.sql(point).collect()
+        xs.append((time.perf_counter() - t0) * 1000)
+    t.join()
+    xs.sort()
+    n = len(xs)
+    done.update({"small_n": n, "small_p50_ms": round(xs[n // 2], 2) if n else None,
+                 "small_p99_ms": round(xs[max(0, int(n * .99) - 1)], 2) if n else None,
+                 "small_max_ms": round(xs[-1], 2) if n else None})
+    r["hol_spark_connect_separate_sessions"] = done
     return r
 
 
@@ -304,6 +329,13 @@ def main():
     which = sys.argv[1] if len(sys.argv) > 1 else "backends"
     if which == "spark-overhead":
         write_json("overhead-spark", spark_overhead())
+        return
+    if which == "storage-soak":
+        mode, env = BACKENDS["cluster-storage"]
+        res = run_backend("cluster-storage", mode, env, ref_results(), NS, reps=10, timeout=120)
+        write_json("storage-soak", {k: v for k, v in res.items() if k in ("hangs", "errors", "total_s_median_warm")} |
+                   {"executions": sum(len(v) for v in res["queries"].values()),
+                    "failed": [(q, i, r["error"][:200]) for q, v in res["queries"].items() for i, r in enumerate(v) if "error" in r]})
         return
     if which == "overhead":
         res = {"local": overhead_and_hol("local", {}, "local"),

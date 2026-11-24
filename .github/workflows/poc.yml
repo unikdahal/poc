@@ -97,6 +97,9 @@ jobs:
       - name: Fixed overhead and head-of-line blocking
         continue-on-error: true
         run: python -m harness.suite_cluster overhead
+      - name: Storage shuffle soak (10 x 22 queries, hang detection)
+        continue-on-error: true
+        run: python -m harness.suite_cluster storage-soak
       - name: Diagnostics
         if: always()
         run: |

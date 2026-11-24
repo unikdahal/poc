@@ -45,12 +45,20 @@ def backend(result, label, tag, count):
         command("docker", "pull", image, timeout=300)
         case["image"] = image
         case["digest"] = command("docker", "image", "inspect", "-f", "{{json .RepoDigests}}", image)
-        path = base.ROOT / "compose" / "celeborn-defaults.conf"
-        case["config"] = path.read_text()
+        defaults = (base.ROOT / "compose" / "celeborn-defaults.conf").read_text()
+        case["config"] = defaults + "\nceleborn.metrics.conf /opt/celeborn/conf/metrics.properties\n"
+        case["metrics_config"] = (
+            "*.sink.prometheusServlet.class=org.apache.celeborn.common.metrics.sink.PrometheusServlet\n"
+        )
+        path = base.OUT / f"{label}-celeborn.conf"
+        metrics_path = base.OUT / f"{label}-metrics.properties"
+        path.write_text(case["config"])
+        metrics_path.write_text(case["metrics_config"])
 
         def start(name, env, ports, program):
             args = ["docker", "run", "-d", "--name", name, "--hostname", name, "--network", "poc",
-                    "-v", f"{path}:/opt/celeborn/conf/celeborn-defaults.conf:ro",
+                    "-v", f"{path.resolve()}:/opt/celeborn/conf/celeborn-defaults.conf:ro",
+                    "-v", f"{metrics_path.resolve()}:/opt/celeborn/conf/metrics.properties:ro",
                     "-e", f"CELEBORN_LOCAL_HOSTNAME={name}", "-e", "CELEBORN_NO_DAEMONIZE=1", *ports]
             for variable in env:
                 args.extend(("-e", variable))
@@ -71,8 +79,6 @@ def backend(result, label, tag, count):
     except Exception as exc:
         case["error"] = error(exc)
         save(TASK, result)
-        if not workers:
-            raise
         raise
     finally:
         for name in reversed(launched):
@@ -110,33 +116,46 @@ def save_metrics(label, phase, workers):
 
 
 def stage_snapshot(controller, session_id, since):
-    sql = f"""
-        SELECT s.job_id, s.stage, s.partitions, s.mode, s.distribution, s.status, s.created_at, s.stopped_at,
-               min(t.created_at) AS first_task_created_at, max(t.stopped_at) AS last_task_stopped_at,
-               count(t.partition) AS task_attempts
-        FROM system.execution.stages s LEFT JOIN system.execution.tasks t
-          ON s.session_id = t.session_id AND s.job_id = t.job_id AND s.stage = t.stage
-        WHERE s.session_id = '{session_id}' AND s.created_at >= TIMESTAMP '{since}'
-        GROUP BY s.job_id, s.stage, s.partitions, s.mode, s.distribution, s.status, s.created_at, s.stopped_at
-        ORDER BY s.job_id, s.stage
-        """
+    stages = collect(controller, f"""
+        SELECT CAST(job_id AS BIGINT) AS job_id, CAST(stage AS BIGINT) AS stage,
+               CAST(partitions AS BIGINT) AS partitions, mode, distribution, status, created_at, stopped_at
+        FROM system.execution.stages
+        WHERE session_id = '{session_id}' AND created_at >= TIMESTAMP '{since}'
+        ORDER BY job_id, stage
+        """, 20)
+    tasks = collect(controller, f"""
+        SELECT CAST(job_id AS BIGINT) AS job_id, CAST(stage AS BIGINT) AS stage, created_at, stopped_at
+        FROM system.execution.tasks
+        WHERE session_id = '{session_id}' AND created_at >= TIMESTAMP '{since}'
+        """, 20)
+    by_stage = {}
+    for row in tasks:
+        by_stage.setdefault((row.job_id, row.stage), []).append(row)
     records = []
-    for row in collect(controller, sql, 20):
-        record = row.asDict()
+    for row in stages:
+        task_rows = by_stage.get((row.job_id, row.stage), [])
+        first_task = min((task.created_at for task in task_rows), default=None)
+        last_task = max((task.stopped_at for task in task_rows if task.stopped_at is not None), default=None)
+        record = row.asDict() | {"first_task_created_at": first_task, "last_task_stopped_at": last_task,
+                                 "task_attempts": len(task_rows)}
         for key, start, end in (
             ("created_to_stopped_s", row.created_at, row.stopped_at),
-            ("first_task_to_last_stop_s", row.first_task_created_at, row.last_task_stopped_at),
+            ("first_task_to_last_stop_s", first_task, last_task),
         ):
             record[key] = (end - start).total_seconds() if start is not None and end is not None else None
         records.append(record)
     return records
 
 
-def session_id(spark):
-    session = getattr(spark, "session_id", None) or getattr(spark.client, "_session_id", None)
-    if not session or not re.fullmatch("[0-9a-fA-F-]+", session):
-        raise RuntimeError("unable to identify the query session")
-    return session
+def session_id(spark, controller):
+    client_id = getattr(spark, "session_id", None) or getattr(spark.client, "_session_id", None)
+    if not client_id or not re.fullmatch("[0-9a-fA-F-]+", client_id):
+        raise RuntimeError("unable to identify the query client session")
+    rows = collect(controller,
+                   f"SELECT session_id FROM system.session.sessions WHERE client_session_id = '{client_id}'", 20)
+    if len(rows) != 1 or not re.fullmatch("[0-9a-fA-F-]+", rows[0].session_id):
+        raise RuntimeError(f"expected one server session for the query client, got {len(rows)}")
+    return rows[0].session_id
 
 
 def fault(result, spark, worker, reference):
@@ -180,6 +199,10 @@ def run_case(result, label, mode, tag, count, codec, split, reference):
             cluster = CombinedStats([stats, *[base.CgroupStats(name) for name in [MASTER, *workers]]]) if workers else stats
             case["resource_scope"] = [SAIL_CONTAINER, *([MASTER, *workers] if workers else [])]
             controller = base.connect(port) if mode == "local-cluster" else None
+            session = None
+            if controller:
+                record, session = attempt(lambda: session_id(spark, controller))
+                case["stage_session"] = record | {"server_session_id": session}
             save_metrics(label, "before", workers)
             samples = case["queries"] = {}
             for query in QUERIES:
@@ -190,8 +213,8 @@ def run_case(result, label, mode, tag, count, codec, split, reference):
                     if rows is not None and query in reference:
                         record["matches_spark"] = fingerprint(rows, tpch.ordered(query)) == reference[query]
                     records.append(record)
-                    if rep == 2 and controller and query in STAGE_QUERIES:
-                        stats_record, stage_rows = attempt(lambda: stage_snapshot(controller, session_id(spark), before))
+                    if rep == 2 and session and query in STAGE_QUERIES:
+                        stats_record, stage_rows = attempt(lambda: stage_snapshot(controller, session, before))
                         record["stages"] = stage_rows if stage_rows is not None else stats_record
                     save(TASK, result)
                     if record["status"] == "timeout":

@@ -16,3 +16,12 @@ post-cancellation CPU windows for the same long query.
 
 Memory samples, fetch outcomes, CPU windows and log excerpts are pending.
 [Raw results](https://github.com/unikdahal/poc/tree/results/agent2-flight-leak/agent2-flight-leak)
+
+The first Flight connection hit `Connection reset by peer` during startup.
+In the separate Connect run, `interruptAll()` timed out at 10 seconds with
+the query still running. The cgroup used 35.618 CPU-seconds in the first
+10-second window after that deadline and 39.374 in the window one minute
+later, compared with 0.001 during the idle control. The workload was still
+active at the last sample. A rerun with a readiness probe is collecting the
+ticket series and Flight cancellation control.
+[Initial raw results](https://github.com/unikdahal/poc/blob/afe03a6b5d75e77f2358997215cfe23df39e3b3d/agent2-flight-leak/flight-leak.json)

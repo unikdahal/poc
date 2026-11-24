@@ -16,3 +16,11 @@ catalog endpoint requests from Polaris access logs for ten identical statements.
 The token probe requires a successful retry on the same endpoint within the
 same statement. Execution outcomes and log excerpts are pending.
 [Raw results](https://github.com/unikdahal/poc/tree/results/agent2-catalog/agent2-catalog)
+
+The initial run created 2,000 tables. The ten replayed statements generated
+25 catalog requests from Spark, 14 from Sail with caching disabled, and 10
+with the global listing cache. The expiry probe observed a 401 followed by a
+successful retry for the views listing. The parallel tables request failed
+with `error sending request for url` before the full statement completed.
+Corrected latency measurements and the full expired-token retry are pending.
+[Initial raw results](https://github.com/unikdahal/poc/blob/559940e67204b7a77647890922cce628ec85fcf2/agent2-catalog/catalog.json)

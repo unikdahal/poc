@@ -198,7 +198,7 @@ def concurrency(d):
         for n in (1, 4, 8, 16):
             case = d.get("engines", {}).get(f"{name}-{n}", {})
             trials = case.get("trials", [])
-            warm = case.get("warm_medians", {})
+            warm = case.get("warm_medians", {}) if all(t["validated"] > 0 for t in trials) else {}
             for trial in trials:
                 for stream in trial.get("stream_results", []):
                     for row in stream:
@@ -216,6 +216,7 @@ def concurrency(d):
         "use the validated results. The table shows the median across two trials.",
         table(("Engine", "Streams", "Trials", "Validated", "Errors", "Mismatches", "Unverified",
                "Queries/hour", "P50 s", "P95 s", "CPU s", "Peak MiB"), rows),
+        "Warm medians require two complete trials with Spark-matching results in each. "
         "Incomplete trials and completed executions without a Spark reference are visible in the raw results."
     ]) + anomalies(d, errors)
 

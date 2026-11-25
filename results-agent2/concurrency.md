@@ -17,7 +17,7 @@ Each session warmed with Q6 and then ran the same 22 queries in a deterministic 
 | sail | 8 | 2 | 304 | 0 | 48 | 0 | 1,587.5 | 9.537 | 53.333 | 1,206.933 | 12,288.0 |
 | sail | 16 | 1 | 15 | 16 | 3 | 0 | — | — | — | — | — |
 | sail-cluster | 1 | 2 | 38 | 0 | 6 | 0 | 1,072.3 | 2.205 | 7.723 | 223.865 | 5,527.3 |
-| sail-cluster | 4 | 2 | 25 | 148 | 3 | 0 | 534.1 | — | — | 151.509 | 7,501.9 |
+| sail-cluster | 4 | 2 | 25 | 148 | 3 | 0 | — | — | — | — | — |
 | sail-cluster | 8 | 0 | 0 | 0 | 0 | 0 | — | — | — | — | — |
 | sail-cluster | 16 | 1 | 0 | 16 | 0 | 0 | — | — | — | — | — |
 | comet | 1 | 2 | 44 | 0 | 0 | 0 | 597.6 | 3.974 | 13.122 | 434.385 | 7,030.9 |
@@ -26,9 +26,28 @@ Each session warmed with Q6 and then ran the same 22 queries in a deterministic 
 | comet | 16 | 2 | 683 | 21 | 0 | 0 | 597.1 | 86.773 | 157.036 | 6,367.080 | 13,396.7 |
 
 Incomplete trials and completed executions without a Spark reference are visible in the raw results.
+The fresh-port rerun reached all 12 configurations before its
+310-minute suite deadline. Spark+Comet completed both trials at every
+stream count and recorded 21 query timeouts at 16 streams. Sail local
+completed both trials through eight streams. Docker reported an OOM
+kill for both Sail modes at 16 streams. Q1, Q8 and Q14 differed from
+Spark in both Sail modes.
+
+The clustered four-stream mode lost its worker pool after returning
+25 validated results in the first trial. The second trial returned
+zero validated results, so the report omits those warm medians.
+The clustered eight-stream mode failed the readiness check with
+`Pool not running`. The earlier run completed these two configurations
+at 1,331.1 and 1,237.1 validated queries/hour respectively. Those
+observations come from a separate runner and leave a same-runner
+comparison at four and eight clustered streams unverified.
+[First concurrency run](https://github.com/unikdahal/poc/blob/8dff639c62a924019135e7feccf2c44ff511fe43/agent2-concurrency/concurrency.json)
+
 ## Anomalies and log excerpts
 
 ```text
+Docker | sail-16 and sail-cluster-16 OOMKilled=true, exit 137
+Workflow | suite step timed out after 310 minutes
 sail/16 Q21 | TimeoutError: deadline of 180s exceeded (client still active: True)
 sail/16 Q5 | TimeoutError: deadline of 180s exceeded (client still active: True)
 sail/16 Q4 | TimeoutError: deadline of 180s exceeded (client still active: True)

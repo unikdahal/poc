@@ -90,7 +90,8 @@ def run_case(result, name, label, streams, reference, port):
                    for stream_results in trial["stream_results"] for row in stream_results):
                 case["trial_stopped_after_timeout"] = True
                 break
-        if len(trials) == 2 and all(trial["attempted"] == trial["expected"] for trial in trials):
+        if len(trials) == 2 and all(trial["attempted"] == trial["expected"] and trial["validated"] > 0
+                                    for trial in trials):
             keys = ("wall_s", "cpu_s", "peak_bytes", "queries_per_hour", "p50_s", "p95_s")
             case["warm_medians"] = {
                 key: statistics.median(trial[key] for trial in trials)

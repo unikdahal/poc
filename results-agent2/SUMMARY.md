@@ -5,7 +5,7 @@ Runs use Spark 3.5 for correctness. Validated timings use warm samples on the sa
 | Task | Run outcome | Hosted run |
 | --- | --- | --- |
 | [tpcds](tpcds.md) | 78 match, 21 values differ | [Run](https://github.com/unikdahal/poc/actions/runs/45496222083) |
-| [ingest](ingest.md) | Running or awaiting results | [Run](https://github.com/unikdahal/poc/actions/runs/45534164779) |
+| [ingest](ingest.md) | 21/24 engine-operation cases with validated warm timings | [Run](https://github.com/unikdahal/poc/actions/runs/45534164779) |
 | [memory](memory.md) | 54/54 configurations attempted, 4 container OOM kills | [Run](https://github.com/unikdahal/poc/actions/runs/45490267308) |
 | [concurrency](concurrency.md) | 9/12 stream configurations with two complete trials | [Run](https://github.com/unikdahal/poc/actions/runs/45501158882) |
 | [udf](udf.md) | 7/8 engine/UDF pairs with validated warm timings | [Run](https://github.com/unikdahal/poc/actions/runs/45498374264) |

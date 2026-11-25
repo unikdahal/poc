@@ -2,62 +2,51 @@
 
 Command `/opt/hostedtoolcache/Python/3.11.18/x64/bin/python -m harness.agent2.ingest`.
 
-Workflow source revision `e1a382c1e2ae0dca85f40cfb507f9a95c0033663`. Sail image revision `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`.
+Workflow source revision `368ce7fcd213faa230e1a69daee180e9a5c75ce8`. Sail image revision `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`.
 
 Recorded versions include spark 3.5.10, iceberg 1.12.0, comet 1.2.0, python 3.11.18, adbc 1.13.0.
 
 The raw JSON records engine settings, runner details and individual attempts.
 
-The suite prepared 15000000 orders with operation counts `{'delete': 750000, 'insert': 750000, 'update': 1500000}`. Spark checked table content with `EXCEPT ALL` in both directions. The files column gives medians over the two warm outputs from the reference engine's `.files` metadata.
+The suite prepared 15000000 orders with operation counts `{'delete': 750000, 'insert': 750000, 'update': 1500000}`. Spark checked the final successful output against a source or independently derived expected table. The check validated unique reference keys, total row counts and all column values through a full outer join. The files column gives medians over the two warm outputs from the reference engine's `.files` metadata.
 
 | Operation | Engine | Equality | Warm wall s/CPU s/peak MiB | Added files/MiB |
 | --- | --- | --- | --- | --- |
-| lineitem | spark | equal | 54.241/181.505/3,331.3 | 19.0 / 1,502.1 |
-| lineitem | comet | equal | 51.004/169.580/3,929.9 | 19.0 / 1,502.1 |
-| lineitem | sail | equal | 19.818/65.401/1,642.0 | 4.0 / 1,650.0 |
-| lineitem | sail-cluster | unverified | —/—/— | — |
-| orders | spark | unverified | —/—/— | — |
-| orders | comet | unverified | —/—/— | — |
-| orders | sail | unverified | —/—/— | — |
-| orders | sail-cluster | unverified | —/—/— | — |
-| orders v2 copy-on-write | spark | unverified | —/—/— | — |
-| orders v2 copy-on-write | comet | unverified | —/—/— | — |
-| orders v2 copy-on-write | sail | error | —/—/— | — |
-| orders v2 copy-on-write | sail-cluster | unverified | —/—/— | — |
-| orders v2 merge-on-read | spark | unverified | —/—/— | — |
-| orders v2 merge-on-read | comet | unverified | —/—/— | — |
-| orders v2 merge-on-read | sail | error | —/—/— | — |
-| orders v2 merge-on-read | sail-cluster | unverified | —/—/— | — |
-| orders v3 copy-on-write | spark | unverified | —/—/— | — |
-| orders v3 copy-on-write | comet | unverified | —/—/— | — |
-| orders v3 copy-on-write | sail | error | —/—/— | — |
-| orders v3 copy-on-write | sail-cluster | error | —/—/— | — |
-| orders v3 merge-on-read | spark | unverified | —/—/— | — |
-| orders v3 merge-on-read | comet | unverified | —/—/— | — |
-| orders v3 merge-on-read | sail | error | —/—/— | — |
-| orders v3 merge-on-read | sail-cluster | error | —/—/— | — |
+| lineitem | spark | equal | 39.442/125.900/4,227.2 | 19.0 / 1,502.1 |
+| lineitem | comet | equal | 38.069/119.110/4,137.1 | 19.0 / 1,502.1 |
+| lineitem | sail | equal | 15.245/50.684/1,423.6 | 4.0 / 1,650.0 |
+| lineitem | sail-cluster | equal | 15.611/50.525/2,243.9 | 8.0 / 1,651.4 |
+| orders | spark | equal | 12.569/25.470/3,555.9 | 6.0 / 362.9 |
+| orders | comet | equal | 8.303/22.630/3,334.5 | 6.0 / 362.9 |
+| orders | sail | equal | 3.752/9.797/1,314.1 | 4.0 / 399.9 |
+| orders | sail-cluster | equal | 3.238/10.184/1,430.3 | 6.0 / 400.5 |
+| orders v2 copy-on-write | spark | equal | 21.618/65.430/8,174.2 | 8.0 / 367.0 |
+| orders v2 copy-on-write | comet | equal | 23.429/74.195/8,219.8 | 8.0 / 367.0 |
+| orders v2 copy-on-write | sail | timeout | —/—/— | — |
+| orders v2 copy-on-write | sail-cluster | equal | 23.969/55.008/12,288.0 | 5.0 / 417.5 |
+| orders v2 merge-on-read | spark | equal | 12.643/37.220/7,179.3 | 7.0 / 58.8 |
+| orders v2 merge-on-read | comet | equal | 12.210/36.165/5,629.9 | 7.0 / 58.8 |
+| orders v2 merge-on-read | sail | equal | 4.027/12.168/11,520.2 | 5.5 / 83.6 |
+| orders v2 merge-on-read | sail-cluster | equal | 6.086/21.975/10,724.1 | 10.0 / 87.0 |
+| orders v3 copy-on-write | spark | equal | 22.912/68.175/8,382.5 | 8.0 / 383.4 |
+| orders v3 copy-on-write | comet | equal | 24.329/79.120/8,268.3 | 8.0 / 383.4 |
+| orders v3 copy-on-write | sail | timeout | —/—/— | — |
+| orders v3 copy-on-write | sail-cluster | timeout | —/—/— | — |
+| orders v3 merge-on-read | spark | equal | 12.806/36.150/7,577.5 | 3.5 / 60.3 |
+| orders v3 merge-on-read | comet | equal | 13.966/38.670/5,614.7 | 3.5 / 60.3 |
+| orders v3 merge-on-read | sail | equal | 30.429/22.591/12,288.0 | 6.5 / 73.0 |
+| orders v3 merge-on-read | sail-cluster | equal | 38.981/36.235/12,288.0 | 11.5 / 77.6 |
 
 Rows without an equality verdict or warm timing lack complete verification. File-system write amplification beyond the Iceberg metadata was outside this run.
-The suite reached its 310-minute deadline while verifying the orders CTAS
-outputs. Three lineitem configurations verified all samples. The clustered
-lineitem case verified two outputs before its final comparison timed out.
-Both Sail write containers reported `OOMKilled=true` during the MERGE
-matrix. Once a container stopped, subsequent cases on that server hit
-connection errors, leaving their independent behavior unverified. The
-follow-up uses fresh servers per case and an exact keyed comparison.
-[Follow-up run](https://github.com/unikdahal/poc/actions/runs/45534164779)
-
 ## Anomalies and log excerpts
 
 ```text
-orders v2 copy-on-write, sail, sample 1 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v2 copy-on-write, sail, sample 2 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v2 merge-on-read, sail, sample 1 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v3 copy-on-write, sail, sample 1 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v3 copy-on-write, sail-cluster, sample 1 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v3 copy-on-write, sail-cluster, sample 2 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v3 merge-on-read, sail, sample 1 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
-orders v3 merge-on-read, sail-cluster, sample 1 | SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:
+orders v2 copy-on-write, sail, sample 3 | TimeoutError: deadline of 360s exceeded (client still active: True)
+orders v3 copy-on-write, sail, sample 2 | TimeoutError: deadline of 360s exceeded (client still active: True)
+orders v3 copy-on-write, sail-cluster, sample 1 | TimeoutError: deadline of 360s exceeded (client still active: True)
+sail-merge_v2_copy-on-write | Docker OOMKilled=true, exit 137
+sail-merge_v3_copy-on-write | Docker OOMKilled=true, exit 137
+sail-cluster-merge_v3_copy-on-write | Docker OOMKilled=true, exit 137
 ```
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/3c1ff1909f6d0feaabe6a95565cba0c5ec9fe2ea/agent2-ingest/ingest.json) · [Result files](https://github.com/unikdahal/poc/tree/3c1ff1909f6d0feaabe6a95565cba0c5ec9fe2ea/agent2-ingest) · [Workflow run](https://github.com/unikdahal/poc/actions/runs/45490127635)
+[Raw JSON](https://github.com/unikdahal/poc/blob/ddf9395c3547dce6d7b73967d7820eaae66b5771/agent2-ingest/ingest.json) · [Result files](https://github.com/unikdahal/poc/tree/ddf9395c3547dce6d7b73967d7820eaae66b5771/agent2-ingest) · [Workflow run](https://github.com/unikdahal/poc/actions/runs/45534164779)

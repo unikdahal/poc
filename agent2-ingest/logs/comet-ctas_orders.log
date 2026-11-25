@@ -1,0 +1,926 @@
+:: loading settings :: url = jar:file:/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.3.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/runner/.ivy2/cache
+The jars for the packages stored in: /home/runner/.ivy2/jars
+org.apache.spark#spark-connect_2.12 added as a dependency
+org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+org.apache.iceberg#iceberg-aws-bundle added as a dependency
+org.apache.datafusion#comet-spark-spark3.5_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-c0e82537-79c3-4ae9-a1a4-32ccd592b22a;1.0
+	confs: [default]
+	found org.apache.spark#spark-connect_2.12;3.5.10 in central
+	found org.spark-project.spark#unused;1.0.0 in central
+	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0 in central
+	found org.apache.iceberg#iceberg-aws-bundle;1.12.0 in central
+	found org.apache.datafusion#comet-spark-spark3.5_2.12;1.2.0 in central
+	found org.scala-lang.modules#scala-collection-compat_2.12;2.12.0 in central
+:: resolution report :: resolve 183ms :: artifacts dl 8ms
+	:: modules in use:
+	org.apache.datafusion#comet-spark-spark3.5_2.12;1.2.0 from central in [default]
+	org.apache.iceberg#iceberg-aws-bundle;1.12.0 from central in [default]
+	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0 from central in [default]
+	org.apache.spark#spark-connect_2.12;3.5.10 from central in [default]
+	org.scala-lang.modules#scala-collection-compat_2.12;2.12.0 from central in [default]
+	org.spark-project.spark#unused;1.0.0 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   6   |   0   |   0   |   0   ||   6   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-c0e82537-79c3-4ae9-a1a4-32ccd592b22a
+	confs: [default]
+	0 artifacts copied, 6 already retrieved (0kB/6ms)
+26/11/25 02:55:31 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/25 02:55:31 INFO SparkConnectServer: Starting Spark session.
+26/11/25 02:55:31 INFO SparkContext: Running Spark version 3.5.10
+26/11/25 02:55:31 INFO SparkContext: OS info Linux, 7.0.0-1020-azure, amd64
+26/11/25 02:55:31 INFO SparkContext: Java version 17.0.21
+26/11/25 02:55:31 INFO ResourceUtils: ==============================================================
+26/11/25 02:55:31 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/11/25 02:55:31 INFO ResourceUtils: ==============================================================
+26/11/25 02:55:31 INFO SparkContext: Submitted application: org.apache.spark.sql.connect.service.SparkConnectServer
+26/11/25 02:55:31 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 4096, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/11/25 02:55:31 INFO ResourceProfile: Limiting resource is cpu
+26/11/25 02:55:31 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/11/25 02:55:31 INFO SecurityManager: Changing view acls to: runner
+26/11/25 02:55:31 INFO SecurityManager: Changing modify acls to: runner
+26/11/25 02:55:31 INFO SecurityManager: Changing view acls groups to: 
+26/11/25 02:55:31 INFO SecurityManager: Changing modify acls groups to: 
+26/11/25 02:55:31 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: runner; groups with view permissions: EMPTY; users with modify permissions: runner; groups with modify permissions: EMPTY
+26/11/25 02:55:31 INFO Utils: Successfully started service 'sparkDriver' on port 37503.
+26/11/25 02:55:31 INFO SparkEnv: Registering MapOutputTracker
+26/11/25 02:55:31 INFO SparkEnv: Registering BlockManagerMaster
+26/11/25 02:55:32 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/11/25 02:55:32 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/11/25 02:55:32 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/11/25 02:55:32 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-fe5d0d4f-5ad4-44ff-a799-28221323d6a1
+26/11/25 02:55:32 INFO MemoryStore: MemoryStore started with capacity 8.6 GiB
+26/11/25 02:55:32 INFO SparkEnv: Registering OutputCommitCoordinator
+26/11/25 02:55:32 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar at spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar at spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar at spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar at spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar at spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar at spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar at file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 02:55:32 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar at file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 02:55:32 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar at file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 02:55:32 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar at file:///home/runner/.ivy2/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar
+26/11/25 02:55:32 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar at file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Copying /home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 02:55:32 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar at file:///home/runner/.ivy2/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Copying /home/runner/.ivy2/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar
+26/11/25 02:55:32 INFO CometDriverPlugin: CometDriverPlugin init
+26/11/25 02:55:32 INFO BaseAllocator: Debug mode disabled. Enable with the VM option -Darrow.memory.debug.allocator=true.
+26/11/25 02:55:32 INFO DefaultAllocationManagerOption: allocation manager type not specified, using netty as the default type
+26/11/25 02:55:32 INFO CheckAllocator: Using DefaultAllocationManager at memory/unsafe/DefaultAllocationManagerFactory.class
+26/11/25 02:55:32 INFO CometDriverPlugin: Setting spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.apache.comet.CometSparkSessionExtensions
+26/11/25 02:55:32 INFO CometDriverPlugin: Comet metrics reporting is disabled. Set spark.comet.metrics.enabled=true to enable.
+26/11/25 02:55:32 INFO DriverPluginContainer: Initialized driver component for plugin org.apache.spark.CometPlugin.
+26/11/25 02:55:32 INFO Executor: Starting executor ID driver on host runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net
+26/11/25 02:55:32 INFO Executor: OS info Linux, 7.0.0-1020-azure, amd64
+26/11/25 02:55:32 INFO Executor: Java version 17.0.21
+26/11/25 02:55:32 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/11/25 02:55:32 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@2bbb44da for default.
+26/11/25 02:55:32 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 02:55:32 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 02:55:32 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: /home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 02:55:32 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: /home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 02:55:32 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: /home/runner/.ivy2/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar
+26/11/25 02:55:32 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: /home/runner/.ivy2/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar
+26/11/25 02:55:32 INFO Executor: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO TransportClientFactory: Successfully created connection to runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net/10.1.0.5:37503 after 17 ms (0 ms spent in bootstraps)
+26/11/25 02:55:32 INFO Utils: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp17405692685642800857.tmp
+26/11/25 02:55:32 INFO Utils: /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp17405692685642800857.tmp has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar
+26/11/25 02:55:32 INFO Executor: Adding file:/tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.scala-lang.modules_scala-collection-compat_2.12-2.12.0.jar to class loader default
+26/11/25 02:55:32 INFO Executor: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp16469379764732543402.tmp
+26/11/25 02:55:32 INFO Utils: /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp16469379764732543402.tmp has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 02:55:32 INFO Executor: Adding file:/tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to class loader default
+26/11/25 02:55:32 INFO Executor: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp12989272420954230881.tmp
+26/11/25 02:55:32 INFO Utils: /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp12989272420954230881.tmp has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 02:55:32 INFO Executor: Adding file:/tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.spark_spark-connect_2.12-3.5.10.jar to class loader default
+26/11/25 02:55:32 INFO Executor: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.spark-project.spark_unused-1.0.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp14973860956826957153.tmp
+26/11/25 02:55:32 INFO Utils: /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp14973860956826957153.tmp has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 02:55:32 INFO Executor: Adding file:/tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.spark-project.spark_unused-1.0.0.jar to class loader default
+26/11/25 02:55:32 INFO Executor: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795575331744
+26/11/25 02:55:32 INFO Utils: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp8442592276023042369.tmp
+26/11/25 02:55:33 INFO Utils: /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp8442592276023042369.tmp has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 02:55:33 INFO Executor: Adding file:/tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to class loader default
+26/11/25 02:55:33 INFO Executor: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar with timestamp 1795575331744
+26/11/25 02:55:33 INFO Utils: Fetching spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/jars/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp17460528743656006191.tmp
+26/11/25 02:55:33 INFO Utils: /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/fetchFileTemp17460528743656006191.tmp has been previously copied to /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar
+26/11/25 02:55:33 INFO Executor: Adding file:/tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8/userFiles-10e37cf0-657a-4e64-8078-e1a9b9e4cb1c/org.apache.datafusion_comet-spark-spark3.5_2.12-1.2.0.jar to class loader default
+26/11/25 02:55:33 INFO CometExecutorPlugin: CometExecutorPlugin init
+26/11/25 02:55:33 INFO ExecutorPluginContainer: Initialized executor component for plugin org.apache.spark.CometPlugin.
+26/11/25 02:55:33 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 36693.
+26/11/25 02:55:33 INFO NettyBlockTransferService: Server created on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693
+26/11/25 02:55:33 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/11/25 02:55:33 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, 36693, None)
+26/11/25 02:55:33 INFO BlockManagerMasterEndpoint: Registering block manager runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 with 8.6 GiB RAM, BlockManagerId(driver, runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, 36693, None)
+26/11/25 02:55:33 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, 36693, None)
+26/11/25 02:55:33 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, 36693, None)
+26/11/25 02:55:34 INFO SparkConnectServer: Spark Connect server started at: 0:0:0:0:0:0:0:0%0:18011
+26/11/25 02:55:34 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/11/25 02:55:34 INFO SharedState: Warehouse path is 'file:/home/runner/work/poc/poc/spark-warehouse'.
+26/11/25 02:55:34 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,35842106-472a-4076-86a9-c0d4f613e536) is created.
+26/11/25 02:55:34 INFO SparkConnectExecutionManager: Starting thread for cleanup of abandoned executions every 30000 ms
+26/11/25 02:55:34 INFO ExecuteGrpcResponseSender: Starting for opId=35842106-472a-4076-86a9-c0d4f613e536, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:35 INFO BaseAllocator: Debug mode disabled.
+26/11/25 02:55:35 INFO DefaultAllocationManagerOption: allocation manager type not specified, using netty as the default type
+26/11/25 02:55:35 INFO CheckAllocator: Using DefaultAllocationManager at memory-netty-12.0.1.jar!/org/apache/arrow/memory/DefaultAllocationManagerFactory.class
+26/11/25 02:55:35 WARN AuthManagers: Inferring rest.auth.type=oauth2 since property credential was provided. Please explicitly set rest.auth.type to avoid this warning.
+26/11/25 02:55:35 INFO AuthManagers: Loading AuthManager implementation: org.apache.iceberg.rest.auth.OAuth2Manager
+26/11/25 02:55:35 WARN OAuth2Manager: Iceberg REST client is missing the OAuth2 server URI configuration and defaults to http://localhost:8181/api/catalog/v1/oauth/tokens. This automatic fallback will be removed in a future Iceberg release. It is recommended to configure the OAuth2 endpoint using the 'oauth2-server-uri' property to be prepared. This warning will disappear if the OAuth2 endpoint is explicitly configured. See https://github.com/apache/iceberg/issues/10537
+26/11/25 02:55:35 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:35 WARN CometConfDeprecations: Comet configuration 'spark.comet.exec.shuffle.enabled' is deprecated; use 'spark.comet.shuffle.enabled' instead.
+26/11/25 02:55:36 INFO NativeBase: Couldn't locate log file from either COMET_CONF_DIR or comet.log.file.path. Using default log configuration with INFO log level which emits to stderr
+26/11/25 02:55:36 INFO core/src/lib.rs: Comet native library version 1.2.0 initialized
+26/11/25 02:55:36 WARN NativeBase: Comet's native library uses timezone database 2025b, but the JVM uses 2026e. Local times that Comet computes natively can differ from Spark's in timezones whose rules changed between these versions.
+26/11/25 02:55:36 INFO NativeBase: Setting system property arrow.enable_unsafe_memory_access to true
+26/11/25 02:55:36 INFO NativeBase: Setting system property arrow.enable_null_check_for_get to false
+26/11/25 02:55:36 WARN CometConfDeprecations: Comet configuration 'spark.comet.explainFallback.enabled' is deprecated; use 'spark.comet.explain.fallback.enabled' instead.
+26/11/25 02:55:36 INFO ExecuteGrpcResponseSender: Stream finished for opId=35842106-472a-4076-86a9-c0d4f613e536, sent all responses up to last index 3. totalTime=1771594586ns waitingForResults=1768007508ns waitingForSend=0ns
+26/11/25 02:55:36 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,a658d1d9-e7ed-485f-84dc-faa8e739107b) is created.
+26/11/25 02:55:36 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,35842106-472a-4076-86a9-c0d4f613e536) is removed.
+26/11/25 02:55:36 INFO ExecuteResponseObserver: Release all for opId=35842106-472a-4076-86a9-c0d4f613e536. Execution stats: total=CachedSize(1045,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(915,2) maxCachedUntilProduced=CachedSize(915,2)
+26/11/25 02:55:36 INFO ExecuteResponseObserver: Release all for opId=35842106-472a-4076-86a9-c0d4f613e536. Execution stats: total=CachedSize(1045,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(915,2) maxCachedUntilProduced=CachedSize(915,2)
+26/11/25 02:55:36 INFO ExecuteGrpcResponseSender: Starting for opId=a658d1d9-e7ed-485f-84dc-faa8e739107b, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:36 INFO CodeGenerator: Code generated in 106.268917 ms
+26/11/25 02:55:36 INFO CodeGenerator: Code generated in 4.570634 ms
+26/11/25 02:55:36 INFO DAGScheduler: Got job 0 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 1 output partitions
+26/11/25 02:55:36 INFO DAGScheduler: Final stage: ResultStage 0 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 02:55:36 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 02:55:36 INFO DAGScheduler: Missing parents: List()
+26/11/25 02:55:36 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[5] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 02:55:36 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 16.3 KiB, free 8.6 GiB)
+26/11/25 02:55:36 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 7.2 KiB, free 8.6 GiB)
+26/11/25 02:55:36 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 7.2 KiB, free: 8.6 GiB)
+26/11/25 02:55:36 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1611
+26/11/25 02:55:36 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[5] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0))
+26/11/25 02:55:36 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks resource profile 0
+26/11/25 02:55:36 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 0, PROCESS_LOCAL, 9824 bytes) 
+26/11/25 02:55:36 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/11/25 02:55:36 INFO Executor: Using REPL class URI: spark://runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:37503/artifacts/0eea555f-3817-48ae-bdfd-d3624bb12b42/classes/
+26/11/25 02:55:36 INFO Executor: Created or updated repl class loader org.apache.spark.executor.ExecutorClassLoader@63a126a5 for 0eea555f-3817-48ae-bdfd-d3624bb12b42.
+26/11/25 02:55:36 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+26/11/25 02:55:36 INFO CodeGenerator: Code generated in 19.270282 ms
+26/11/25 02:55:37 INFO core/src/execution/jni_api.rs: Comet tokio runtime: using spark.executor.cores=4 worker threads
+26/11/25 02:55:37 INFO CodeGenerator: Code generated in 15.177394 ms
+26/11/25 02:55:37 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 2386 bytes result sent to driver
+26/11/25 02:55:37 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 245 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (1/1)
+26/11/25 02:55:37 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/11/25 02:55:37 INFO DAGScheduler: ResultStage 0 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.359 s
+26/11/25 02:55:37 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 02:55:37 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished
+26/11/25 02:55:37 INFO ExecuteGrpcResponseSender: Stream finished for opId=a658d1d9-e7ed-485f-84dc-faa8e739107b, sent all responses up to last index 4. totalTime=632904064ns waitingForResults=627719353ns waitingForSend=0ns
+26/11/25 02:55:37 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,a658d1d9-e7ed-485f-84dc-faa8e739107b) is removed.
+26/11/25 02:55:37 INFO ExecuteResponseObserver: Release all for opId=a658d1d9-e7ed-485f-84dc-faa8e739107b. Execution stats: total=CachedSize(1511,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(1267,2) maxCachedUntilProduced=CachedSize(1267,2)
+26/11/25 02:55:37 INFO ExecuteResponseObserver: Release all for opId=a658d1d9-e7ed-485f-84dc-faa8e739107b. Execution stats: total=CachedSize(1511,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(1267,2) maxCachedUntilProduced=CachedSize(1267,2)
+26/11/25 02:55:37 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,b4e76e91-cbcf-425b-84e7-280240fba61d) is created.
+26/11/25 02:55:37 INFO ExecuteGrpcResponseSender: Starting for opId=b4e76e91-cbcf-425b-84e7-280240fba61d, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:37 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:37 INFO RESTSessionCatalog: Table properties set at catalog level through catalog properties: {}
+26/11/25 02:55:37 INFO RESTSessionCatalog: Table properties enforced at catalog level through catalog properties: {}
+26/11/25 02:55:37 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:37 INFO V2ScanRelationPushDown: 
+Output: o_orderkey#7L, o_custkey#8L, o_orderstatus#9, o_totalprice#10, o_orderdate#11, o_orderpriority#12, o_clerk#13, o_shippriority#14, o_comment#15
+         
+26/11/25 02:55:37 INFO SnapshotScan: Scanning table polaris.tpch_sf10.orders snapshot 4677235499825234483 created at 2026-11-25T02:40:28.267+00:00 with filter true
+26/11/25 02:55:37 INFO BaseDistributedDataScan: Planning file tasks locally for table polaris.tpch_sf10.orders
+26/11/25 02:55:37 INFO LoggingMetricsReporter: Received metrics report: ScanReport{tableName=polaris.tpch_sf10.orders, snapshotId=4677235499825234483, filter=true, schemaId=0, projectedFieldIds=[1, 2, 3, 4, 5, 6, 7, 8, 9], projectedFieldNames=[o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority, o_comment], scanMetrics=ScanMetricsResult{totalPlanningDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.522061329S, count=1}, resultDataFiles=CounterResult{unit=COUNT, value=6}, resultDeleteFiles=CounterResult{unit=COUNT, value=0}, totalDataManifests=CounterResult{unit=COUNT, value=1}, totalDeleteManifests=CounterResult{unit=COUNT, value=0}, scannedDataManifests=CounterResult{unit=COUNT, value=1}, skippedDataManifests=CounterResult{unit=COUNT, value=0}, totalFileSizeInBytes=CounterResult{unit=BYTES, value=380537889}, totalDeleteFileSizeInBytes=CounterResult{unit=BYTES, value=0}, skippedDataFiles=CounterResult{unit=COUNT, value=0}, skippedDeleteFiles=CounterResult{unit=COUNT, value=0}, scannedDeleteManifests=CounterResult{unit=COUNT, value=0}, skippedDeleteManifests=CounterResult{unit=COUNT, value=0}, indexedDeleteFiles=CounterResult{unit=COUNT, value=0}, equalityDeleteFiles=CounterResult{unit=COUNT, value=0}, positionalDeleteFiles=CounterResult{unit=COUNT, value=0}, dvs=CounterResult{unit=COUNT, value=0}}, metadata={engine-version=3.5.10, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-id=local-1795575332338, engine-name=spark, app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 02:55:38 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 6 partition(s) for table polaris.tpch_sf10.orders
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 2.3 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:38 INFO SparkContext: Created broadcast 1 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 1134.0 B, free 8.6 GiB)
+26/11/25 02:55:38 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:38 INFO SparkContext: Created broadcast 2 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:38 INFO BlockManagerInfo: Removed broadcast_0_piece0 on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 in memory (size: 7.2 KiB, free: 8.6 GiB)
+26/11/25 02:55:38 INFO CodeGenerator: Code generated in 19.480525 ms
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 2.3 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:38 INFO SparkContext: Created broadcast 3 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 1134.0 B, free 8.6 GiB)
+26/11/25 02:55:38 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:38 INFO SparkContext: Created broadcast 4 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:38 INFO CometIcebergNativeScan: IcebergScan: 6 tasks, 9 pools (83.3% avg dedup)
+26/11/25 02:55:38 INFO CometIcebergNativeScan:   Common pools (unique/bytes): schema=1/609, partition_type=1/29, partition_spec=1/25, name_mapping=0/0, project_field_ids=1/11, partition_data=1/0, delete_file=0/0, delete_file_path=0/0, delete_files_set=0/0, residual=0/0; total=674 bytes
+26/11/25 02:55:38 INFO CometIcebergNativeScan:   Per-partition messages: 6, total=744 bytes, max=124 bytes
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 2.1 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.1 KiB, free: 8.6 GiB)
+26/11/25 02:55:38 INFO SparkContext: Created broadcast 5 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:38 INFO AppendDataExec: Start processing data source write support: IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_0, format=PARQUET). The input RDD has 6 partitions.
+26/11/25 02:55:38 INFO SparkContext: Starting job: Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:38 INFO DAGScheduler: Got job 1 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) with 6 output partitions
+26/11/25 02:55:38 INFO DAGScheduler: Final stage: ResultStage 1 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...)
+26/11/25 02:55:38 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 02:55:38 INFO DAGScheduler: Missing parents: List()
+26/11/25 02:55:38 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[8] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...), which has no missing parents
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 22.7 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 9.3 KiB, free 8.6 GiB)
+26/11/25 02:55:38 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 9.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:38 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1611
+26/11/25 02:55:38 INFO DAGScheduler: Submitting 6 missing tasks from ResultStage 1 (MapPartitionsRDD[8] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5))
+26/11/25 02:55:38 INFO TaskSchedulerImpl: Adding task set 1.0 with 6 tasks resource profile 0
+26/11/25 02:55:38 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 0, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:38 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 2) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 1, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:38 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 3) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 2, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:38 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 4) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 3, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:38 INFO Executor: Running task 0.0 in stage 1.0 (TID 1)
+26/11/25 02:55:38 INFO Executor: Running task 1.0 in stage 1.0 (TID 2)
+26/11/25 02:55:38 INFO Executor: Running task 3.0 in stage 1.0 (TID 4)
+26/11/25 02:55:38 INFO Executor: Running task 2.0 in stage 1.0 (TID 3)
+26/11/25 02:55:38 INFO CodeGenerator: Code generated in 19.271499 ms
+26/11/25 02:55:38 INFO FormatModelRegistry: Unable to call register for (org.apache.iceberg.flink.data.FlinkFormatModels). Check for missing jars on the classpath: java.lang.NoSuchMethodException: Cannot find method: register
+26/11/25 02:55:38 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:38 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:38 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:38 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:43 INFO DataWritingSparkTask: Writer for partition 1 is committing.
+26/11/25 02:55:44 INFO DataWritingSparkTask: Writer for partition 0 is committing.
+26/11/25 02:55:44 INFO DataWritingSparkTask: Writer for partition 2 is committing.
+26/11/25 02:55:44 INFO DataWritingSparkTask: Writer for partition 3 is committing.
+26/11/25 02:55:44 INFO DataWritingSparkTask: Committed partition 1 (task 2, attempt 0, stage 1.0)
+26/11/25 02:55:44 INFO Executor: Finished task 1.0 in stage 1.0 (TID 2). 6661 bytes result sent to driver
+26/11/25 02:55:44 INFO TaskSetManager: Starting task 4.0 in stage 1.0 (TID 5) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 4, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:44 INFO Executor: Running task 4.0 in stage 1.0 (TID 5)
+26/11/25 02:55:44 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 2) in 6499 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (1/6)
+26/11/25 02:55:44 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:46 INFO DataWritingSparkTask: Committed partition 2 (task 3, attempt 0, stage 1.0)
+26/11/25 02:55:46 INFO Executor: Finished task 2.0 in stage 1.0 (TID 3). 6618 bytes result sent to driver
+26/11/25 02:55:46 INFO TaskSetManager: Starting task 5.0 in stage 1.0 (TID 6) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 5, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:46 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 3) in 8022 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (2/6)
+26/11/25 02:55:46 INFO Executor: Running task 5.0 in stage 1.0 (TID 6)
+26/11/25 02:55:46 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:46 INFO DataWritingSparkTask: Writer for partition 5 is committing.
+26/11/25 02:55:46 INFO DataWritingSparkTask: Committed partition 5 (task 6, attempt 0, stage 1.0)
+26/11/25 02:55:46 INFO Executor: Finished task 5.0 in stage 1.0 (TID 6). 6618 bytes result sent to driver
+26/11/25 02:55:46 INFO TaskSetManager: Finished task 5.0 in stage 1.0 (TID 6) in 426 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (3/6)
+26/11/25 02:55:46 INFO DataWritingSparkTask: Committed partition 3 (task 4, attempt 0, stage 1.0)
+26/11/25 02:55:46 INFO Executor: Finished task 3.0 in stage 1.0 (TID 4). 6618 bytes result sent to driver
+26/11/25 02:55:46 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 4) in 8497 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (4/6)
+26/11/25 02:55:46 INFO DataWritingSparkTask: Committed partition 0 (task 1, attempt 0, stage 1.0)
+26/11/25 02:55:46 INFO Executor: Finished task 0.0 in stage 1.0 (TID 1). 6618 bytes result sent to driver
+26/11/25 02:55:46 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 8605 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (5/6)
+26/11/25 02:55:47 INFO CometExecIterator: Comet native memory usage: allocated 80.5 MiB, reserved 0.0 MiB (1 native plans, 1 memory pools); JVM Arrow allocated 1.0 MiB, 1.0 MiB of it imported from native
+26/11/25 02:55:47 INFO DataWritingSparkTask: Writer for partition 4 is committing.
+26/11/25 02:55:48 INFO DataWritingSparkTask: Committed partition 4 (task 5, attempt 0, stage 1.0)
+26/11/25 02:55:48 INFO Executor: Finished task 4.0 in stage 1.0 (TID 5). 6618 bytes result sent to driver
+26/11/25 02:55:48 INFO TaskSetManager: Finished task 4.0 in stage 1.0 (TID 5) in 3363 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (6/6)
+26/11/25 02:55:48 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/11/25 02:55:48 INFO DAGScheduler: ResultStage 1 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) finished in 9.873 s
+26/11/25 02:55:48 INFO DAGScheduler: Job 1 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 02:55:48 INFO TaskSchedulerImpl: Killing all running tasks in stage 1: Stage finished
+26/11/25 02:55:48 INFO DAGScheduler: Job 1 finished: Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+..., took 9.876737 s
+26/11/25 02:55:48 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_0, format=PARQUET) is committing.
+26/11/25 02:55:48 INFO SparkWrite: Committing append with 6 new data files to table polaris.agent2_ingest.comet_ctas_orders_0
+26/11/25 02:55:48 INFO SnapshotProducer: Committed snapshot 1644844810137985204 (MergeAppend)
+26/11/25 02:55:48 INFO LoggingMetricsReporter: Received metrics report: CommitReport{tableName=polaris.agent2_ingest.comet_ctas_orders_0, snapshotId=1644844810137985204, sequenceNumber=1, operation=append, commitMetrics=CommitMetricsResult{totalDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.071097771S, count=1}, attempts=CounterResult{unit=COUNT, value=1}, addedDataFiles=CounterResult{unit=COUNT, value=6}, removedDataFiles=null, totalDataFiles=CounterResult{unit=COUNT, value=6}, addedDeleteFiles=null, addedEqualityDeleteFiles=null, addedPositionalDeleteFiles=null, addedDVs=null, removedDeleteFiles=null, removedEqualityDeleteFiles=null, removedPositionalDeleteFiles=null, removedDVs=null, totalDeleteFiles=CounterResult{unit=COUNT, value=0}, addedRecords=CounterResult{unit=COUNT, value=15000000}, removedRecords=null, totalRecords=CounterResult{unit=COUNT, value=15000000}, addedFilesSizeInBytes=CounterResult{unit=BYTES, value=380537889}, removedFilesSizeInBytes=null, totalFilesSizeInBytes=CounterResult{unit=BYTES, value=380537889}, addedPositionalDeletes=null, removedPositionalDeletes=null, totalPositionalDeletes=CounterResult{unit=COUNT, value=0}, addedEqualityDeletes=null, removedEqualityDeletes=null, totalEqualityDeletes=CounterResult{unit=COUNT, value=0}, manifestsCreated=CounterResult{unit=COUNT, value=1}, manifestsReplaced=CounterResult{unit=COUNT, value=0}, manifestsKept=CounterResult{unit=COUNT, value=0}, manifestEntriesProcessed=null}, metadata={engine-version=3.5.10, app-id=local-1795575332338, engine-name=spark, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 02:55:48 INFO SparkWrite: Committed in 83 ms
+26/11/25 02:55:48 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_0, format=PARQUET) committed.
+26/11/25 02:55:48 WARN RESTMetricsReporter: Failed to report metrics to REST endpoint v1/poc/namespaces/agent2_ingest/tables/comet_ctas_orders_0/metrics
+org.apache.iceberg.exceptions.RESTException: Unable to process (code: 404, type: NoSuchTableException): Table does not exist: agent2_ingest.comet_ctas_orders_0
+	at org.apache.iceberg.rest.ErrorHandlers.createRESTException(ErrorHandlers.java:115)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:357)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:321)
+	at org.apache.iceberg.rest.HTTPClient.throwFailure(HTTPClient.java:242)
+	at org.apache.iceberg.rest.HTTPClient.handleResponse(HTTPClient.java:367)
+	at org.apache.iceberg.rest.HTTPClient.lambda$execute$1(HTTPClient.java:325)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:247)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:188)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:321)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:299)
+	at org.apache.iceberg.rest.BaseHTTPClient.post(BaseHTTPClient.java:112)
+	at org.apache.iceberg.rest.RESTClient.post(RESTClient.java:150)
+	at org.apache.iceberg.rest.RESTMetricsReporter.lambda$report$0(RESTMetricsReporter.java:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/11/25 02:55:48 WARN CometExecRule: Comet cannot execute some parts of this plan natively (set spark.comet.explain.fallback.enabled=false to disable this logging):
+ CommandResult [COMET: CommandResult is not supported]
+   +- AtomicCreateTableAsSelect
+
+Comet accelerated 0 out of 2 eligible operators (0%). Final plan contains 0 transitions between Spark and Comet. Accelerated expressions: 0 native, 0 codegen dispatch.
+26/11/25 02:55:48 INFO ExecuteGrpcResponseSender: Stream finished for opId=b4e76e91-cbcf-425b-84e7-280240fba61d, sent all responses up to last index 3. totalTime=11093061840ns waitingForResults=11091902979ns waitingForSend=0ns
+26/11/25 02:55:48 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,b4e76e91-cbcf-425b-84e7-280240fba61d) is removed.
+26/11/25 02:55:48 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,238b00d3-9020-488c-a49c-f7e7e7f0e697) is created.
+26/11/25 02:55:48 INFO ExecuteResponseObserver: Release all for opId=b4e76e91-cbcf-425b-84e7-280240fba61d. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 02:55:48 INFO ExecuteResponseObserver: Release all for opId=b4e76e91-cbcf-425b-84e7-280240fba61d. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 02:55:48 INFO ExecuteGrpcResponseSender: Starting for opId=238b00d3-9020-488c-a49c-f7e7e7f0e697, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:48 INFO CodeGenerator: Code generated in 4.988534 ms
+26/11/25 02:55:48 WARN CometExecRule: Comet cannot execute some parts of this plan natively (set spark.comet.explain.fallback.enabled=false to disable this logging):
+ LocalTableScan [COMET: Native support for operator LocalTableScanExec is disabled. Set spark.comet.exec.localTableScan.enabled=true to enable it.]
+
+Comet accelerated 0 out of 1 eligible operators (0%). Final plan contains 0 transitions between Spark and Comet. Accelerated expressions: 0 native, 0 codegen dispatch.
+26/11/25 02:55:48 INFO ExecuteGrpcResponseSender: Stream finished for opId=238b00d3-9020-488c-a49c-f7e7e7f0e697, sent all responses up to last index 4. totalTime=22629035ns waitingForResults=22068708ns waitingForSend=0ns
+26/11/25 02:55:48 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,238b00d3-9020-488c-a49c-f7e7e7f0e697) is removed.
+26/11/25 02:55:48 INFO ExecuteResponseObserver: Release all for opId=238b00d3-9020-488c-a49c-f7e7e7f0e697. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(571,3) maxCachedUntilProduced=CachedSize(690,4)
+26/11/25 02:55:48 INFO ExecuteResponseObserver: Release all for opId=238b00d3-9020-488c-a49c-f7e7e7f0e697. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(571,3) maxCachedUntilProduced=CachedSize(690,4)
+26/11/25 02:55:48 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,7a73c15a-df44-4afc-8739-b265ce9f93d7) is created.
+26/11/25 02:55:48 INFO ExecuteGrpcResponseSender: Starting for opId=7a73c15a-df44-4afc-8739-b265ce9f93d7, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:48 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:48 INFO RESTSessionCatalog: Table properties set at catalog level through catalog properties: {}
+26/11/25 02:55:48 INFO RESTSessionCatalog: Table properties enforced at catalog level through catalog properties: {}
+26/11/25 02:55:48 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:48 INFO V2ScanRelationPushDown: 
+Output: o_orderkey#43L, o_custkey#44L, o_orderstatus#45, o_totalprice#46, o_orderdate#47, o_orderpriority#48, o_clerk#49, o_shippriority#50, o_comment#51
+         
+26/11/25 02:55:48 INFO SnapshotScan: Scanning table polaris.tpch_sf10.orders snapshot 4677235499825234483 created at 2026-11-25T02:40:28.267+00:00 with filter true
+26/11/25 02:55:48 INFO BaseDistributedDataScan: Planning file tasks locally for table polaris.tpch_sf10.orders
+26/11/25 02:55:48 INFO LoggingMetricsReporter: Received metrics report: ScanReport{tableName=polaris.tpch_sf10.orders, snapshotId=4677235499825234483, filter=true, schemaId=0, projectedFieldIds=[1, 2, 3, 4, 5, 6, 7, 8, 9], projectedFieldNames=[o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority, o_comment], scanMetrics=ScanMetricsResult{totalPlanningDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.011157263S, count=1}, resultDataFiles=CounterResult{unit=COUNT, value=6}, resultDeleteFiles=CounterResult{unit=COUNT, value=0}, totalDataManifests=CounterResult{unit=COUNT, value=1}, totalDeleteManifests=CounterResult{unit=COUNT, value=0}, scannedDataManifests=CounterResult{unit=COUNT, value=1}, skippedDataManifests=CounterResult{unit=COUNT, value=0}, totalFileSizeInBytes=CounterResult{unit=BYTES, value=380537889}, totalDeleteFileSizeInBytes=CounterResult{unit=BYTES, value=0}, skippedDataFiles=CounterResult{unit=COUNT, value=0}, skippedDeleteFiles=CounterResult{unit=COUNT, value=0}, scannedDeleteManifests=CounterResult{unit=COUNT, value=0}, skippedDeleteManifests=CounterResult{unit=COUNT, value=0}, indexedDeleteFiles=CounterResult{unit=COUNT, value=0}, equalityDeleteFiles=CounterResult{unit=COUNT, value=0}, positionalDeleteFiles=CounterResult{unit=COUNT, value=0}, dvs=CounterResult{unit=COUNT, value=0}}, metadata={engine-version=3.5.10, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-id=local-1795575332338, engine-name=spark, app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 02:55:48 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 6 partition(s) for table polaris.tpch_sf10.orders
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 2.3 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:48 INFO SparkContext: Created broadcast 7 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 1134.0 B, free 8.6 GiB)
+26/11/25 02:55:48 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:48 INFO SparkContext: Created broadcast 8 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:48 INFO CodeGenerator: Code generated in 13.086386 ms
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_9 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_9_piece0 stored as bytes in memory (estimated size 2.3 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:48 INFO SparkContext: Created broadcast 9 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_10 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_10_piece0 stored as bytes in memory (estimated size 1134.0 B, free 8.6 GiB)
+26/11/25 02:55:48 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:48 INFO SparkContext: Created broadcast 10 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:48 INFO CometIcebergNativeScan: IcebergScan: 6 tasks, 9 pools (83.3% avg dedup)
+26/11/25 02:55:48 INFO CometIcebergNativeScan:   Common pools (unique/bytes): schema=1/609, partition_type=1/29, partition_spec=1/25, name_mapping=0/0, project_field_ids=1/11, partition_data=1/0, delete_file=0/0, delete_file_path=0/0, delete_files_set=0/0, residual=0/0; total=674 bytes
+26/11/25 02:55:48 INFO CometIcebergNativeScan:   Per-partition messages: 6, total=744 bytes, max=124 bytes
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_11 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_11_piece0 stored as bytes in memory (estimated size 2.1 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.1 KiB, free: 8.6 GiB)
+26/11/25 02:55:48 INFO SparkContext: Created broadcast 11 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:48 INFO AppendDataExec: Start processing data source write support: IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_1, format=PARQUET). The input RDD has 6 partitions.
+26/11/25 02:55:48 INFO SparkContext: Starting job: Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:48 INFO DAGScheduler: Got job 2 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) with 6 output partitions
+26/11/25 02:55:48 INFO DAGScheduler: Final stage: ResultStage 2 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...)
+26/11/25 02:55:48 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 02:55:48 INFO DAGScheduler: Missing parents: List()
+26/11/25 02:55:48 INFO DAGScheduler: Submitting ResultStage 2 (MapPartitionsRDD[11] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...), which has no missing parents
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_12 stored as values in memory (estimated size 22.7 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO MemoryStore: Block broadcast_12_piece0 stored as bytes in memory (estimated size 9.3 KiB, free 8.6 GiB)
+26/11/25 02:55:48 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 9.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:48 INFO SparkContext: Created broadcast 12 from broadcast at DAGScheduler.scala:1611
+26/11/25 02:55:48 INFO DAGScheduler: Submitting 6 missing tasks from ResultStage 2 (MapPartitionsRDD[11] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5))
+26/11/25 02:55:48 INFO TaskSchedulerImpl: Adding task set 2.0 with 6 tasks resource profile 0
+26/11/25 02:55:48 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 7) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 0, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:48 INFO TaskSetManager: Starting task 1.0 in stage 2.0 (TID 8) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 1, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:48 INFO TaskSetManager: Starting task 2.0 in stage 2.0 (TID 9) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 2, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:48 INFO TaskSetManager: Starting task 3.0 in stage 2.0 (TID 10) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 3, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:48 INFO Executor: Running task 2.0 in stage 2.0 (TID 9)
+26/11/25 02:55:48 INFO Executor: Running task 1.0 in stage 2.0 (TID 8)
+26/11/25 02:55:48 INFO Executor: Running task 0.0 in stage 2.0 (TID 7)
+26/11/25 02:55:48 INFO Executor: Running task 3.0 in stage 2.0 (TID 10)
+26/11/25 02:55:48 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:48 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:48 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:48 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:49 INFO BlockManagerInfo: Removed broadcast_5_piece0 on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 in memory (size: 2.1 KiB, free: 8.6 GiB)
+26/11/25 02:55:49 INFO BlockManagerInfo: Removed broadcast_1_piece0 on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 in memory (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:49 INFO BlockManagerInfo: Removed broadcast_6_piece0 on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 in memory (size: 9.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:49 INFO BlockManagerInfo: Removed broadcast_2_piece0 on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 in memory (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:52 INFO DataWritingSparkTask: Writer for partition 3 is committing.
+26/11/25 02:55:53 INFO DataWritingSparkTask: Writer for partition 1 is committing.
+26/11/25 02:55:53 INFO DataWritingSparkTask: Writer for partition 2 is committing.
+26/11/25 02:55:53 INFO DataWritingSparkTask: Writer for partition 0 is committing.
+26/11/25 02:55:53 INFO DataWritingSparkTask: Committed partition 3 (task 10, attempt 0, stage 2.0)
+26/11/25 02:55:53 INFO Executor: Finished task 3.0 in stage 2.0 (TID 10). 6662 bytes result sent to driver
+26/11/25 02:55:53 INFO TaskSetManager: Starting task 4.0 in stage 2.0 (TID 11) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 4, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:53 INFO TaskSetManager: Finished task 3.0 in stage 2.0 (TID 10) in 5069 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (1/6)
+26/11/25 02:55:53 INFO Executor: Running task 4.0 in stage 2.0 (TID 11)
+26/11/25 02:55:53 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:54 INFO DataWritingSparkTask: Committed partition 1 (task 8, attempt 0, stage 2.0)
+26/11/25 02:55:54 INFO Executor: Finished task 1.0 in stage 2.0 (TID 8). 6618 bytes result sent to driver
+26/11/25 02:55:54 INFO TaskSetManager: Starting task 5.0 in stage 2.0 (TID 12) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 5, PROCESS_LOCAL, 9700 bytes) 
+26/11/25 02:55:54 INFO Executor: Running task 5.0 in stage 2.0 (TID 12)
+26/11/25 02:55:54 INFO TaskSetManager: Finished task 1.0 in stage 2.0 (TID 8) in 5698 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (2/6)
+26/11/25 02:55:54 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:54 INFO DataWritingSparkTask: Committed partition 0 (task 7, attempt 0, stage 2.0)
+26/11/25 02:55:54 INFO Executor: Finished task 0.0 in stage 2.0 (TID 7). 6618 bytes result sent to driver
+26/11/25 02:55:54 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 7) in 5924 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (3/6)
+26/11/25 02:55:54 INFO DataWritingSparkTask: Committed partition 2 (task 9, attempt 0, stage 2.0)
+26/11/25 02:55:54 INFO Executor: Finished task 2.0 in stage 2.0 (TID 9). 6618 bytes result sent to driver
+26/11/25 02:55:54 INFO TaskSetManager: Finished task 2.0 in stage 2.0 (TID 9) in 5941 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (4/6)
+26/11/25 02:55:54 INFO DataWritingSparkTask: Writer for partition 5 is committing.
+26/11/25 02:55:54 INFO DataWritingSparkTask: Committed partition 5 (task 12, attempt 0, stage 2.0)
+26/11/25 02:55:54 INFO Executor: Finished task 5.0 in stage 2.0 (TID 12). 6619 bytes result sent to driver
+26/11/25 02:55:54 INFO TaskSetManager: Finished task 5.0 in stage 2.0 (TID 12) in 295 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (5/6)
+26/11/25 02:55:56 INFO DataWritingSparkTask: Writer for partition 4 is committing.
+26/11/25 02:55:56 INFO DataWritingSparkTask: Committed partition 4 (task 11, attempt 0, stage 2.0)
+26/11/25 02:55:56 INFO Executor: Finished task 4.0 in stage 2.0 (TID 11). 6619 bytes result sent to driver
+26/11/25 02:55:56 INFO TaskSetManager: Finished task 4.0 in stage 2.0 (TID 11) in 3188 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (6/6)
+26/11/25 02:55:56 INFO TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool 
+26/11/25 02:55:56 INFO DAGScheduler: ResultStage 2 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) finished in 8.265 s
+26/11/25 02:55:56 INFO DAGScheduler: Job 2 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 02:55:56 INFO TaskSchedulerImpl: Killing all running tasks in stage 2: Stage finished
+26/11/25 02:55:56 INFO DAGScheduler: Job 2 finished: Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+..., took 8.269430 s
+26/11/25 02:55:56 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_1, format=PARQUET) is committing.
+26/11/25 02:55:56 INFO SparkWrite: Committing append with 6 new data files to table polaris.agent2_ingest.comet_ctas_orders_1
+26/11/25 02:55:56 INFO SnapshotProducer: Committed snapshot 6383412789143692860 (MergeAppend)
+26/11/25 02:55:56 INFO LoggingMetricsReporter: Received metrics report: CommitReport{tableName=polaris.agent2_ingest.comet_ctas_orders_1, snapshotId=6383412789143692860, sequenceNumber=1, operation=append, commitMetrics=CommitMetricsResult{totalDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.043697135S, count=1}, attempts=CounterResult{unit=COUNT, value=1}, addedDataFiles=CounterResult{unit=COUNT, value=6}, removedDataFiles=null, totalDataFiles=CounterResult{unit=COUNT, value=6}, addedDeleteFiles=null, addedEqualityDeleteFiles=null, addedPositionalDeleteFiles=null, addedDVs=null, removedDeleteFiles=null, removedEqualityDeleteFiles=null, removedPositionalDeleteFiles=null, removedDVs=null, totalDeleteFiles=CounterResult{unit=COUNT, value=0}, addedRecords=CounterResult{unit=COUNT, value=15000000}, removedRecords=null, totalRecords=CounterResult{unit=COUNT, value=15000000}, addedFilesSizeInBytes=CounterResult{unit=BYTES, value=380537889}, removedFilesSizeInBytes=null, totalFilesSizeInBytes=CounterResult{unit=BYTES, value=380537889}, addedPositionalDeletes=null, removedPositionalDeletes=null, totalPositionalDeletes=CounterResult{unit=COUNT, value=0}, addedEqualityDeletes=null, removedEqualityDeletes=null, totalEqualityDeletes=CounterResult{unit=COUNT, value=0}, manifestsCreated=CounterResult{unit=COUNT, value=1}, manifestsReplaced=CounterResult{unit=COUNT, value=0}, manifestsKept=CounterResult{unit=COUNT, value=0}, manifestEntriesProcessed=null}, metadata={engine-version=3.5.10, app-id=local-1795575332338, engine-name=spark, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 02:55:56 INFO SparkWrite: Committed in 44 ms
+26/11/25 02:55:56 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_1, format=PARQUET) committed.
+26/11/25 02:55:56 WARN RESTMetricsReporter: Failed to report metrics to REST endpoint v1/poc/namespaces/agent2_ingest/tables/comet_ctas_orders_1/metrics
+org.apache.iceberg.exceptions.RESTException: Unable to process (code: 404, type: NoSuchTableException): Table does not exist: agent2_ingest.comet_ctas_orders_1
+	at org.apache.iceberg.rest.ErrorHandlers.createRESTException(ErrorHandlers.java:115)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:357)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:321)
+	at org.apache.iceberg.rest.HTTPClient.throwFailure(HTTPClient.java:242)
+	at org.apache.iceberg.rest.HTTPClient.handleResponse(HTTPClient.java:367)
+	at org.apache.iceberg.rest.HTTPClient.lambda$execute$1(HTTPClient.java:325)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:247)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:188)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:321)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:299)
+	at org.apache.iceberg.rest.BaseHTTPClient.post(BaseHTTPClient.java:112)
+	at org.apache.iceberg.rest.RESTClient.post(RESTClient.java:150)
+	at org.apache.iceberg.rest.RESTMetricsReporter.lambda$report$0(RESTMetricsReporter.java:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/11/25 02:55:56 WARN CometExecRule: Comet cannot execute some parts of this plan natively (set spark.comet.explain.fallback.enabled=false to disable this logging):
+ CommandResult [COMET: CommandResult is not supported]
+   +- AtomicCreateTableAsSelect
+
+Comet accelerated 0 out of 2 eligible operators (0%). Final plan contains 0 transitions between Spark and Comet. Accelerated expressions: 0 native, 0 codegen dispatch.
+26/11/25 02:55:56 INFO ExecuteGrpcResponseSender: Stream finished for opId=7a73c15a-df44-4afc-8739-b265ce9f93d7, sent all responses up to last index 3. totalTime=8465321509ns waitingForResults=8463969493ns waitingForSend=0ns
+26/11/25 02:55:56 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,7a73c15a-df44-4afc-8739-b265ce9f93d7) is removed.
+26/11/25 02:55:56 INFO ExecuteResponseObserver: Release all for opId=7a73c15a-df44-4afc-8739-b265ce9f93d7. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 02:55:56 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,486eca32-5249-497e-afe4-cb787b4f4d76) is created.
+26/11/25 02:55:56 INFO ExecuteResponseObserver: Release all for opId=7a73c15a-df44-4afc-8739-b265ce9f93d7. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 02:55:56 INFO ExecuteGrpcResponseSender: Starting for opId=486eca32-5249-497e-afe4-cb787b4f4d76, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:56 INFO CodeGenerator: Code generated in 4.005831 ms
+26/11/25 02:55:56 WARN CometExecRule: Comet cannot execute some parts of this plan natively (set spark.comet.explain.fallback.enabled=false to disable this logging):
+ LocalTableScan [COMET: Native support for operator LocalTableScanExec is disabled. Set spark.comet.exec.localTableScan.enabled=true to enable it.]
+
+Comet accelerated 0 out of 1 eligible operators (0%). Final plan contains 0 transitions between Spark and Comet. Accelerated expressions: 0 native, 0 codegen dispatch.
+26/11/25 02:55:56 INFO ExecuteGrpcResponseSender: Stream finished for opId=486eca32-5249-497e-afe4-cb787b4f4d76, sent all responses up to last index 4. totalTime=13542248ns waitingForResults=11480063ns waitingForSend=0ns
+26/11/25 02:55:56 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,486eca32-5249-497e-afe4-cb787b4f4d76) is removed.
+26/11/25 02:55:56 INFO ExecuteResponseObserver: Release all for opId=486eca32-5249-497e-afe4-cb787b4f4d76. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(571,3) maxCachedUntilProduced=CachedSize(571,3)
+26/11/25 02:55:56 INFO ExecuteResponseObserver: Release all for opId=486eca32-5249-497e-afe4-cb787b4f4d76. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(571,3) maxCachedUntilProduced=CachedSize(571,3)
+26/11/25 02:55:56 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,7b83b569-bd8b-468f-a0f6-86754e7ea852) is created.
+26/11/25 02:55:56 INFO ExecuteGrpcResponseSender: Starting for opId=7b83b569-bd8b-468f-a0f6-86754e7ea852, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:55:56 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:56 INFO RESTSessionCatalog: Table properties set at catalog level through catalog properties: {}
+26/11/25 02:55:56 INFO RESTSessionCatalog: Table properties enforced at catalog level through catalog properties: {}
+26/11/25 02:55:56 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 02:55:56 INFO V2ScanRelationPushDown: 
+Output: o_orderkey#79L, o_custkey#80L, o_orderstatus#81, o_totalprice#82, o_orderdate#83, o_orderpriority#84, o_clerk#85, o_shippriority#86, o_comment#87
+         
+26/11/25 02:55:56 INFO SnapshotScan: Scanning table polaris.tpch_sf10.orders snapshot 4677235499825234483 created at 2026-11-25T02:40:28.267+00:00 with filter true
+26/11/25 02:55:56 INFO BaseDistributedDataScan: Planning file tasks locally for table polaris.tpch_sf10.orders
+26/11/25 02:55:56 INFO LoggingMetricsReporter: Received metrics report: ScanReport{tableName=polaris.tpch_sf10.orders, snapshotId=4677235499825234483, filter=true, schemaId=0, projectedFieldIds=[1, 2, 3, 4, 5, 6, 7, 8, 9], projectedFieldNames=[o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority, o_comment], scanMetrics=ScanMetricsResult{totalPlanningDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.010569901S, count=1}, resultDataFiles=CounterResult{unit=COUNT, value=6}, resultDeleteFiles=CounterResult{unit=COUNT, value=0}, totalDataManifests=CounterResult{unit=COUNT, value=1}, totalDeleteManifests=CounterResult{unit=COUNT, value=0}, scannedDataManifests=CounterResult{unit=COUNT, value=1}, skippedDataManifests=CounterResult{unit=COUNT, value=0}, totalFileSizeInBytes=CounterResult{unit=BYTES, value=380537889}, totalDeleteFileSizeInBytes=CounterResult{unit=BYTES, value=0}, skippedDataFiles=CounterResult{unit=COUNT, value=0}, skippedDeleteFiles=CounterResult{unit=COUNT, value=0}, scannedDeleteManifests=CounterResult{unit=COUNT, value=0}, skippedDeleteManifests=CounterResult{unit=COUNT, value=0}, indexedDeleteFiles=CounterResult{unit=COUNT, value=0}, equalityDeleteFiles=CounterResult{unit=COUNT, value=0}, positionalDeleteFiles=CounterResult{unit=COUNT, value=0}, dvs=CounterResult{unit=COUNT, value=0}}, metadata={engine-version=3.5.10, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-id=local-1795575332338, engine-name=spark, app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 02:55:56 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 6 partition(s) for table polaris.tpch_sf10.orders
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_13 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_13_piece0 stored as bytes in memory (estimated size 2.3 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:56 INFO SparkContext: Created broadcast 13 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_14 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_14_piece0 stored as bytes in memory (estimated size 1134.0 B, free 8.6 GiB)
+26/11/25 02:55:56 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:56 INFO SparkContext: Created broadcast 14 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:56 INFO CodeGenerator: Code generated in 9.783798 ms
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_15 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_15_piece0 stored as bytes in memory (estimated size 2.3 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:56 INFO SparkContext: Created broadcast 15 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_16 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_16_piece0 stored as bytes in memory (estimated size 1134.0 B, free 8.6 GiB)
+26/11/25 02:55:56 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 1134.0 B, free: 8.6 GiB)
+26/11/25 02:55:56 INFO SparkContext: Created broadcast 16 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:56 INFO CometIcebergNativeScan: IcebergScan: 6 tasks, 9 pools (83.3% avg dedup)
+26/11/25 02:55:56 INFO CometIcebergNativeScan:   Common pools (unique/bytes): schema=1/609, partition_type=1/29, partition_spec=1/25, name_mapping=0/0, project_field_ids=1/11, partition_data=1/0, delete_file=0/0, delete_file_path=0/0, delete_files_set=0/0, residual=0/0; total=674 bytes
+26/11/25 02:55:56 INFO CometIcebergNativeScan:   Per-partition messages: 6, total=744 bytes, max=124 bytes
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_17 stored as values in memory (estimated size 32.0 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_17_piece0 stored as bytes in memory (estimated size 2.1 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 2.1 KiB, free: 8.6 GiB)
+26/11/25 02:55:56 INFO SparkContext: Created broadcast 17 from Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:56 INFO AppendDataExec: Start processing data source write support: IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_2, format=PARQUET). The input RDD has 6 partitions.
+26/11/25 02:55:56 INFO SparkContext: Starting job: Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 02:55:56 INFO DAGScheduler: Got job 3 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) with 6 output partitions
+26/11/25 02:55:56 INFO DAGScheduler: Final stage: ResultStage 3 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...)
+26/11/25 02:55:56 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 02:55:56 INFO DAGScheduler: Missing parents: List()
+26/11/25 02:55:56 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[14] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...), which has no missing parents
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_18 stored as values in memory (estimated size 22.7 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO MemoryStore: Block broadcast_18_piece0 stored as bytes in memory (estimated size 9.3 KiB, free 8.6 GiB)
+26/11/25 02:55:56 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net:36693 (size: 9.3 KiB, free: 8.6 GiB)
+26/11/25 02:55:56 INFO SparkContext: Created broadcast 18 from broadcast at DAGScheduler.scala:1611
+26/11/25 02:55:56 INFO DAGScheduler: Submitting 6 missing tasks from ResultStage 3 (MapPartitionsRDD[14] at Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5))
+26/11/25 02:55:56 INFO TaskSchedulerImpl: Adding task set 3.0 with 6 tasks resource profile 0
+26/11/25 02:55:56 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 13) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 0, PROCESS_LOCAL, 9701 bytes) 
+26/11/25 02:55:56 INFO TaskSetManager: Starting task 1.0 in stage 3.0 (TID 14) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 1, PROCESS_LOCAL, 9701 bytes) 
+26/11/25 02:55:56 INFO TaskSetManager: Starting task 2.0 in stage 3.0 (TID 15) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 2, PROCESS_LOCAL, 9701 bytes) 
+26/11/25 02:55:56 INFO TaskSetManager: Starting task 3.0 in stage 3.0 (TID 16) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 3, PROCESS_LOCAL, 9701 bytes) 
+26/11/25 02:55:56 INFO Executor: Running task 0.0 in stage 3.0 (TID 13)
+26/11/25 02:55:56 INFO Executor: Running task 2.0 in stage 3.0 (TID 15)
+26/11/25 02:55:56 INFO Executor: Running task 1.0 in stage 3.0 (TID 14)
+26/11/25 02:55:56 INFO Executor: Running task 3.0 in stage 3.0 (TID 16)
+26/11/25 02:55:56 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:56 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:56 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:56 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:55:57 INFO CometExecIterator: Comet native memory usage: allocated 229.4 MiB, reserved 0.0 MiB (4 native plans, 4 memory pools); JVM Arrow allocated 0.0 MiB, 0.0 MiB of it imported from native
+26/11/25 02:56:01 INFO DataWritingSparkTask: Writer for partition 0 is committing.
+26/11/25 02:56:01 INFO DataWritingSparkTask: Writer for partition 3 is committing.
+26/11/25 02:56:01 INFO DataWritingSparkTask: Writer for partition 1 is committing.
+26/11/25 02:56:01 INFO DataWritingSparkTask: Writer for partition 2 is committing.
+26/11/25 02:56:01 INFO DataWritingSparkTask: Committed partition 0 (task 13, attempt 0, stage 3.0)
+26/11/25 02:56:01 INFO Executor: Finished task 0.0 in stage 3.0 (TID 13). 6619 bytes result sent to driver
+26/11/25 02:56:01 INFO TaskSetManager: Starting task 4.0 in stage 3.0 (TID 17) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 4, PROCESS_LOCAL, 9701 bytes) 
+26/11/25 02:56:01 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 13) in 5022 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (1/6)
+26/11/25 02:56:01 INFO Executor: Running task 4.0 in stage 3.0 (TID 17)
+26/11/25 02:56:01 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:56:02 INFO DataWritingSparkTask: Committed partition 3 (task 16, attempt 0, stage 3.0)
+26/11/25 02:56:02 INFO Executor: Finished task 3.0 in stage 3.0 (TID 16). 6619 bytes result sent to driver
+26/11/25 02:56:02 INFO TaskSetManager: Starting task 5.0 in stage 3.0 (TID 18) (runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net, executor driver, partition 5, PROCESS_LOCAL, 9701 bytes) 
+26/11/25 02:56:02 INFO TaskSetManager: Finished task 3.0 in stage 3.0 (TID 16) in 5593 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (2/6)
+26/11/25 02:56:02 INFO Executor: Running task 5.0 in stage 3.0 (TID 18)
+26/11/25 02:56:02 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 02:56:02 INFO DataWritingSparkTask: Committed partition 1 (task 14, attempt 0, stage 3.0)
+26/11/25 02:56:02 INFO Executor: Finished task 1.0 in stage 3.0 (TID 14). 6619 bytes result sent to driver
+26/11/25 02:56:02 INFO TaskSetManager: Finished task 1.0 in stage 3.0 (TID 14) in 5672 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (3/6)
+26/11/25 02:56:02 INFO DataWritingSparkTask: Committed partition 2 (task 15, attempt 0, stage 3.0)
+26/11/25 02:56:02 INFO Executor: Finished task 2.0 in stage 3.0 (TID 15). 6619 bytes result sent to driver
+26/11/25 02:56:02 INFO TaskSetManager: Finished task 2.0 in stage 3.0 (TID 15) in 5748 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (4/6)
+26/11/25 02:56:02 INFO DataWritingSparkTask: Writer for partition 5 is committing.
+26/11/25 02:56:02 INFO DataWritingSparkTask: Committed partition 5 (task 18, attempt 0, stage 3.0)
+26/11/25 02:56:02 INFO Executor: Finished task 5.0 in stage 3.0 (TID 18). 6576 bytes result sent to driver
+26/11/25 02:56:02 INFO TaskSetManager: Finished task 5.0 in stage 3.0 (TID 18) in 259 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (5/6)
+26/11/25 02:56:04 INFO DataWritingSparkTask: Writer for partition 4 is committing.
+26/11/25 02:56:04 INFO SparkConnectExecutionManager: Started periodic run of SparkConnectExecutionManager maintenance.
+26/11/25 02:56:04 INFO SparkConnectExecutionManager: Finished periodic run of SparkConnectExecutionManager maintenance.
+26/11/25 02:56:04 INFO DataWritingSparkTask: Committed partition 4 (task 17, attempt 0, stage 3.0)
+26/11/25 02:56:04 INFO Executor: Finished task 4.0 in stage 3.0 (TID 17). 6619 bytes result sent to driver
+26/11/25 02:56:04 INFO TaskSetManager: Finished task 4.0 in stage 3.0 (TID 17) in 2907 ms on runnervm0hi8g.uuljqtvc0mnudos2mzdwvisxhe.phxx.internal.cloudapp.net (executor driver) (6/6)
+26/11/25 02:56:04 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+26/11/25 02:56:04 INFO DAGScheduler: ResultStage 3 (Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) finished in 7.933 s
+26/11/25 02:56:04 INFO DAGScheduler: Job 3 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 02:56:04 INFO TaskSchedulerImpl: Killing all running tasks in stage 3: Stage finished
+26/11/25 02:56:04 INFO DAGScheduler: Job 3 finished: Spark Connect - session_id: "f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+..., took 7.937607 s
+26/11/25 02:56:04 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_2, format=PARQUET) is committing.
+26/11/25 02:56:04 INFO SparkWrite: Committing append with 6 new data files to table polaris.agent2_ingest.comet_ctas_orders_2
+26/11/25 02:56:04 INFO SnapshotProducer: Committed snapshot 7478290433672696078 (MergeAppend)
+26/11/25 02:56:04 INFO LoggingMetricsReporter: Received metrics report: CommitReport{tableName=polaris.agent2_ingest.comet_ctas_orders_2, snapshotId=7478290433672696078, sequenceNumber=1, operation=append, commitMetrics=CommitMetricsResult{totalDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.039458178S, count=1}, attempts=CounterResult{unit=COUNT, value=1}, addedDataFiles=CounterResult{unit=COUNT, value=6}, removedDataFiles=null, totalDataFiles=CounterResult{unit=COUNT, value=6}, addedDeleteFiles=null, addedEqualityDeleteFiles=null, addedPositionalDeleteFiles=null, addedDVs=null, removedDeleteFiles=null, removedEqualityDeleteFiles=null, removedPositionalDeleteFiles=null, removedDVs=null, totalDeleteFiles=CounterResult{unit=COUNT, value=0}, addedRecords=CounterResult{unit=COUNT, value=15000000}, removedRecords=null, totalRecords=CounterResult{unit=COUNT, value=15000000}, addedFilesSizeInBytes=CounterResult{unit=BYTES, value=380537889}, removedFilesSizeInBytes=null, totalFilesSizeInBytes=CounterResult{unit=BYTES, value=380537889}, addedPositionalDeletes=null, removedPositionalDeletes=null, totalPositionalDeletes=CounterResult{unit=COUNT, value=0}, addedEqualityDeletes=null, removedEqualityDeletes=null, totalEqualityDeletes=CounterResult{unit=COUNT, value=0}, manifestsCreated=CounterResult{unit=COUNT, value=1}, manifestsReplaced=CounterResult{unit=COUNT, value=0}, manifestsKept=CounterResult{unit=COUNT, value=0}, manifestEntriesProcessed=null}, metadata={engine-version=3.5.10, app-id=local-1795575332338, engine-name=spark, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 02:56:04 INFO SparkWrite: Committed in 40 ms
+26/11/25 02:56:04 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.agent2_ingest.comet_ctas_orders_2, format=PARQUET) committed.
+26/11/25 02:56:04 WARN RESTMetricsReporter: Failed to report metrics to REST endpoint v1/poc/namespaces/agent2_ingest/tables/comet_ctas_orders_2/metrics
+org.apache.iceberg.exceptions.RESTException: Unable to process (code: 404, type: NoSuchTableException): Table does not exist: agent2_ingest.comet_ctas_orders_2
+	at org.apache.iceberg.rest.ErrorHandlers.createRESTException(ErrorHandlers.java:115)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:357)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:321)
+	at org.apache.iceberg.rest.HTTPClient.throwFailure(HTTPClient.java:242)
+	at org.apache.iceberg.rest.HTTPClient.handleResponse(HTTPClient.java:367)
+	at org.apache.iceberg.rest.HTTPClient.lambda$execute$1(HTTPClient.java:325)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:247)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:188)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:321)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:299)
+	at org.apache.iceberg.rest.BaseHTTPClient.post(BaseHTTPClient.java:112)
+	at org.apache.iceberg.rest.RESTClient.post(RESTClient.java:150)
+	at org.apache.iceberg.rest.RESTMetricsReporter.lambda$report$0(RESTMetricsReporter.java:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/11/25 02:56:04 WARN CometExecRule: Comet cannot execute some parts of this plan natively (set spark.comet.explain.fallback.enabled=false to disable this logging):
+ CommandResult [COMET: CommandResult is not supported]
+   +- AtomicCreateTableAsSelect
+
+Comet accelerated 0 out of 2 eligible operators (0%). Final plan contains 0 transitions between Spark and Comet. Accelerated expressions: 0 native, 0 codegen dispatch.
+26/11/25 02:56:04 INFO ExecuteGrpcResponseSender: Stream finished for opId=7b83b569-bd8b-468f-a0f6-86754e7ea852, sent all responses up to last index 3. totalTime=8099240002ns waitingForResults=8098568468ns waitingForSend=0ns
+26/11/25 02:56:04 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,5fa0e068-86e1-436f-a4f6-a23a843767ba) is created.
+26/11/25 02:56:04 INFO ExecuteGrpcResponseSender: Starting for opId=5fa0e068-86e1-436f-a4f6-a23a843767ba, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 02:56:04 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,7b83b569-bd8b-468f-a0f6-86754e7ea852) is removed.
+26/11/25 02:56:04 INFO ExecuteResponseObserver: Release all for opId=7b83b569-bd8b-468f-a0f6-86754e7ea852. Execution stats: total=CachedSize(577,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(299,2) maxCachedUntilProduced=CachedSize(299,2)
+26/11/25 02:56:04 INFO ExecuteResponseObserver: Release all for opId=7b83b569-bd8b-468f-a0f6-86754e7ea852. Execution stats: total=CachedSize(577,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(299,2) maxCachedUntilProduced=CachedSize(299,2)
+26/11/25 02:56:04 INFO CodeGenerator: Code generated in 3.729802 ms
+26/11/25 02:56:04 WARN CometExecRule: Comet cannot execute some parts of this plan natively (set spark.comet.explain.fallback.enabled=false to disable this logging):
+ LocalTableScan [COMET: Native support for operator LocalTableScanExec is disabled. Set spark.comet.exec.localTableScan.enabled=true to enable it.]
+
+Comet accelerated 0 out of 1 eligible operators (0%). Final plan contains 0 transitions between Spark and Comet. Accelerated expressions: 0 native, 0 codegen dispatch.
+26/11/25 02:56:04 INFO ExecuteGrpcResponseSender: Stream finished for opId=5fa0e068-86e1-436f-a4f6-a23a843767ba, sent all responses up to last index 4. totalTime=11803168ns waitingForResults=11402272ns waitingForSend=0ns
+26/11/25 02:56:04 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,f2e3a7b8-c0c5-4b23-8658-a2f7b10461a8,5fa0e068-86e1-436f-a4f6-a23a843767ba) is removed.
+26/11/25 02:56:04 INFO ExecuteResponseObserver: Release all for opId=5fa0e068-86e1-436f-a4f6-a23a843767ba. Execution stats: total=CachedSize(691,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(572,3) maxCachedUntilProduced=CachedSize(572,3)
+26/11/25 02:56:04 INFO ExecuteResponseObserver: Release all for opId=5fa0e068-86e1-436f-a4f6-a23a843767ba. Execution stats: total=CachedSize(691,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(572,3) maxCachedUntilProduced=CachedSize(572,3)
+26/11/25 02:56:04 INFO CometExecutorPlugin: CometExecutorPlugin shutdown
+26/11/25 02:56:04 INFO SparkContext: Invoking stop() from shutdown hook
+26/11/25 02:56:04 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/11/25 02:56:04 INFO CometDriverPlugin: CometDriverPlugin shutdown
+26/11/25 02:56:04 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/11/25 02:56:04 INFO MemoryStore: MemoryStore cleared
+26/11/25 02:56:04 INFO BlockManager: BlockManager stopped
+26/11/25 02:56:04 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/11/25 02:56:04 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/11/25 02:56:04 INFO SparkContext: Successfully stopped SparkContext
+26/11/25 02:56:04 INFO ShutdownHookManager: Shutdown hook called
+26/11/25 02:56:04 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-12a4d025-a994-4d11-881f-71f0f7fee128
+26/11/25 02:56:04 INFO ShutdownHookManager: Deleting directory /tmp/spark-2146196e-6e4d-426e-831d-61f5887a6ce8
+26/11/25 02:56:04 INFO ShutdownHookManager: Deleting directory /tmp/spark-bcf46c96-0719-4867-9509-aca2db8ebeeb

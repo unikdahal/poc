@@ -156,9 +156,13 @@ def running_stage(client, internal, started, label):
         GROUP BY job_id, stage
         """, 12)
     underway = {(row[0], row[1]): row[2] for row in rows}
+    stage_modes = {(node["job"], node["stage"]): node["mode"].lower() for node in nodes}
     for node in nodes:
         key = (node["job"], node["stage"])
-        want = (not node["inputs"] and node["distribution"].lower() != "single") if label == "map-kill" else             any("blocking" in edge["mode"].lower() for edge in node["inputs"])
+        if label == "map-kill":
+            want = not node["inputs"]
+        else:
+            want = any(stage_modes.get((node["job"], edge["stage"])) == "blocking" for edge in node["inputs"])
         if key in underway and want and "worker" in node["placement"].lower():
             return node | {"running_tasks": underway[key], "worker_assignment_exposed": False}
     return None
@@ -242,7 +246,7 @@ def fault(result, label, ref):
     observations = result["cases"].setdefault(label, [])
     session = base.connect(PORT)
     tpch.use(session, "tpch_sf10")
-    internal = internal_id(session)
+    internal = internal_id(session) if label in ("map-kill", "reduce-kill") else None
     outcome, stage_observations = {}, []
     query = 9
     start = time.monotonic()

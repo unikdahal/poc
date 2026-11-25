@@ -2,8 +2,6 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
-import hashlib
-import os
 from pathlib import Path
 import re
 import subprocess
@@ -47,60 +45,55 @@ def pycatalog():
 
 
 FLINK_VERSION = "1.20.4"
-FLINK_SHA512 = "980120df8c57011c49899b848b13c219949f1e645d829f6deec9ee8e12fe65dacba8105de8faef7f8aecd372c46022394f0b2dfb32c5a0067a45b54df5a49ddc"
+FLINK_IMAGE = "flink:1.20.4-scala_2.12-java17@sha256:912157e4e22718a5fa712cd3d3ce90fe0be10679b40fcb56aeaae42aad19f254"
 ICEBERG_VERSION = "1.12.0"
 FLINK_CATALOG = """CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',
-'uri'='http://localhost:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',
+'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',
 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',
-'s3.endpoint'='http://localhost:9000','s3.path-style-access'='true','s3.access-key-id'='admin',
+'s3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',
 's3.secret-access-key'='password','client.region'='us-east-1');"""
 
 
 @contextmanager
 def flink_service(result):
-    result["versions"]["flink"] = {"version": FLINK_VERSION, "sha512": FLINK_SHA512,
+    from harness.p3.common import sail_state
+
+    result["versions"]["flink"] = {"version": FLINK_VERSION, "image": FLINK_IMAGE,
                                      "iceberg_runtime": ICEBERG_VERSION, "scala": "2.12"}
     with tempfile.TemporaryDirectory(prefix="p3-flink-") as directory:
         work = Path(directory)
-        archive = work / "flink.tgz"
-        url = f"https://archive.apache.org/dist/flink/flink-{FLINK_VERSION}/flink-{FLINK_VERSION}-bin-scala_2.12.tgz"
-        cmd("curl", "-fsSL", "--retry", "3", url, "-o", str(archive), timeout=300)
-        with archive.open("rb") as source:
-            if hashlib.file_digest(source, "sha512").hexdigest() != FLINK_SHA512:
-                raise RuntimeError("Flink archive checksum differs")
-        cmd("tar", "xzf", str(archive), "-C", str(work), timeout=90)
-        archive.unlink()
-        home = work / f"flink-{FLINK_VERSION}"
+        mounts = []
         for name in ("iceberg-flink-runtime-1.20", "iceberg-aws-bundle"):
             artifact = f"{name}-{ICEBERG_VERSION}.jar"
-            cmd("curl", "-fsSL", "--retry", "3",
+            path = work / artifact
+            cmd("curl", "-fsSL", "--retry", "3", "--retry-all-errors",
                 f"https://repo.maven.apache.org/maven2/org/apache/iceberg/{name}/{ICEBERG_VERSION}/{artifact}",
-                "-o", str(home / "lib" / artifact), timeout=180)
-        env = os.environ | {"AWS_REGION": "us-east-1", "AWS_ACCESS_KEY_ID": "admin", "AWS_SECRET_ACCESS_KEY": "password"}
-        with (base.OUT / "flink-start.log").open("w") as log:
-            subprocess.run([str(home / "bin/start-cluster.sh")], cwd=home, env=env,
-                           stdout=log, stderr=subprocess.STDOUT, check=True, timeout=60)
-        base.wait_port(8081, timeout=60)
+                "-o", str(path), timeout=180)
+            mounts.extend(("-v", f"{path}:/opt/flink/lib/{artifact}:ro"))
+        container = "p3-flink"
         try:
-            yield home, env
+            cmd("docker", "run", "-d", "--name", container, "--network", "poc", "--memory", "5g", "--cpus", "3",
+                "-p", "127.0.0.1:18081:8081", "-e", "AWS_REGION=us-east-1", *mounts, FLINK_IMAGE,
+                "bash", "-c", "bin/start-cluster.sh && tail -f /dev/null", timeout=300)
+            base.wait_port(18081, timeout=90)
+            yield container
         finally:
-            subprocess.run([str(home / "bin/stop-cluster.sh")], cwd=home, env=env, check=False,
-                           stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT, timeout=60)
-            for log in (home / "log").glob("*.log"):
-                (base.OUT / log.name).write_bytes(log.read_bytes()[-900000:])
+            (base.OUT / "flink-service.log").write_text(cmd("docker", "logs", "--tail", "800", container, check=False))
+            cmd("docker", "stop", "-t", "6", container, check=False, timeout=15)
+            result["flink_container_state"] = sail_state(container)
+            cmd("docker", "rm", "-f", container, check=False)
 
 
-def flink_sql(handle, label, *statements_):
-    home, env = handle
-    path = home / "p3.sql"
-    path.write_text("\n".join([
+def flink_sql(container, label, *statements_):
+    script = "\n".join([
         "SET 'table.dml-sync'='true';",
         "SET 'sql-client.execution.result-mode'='tableau';",
         "SET 'parallelism.default'='1';", FLINK_CATALOG, *statements_, "QUIT;",
-    ]))
+    ])
     with (base.OUT / f"flink-{label}.log").open("w") as log:
-        end = subprocess.run([str(home / "bin/sql-client.sh"), "embedded", "-f", str(path)],
-                             cwd=home, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=240)
+        end = subprocess.run(["docker", "exec", "-i", container, "bash", "-c",
+                              "cat > /tmp/p3.sql && bin/sql-client.sh embedded -f /tmp/p3.sql"],
+                             input=script, text=True, stdout=log, stderr=subprocess.STDOUT, timeout=240)
     raw = (base.OUT / f"flink-{label}.log").read_text(errors="replace")
     plain = re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", raw)
     if end.returncode or "[ERROR]" in plain or "Could not execute SQL" in plain:
@@ -336,7 +329,8 @@ def maintenance(result):
 
 def conflict(result):
     table = f"{NS}.conflict"
-    for isolation in ("serializable", "snapshot"):
+    isolation_levels = ("snapshot",) if VARIANT == "conflict-snapshot" else ("serializable", "snapshot")
+    for isolation in isolation_levels:
         for peer in ("spark", "sail"):
             for trial in range(3):
                 suffix = f"{isolation}_{peer}_{trial}"
@@ -385,7 +379,7 @@ def conflict(result):
 def main():
     result = begin(TASK)
     base.start_token_refresher()
-    {"interop": interop, "evolution": evolution, "maintenance": maintenance, "conflict": conflict}[VARIANT](result)
+    {"interop": interop, "evolution": evolution, "maintenance": maintenance, "conflict": conflict, "conflict-snapshot": conflict}[VARIANT](result)
     save(result)
 
 

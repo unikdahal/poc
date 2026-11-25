@@ -7,7 +7,7 @@ variants = {
     "k8s-scale": ("flight-1", "flight-2", "flight-4", "storage-1", "storage-2", "storage-4",
                   "map-kill", "reduce-kill", "drain", "netem", "pod-oom", "driver-restart", "burst"),
     "soak": ("local", "local-cluster"),
-    "iceberg-deep": ("interop", "evolution", "maintenance", "conflict"),
+    "iceberg-deep": ("interop", "evolution", "maintenance", "conflict", "conflict-snapshot"),
     "cpu-scaling": ("runner-1", "runner-2"),
     "faults-storage": ("storage", "catalog"),
     "api-coverage": ("python35", "python4", "jvm35", "jvm4"),

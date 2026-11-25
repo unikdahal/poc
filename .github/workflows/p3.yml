@@ -132,6 +132,13 @@ jobs:
         run: |
           python -m pip install pyiceberg==0.10.0 'pyarrow==17.0.0' 'numpy==1.26.4'
           python -m pip freeze > out/pip-freeze.txt
+      - name: Install the Connect session-release client
+        if: matrix.task == 'soak'
+        run: |
+          python -m venv --system-site-packages "$RUNNER_TEMP/p3-churn"
+          "$RUNNER_TEMP/p3-churn/bin/python" -m pip install pyspark-client==4.0.1 pyarrow==17.0.0 pandas==2.2.3
+          printf 'P3_CHURN_PYTHON=%s\n' "$RUNNER_TEMP/p3-churn/bin/python" >> "$GITHUB_ENV"
+          "$RUNNER_TEMP/p3-churn/bin/python" -m pip freeze > out/churn-pip-freeze.txt
       - name: Install OTLP message schemas
         if: matrix.task == 'ops'
         run: |
@@ -140,7 +147,9 @@ jobs:
       - name: Run treatment
         continue-on-error: true
         timeout-minutes: ${{ matrix.step_timeout }}
-        run: python -m "harness.p3.${P3_TASK//-/_}"
+        run: |
+          set -o pipefail
+          python -u -m "harness.p3.${P3_TASK//-/_}" 2>&1 | tee out/treatment.log
       - name: Publish diagnostics and raw results
         if: always()
         env:

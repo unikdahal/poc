@@ -1,8 +1,11 @@
 """Five and a half hours of mixed activity and post-load measurements."""
 
+import json
 import math
 import os
 import statistics
+import subprocess
+import sys
 import threading
 import time
 
@@ -101,27 +104,29 @@ def soak(result, session, stats, container, reference):
                     for name, values in window.items()}})
                 window.clear()
                 save(result)
+            print(f"soak {mode}: elapsed={elapsed:.0f}s samples={len(observations)} "
+                  f"cgroup_bytes={observations[-1].get('cgroup_bytes')}", flush=True)
             tick += 1
             finish.wait(max(0, tick * 30 - (time.monotonic() - clock)))
 
-    def churn():
-        while time.monotonic() - clock < ACTIVE_SECONDS:
-            start = time.monotonic()
-            def exercise():
-                s = base.connect(50051)
-                try:
-                    return collect(s, "SELECT 1", 15)
-                finally:
-                    bounded(s.stop, 5)
-            record, rows = timed(exercise)
-            observe("session_churn", record, rows is not None and rows[0][0] == 1)
-            time.sleep(max(0, 1.25 - (time.monotonic() - start)))
+    def consume_sessions(process):
+        for line in process.stdout:
+            try:
+                record = json.loads(line)
+                observe("session_churn", record, record["status"] == "ok" and record["validated"])
+            except (KeyError, json.JSONDecodeError):
+                print(line.strip(), flush=True)
 
+    client = os.environ["P3_CHURN_PYTHON"]
+    churn_log = (base.OUT / "churn-client.log").open("w")
+    process = subprocess.Popen([client, "-m", "harness.p3.soak", "--churn"],
+                               stdout=subprocess.PIPE, stderr=churn_log, text=True)
     sampler = threading.Thread(target=sample_loop, daemon=True)
-    churner = threading.Thread(target=churn, daemon=True)
+    churner = threading.Thread(target=consume_sessions, args=(process,), daemon=True)
     sampler.start()
     churner.start()
     i = 0
+    previous = 0
     try:
         while time.monotonic() - clock < ACTIVE_SECONDS:
             q = QUERIES[i % len(QUERIES)]
@@ -134,17 +139,27 @@ def soak(result, session, stats, container, reference):
             if i % 3 == 0:
                 record, _ = timed(lambda: collect(session, UPDATE, 45))
                 check, rows = timed(lambda: collect(session, f"SELECT v FROM {TARGET}", 20))
-                with lock:
-                    successful = counts.get("merge", {}).get("matched_spark", 0)
-                observe("merge", record | {"readback": check}, record["status"] == "ok" and
-                        rows is not None and rows[0][0] == successful + 1)
+                value = rows[0][0] if rows else None
+                valid = record["status"] == "ok" and value == previous + reference["merge_delta"]
+                observe("merge", record | {"readback": check, "value_before": previous, "value_after": value}, valid)
+                if value is not None:
+                    previous = value
             i += 1
             time.sleep(.35)
-        churner.join(25)
+        try:
+            process.wait(timeout=40)
+        except subprocess.TimeoutExpired:
+            process.terminate()
+            process.wait(timeout=10)
+        churner.join(10)
+        result["churn_process_exit_code"] = process.returncode
         bounded(session.stop, 6)
         while time.monotonic() - clock < TOTAL_SECONDS:
             time.sleep(min(15, max(0, TOTAL_SECONDS - (time.monotonic() - clock))))
     finally:
+        if process.poll() is None:
+            process.terminate()
+        churn_log.close()
         finish.set()
         sampler.join(20)
         result["cases"]["trends"] = {key: fit(observations, key) for key in ("rss_bytes", "cgroup_bytes")}
@@ -156,6 +171,8 @@ def soak(result, session, stats, container, reference):
 
 def main():
     result = begin(TASK)
+    result["versions"]["churn_client_pyspark"] = "4.0.1"
+    result["cases"]["target"] = {"active_s": ACTIVE_SECONDS, "total_s": TOTAL_SECONDS, "sessions": 10000}
     reference = {}
 
     def load(spark, *_):
@@ -178,8 +195,30 @@ def main():
     base.start_token_refresher()
     group(result, "mixed-soak", lambda *args: soak(result, *args, reference), "sail",
           mode=VARIANT, memory="11g", extra={"SAIL_CLUSTER__WORKER_INITIAL_COUNT": "1",
-          "SAIL_CLUSTER__WORKER_MAX_COUNT": "1", "SAIL_SPARK__SESSION_TIMEOUT_SECS": "120"})
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "1", "SAIL_CLUSTER__WORKER_TASK_SLOTS": "32",
+          "SAIL_SPARK__SESSION_TIMEOUT_SECS": "120"})
+
+
+def churn_client():
+    from pyspark.sql.connect.session import SparkSession
+
+    clock = time.monotonic()
+    while time.monotonic() - clock < ACTIVE_SECONDS:
+        started = time.monotonic()
+
+        def exercise():
+            session = SparkSession("sc://localhost:50051", userId="synthetic_churn")
+            try:
+                rows = collect(session, "SELECT 1", 12)
+                bounded(session.client.release_session, 6)
+                return rows is not None and rows[0][0] == 1
+            finally:
+                session.client.close()
+
+        rec, valid = timed(exercise)
+        print(json.dumps(rec | {"validated": bool(valid)}), flush=True)
+        time.sleep(max(0, 1.25 - (time.monotonic() - started)))
 
 
 if __name__ == "__main__":
-    main()
+    churn_client() if "--churn" in sys.argv else main()

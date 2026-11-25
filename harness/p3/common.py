@@ -214,6 +214,7 @@ def engine(result, name, *, label=None, memory=None, cores=4, mode="local", extr
             stats = base.CgroupStats(container)
         else:
             memory = memory or ("8g" if name == "comet" else "9g")
+            spark_conf = {"spark.jars.ivySettings": str(Path(__file__).with_name("tools") / "ivysettings.xml")} | (spark_conf or {})
             cfg["settings"] = {"comet": name == "comet", "cores": cores, "driver_memory": memory,
                                "catalog_cache": False, "overrides": spark_conf or {}, "port": port}
             proc, cfg["listen_s"] = base.start_spark_connect(port=port, comet=name == "comet",

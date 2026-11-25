@@ -1,8 +1,8 @@
 {
   "task": "api-coverage",
   "variant": "jvm35",
-  "revision": "7e6420162a2a963481832119c1c2ea8b11b0186a",
-  "run_id": "45554682627",
+  "revision": "c2491b5858d15e158fd9148f218d0ea5e55a053b",
+  "run_id": "45555832626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,7 +19,7 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
       "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
@@ -69,7 +69,7 @@
   "runner": {
     "cpu_count": 4,
     "total_memory_bytes": 16464306176,
-    "disk": "/dev/mapper/cow-root 154894188544 44081041408 110796369920  29% /"
+    "disk": "/dev/mapper/cow-root 154894188544 44081111040 110796300288  29% /"
   },
   "engines": {
     "reference": {
@@ -78,13 +78,15 @@
         "cores": 4,
         "driver_memory": "9g",
         "catalog_cache": false,
-        "overrides": {},
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
         "port": 15002
       },
-      "listen_s": 4.258668422698975,
+      "listen_s": 5.510540962219238,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.9415710959999615
+        "elapsed_s": 1.9896402759999887
       }
     },
     "jvm35": {
@@ -102,13 +104,14 @@
           "AWS_REGION": "us-east-1",
           "AWS_ENDPOINT": "http://minio:9000",
           "AWS_ALLOW_HTTP": "true",
-          "RUST_LOG": "warn"
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__CHECKPOINT__PATH": "s3://warehouse/p3-checkpoint"
         }
       },
-      "listen_s": 0.20598589399992306,
+      "listen_s": 0.11927408499997227,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.0061206150000998605
+        "elapsed_s": 0.007328524000001835
       },
       "before_shutdown": {
         "Status": "running",
@@ -117,10 +120,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 4225,
+        "Pid": 4152,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:39:17.88386155Z",
+        "StartedAt": "2026-11-25T05:49:08.75623713Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -133,109 +136,109 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:39:17.88386155Z",
-        "FinishedAt": "2026-11-25T05:39:28.742377881Z"
+        "StartedAt": "2026-11-25T05:49:08.75623713Z",
+        "FinishedAt": "2026-11-25T05:49:19.702726697Z"
       }
     }
   },
   "cases": {
     "approx": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[8,3]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[8,3]]"
       }
     },
     "explode": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,0,0], [0,1,1], [1,0,1], [1,1,2], [2,0,2], [2,1,3], [3,0,3], [3,1,4], [4,0,4], [4,1,5], [5,0,5], [5,1,6], [6,0,6], [6,1,7], [7,0,7], [7,1,8]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,0,0], [0,1,1], [1,0,1], [1,1,2], [2,0,2], [2,1,3], [3,0,3], [3,1,4], [4,0,4], [4,1,5], [5,0,5], [5,1,6], [6,0,6], [6,1,7], [7,0,7], [7,1,8]]"
       }
     },
     "groupby_sum": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,12], [1,16]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,12], [1,16]]"
       }
     },
     "higher_order": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,WrappedArray(0, 2)], [1,WrappedArray(2, 4)], [2,WrappedArray(4, 6)], [3,WrappedArray(6, 8)], [4,WrappedArray(8, 10)], [5,WrappedArray(10, 12)], [6,WrappedArray(12, 14)], [7,WrappedArray(14, 16)]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,WrappedArray(0, 2)], [1,WrappedArray(2, 4)], [2,WrappedArray(4, 6)], [3,WrappedArray(6, 8)], [4,WrappedArray(8, 10)], [5,WrappedArray(10, 12)], [6,WrappedArray(12, 14)], [7,WrappedArray(14, 16)]]"
       }
     },
     "json_regex": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,x_], [1,x_], [2,x_]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,x_], [1,x_], [2,x_]]"
       }
     },
     "range_filter": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0], [2], [4], [6]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0], [2], [4], [6]]"
       }
     },
     "select_literal": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.ExceptionInInitializerError"
+        "status": "ok",
+        "fingerprint": "[[1]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.ExceptionInInitializerError"
+        "status": "ok",
+        "fingerprint": "[[1]]"
       }
     },
     "timestamp_ntz": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[2024-03-10T03:10]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[2024-03-10T03:10]]"
       }
     },
     "window": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,1], [1,1], [2,2], [3,2], [4,3], [5,3], [6,4], [7,4]]"
       },
       "sail": {
-        "status": "error",
-        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+        "status": "ok",
+        "fingerprint": "[[0,1], [1,1], [2,2], [3,2], [4,3], [5,3], [6,4], [7,4]]"
       }
     }
   },

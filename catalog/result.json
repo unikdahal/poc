@@ -1,8 +1,8 @@
 {
   "task": "faults-storage",
   "variant": "catalog",
-  "revision": "c17f24c45051b369d87aba70b86281648610916c",
-  "run_id": "45555042191",
+  "revision": "c2491b5858d15e158fd9148f218d0ea5e55a053b",
+  "run_id": "45555832626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,7 +19,7 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
       "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
@@ -66,12 +66,13 @@
     "toxiproxy": {
       "version": "2.12.0",
       "sha256": "65e042d3fc2290c099527bc506446a6fd863a09f113b8944b636ece70221c2b3"
-    }
+    },
+    "long_query_client": "3.14.10 4.2.1"
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464306176,
-    "disk": "/dev/mapper/cow-root 154894188544 44081098752 110796312576  29% /"
+    "total_memory_bytes": 16464302080,
+    "disk": "/dev/mapper/cow-root 154894188544 44081131520 110796279808  29% /"
   },
   "engines": {
     "spark-reference": {
@@ -81,6 +82,7 @@
         "driver_memory": "9g",
         "catalog_cache": false,
         "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
           "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
           "spark.sql.catalog.p3fault.type": "rest",
           "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
@@ -97,15 +99,465 @@
         },
         "port": 15002
       },
-      "listen_s": 6.509149551391602,
+      "listen_s": 6.761337995529175,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.9333345269999995
+        "elapsed_s": 2.022169670999972
+      }
+    },
+    "catalog_down": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
       },
-      "error": "SparkConnectGrpcException: (org.apache.iceberg.exceptions.CommitStateUnknownException) Service failed: 500: Received an UnknownHostException when attempting to interact with a service. See cause for the exact endpoint that is failing to resolve. If this is happening on an endpoint that previously worked, there may be a network connectivity issue or your DNS cache could be storing endpoints for too long.\nCannot determine whether the commit was successful or not, the underlying data files may or may not be needed. Manual intervention via the Remove Orphan Files Action can remove these files when a connection to the Catalog can be re-established if the commit was actually unsuccessful.\nPlease check to see whether or not your commit was successful before retrying this commit. Retrying an already successful operation will result in duplicate records or unintentional modifications.\nAt this time no files will be deleted including possibly unused manifest lists."
+      "listen_s": 0.15554528899997422,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.0064653519999637865
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4551,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:50:01.788799343Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:50:01.788799343Z",
+        "FinishedAt": "2026-11-25T05:51:56.096925444Z"
+      }
+    },
+    "spark-integrity": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.p3fault.type": "rest",
+          "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.p3fault.warehouse": "p3fault",
+          "spark.sql.catalog.p3fault.credential": "root:s3cr3t",
+          "spark.sql.catalog.p3fault.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.p3fault.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.p3fault.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.p3fault.s3.path-style-access": "true",
+          "spark.sql.catalog.p3fault.s3.access-key-id": "admin",
+          "spark.sql.catalog.p3fault.s3.secret-access-key": "password",
+          "spark.sql.catalog.p3fault.client.region": "us-east-1",
+          "spark.sql.catalog.p3fault.cache-enabled": "false"
+        },
+        "port": 15002
+      },
+      "listen_s": 2.503626823425293,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9872712209999577
+      }
+    },
+    "token-expiry": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.10211070299999392,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00642705500001739
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7394,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:52:08.733864617Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:52:08.733864617Z",
+        "FinishedAt": "2026-11-25T05:52:18.694791682Z"
+      }
     }
   },
-  "cases": {},
+  "cases": {
+    "p3fault.test.catalog_down_0": {
+      "sql": "INSERT INTO p3fault.test.catalog_down_0 SELECT id + 10000, 1 FROM p3fault.test.catalog_down_0",
+      "client": {
+        "status": "ok",
+        "elapsed_s": 0.16637255799997774,
+        "cpu_s": 0.036223000000000005,
+        "peak_bytes": 106098688
+      },
+      "fault": {
+        "not_observed": "No fault trigger matched a proxied request"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/config",
+          "at": 1795585803.056228,
+          "status": 200,
+          "ended": 1795585803.0624363
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F0",
+          "at": 1795585803.0633214,
+          "status": 200,
+          "ended": 1795585803.079877
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F0",
+          "at": 1795585803.0934606,
+          "status": 200,
+          "ended": 1795585803.107167
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F0",
+          "at": 1795585803.1081352,
+          "status": 200,
+          "ended": 1795585803.1193461
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F0",
+          "at": 1795585803.1202238,
+          "status": 200,
+          "ended": 1795585803.1306026
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F0",
+          "at": 1795585803.1581385,
+          "status": 200,
+          "ended": 1795585803.1735132
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F0",
+          "at": 1795585803.1823578,
+          "status": 200,
+          "ended": 1795585803.2157264
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 1.8542855009999926,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            5246461365270798009,
+            null,
+            "append"
+          ],
+          [
+            2915727931235088315,
+            5246461365270798009,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/catalog_down_0/data/00000-173-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/00001-174-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/00002-175-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/00003-176-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/part-7fe70082-f693-4b66-a22d-cc8c85e2003e-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/catalog_down_0/data/00000-173-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/00001-174-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/00002-175-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/00003-176-38fcb0ca-d0e5-4b9e-9829-202c648bab78-0-00001.parquet",
+          "test/catalog_down_0/data/part-7fe70082-f693-4b66-a22d-cc8c85e2003e-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "p3fault.test.catalog_down_1": {
+      "sql": "INSERT INTO p3fault.test.catalog_down_1 SELECT id + 10000, 1 FROM p3fault.test.catalog_down_1",
+      "client": {
+        "status": "ok",
+        "elapsed_s": 0.12518495800003393,
+        "cpu_s": 0.020758,
+        "peak_bytes": 111153152
+      },
+      "fault": {
+        "not_observed": "No fault trigger matched a proxied request"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F1",
+          "at": 1795585838.05754,
+          "status": 200,
+          "ended": 1795585838.0735161
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F1",
+          "at": 1795585838.0770218,
+          "status": 200,
+          "ended": 1795585838.0888882
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F1",
+          "at": 1795585838.0897307,
+          "status": 200,
+          "ended": 1795585838.1010332
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F1",
+          "at": 1795585838.1023347,
+          "status": 200,
+          "ended": 1795585838.1122117
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F1",
+          "at": 1795585838.1386518,
+          "status": 200,
+          "ended": 1795585838.1486714
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F1",
+          "at": 1795585838.1574123,
+          "status": 200,
+          "ended": 1795585838.1758766
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 0.2888247510000497,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            4617466302279579929,
+            null,
+            "append"
+          ],
+          [
+            5096346983933264365,
+            4617466302279579929,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/catalog_down_1/data/00000-182-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/00001-183-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/00002-184-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/00003-185-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/part-d5dd6600-a771-45c8-b55e-3f25bbec2d9e-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/catalog_down_1/data/00000-182-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/00001-183-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/00002-184-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/00003-185-a3f108e8-8181-48cb-bc3c-c012789191a0-0-00001.parquet",
+          "test/catalog_down_1/data/part-d5dd6600-a771-45c8-b55e-3f25bbec2d9e-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "p3fault.test.catalog_down_2": {
+      "sql": "INSERT INTO p3fault.test.catalog_down_2 SELECT id + 10000, 1 FROM p3fault.test.catalog_down_2",
+      "client": {
+        "status": "ok",
+        "elapsed_s": 0.125914014999978,
+        "cpu_s": 0.02092199999999997,
+        "peak_bytes": 115167232
+      },
+      "fault": {
+        "not_observed": "No fault trigger matched a proxied request"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F2",
+          "at": 1795585873.0589433,
+          "status": 200,
+          "ended": 1795585873.0746677
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F2",
+          "at": 1795585873.0786202,
+          "status": 200,
+          "ended": 1795585873.0915737
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F2",
+          "at": 1795585873.0924945,
+          "status": 200,
+          "ended": 1795585873.1031377
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F2",
+          "at": 1795585873.1043892,
+          "status": 200,
+          "ended": 1795585873.1142783
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F2",
+          "at": 1795585873.1408305,
+          "status": 200,
+          "ended": 1795585873.151655
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/catalog%5Fdown%5F2",
+          "at": 1795585873.1598144,
+          "status": 200,
+          "ended": 1795585873.1785393
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 0.30437165400002186,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            5523074983696271632,
+            null,
+            "append"
+          ],
+          [
+            208979509140499486,
+            5523074983696271632,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/catalog_down_2/data/00000-191-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/00001-192-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/00002-193-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/00003-194-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/part-689c1eaf-1fbc-4808-bfdf-dfc58b60a3d1-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/catalog_down_2/data/00000-191-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/00001-192-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/00002-193-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/00003-194-b45a9c3a-ba1a-42b2-a62e-50ed5188978e-0-00001.parquet",
+          "test/catalog_down_2/data/part-689c1eaf-1fbc-4808-bfdf-dfc58b60a3d1-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "token_expiry": {
+      "issued_expires_at": 1795586049,
+      "reported_ttl_s": 120,
+      "wait_udf_s": 605,
+      "direct_rest_before": 200,
+      "query_active_past_expiration": false,
+      "catalog_requests": [],
+      "launch_at": 1795585930.0080435,
+      "query": {
+        "status": "error",
+        "error": "RuntimeError: docker exit 255: /usr/local/lib/python3.14/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.\n  require_minimum_pandas_version()\nCould not find valid SPARK_HOME while searching ['/', '/usr/local/lib/python3.14/site-packages/pyspark/spark-distribution', '/usr/local/lib/python3.14/site-packages/pyspark', '/usr/local/lib/python3.14/site-packages/pyspark/spark-distribution', '/usr/local/lib/python3.14/site-packages/pyspark', '/usr/local/lib/python3.14']\n\nDid you install PySpark via a package manager such as pip or Conda? If so,\nPySpark was not found in your Python environment. It is possible your\nPython environment does not properly bind with your package manager.\n\nPlease check your default 'python' and if you set PYSPARK_PYTHON and/or\nPYSPARK_DRIVER_PYTHON environment variables, and see if you can import\nPySpark, for example, 'python -c 'import pyspark'.\n\nIf you cannot import, you can install by using the Python executable directly,\nfor example, 'python -m pip install pyspark [--user]'. Otherwise, you can also\nexplicitly set the Python executable, that has PySpark installed, to\nPYSPARK_PYTHON or PYSPARK_DRIVER_PYTHON environment variables, for example,\n'PYSPARK_PYTHON=python3 pyspark'.\n\n",
+        "elapsed_s": 0.4632900789999894,
+        "cpu_s": 0.7329920000000001,
+        "peak_bytes": 146792448,
+        "matches_spark": false
+      },
+      "client_active": false
+    }
+  },
   "proxy_routes": {
     "s3": {
       "toxiproxy": 19000,
@@ -117,5 +569,80 @@
       "http_relay": 18182,
       "service": 8181
     }
+  },
+  "reference": {
+    "scan": {
+      "rows": 1,
+      "sha256": "b5358ec23ed290df69be06f48e9b174e13ab79d74d3e2c2c1b8ba597df4b625e"
+    },
+    "p3fault.test.commit_reset_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.commit_reset_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.commit_reset_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "token": {
+      "rows": 1,
+      "sha256": "3aad269d873e022370382ceacbce2d8f69556a6fea9f4b9aeec35bb7ed72a27e"
+    }
+  },
+  "post_fault_scan": {
+    "status": "ok",
+    "elapsed_s": 1.6889231189999805,
+    "matches_spark": true
   }
 }

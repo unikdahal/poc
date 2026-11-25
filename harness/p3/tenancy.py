@@ -42,11 +42,16 @@ def create_roles(result):
             r.raise_for_status()
             return r.json() if r.content else {}
 
-        storage = {"storageType": "S3", "allowedLocations": ["s3://warehouse/"],
+        storage = {"storageType": "S3", "allowedLocations": [f"s3://warehouse/{name}"],
                    "endpoint": "http://localhost:9000", "endpointInternal": "http://minio:9000",
                    "pathStyleAccess": True, "stsUnavailable": False, "region": "us-east-1"}
+        s3 = boto3.client("s3", endpoint_url="http://localhost:9000", aws_access_key_id=base.S3["key"],
+                          aws_secret_access_key=base.S3["secret"], region_name=base.S3["region"])
+        bucket = name.replace("_", "-")
+        s3.create_bucket(Bucket=bucket)
+        storage["allowedLocations"] = [f"s3://{bucket}/"]
         manage("POST", "catalogs", {"catalog": {"name": name, "type": "INTERNAL", "readOnly": False,
-            "properties": {"default-base-location": f"s3://warehouse/{name}"}, "storageConfigInfo": storage}})
+            "properties": {"default-base-location": f"s3://{bucket}/"}, "storageConfigInfo": storage}})
         creds = manage("POST", "principals", {"principal": {"name": name},
                                                "credentialRotationRequired": False})["credentials"]
         manage("POST", "principal-roles", {"principalRole": {"name": name}})

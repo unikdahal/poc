@@ -174,10 +174,15 @@ def run_suite(result, suite, name, spark, *_):
             bounded(lambda: tpch.use(spark, "p3_tpcds_sf1"), 45, spark.interruptAll)
         elif case.startswith("tpch"):
             bounded(lambda: tpch.use(spark, "tpch_sf1"), 45, spark.interruptAll)
-        rec[name] = {"original": output(spark, full), "repro": output(spark, repro)}
         if case == "timestamptz":
+            original = [sql.replace("case_table", f"case_{name}_etc") for sql in full]
+            repro_result = output(spark, original)
+            rec[name] = {"original": repro_result, "repro": repro_result}
             spark.conf.set("spark.sql.session.timeZone", "UTC")
-            rec[name]["utc_control"] = output(spark, repro)
+            control = [sql.replace("case_table", f"case_{name}_utc") for sql in repro]
+            rec[name]["utc_control"] = output(spark, control)
+        else:
+            rec[name] = {"original": output(spark, full), "repro": output(spark, repro)}
         if name == "sail":
             for kind, expressions in (("original", full), ("repro", repro)):
                 rec[kind + "_diff"] = compare(rec["spark"][kind], rec[name][kind], expressions)

@@ -20,6 +20,10 @@ Everything runs on GitHub-hosted runners. All data is synthetic (TPC-H generated
 
 Findings: see the Report section below.
 
+## Run it locally
+
+See [LOCAL.md](LOCAL.md): `scripts/local-up.sh` brings up the whole stack on one Ubuntu machine.
+
 ## Report
 
 The written report of everything verified here: https://claude.ai/artifact/QDhSkD5gJQEsoXDE8mSok8 (raw JSON in `results/`).

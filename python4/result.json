@@ -1,8 +1,8 @@
 {
   "task": "api-coverage",
   "variant": "python4",
-  "revision": "7e6420162a2a963481832119c1c2ea8b11b0186a",
-  "run_id": "45554682627",
+  "revision": "c2491b5858d15e158fd9148f218d0ea5e55a053b",
+  "run_id": "45555832626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,8 +19,8 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
-      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
       "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
@@ -68,8 +68,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464302080,
-    "disk": "/dev/mapper/cow-root 154894188544 44078985216 110798426112  29% /"
+    "total_memory_bytes": 16760344576,
+    "disk": "/dev/root      154894188544 47532101632 107345309696  31% /"
   },
   "engines": {
     "reference": {
@@ -78,13 +78,15 @@
         "cores": 4,
         "driver_memory": "9g",
         "catalog_cache": false,
-        "overrides": {},
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
         "port": 15002
       },
-      "listen_s": 7.01176381111145,
+      "listen_s": 8.514484882354736,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.0210835839998254
+        "elapsed_s": 1.5788878870000076
       }
     },
     "python4": {
@@ -102,13 +104,14 @@
           "AWS_REGION": "us-east-1",
           "AWS_ENDPOINT": "http://minio:9000",
           "AWS_ALLOW_HTTP": "true",
-          "RUST_LOG": "warn"
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__CHECKPOINT__PATH": "s3://warehouse/p3-checkpoint"
         }
       },
-      "listen_s": 0.24776724900016234,
+      "listen_s": 1.5775359649999814,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.006678478000139876
+        "elapsed_s": 0.005976726999989523
       },
       "before_shutdown": {
         "Status": "running",
@@ -117,10 +120,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 5157,
+        "Pid": 4750,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:40:00.641674675Z",
+        "StartedAt": "2026-11-25T05:48:47.96184716Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -133,8 +136,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:40:00.641674675Z",
-        "FinishedAt": "2026-11-25T05:40:10.811154281Z"
+        "StartedAt": "2026-11-25T05:48:47.96184716Z",
+        "FinishedAt": "2026-11-25T05:49:01.503987145Z"
       }
     }
   },
@@ -143,7 +146,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.08960976200000914,
+        "elapsed_s": 0.08345137399999203,
         "fingerprint": {
           "rows": 3,
           "sha256": "3261878651993d085f5f4a3d93121d09a67827bc7c3b90e181215b60a1cc0961"
@@ -156,7 +159,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004076144999999087,
+        "elapsed_s": 0.0030310199999803444,
         "fingerprint": {
           "rows": 3,
           "sha256": "3261878651993d085f5f4a3d93121d09a67827bc7c3b90e181215b60a1cc0961"
@@ -172,7 +175,7 @@
       "verdict": "unsupported",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.2915652510000655,
+        "elapsed_s": 0.22732647199998723,
         "fingerprint": {
           "rows": 2,
           "sha256": "efcf724bf7305bbcfa7da8152cce33098b720c816d711dc1f135b46c55764913"
@@ -185,14 +188,14 @@
       "sail": {
         "status": "error",
         "error": "IllegalArgumentException: invalid argument: Python version used to compile the UDF (3.11) does not match the Python version at runtime (3.14.10 (main, Nov 24 2026, 04:58:47) [GCC 14.2.0])",
-        "elapsed_s": 0.0026159520000419434
+        "elapsed_s": 0.00191293500000711
       }
     },
     "approx_count_distinct": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.2763931040001353,
+        "elapsed_s": 0.13682132899998578,
         "fingerprint": {
           "rows": 1,
           "sha256": "6005b697e19bf6e1cf57364e2da969abde5bf6e308ec54fe12ed9db4dc033cdc"
@@ -203,7 +206,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.0036032869998052774,
+        "elapsed_s": 0.0024929060000147274,
         "fingerprint": {
           "rows": 1,
           "sha256": "6005b697e19bf6e1cf57364e2da969abde5bf6e308ec54fe12ed9db4dc033cdc"
@@ -217,7 +220,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.14384187400014525,
+        "elapsed_s": 0.09074368299999946,
         "fingerprint": {
           "rows": 1,
           "sha256": "230b883eac628babee8ef5314a44028283728429817e51d99bc19d09ec692211"
@@ -228,7 +231,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.0036613720001241745,
+        "elapsed_s": 0.0025235829999985526,
         "fingerprint": {
           "rows": 1,
           "sha256": "230b883eac628babee8ef5314a44028283728429817e51d99bc19d09ec692211"
@@ -242,7 +245,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.2515962209999998,
+        "elapsed_s": 0.2911784049999824,
         "fingerprint": {
           "rows": 3,
           "sha256": "ab6b5075342decfd9cea85edc6f99248a212dbf45b9ebbbe9da2acec0a6fb28e"
@@ -255,7 +258,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.005293531999996048,
+        "elapsed_s": 0.0032420039999863093,
         "fingerprint": {
           "rows": 3,
           "sha256": "ab6b5075342decfd9cea85edc6f99248a212dbf45b9ebbbe9da2acec0a6fb28e"
@@ -272,19 +275,32 @@
       "spark": {
         "status": "error",
         "error": "PySparkNotImplementedError: [NOT_IMPLEMENTED] checkpoint() is not implemented.",
-        "elapsed_s": 0.0002956629998607241
+        "elapsed_s": 0.0007353569999963838
       },
       "sail": {
-        "status": "error",
-        "error": "AnalysisException: checkpoint object-store path is not configured; set execution.checkpoint.path",
-        "elapsed_s": 0.0033346239999900718
+        "status": "ok",
+        "elapsed_s": 0.008616730999989386,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "2026157976326594ee7f99338e6069052e2753ce887a96a2c04abcb068ba0a30"
+        },
+        "sample": [
+          "Row(id=0)",
+          "Row(id=1)",
+          "Row(id=2)",
+          "Row(id=3)",
+          "Row(id=4)",
+          "Row(id=5)",
+          "Row(id=6)",
+          "Row(id=7)"
+        ]
       }
     },
     "cube": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.21910844199987878,
+        "elapsed_s": 0.21826546400001234,
         "fingerprint": {
           "rows": 19,
           "sha256": "8263c60e2ba7aca2def9079702da4a12209861a63cdf9a230fc744a5c23ca30c"
@@ -302,19 +318,19 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004740605000051801,
+        "elapsed_s": 0.0035681979999822033,
         "fingerprint": {
           "rows": 19,
           "sha256": "8263c60e2ba7aca2def9079702da4a12209861a63cdf9a230fc744a5c23ca30c"
         },
         "sample": [
-          "Row(g=1, a=4, sum(b)=6, grouping_id()=0)",
-          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
-          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
           "Row(g=0, a=1, sum(b)=0, grouping_id()=0)",
           "Row(g=0, a=7, sum(b)=12, grouping_id()=0)",
           "Row(g=None, a=1, sum(b)=0, grouping_id()=2)",
           "Row(g=None, a=7, sum(b)=12, grouping_id()=2)",
+          "Row(g=1, a=4, sum(b)=6, grouping_id()=0)",
+          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
+          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
           "Row(g=1, a=2, sum(b)=2, grouping_id()=0)"
         ]
       }
@@ -323,7 +339,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.12279802600005496,
+        "elapsed_s": 0.06734132400001158,
         "fingerprint": {
           "rows": 2,
           "sha256": "1f54f1c135a620388ac1a2f944097894361b54a50db6004b61fd84686fa64fab"
@@ -335,7 +351,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004487902000164468,
+        "elapsed_s": 0.0025559110000017427,
         "fingerprint": {
           "rows": 2,
           "sha256": "1f54f1c135a620388ac1a2f944097894361b54a50db6004b61fd84686fa64fab"
@@ -347,23 +363,37 @@
       }
     },
     "day_time_interval": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "TypeError: Object of type timedelta is not JSON serializable",
-        "elapsed_s": 0.08269336200010002
+        "status": "ok",
+        "elapsed_s": 0.05014255899999398,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "a640cdb55d161d5b7cd42346ebf44e2cc0cc315518fde85a2b5467b4d4a91ded"
+        },
+        "sample": [
+          "Row((t - TIMESTAMP_NTZ '2024-03-09 02:10:00')=datetime.timedelta(days=1))",
+          "Row((t - TIMESTAMP_NTZ '2024-03-09 02:10:00')=datetime.timedelta(days=1))"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "TypeError: Object of type timedelta is not JSON serializable",
-        "elapsed_s": 0.0028861249998044514
+        "status": "ok",
+        "elapsed_s": 0.001982266999988269,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "a640cdb55d161d5b7cd42346ebf44e2cc0cc315518fde85a2b5467b4d4a91ded"
+        },
+        "sample": [
+          "Row((t - TIMESTAMP_NTZ '2024-03-09 02:10:00')=datetime.timedelta(days=1))",
+          "Row((t - TIMESTAMP_NTZ '2024-03-09 02:10:00')=datetime.timedelta(days=1))"
+        ]
       }
     },
     "explode": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.14845425300018178,
+        "elapsed_s": 0.17427540500000305,
         "fingerprint": {
           "rows": 6,
           "sha256": "cf93fd35d58a50dd60d03f6caf28b5d74343037e2064f2a0e559894ad559b895"
@@ -379,7 +409,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004248204000077749,
+        "elapsed_s": 0.0029010249999998905,
         "fingerprint": {
           "rows": 6,
           "sha256": "cf93fd35d58a50dd60d03f6caf28b5d74343037e2064f2a0e559894ad559b895"
@@ -398,7 +428,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.10852127199996175,
+        "elapsed_s": 0.11230257900001561,
         "fingerprint": {
           "rows": 8,
           "sha256": "83210b3ae9d86f65249ff0667b948953ba8006254c98e5348a933004362c7eba"
@@ -416,7 +446,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.003537802999971973,
+        "elapsed_s": 0.0025480989999948633,
         "fingerprint": {
           "rows": 8,
           "sha256": "83210b3ae9d86f65249ff0667b948953ba8006254c98e5348a933004362c7eba"
@@ -437,7 +467,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.12549320900006933,
+        "elapsed_s": 0.12139557099999365,
         "fingerprint": {
           "rows": 3,
           "sha256": "89abb4580daa3bcfb56b71373dcd2ee79fc99314c91876ab6ff11477e161f4e1"
@@ -450,7 +480,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.0045006699999703415,
+        "elapsed_s": 0.003791743000022052,
         "fingerprint": {
           "rows": 3,
           "sha256": "89abb4580daa3bcfb56b71373dcd2ee79fc99314c91876ab6ff11477e161f4e1"
@@ -463,49 +493,91 @@
       }
     },
     "from_to_csv": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
-        "elapsed_s": 0.004595827000002828
+        "status": "ok",
+        "elapsed_s": 0.1508339830000125,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "4a0ecf67b2eb0f470c99d0700df33c3e4af67e1e875d35a9d115986ac7da0a5c"
+        },
+        "sample": [
+          "Row(id=0, to_csv(from_csv(csv))='0,text')",
+          "Row(id=1, to_csv(from_csv(csv))='1,text')"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
-        "elapsed_s": 0.0018434600001455692
+        "status": "ok",
+        "elapsed_s": 0.0028886519999957727,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "4a0ecf67b2eb0f470c99d0700df33c3e4af67e1e875d35a9d115986ac7da0a5c"
+        },
+        "sample": [
+          "Row(id=0, to_csv(from_csv(csv))='0,text')",
+          "Row(id=1, to_csv(from_csv(csv))='1,text')"
+        ]
       }
     },
     "from_to_json": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
-        "elapsed_s": 0.09904010899981586
+        "status": "ok",
+        "elapsed_s": 0.2161952069999984,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "b64cbdd3c7ebecf65731a3ca0d1855da50ddc07d4ceb4e8c6c0c88af15ecc46e"
+        },
+        "sample": [
+          "Row(id=0, to_json(from_json(js))='{\"a\":0}')",
+          "Row(id=1, to_json(from_json(js))='{\"a\":1}')"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
-        "elapsed_s": 0.0024068220000117435
+        "status": "ok",
+        "elapsed_s": 0.002706740999997237,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "b64cbdd3c7ebecf65731a3ca0d1855da50ddc07d4ceb4e8c6c0c88af15ecc46e"
+        },
+        "sample": [
+          "Row(id=0, to_json(from_json(js))='{\"a\":0}')",
+          "Row(id=1, to_json(from_json(js))='{\"a\":1}')"
+        ]
       }
     },
     "get_json_object": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
-        "elapsed_s": 0.005425284000011743
+        "status": "ok",
+        "elapsed_s": 0.0706311229999983,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "27b95f5ed2492c96b6768003ed6a2c5f7e191865fd3edf0a2254ca36a96b08f0"
+        },
+        "sample": [
+          "Row(id=0, get_json_object(js, $.a)='0')",
+          "Row(id=1, get_json_object(js, $.a)='1')"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
-        "elapsed_s": 0.0017657979999512463
+        "status": "ok",
+        "elapsed_s": 0.0023054530000194973,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "27b95f5ed2492c96b6768003ed6a2c5f7e191865fd3edf0a2254ca36a96b08f0"
+        },
+        "sample": [
+          "Row(id=0, get_json_object(js, $.a)='0')",
+          "Row(id=1, get_json_object(js, $.a)='1')"
+        ]
       }
     },
     "grouping_sets_sql": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.24031556099998852,
+        "elapsed_s": 0.26570283600000266,
         "fingerprint": {
           "rows": 11,
           "sha256": "781baa0e7b59073a59ac4af05f3a01b335be56ef1a6c544b765a6235a240fc4e"
@@ -523,34 +595,48 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.00736160899987226,
+        "elapsed_s": 0.00534655399999906,
         "fingerprint": {
           "rows": 11,
           "sha256": "781baa0e7b59073a59ac4af05f3a01b335be56ef1a6c544b765a6235a240fc4e"
         },
         "sample": [
+          "Row(g=1, a=None, SUM(b)=32, grouping_id()=1)",
+          "Row(g=None, a=None, SUM(b)=56, grouping_id()=3)",
           "Row(g=0, a=None, SUM(b)=24, grouping_id()=1)",
           "Row(g=None, a=2, SUM(b)=2, grouping_id()=2)",
           "Row(g=None, a=3, SUM(b)=4, grouping_id()=2)",
           "Row(g=None, a=4, SUM(b)=6, grouping_id()=2)",
           "Row(g=None, a=5, SUM(b)=8, grouping_id()=2)",
-          "Row(g=None, a=6, SUM(b)=10, grouping_id()=2)",
-          "Row(g=None, a=8, SUM(b)=14, grouping_id()=2)",
-          "Row(g=None, a=1, SUM(b)=0, grouping_id()=2)"
+          "Row(g=None, a=6, SUM(b)=10, grouping_id()=2)"
         ]
       }
     },
     "json_tuple_path": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
-        "elapsed_s": 0.007237540000005538
+        "status": "ok",
+        "elapsed_s": 0.14387396000000763,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "27b95f5ed2492c96b6768003ed6a2c5f7e191865fd3edf0a2254ca36a96b08f0"
+        },
+        "sample": [
+          "Row(id=0, c0='0')",
+          "Row(id=1, c0='1')"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
-        "elapsed_s": 0.0017178000000512839
+        "status": "ok",
+        "elapsed_s": 0.0026349290000098335,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "27b95f5ed2492c96b6768003ed6a2c5f7e191865fd3edf0a2254ca36a96b08f0"
+        },
+        "sample": [
+          "Row(id=0, json_tuple(js, a)='0')",
+          "Row(id=1, json_tuple(js, a)='1')"
+        ]
       }
     },
     "local_checkpoint": {
@@ -558,19 +644,32 @@
       "spark": {
         "status": "error",
         "error": "PySparkNotImplementedError: [NOT_IMPLEMENTED] localCheckpoint() is not implemented.",
-        "elapsed_s": 0.00048543299999437295
+        "elapsed_s": 0.0002534509999918555
       },
       "sail": {
-        "status": "error",
-        "error": "AnalysisException: checkpoint object-store path is not configured; set execution.checkpoint.path",
-        "elapsed_s": 0.003196051999793781
+        "status": "ok",
+        "elapsed_s": 0.007301708999989387,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "2026157976326594ee7f99338e6069052e2753ce887a96a2c04abcb068ba0a30"
+        },
+        "sample": [
+          "Row(id=0)",
+          "Row(id=1)",
+          "Row(id=2)",
+          "Row(id=3)",
+          "Row(id=4)",
+          "Row(id=5)",
+          "Row(id=6)",
+          "Row(id=7)"
+        ]
       }
     },
     "mapInPandas": {
       "verdict": "unsupported",
       "spark": {
         "status": "ok",
-        "elapsed_s": 1.109486251999897,
+        "elapsed_s": 0.8995609209999884,
         "fingerprint": {
           "rows": 8,
           "sha256": "239523dbd41c8abd5564e0eef01467baad2249fce0605c637c759bd374850e23"
@@ -589,14 +688,14 @@
       "sail": {
         "status": "error",
         "error": "IllegalArgumentException: invalid argument: Python version used to compile the UDF (3.11) does not match the Python version at runtime (3.14.10 (main, Nov 24 2026, 04:58:47) [GCC 14.2.0])",
-        "elapsed_s": 0.004461541999944529
+        "elapsed_s": 0.0034934500000076696
       }
     },
     "map_filter_transform": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.12231255400001828,
+        "elapsed_s": 0.14904937500000415,
         "fingerprint": {
           "rows": 3,
           "sha256": "3ffbc216bec9ed8c054a3838871507ab081e8c4309c5ff5404e25f7008dd05de"
@@ -609,7 +708,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004973501999984364,
+        "elapsed_s": 0.003455674999997882,
         "fingerprint": {
           "rows": 3,
           "sha256": "3ffbc216bec9ed8c054a3838871507ab081e8c4309c5ff5404e25f7008dd05de"
@@ -625,7 +724,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.1434939559999293,
+        "elapsed_s": 0.1270611059999851,
         "fingerprint": {
           "rows": 3,
           "sha256": "fddc50522b8ecf8de442078b58912c3ad305abd13b5efbfde792fdc435880ab9"
@@ -638,7 +737,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004837359000021024,
+        "elapsed_s": 0.0035221060000196758,
         "fingerprint": {
           "rows": 3,
           "sha256": "fddc50522b8ecf8de442078b58912c3ad305abd13b5efbfde792fdc435880ab9"
@@ -654,7 +753,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.09177057299984881,
+        "elapsed_s": 0.08838732300000629,
         "fingerprint": {
           "rows": 1,
           "sha256": "76a7e59f18cee3344f1c2b1d717b334f57cf45764c61aacf1375ebaf2e390617"
@@ -665,7 +764,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.0036126930001501023,
+        "elapsed_s": 0.002241978999990124,
         "fingerprint": {
           "rows": 1,
           "sha256": "76a7e59f18cee3344f1c2b1d717b334f57cf45764c61aacf1375ebaf2e390617"
@@ -679,7 +778,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.5978715579999516,
+        "elapsed_s": 0.4468359580000083,
         "fingerprint": {
           "rows": 2,
           "sha256": "7eceade66c6ec1238a61e3d9495fd7e234aa56b416eba9590d19d40fd6250601"
@@ -691,14 +790,14 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.006799372999921616,
+        "elapsed_s": 0.004336432000002333,
         "fingerprint": {
           "rows": 2,
           "sha256": "7eceade66c6ec1238a61e3d9495fd7e234aa56b416eba9590d19d40fd6250601"
         },
         "sample": [
-          "Row(g=0, 0=0, 1=None, 2=4, 3=None, 4=8, 5=None, 6=12, 7=None)",
-          "Row(g=1, 0=None, 1=2, 2=None, 3=6, 4=None, 5=10, 6=None, 7=14)"
+          "Row(g=1, 0=None, 1=2, 2=None, 3=6, 4=None, 5=10, 6=None, 7=14)",
+          "Row(g=0, 0=0, 1=None, 2=4, 3=None, 4=8, 5=None, 6=12, 7=None)"
         ]
       }
     },
@@ -706,7 +805,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.6497722499998417,
+        "elapsed_s": 0.4879360970000164,
         "fingerprint": {
           "rows": 2,
           "sha256": "648d9f6cc0134054b30e89f5c3dbe53c510b66860f4fb9de192845e2d0ecece6"
@@ -718,14 +817,14 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.006406137000112722,
+        "elapsed_s": 0.00485644599999091,
         "fingerprint": {
           "rows": 2,
           "sha256": "648d9f6cc0134054b30e89f5c3dbe53c510b66860f4fb9de192845e2d0ecece6"
         },
         "sample": [
-          "Row(g=0, 0=1, 1=None, 2=3, 3=None)",
-          "Row(g=1, 0=None, 1=2, 2=None, 3=4)"
+          "Row(g=1, 0=None, 1=2, 2=None, 3=4)",
+          "Row(g=0, 0=1, 1=None, 2=3, 3=None)"
         ]
       }
     },
@@ -733,7 +832,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.10623400099984792,
+        "elapsed_s": 0.1231497969999964,
         "fingerprint": {
           "rows": 6,
           "sha256": "f70139dcc310c2c3bf261926a168f86403a6baea6884c468c9cdb496fb5d8ae3"
@@ -749,7 +848,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004275117000133832,
+        "elapsed_s": 0.0035745200000008026,
         "fingerprint": {
           "rows": 6,
           "sha256": "f70139dcc310c2c3bf261926a168f86403a6baea6884c468c9cdb496fb5d8ae3"
@@ -765,36 +864,64 @@
       }
     },
     "regexp_count": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
-        "elapsed_s": 0.006067383000072368
+        "status": "ok",
+        "elapsed_s": 0.07935191200002123,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "e2ce42619ab3a0fc5dba5895f96fc9eaf39ae0a1256fe1bdf746b5bf57e8e3b7"
+        },
+        "sample": [
+          "Row(id=0, regexp_count(text, [0-9])=4)",
+          "Row(id=1, regexp_count(text, [0-9])=4)"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
-        "elapsed_s": 0.0020024139998895407
+        "status": "ok",
+        "elapsed_s": 0.0023086159999934353,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "e2ce42619ab3a0fc5dba5895f96fc9eaf39ae0a1256fe1bdf746b5bf57e8e3b7"
+        },
+        "sample": [
+          "Row(id=0, regexp_count(text, [0-9])=4)",
+          "Row(id=1, regexp_count(text, [0-9])=4)"
+        ]
       }
     },
     "regexp_extract_replace": {
-      "verdict": "reference error",
+      "verdict": "match",
       "spark": {
-        "status": "error",
-        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
-        "elapsed_s": 0.00602629199988769
+        "status": "ok",
+        "elapsed_s": 0.11531194099998743,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "571d1f07a1acc79f263241d12e871493bdbf20376b89a4337252b921af484e30"
+        },
+        "sample": [
+          "Row(id=0, regexp_extract(text, ([0-9]+)$, 1)='123', regexp_replace(text, [0-9], x, 1)='key-x-xxx')",
+          "Row(id=1, regexp_extract(text, ([0-9]+)$, 1)='123', regexp_replace(text, [0-9], x, 1)='key-x-xxx')"
+        ]
       },
       "sail": {
-        "status": "error",
-        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
-        "elapsed_s": 0.02796473600005811
+        "status": "ok",
+        "elapsed_s": 0.002982212000006257,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "571d1f07a1acc79f263241d12e871493bdbf20376b89a4337252b921af484e30"
+        },
+        "sample": [
+          "Row(id=0, regexp_extract(text, ([0-9]+)$, 1)='123', regexp_replace(text, [0-9], x, 1)='key-x-xxx')",
+          "Row(id=1, regexp_extract(text, ([0-9]+)$, 1)='123', regexp_replace(text, [0-9], x, 1)='key-x-xxx')"
+        ]
       }
     },
     "rollup": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.18064708099996096,
+        "elapsed_s": 0.18109562700001902,
         "fingerprint": {
           "rows": 11,
           "sha256": "25f76cbaf9df2b4568070a50fbc096af7294354f681ae8ee13506eb8e482ce47"
@@ -812,20 +939,20 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004521700000168494,
+        "elapsed_s": 0.003220478000002913,
         "fingerprint": {
           "rows": 11,
           "sha256": "25f76cbaf9df2b4568070a50fbc096af7294354f681ae8ee13506eb8e482ce47"
         },
         "sample": [
-          "Row(g=0, a=1, sum(b)=0, grouping_id()=0)",
-          "Row(g=0, a=7, sum(b)=12, grouping_id()=0)",
-          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
-          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
-          "Row(g=1, a=4, sum(b)=6, grouping_id()=0)",
           "Row(g=0, a=None, sum(b)=24, grouping_id()=1)",
           "Row(g=1, a=2, sum(b)=2, grouping_id()=0)",
-          "Row(g=0, a=3, sum(b)=4, grouping_id()=0)"
+          "Row(g=0, a=3, sum(b)=4, grouping_id()=0)",
+          "Row(g=0, a=5, sum(b)=8, grouping_id()=0)",
+          "Row(g=1, a=6, sum(b)=10, grouping_id()=0)",
+          "Row(g=1, a=8, sum(b)=14, grouping_id()=0)",
+          "Row(g=0, a=1, sum(b)=0, grouping_id()=0)",
+          "Row(g=0, a=7, sum(b)=12, grouping_id()=0)"
         ]
       }
     },
@@ -833,7 +960,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.9844307760001811,
+        "elapsed_s": 0.6919354949999956,
         "fingerprint": {
           "rows": 8,
           "sha256": "708ec998d816a21361b9c160c172a66c5cd75baaea17963feddf37e5e7abb564"
@@ -851,7 +978,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.007438703000161695,
+        "elapsed_s": 0.0059098829999868485,
         "fingerprint": {
           "rows": 8,
           "sha256": "708ec998d816a21361b9c160c172a66c5cd75baaea17963feddf37e5e7abb564"
@@ -872,7 +999,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.09487028099988493,
+        "elapsed_s": 0.10212634199999115,
         "fingerprint": {
           "rows": 3,
           "sha256": "c4148f3117861aa14bc6a20f0a6697a5fe13fe346a45fbdd4a19e46db56fcabf"
@@ -885,7 +1012,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.003996103999952538,
+        "elapsed_s": 0.002976797000002307,
         "fingerprint": {
           "rows": 3,
           "sha256": "c4148f3117861aa14bc6a20f0a6697a5fe13fe346a45fbdd4a19e46db56fcabf"
@@ -901,7 +1028,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.1002657620001628,
+        "elapsed_s": 0.06315388999999527,
         "fingerprint": {
           "rows": 2,
           "sha256": "c3024be3fc24410a8f2fffc640369197036464d659824a9bc7dcdd0ecfb8fc37"
@@ -913,7 +1040,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.003935980000051131,
+        "elapsed_s": 0.002326079999988906,
         "fingerprint": {
           "rows": 2,
           "sha256": "c3024be3fc24410a8f2fffc640369197036464d659824a9bc7dcdd0ecfb8fc37"
@@ -928,7 +1055,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.12767174700002215,
+        "elapsed_s": 0.1453987760000075,
         "fingerprint": {
           "rows": 3,
           "sha256": "b9026960eb897fea60356c89fab049cfc1ea07b7530a24ab702655576b978e19"
@@ -941,7 +1068,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.00437359300008211,
+        "elapsed_s": 0.002983043000000407,
         "fingerprint": {
           "rows": 3,
           "sha256": "b9026960eb897fea60356c89fab049cfc1ea07b7530a24ab702655576b978e19"
@@ -957,7 +1084,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.1079119640000954,
+        "elapsed_s": 0.1816393459999972,
         "fingerprint": {
           "rows": 16,
           "sha256": "135282e31aabb2bdc7cb18dd7df5f4f6a4dce6b54f1c937687932d8a33321e6e"
@@ -975,7 +1102,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.0059101819999796135,
+        "elapsed_s": 0.0032709719999957088,
         "fingerprint": {
           "rows": 16,
           "sha256": "135282e31aabb2bdc7cb18dd7df5f4f6a4dce6b54f1c937687932d8a33321e6e"
@@ -996,7 +1123,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.3019947590000811,
+        "elapsed_s": 0.21463271499999337,
         "fingerprint": {
           "rows": 8,
           "sha256": "2898a2465b978904ff5125383688422133b01624a7571fb747cc94773b5234f9"
@@ -1014,7 +1141,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004578549000143539,
+        "elapsed_s": 0.0032540670000003047,
         "fingerprint": {
           "rows": 8,
           "sha256": "2898a2465b978904ff5125383688422133b01624a7571fb747cc94773b5234f9"
@@ -1035,7 +1162,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.3057956830000421,
+        "elapsed_s": 0.3080632909999963,
         "fingerprint": {
           "rows": 8,
           "sha256": "1c4ef7e788d2da1dcee48d603a2b1f5166c4be0e37a9cc9792a328499cf9dd7a"
@@ -1053,7 +1180,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.00506991699990067,
+        "elapsed_s": 0.003262335000016492,
         "fingerprint": {
           "rows": 8,
           "sha256": "1c4ef7e788d2da1dcee48d603a2b1f5166c4be0e37a9cc9792a328499cf9dd7a"
@@ -1071,10 +1198,10 @@
       }
     },
     "writer_iceberg": {
-      "verdict": "unsupported",
+      "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 3.366380132000131,
+        "elapsed_s": 2.69308941700001,
         "fingerprint": {
           "rows": 9,
           "sha256": "a28918621d749a6892dfc4014e0c938e741f95f2c7ff0bb12e5e60e55ad6c46e"
@@ -1091,34 +1218,47 @@
         ]
       },
       "sail": {
-        "status": "error",
-        "error": "AnalysisException: Iceberg table already exists at path: s3://warehouse/poc/p3_api/writer_probe/",
-        "elapsed_s": 0.06841510200001721
+        "status": "ok",
+        "elapsed_s": 0.2128507989999946,
+        "fingerprint": {
+          "rows": 9,
+          "sha256": "a28918621d749a6892dfc4014e0c938e741f95f2c7ff0bb12e5e60e55ad6c46e"
+        },
+        "sample": [
+          "Row(id=0)",
+          "Row(id=1)",
+          "Row(id=2)",
+          "Row(id=3)",
+          "Row(id=4)",
+          "Row(id=5)",
+          "Row(id=6)",
+          "Row(id=7)"
+        ]
       }
     },
     "writer_parquet_options": {
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 1.0071820169998773,
+        "elapsed_s": 0.9537211230000082,
         "fingerprint": {
           "rows": 8,
           "sha256": "aadb413449f054cd35fb1deb08f4cc2f145a4f56374dbb852377ebb0553394b9"
         },
         "sample": [
-          "Row(id=4, g=0)",
+          "Row(id=7, g=1)",
+          "Row(id=3, g=1)",
+          "Row(id=5, g=1)",
           "Row(id=0, g=0)",
           "Row(id=6, g=0)",
-          "Row(id=5, g=1)",
-          "Row(id=3, g=1)",
-          "Row(id=7, g=1)",
+          "Row(id=4, g=0)",
           "Row(id=2, g=0)",
           "Row(id=1, g=1)"
         ]
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.007565374000023439,
+        "elapsed_s": 0.0059000239999988935,
         "fingerprint": {
           "rows": 8,
           "sha256": "aadb413449f054cd35fb1deb08f4cc2f145a4f56374dbb852377ebb0553394b9"
@@ -1139,7 +1279,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.1079793859998972,
+        "elapsed_s": 0.0593116210000062,
         "fingerprint": {
           "rows": 2,
           "sha256": "079c7635b25d7e4fe542f5f0a420d7a61a1a82e85c4e8562291b0756418547f6"
@@ -1151,7 +1291,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.003064018000031865,
+        "elapsed_s": 0.0022063929999944776,
         "fingerprint": {
           "rows": 2,
           "sha256": "079c7635b25d7e4fe542f5f0a420d7a61a1a82e85c4e8562291b0756418547f6"
@@ -1166,7 +1306,7 @@
       "verdict": "match",
       "spark": {
         "status": "ok",
-        "elapsed_s": 0.09488306099979127,
+        "elapsed_s": 0.0746856449999882,
         "fingerprint": {
           "rows": 3,
           "sha256": "e8cdd2ec46fb9ab1d5e0c3ae02c2a4094f025ed1bde6a79d7bfab22bfaad5e61"
@@ -1179,7 +1319,7 @@
       },
       "sail": {
         "status": "ok",
-        "elapsed_s": 0.004048683000064557,
+        "elapsed_s": 0.003074280999982193,
         "fingerprint": {
           "rows": 3,
           "sha256": "e8cdd2ec46fb9ab1d5e0c3ae02c2a4094f025ed1bde6a79d7bfab22bfaad5e61"

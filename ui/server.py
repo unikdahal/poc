@@ -168,14 +168,48 @@ POOL = {eid: Engine(eid, spec) for eid, spec in ENGINES.items()}
 HISTORY: collections.deque = collections.deque(maxlen=100)
 
 
-def run_on(engine: Engine, sql: str, ns: str | None, reps: int, warmup: bool, explain: bool) -> dict:
+class QueryTimeout(Exception):
+    pass
+
+
+def bounded(engine: Engine, fn, timeout: float):
+    """Run fn() with a deadline. On timeout, interrupt the engine's running operations."""
+    box = {}
+
+    def work():
+        try:
+            box["v"] = fn()
+        except BaseException as e:  # noqa: BLE001
+            box["e"] = e
+    t = threading.Thread(target=work, daemon=True)
+    t.start()
+    t.join(timeout)
+    if t.is_alive():
+        try:
+            if engine.spec["kind"] == "connect" and engine.session is not None:
+                engine.session.interruptAll()
+        except Exception:  # noqa: BLE001
+            pass
+        engine.reset()
+        raise QueryTimeout(f"timed out after {timeout:g} s; running operations were interrupted")
+    if "e" in box:
+        raise box["e"]
+    return box["v"]
+
+
+def run_on(engine: Engine, sql: str, ns: str | None, reps: int, warmup: bool, explain: bool,
+           timeout: float = 600) -> dict:
     res = {"engine": engine.id, "label": engine.spec["label"], "runs": []}
+    if not engine.up():
+        engine.reset()
+        return res | {"ok": False, "error": f"not running on port {engine.spec['port']}",
+                      "error_head": f"not running on port {engine.spec['port']}"}
     with engine.lock:
         try:
             stats = engine.stats()
             if warmup:
                 t0 = time.perf_counter()
-                engine.execute(sql, ns)
+                bounded(engine, lambda: engine.execute(sql, ns), timeout)
                 res["warmup_s"] = round(time.perf_counter() - t0, 4)
             result = None
             for _ in range(max(1, reps)):
@@ -184,9 +218,9 @@ def run_on(engine: Engine, sql: str, ns: str | None, reps: int, warmup: bool, ex
                 t0 = time.perf_counter()
                 if peak:
                     with peak:
-                        result = engine.execute(sql, ns)
+                        result = bounded(engine, lambda: engine.execute(sql, ns), timeout)
                 else:
-                    result = engine.execute(sql, ns)
+                    result = bounded(engine, lambda: engine.execute(sql, ns), timeout)
                 wall = time.perf_counter() - t0
                 cpu = (stats.cpu_seconds() - cpu0) if stats else float("nan")
                 res["runs"].append({"wall_s": round(wall, 4),
@@ -205,7 +239,7 @@ def run_on(engine: Engine, sql: str, ns: str | None, reps: int, warmup: bool, ex
                        truncated_compare=len(rows) > COMPARE_ROWS)
             if explain:
                 try:
-                    res["plan"] = engine.explain(sql, ns)
+                    res["plan"] = bounded(engine, lambda: engine.explain(sql, ns), 120)
                 except Exception as e:  # noqa: BLE001
                     res["plan"] = f"EXPLAIN failed: {e}"
         except Exception as e:  # noqa: BLE001
@@ -284,17 +318,18 @@ def run(body: dict) -> dict:
     explain = bool(body.get("explain", False))
     parallel = body.get("mode") == "parallel"
     rel_tol = float(body.get("rel_tol", 1e-9))
+    timeout = float(body.get("timeout_s", 600))
     t0 = time.time()
     if parallel:
         results = [None] * len(engines)
 
         def work(i, e):
-            results[i] = run_on(e, sql, ns, reps, warmup, explain)
+            results[i] = run_on(e, sql, ns, reps, warmup, explain, timeout)
         ts = [threading.Thread(target=work, args=(i, e)) for i, e in enumerate(engines)]
         [t.start() for t in ts]
         [t.join() for t in ts]
     else:
-        results = [run_on(e, sql, ns, reps, warmup, explain) for e in engines]
+        results = [run_on(e, sql, ns, reps, warmup, explain, timeout) for e in engines]
     ordered = bool(re.search(r"\border\s+by\b", split_statements(sql)[-1], re.I)) if sql.strip() else False
     ok = [r for r in results if r.get("ok")]
     comparisons = [compare(ok[0], r, ordered, rel_tol) for r in ok[1:]] if len(ok) > 1 else []

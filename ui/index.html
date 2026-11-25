@@ -107,6 +107,7 @@ ORDER BY 1, 2</textarea>
         <label title="Sequential gives clean timings; parallel shows behaviour under contention">Mode
           <select id="mode"><option value="sequential">sequential</option><option value="parallel">parallel</option></select></label>
         <label title="Numeric cells closer than this relative difference count as equal">Tolerance <input type="text" id="tol" value="1e-9" size="6"></label>
+        <label title="Per run; on timeout the engine's running operations are interrupted">Timeout s <input type="number" id="timeout" value="600" min="5"></label>
         <label><input type="checkbox" id="explain"> Plans</label>
         <span class="spacer"></span>
         <button id="suite" title="Run all 22 TPC-H presets with these settings">Run TPC-H suite</button>
@@ -176,7 +177,7 @@ $('#preset').onchange = () => { const p = PRESETS[$('#preset').value]; if (p) $(
 
 function settings(sql) {
   return {sql, engines: selected(), namespace: $('#ns').value, reps: +$('#reps').value || 1,
-          warmup: $('#warmup').checked, mode: $('#mode').value, explain: $('#explain').checked, rel_tol: $('#tol').value};
+          warmup: $('#warmup').checked, mode: $('#mode').value, explain: $('#explain').checked, rel_tol: $('#tol').value, timeout_s: +$('#timeout').value || 600};
 }
 function busy(on) { ['#run', '#suite'].forEach(s => $(s).disabled = on); }
 

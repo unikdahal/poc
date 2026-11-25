@@ -11,7 +11,7 @@ variants = {
     "cpu-scaling": ("runner-1", "runner-2"),
     "faults-storage": ("storage", "catalog"),
     "api-coverage": ("python35", "python4", "jvm35", "jvm4"),
-    "ops": ("operator",),
+    "ops": ("surface", "term", "int", "hup"),
     "scale-up": ("tpch50", "tpcds10-1", "tpcds10-2", "tpcds10-3"),
 }
 

@@ -387,14 +387,16 @@ def expiration(result, relays, expected, session, stats_, container):
 import json
 import time
 from pyspark.sql import SparkSession
+from pyspark.sql.connect.functions import udf
+from pyspark.sql.types import IntegerType
 
 def hold(value):
     time.sleep(605)
     return value
 
 session = SparkSession.builder.remote("sc://127.0.0.1:50051").create()
-session.udf.register("p3_expiration_hold", hold, "int")
-rows = session.sql("SELECT p3_expiration_hold(id) FROM {NS}.token_query").collect()
+delay = udf(hold, IntegerType(), useArrow=False)
+rows = session.table("{NS}.token_query").select(delay("id")).collect()
 print("P3_RESULT=" + json.dumps([list(row) for row in rows]), flush=True)
 """
     result["versions"]["long_query_client"] = cmd("docker", "exec", container, "python", "-c",

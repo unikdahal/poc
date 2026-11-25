@@ -12,7 +12,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import requests
 
-from harness.p3.common import PIN, UPSTREAM, base, begin, cmd, collect, fingerprint, group, save, sail_state, timed
+from harness.p3.common import PIN, UPSTREAM, VARIANT, base, begin, cmd, collect, fingerprint, group, save, sail_state, timed
 from harness.p3.tenancy import named_session
 from harness.suite_flight import any_cmd_statement_query
 
@@ -169,20 +169,32 @@ def main():
     result["cli"] = {entry: cmd("docker", "run", "--rm", base.SAIL_IMAGE, entry, "server", "--help", check=False)
                      for entry in ("spark", "flight")}
 
-    def spark_reference(session, *_):
+    print("operator probe reference", flush=True)
+    if VARIANT in ("term", "int", "hup"):
+        expected = group(result, "spark-reference", lambda session, *_: fingerprint(collect(session, WORK, 150)), "spark")
+        if expected:
+            for rep in range(1 if VARIANT == "hup" else 3):
+                print(f"signal {VARIANT} trial {rep+1}", flush=True)
+                lifecycle(result, VARIANT.upper(), rep, expected)
+        save(result)
+        return
+
+    def surface_reference(session, *_):
         for method in ("EXPLAIN", "EXPLAIN FORMATTED", "EXPLAIN ANALYZE"):
             sql_probe(result, f"spark {method}", session, method + " SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1")
-        return fingerprint(collect(session, "SELECT 1")), fingerprint(collect(session, WORK, 180))
+        return fingerprint(collect(session, "SELECT 1")), None
 
-    reference = group(result, "spark-reference", spark_reference, "spark")
+    reference = group(result, "spark-reference", surface_reference, "spark")
     extra = {"RUST_LOG": "info", "SAIL_TELEMETRY__EXPORT_TRACES": "true",
              "SAIL_TELEMETRY__EXPORT_METRICS": "true", "SAIL_TELEMETRY__EXPORT_LOGS": "true",
              "SAIL_TELEMETRY__EXPORTER__SYSTEM__ENABLED": "true",
              "SAIL_TELEMETRY__EXPORTER__OTLP__ENDPOINT": f"http://host.docker.internal:{SINK_PORT}",
              "SAIL_TELEMETRY__EXPORTER__OTLP__PROTOCOL": "http-binary"}
+    print("operator probe OpenTelemetry", flush=True)
     with telemetry_sink(result):
         group(result, "telemetry", lambda *args: observe(result, *args), "sail", extra=extra,
               options=("--add-host=host.docker.internal:host-gateway",))
+    print("operator probe Flight", flush=True)
     group(result, "flight", lambda *args: flight_probe(result, *args), "flight", extra={"RUST_LOG": "info"})
     result["startup"] = []
     for rep in range(3):
@@ -196,10 +208,6 @@ def main():
         group(result, label, cold, "sail", ready=False)
     if len(result["startup"]) == 3 and all(r["matches_spark"] for r in result["startup"]):
         result["median_fresh_start_s"] = statistics.median(r["launch_and_first_query_s"] for r in result["startup"][1:])
-    if reference:
-        for signal, reps in (("TERM", 3), ("INT", 3), ("HUP", 1)):
-            for rep in range(reps):
-                lifecycle(result, signal, rep, reference[1])
     source = f"{UPSTREAM}/blob/{PIN}/crates/"
     result["source"] = {
         "config_at_startup": source + "sail-common/src/config/application.rs#L76-L84",

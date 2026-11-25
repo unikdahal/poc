@@ -1,0 +1,976 @@
+:: loading settings :: url = jar:file:/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.3.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/runner/.ivy2/cache
+The jars for the packages stored in: /home/runner/.ivy2/jars
+org.apache.spark#spark-connect_2.12 added as a dependency
+org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+org.apache.iceberg#iceberg-aws-bundle added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-df5bcece-a4db-44f9-b1c8-89aa34756e09;1.0
+	confs: [default]
+	found org.apache.spark#spark-connect_2.12;3.5.10 in central
+	found org.spark-project.spark#unused;1.0.0 in central
+	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0 in central
+	found org.apache.iceberg#iceberg-aws-bundle;1.12.0 in central
+downloading https://repo1.maven.org/maven2/org/apache/spark/spark-connect_2.12/3.5.10/spark-connect_2.12-3.5.10.jar ...
+	[SUCCESSFUL ] org.apache.spark#spark-connect_2.12;3.5.10!spark-connect_2.12.jar (231ms)
+downloading https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.12.0/iceberg-spark-runtime-3.5_2.12-1.12.0.jar ...
+	[SUCCESSFUL ] org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0!iceberg-spark-runtime-3.5_2.12.jar (235ms)
+downloading https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-aws-bundle/1.12.0/iceberg-aws-bundle-1.12.0.jar ...
+	[SUCCESSFUL ] org.apache.iceberg#iceberg-aws-bundle;1.12.0!iceberg-aws-bundle.jar (181ms)
+downloading https://repo1.maven.org/maven2/org/spark-project/spark/unused/1.0.0/unused-1.0.0.jar ...
+	[SUCCESSFUL ] org.spark-project.spark#unused;1.0.0!unused.jar (29ms)
+:: resolution report :: resolve 1249ms :: artifacts dl 683ms
+	:: modules in use:
+	org.apache.iceberg#iceberg-aws-bundle;1.12.0 from central in [default]
+	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0 from central in [default]
+	org.apache.spark#spark-connect_2.12;3.5.10 from central in [default]
+	org.spark-project.spark#unused;1.0.0 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   4   |   4   |   0   ||   4   |   4   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-df5bcece-a4db-44f9-b1c8-89aa34756e09
+	confs: [default]
+	4 artifacts copied, 0 already retrieved (128358kB/51ms)
+26/11/25 05:28:34 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/25 05:28:34 INFO SparkConnectServer: Starting Spark session.
+26/11/25 05:28:34 INFO SparkContext: Running Spark version 3.5.10
+26/11/25 05:28:34 INFO SparkContext: OS info Linux, 7.0.0-1014-aws, amd64
+26/11/25 05:28:34 INFO SparkContext: Java version 17.0.21
+26/11/25 05:28:34 INFO ResourceUtils: ==============================================================
+26/11/25 05:28:34 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/11/25 05:28:34 INFO ResourceUtils: ==============================================================
+26/11/25 05:28:34 INFO SparkContext: Submitted application: org.apache.spark.sql.connect.service.SparkConnectServer
+26/11/25 05:28:34 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/11/25 05:28:34 INFO ResourceProfile: Limiting resource is cpu
+26/11/25 05:28:34 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/11/25 05:28:34 INFO SecurityManager: Changing view acls to: runner
+26/11/25 05:28:34 INFO SecurityManager: Changing modify acls to: runner
+26/11/25 05:28:34 INFO SecurityManager: Changing view acls groups to: 
+26/11/25 05:28:34 INFO SecurityManager: Changing modify acls groups to: 
+26/11/25 05:28:34 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: runner; groups with view permissions: EMPTY; users with modify permissions: runner; groups with modify permissions: EMPTY
+26/11/25 05:28:34 INFO Utils: Successfully started service 'sparkDriver' on port 35693.
+26/11/25 05:28:34 INFO SparkEnv: Registering MapOutputTracker
+26/11/25 05:28:34 INFO SparkEnv: Registering BlockManagerMaster
+26/11/25 05:28:34 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/11/25 05:28:34 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/11/25 05:28:34 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/11/25 05:28:34 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-1d8938d1-2d45-430b-84b1-1dae8a96af90
+26/11/25 05:28:34 INFO MemoryStore: MemoryStore started with capacity 5.2 GiB
+26/11/25 05:28:34 INFO SparkEnv: Registering OutputCommitCoordinator
+26/11/25 05:28:34 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar at spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar at spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar at spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar at spark://ip-10-0-128-130.ec2.internal:35693/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar at file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 05:28:34 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar at file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 05:28:34 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar at file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 05:28:34 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar at file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Copying /home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 05:28:34 INFO Executor: Starting executor ID driver on host ip-10-0-128-130.ec2.internal
+26/11/25 05:28:34 INFO Executor: OS info Linux, 7.0.0-1014-aws, amd64
+26/11/25 05:28:34 INFO Executor: Java version 17.0.21
+26/11/25 05:28:34 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/11/25 05:28:34 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@1b3ab4f9 for default.
+26/11/25 05:28:34 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 05:28:34 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 05:28:34 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: /home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 05:28:34 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: /home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 05:28:34 INFO Executor: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO TransportClientFactory: Successfully created connection to ip-10-0-128-130.ec2.internal/10.0.128.130:35693 after 15 ms (0 ms spent in bootstraps)
+26/11/25 05:28:34 INFO Utils: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.spark-project.spark_unused-1.0.0.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp11870441052359674863.tmp
+26/11/25 05:28:34 INFO Utils: /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp11870441052359674863.tmp has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 05:28:34 INFO Executor: Adding file:/tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.spark-project.spark_unused-1.0.0.jar to class loader default
+26/11/25 05:28:34 INFO Executor: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp8587076585385641474.tmp
+26/11/25 05:28:34 INFO Utils: /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp8587076585385641474.tmp has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 05:28:34 INFO Executor: Adding file:/tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.spark_spark-connect_2.12-3.5.10.jar to class loader default
+26/11/25 05:28:34 INFO Executor: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp7066318222360429895.tmp
+26/11/25 05:28:34 INFO Utils: /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp7066318222360429895.tmp has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 05:28:34 INFO Executor: Adding file:/tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to class loader default
+26/11/25 05:28:34 INFO Executor: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584514223
+26/11/25 05:28:34 INFO Utils: Fetching spark://ip-10-0-128-130.ec2.internal:35693/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp1743683542868105507.tmp
+26/11/25 05:28:35 INFO Utils: /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/fetchFileTemp1743683542868105507.tmp has been previously copied to /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 05:28:35 INFO Executor: Adding file:/tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55/userFiles-2e74efa3-49fd-4f6b-aa32-dbec51e01274/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to class loader default
+26/11/25 05:28:35 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37735.
+26/11/25 05:28:35 INFO NettyBlockTransferService: Server created on ip-10-0-128-130.ec2.internal:37735
+26/11/25 05:28:35 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/11/25 05:28:35 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, ip-10-0-128-130.ec2.internal, 37735, None)
+26/11/25 05:28:35 INFO BlockManagerMasterEndpoint: Registering block manager ip-10-0-128-130.ec2.internal:37735 with 5.2 GiB RAM, BlockManagerId(driver, ip-10-0-128-130.ec2.internal, 37735, None)
+26/11/25 05:28:35 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, ip-10-0-128-130.ec2.internal, 37735, None)
+26/11/25 05:28:35 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, ip-10-0-128-130.ec2.internal, 37735, None)
+26/11/25 05:28:35 INFO SparkConnectServer: Spark Connect server started at: 0:0:0:0:0:0:0:0%0:15002
+26/11/25 05:28:36 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/11/25 05:28:36 INFO SharedState: Warehouse path is 'file:/home/runner/work/poc/poc/spark-warehouse'.
+26/11/25 05:28:36 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,28414f89-ed6b-4f82-9d42-76aebbf8c92e) is created.
+26/11/25 05:28:36 INFO SparkConnectExecutionManager: Starting thread for cleanup of abandoned executions every 30000 ms
+26/11/25 05:28:36 INFO ExecuteGrpcResponseSender: Starting for opId=28414f89-ed6b-4f82-9d42-76aebbf8c92e, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:36 INFO BaseAllocator: Debug mode disabled.
+26/11/25 05:28:36 INFO DefaultAllocationManagerOption: allocation manager type not specified, using netty as the default type
+26/11/25 05:28:36 INFO CheckAllocator: Using DefaultAllocationManager at memory-netty-12.0.1.jar!/org/apache/arrow/memory/DefaultAllocationManagerFactory.class
+26/11/25 05:28:37 WARN AuthManagers: Inferring rest.auth.type=oauth2 since property credential was provided. Please explicitly set rest.auth.type to avoid this warning.
+26/11/25 05:28:37 INFO AuthManagers: Loading AuthManager implementation: org.apache.iceberg.rest.auth.OAuth2Manager
+26/11/25 05:28:37 WARN OAuth2Manager: Iceberg REST client is missing the OAuth2 server URI configuration and defaults to http://localhost:8181/api/catalog/v1/oauth/tokens. This automatic fallback will be removed in a future Iceberg release. It is recommended to configure the OAuth2 endpoint using the 'oauth2-server-uri' property to be prepared. This warning will disappear if the OAuth2 endpoint is explicitly configured. See https://github.com/apache/iceberg/issues/10537
+26/11/25 05:28:37 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 05:28:37 INFO ExecuteGrpcResponseSender: Stream finished for opId=28414f89-ed6b-4f82-9d42-76aebbf8c92e, sent all responses up to last index 3. totalTime=1161740525ns waitingForResults=1157906470ns waitingForSend=0ns
+26/11/25 05:28:37 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,28414f89-ed6b-4f82-9d42-76aebbf8c92e) is removed.
+26/11/25 05:28:37 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,a90dcb19-9312-4397-8bab-ee4d2dc68bf7) is created.
+26/11/25 05:28:37 INFO ExecuteResponseObserver: Release all for opId=28414f89-ed6b-4f82-9d42-76aebbf8c92e. Execution stats: total=CachedSize(511,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(381,2) maxCachedUntilProduced=CachedSize(381,2)
+26/11/25 05:28:37 INFO ExecuteResponseObserver: Release all for opId=28414f89-ed6b-4f82-9d42-76aebbf8c92e. Execution stats: total=CachedSize(511,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(381,2) maxCachedUntilProduced=CachedSize(381,2)
+26/11/25 05:28:37 INFO ExecuteGrpcResponseSender: Starting for opId=a90dcb19-9312-4397-8bab-ee4d2dc68bf7, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:37 INFO CodeGenerator: Code generated in 96.002063 ms
+26/11/25 05:28:38 INFO DAGScheduler: Got job 0 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 1 output partitions
+26/11/25 05:28:38 INFO DAGScheduler: Final stage: ResultStage 0 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:38 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 05:28:38 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:38 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[2] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:38 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 8.2 KiB, free 5.2 GiB)
+26/11/25 05:28:38 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 4.2 KiB, free 5.2 GiB)
+26/11/25 05:28:38 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 4.2 KiB, free: 5.2 GiB)
+26/11/25 05:28:38 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:38 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[2] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0))
+26/11/25 05:28:38 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks resource profile 0
+26/11/25 05:28:38 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, PROCESS_LOCAL, 9439 bytes) 
+26/11/25 05:28:38 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/11/25 05:28:38 INFO Executor: Using REPL class URI: spark://ip-10-0-128-130.ec2.internal:35693/artifacts/5292239c-c6d7-420e-976e-a22dc4893d34/classes/
+26/11/25 05:28:38 INFO Executor: Created or updated repl class loader org.apache.spark.executor.ExecutorClassLoader@272be0fa for 5292239c-c6d7-420e-976e-a22dc4893d34.
+26/11/25 05:28:38 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+26/11/25 05:28:38 INFO CodeGenerator: Code generated in 15.502582 ms
+26/11/25 05:28:38 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 1672 bytes result sent to driver
+26/11/25 05:28:38 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 111 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/1)
+26/11/25 05:28:38 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/11/25 05:28:38 INFO DAGScheduler: ResultStage 0 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.225 s
+26/11/25 05:28:38 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 05:28:38 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished
+26/11/25 05:28:38 INFO ExecuteGrpcResponseSender: Stream finished for opId=a90dcb19-9312-4397-8bab-ee4d2dc68bf7, sent all responses up to last index 4. totalTime=492874759ns waitingForResults=490311375ns waitingForSend=0ns
+26/11/25 05:28:38 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,a90dcb19-9312-4397-8bab-ee4d2dc68bf7) is removed.
+26/11/25 05:28:38 INFO ExecuteResponseObserver: Release all for opId=a90dcb19-9312-4397-8bab-ee4d2dc68bf7. Execution stats: total=CachedSize(955,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(711,2) maxCachedUntilProduced=CachedSize(711,2)
+26/11/25 05:28:38 INFO ExecuteResponseObserver: Release all for opId=a90dcb19-9312-4397-8bab-ee4d2dc68bf7. Execution stats: total=CachedSize(955,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(711,2) maxCachedUntilProduced=CachedSize(711,2)
+26/11/25 05:28:38 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,7e149697-480e-4911-9f82-db582677f698) is created.
+26/11/25 05:28:38 INFO ExecuteGrpcResponseSender: Starting for opId=7e149697-480e-4911-9f82-db582677f698, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:38 INFO BlockManagerInfo: Removed broadcast_0_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 4.2 KiB, free: 5.2 GiB)
+26/11/25 05:28:38 INFO ExecuteGrpcResponseSender: Stream finished for opId=7e149697-480e-4911-9f82-db582677f698, sent all responses up to last index 3. totalTime=342774526ns waitingForResults=337945185ns waitingForSend=0ns
+26/11/25 05:28:38 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,7e149697-480e-4911-9f82-db582677f698) is removed.
+26/11/25 05:28:38 INFO ExecuteResponseObserver: Release all for opId=7e149697-480e-4911-9f82-db582677f698. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 05:28:38 INFO ExecuteResponseObserver: Release all for opId=7e149697-480e-4911-9f82-db582677f698. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 05:28:38 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,af95a921-afe7-4fbd-9ec7-b588aa76e794) is created.
+26/11/25 05:28:38 INFO ExecuteGrpcResponseSender: Starting for opId=af95a921-afe7-4fbd-9ec7-b588aa76e794, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:38 INFO CodeGenerator: Code generated in 9.38534 ms
+26/11/25 05:28:38 INFO ExecuteGrpcResponseSender: Stream finished for opId=af95a921-afe7-4fbd-9ec7-b588aa76e794, sent all responses up to last index 4. totalTime=46139077ns waitingForResults=43332718ns waitingForSend=0ns
+26/11/25 05:28:38 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,af95a921-afe7-4fbd-9ec7-b588aa76e794) is removed.
+26/11/25 05:28:38 INFO ExecuteResponseObserver: Release all for opId=af95a921-afe7-4fbd-9ec7-b588aa76e794. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(299,2) maxCachedUntilProduced=CachedSize(571,3)
+26/11/25 05:28:38 INFO ExecuteResponseObserver: Release all for opId=af95a921-afe7-4fbd-9ec7-b588aa76e794. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(299,2) maxCachedUntilProduced=CachedSize(571,3)
+26/11/25 05:28:38 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,e67c49a0-5045-4c6c-bc54-9ab3542672dd) is created.
+26/11/25 05:28:38 INFO ExecuteGrpcResponseSender: Starting for opId=e67c49a0-5045-4c6c-bc54-9ab3542672dd, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:38 INFO RESTSessionCatalog: Table properties set at catalog level through catalog properties: {}
+26/11/25 05:28:38 INFO RESTSessionCatalog: Table properties enforced at catalog level through catalog properties: {}
+26/11/25 05:28:38 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 05:28:39 INFO CodeGenerator: Code generated in 39.544159 ms
+26/11/25 05:28:39 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 32.0 KiB, free 5.2 GiB)
+26/11/25 05:28:39 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 2039.0 B, free 5.2 GiB)
+26/11/25 05:28:39 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 2039.0 B, free: 5.2 GiB)
+26/11/25 05:28:39 INFO SparkContext: Created broadcast 1 from Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 05:28:39 INFO AppendDataExec: Start processing data source write support: IcebergBatchWrite(table=polaris.p3_iceberg.merge_history, format=PARQUET). The input RDD has 4 partitions.
+26/11/25 05:28:39 INFO SparkContext: Starting job: Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...
+26/11/25 05:28:39 INFO DAGScheduler: Got job 1 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) with 4 output partitions
+26/11/25 05:28:39 INFO DAGScheduler: Final stage: ResultStage 1 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...)
+26/11/25 05:28:39 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 05:28:39 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:39 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[5] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...), which has no missing parents
+26/11/25 05:28:39 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 13.5 KiB, free 5.2 GiB)
+26/11/25 05:28:39 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 6.6 KiB, free 5.2 GiB)
+26/11/25 05:28:39 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 6.6 KiB, free: 5.2 GiB)
+26/11/25 05:28:39 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:39 INFO DAGScheduler: Submitting 4 missing tasks from ResultStage 1 (MapPartitionsRDD[5] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/11/25 05:28:39 INFO TaskSchedulerImpl: Adding task set 1.0 with 4 tasks resource profile 0
+26/11/25 05:28:39 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, PROCESS_LOCAL, 9356 bytes) 
+26/11/25 05:28:39 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 2) (ip-10-0-128-130.ec2.internal, executor driver, partition 1, PROCESS_LOCAL, 9356 bytes) 
+26/11/25 05:28:39 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 3) (ip-10-0-128-130.ec2.internal, executor driver, partition 2, PROCESS_LOCAL, 9356 bytes) 
+26/11/25 05:28:39 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 4) (ip-10-0-128-130.ec2.internal, executor driver, partition 3, PROCESS_LOCAL, 9356 bytes) 
+26/11/25 05:28:39 INFO Executor: Running task 0.0 in stage 1.0 (TID 1)
+26/11/25 05:28:39 INFO Executor: Running task 1.0 in stage 1.0 (TID 2)
+26/11/25 05:28:39 INFO Executor: Running task 2.0 in stage 1.0 (TID 3)
+26/11/25 05:28:39 INFO Executor: Running task 3.0 in stage 1.0 (TID 4)
+26/11/25 05:28:39 INFO CodeGenerator: Code generated in 15.846885 ms
+26/11/25 05:28:39 INFO FormatModelRegistry: Unable to call register for (org.apache.iceberg.flink.data.FlinkFormatModels). Check for missing jars on the classpath: java.lang.NoSuchMethodException: Cannot find method: register
+26/11/25 05:28:39 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 05:28:39 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 05:28:39 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 05:28:39 INFO CodecPool: Got brand-new compressor [.zstd]
+26/11/25 05:28:39 INFO DataWritingSparkTask: Writer for partition 1 is committing.
+26/11/25 05:28:39 INFO DataWritingSparkTask: Writer for partition 3 is committing.
+26/11/25 05:28:39 INFO DataWritingSparkTask: Writer for partition 0 is committing.
+26/11/25 05:28:39 INFO DataWritingSparkTask: Writer for partition 2 is committing.
+26/11/25 05:28:40 INFO DataWritingSparkTask: Committed partition 1 (task 2, attempt 0, stage 1.0)
+26/11/25 05:28:40 INFO DataWritingSparkTask: Committed partition 3 (task 4, attempt 0, stage 1.0)
+26/11/25 05:28:40 INFO DataWritingSparkTask: Committed partition 0 (task 1, attempt 0, stage 1.0)
+26/11/25 05:28:40 INFO DataWritingSparkTask: Committed partition 2 (task 3, attempt 0, stage 1.0)
+26/11/25 05:28:40 INFO Executor: Finished task 0.0 in stage 1.0 (TID 1). 4285 bytes result sent to driver
+26/11/25 05:28:40 INFO Executor: Finished task 3.0 in stage 1.0 (TID 4). 4285 bytes result sent to driver
+26/11/25 05:28:40 INFO Executor: Finished task 1.0 in stage 1.0 (TID 2). 4285 bytes result sent to driver
+26/11/25 05:28:40 INFO Executor: Finished task 2.0 in stage 1.0 (TID 3). 4285 bytes result sent to driver
+26/11/25 05:28:40 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 4) in 990 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/4)
+26/11/25 05:28:40 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 3) in 992 ms on ip-10-0-128-130.ec2.internal (executor driver) (2/4)
+26/11/25 05:28:40 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 998 ms on ip-10-0-128-130.ec2.internal (executor driver) (3/4)
+26/11/25 05:28:40 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 2) in 993 ms on ip-10-0-128-130.ec2.internal (executor driver) (4/4)
+26/11/25 05:28:40 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/11/25 05:28:40 INFO DAGScheduler: ResultStage 1 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+...) finished in 1.010 s
+26/11/25 05:28:40 INFO DAGScheduler: Job 1 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 05:28:40 INFO TaskSchedulerImpl: Killing all running tasks in stage 1: Stage finished
+26/11/25 05:28:40 INFO DAGScheduler: Job 1 finished: Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  command {
+    sql_command {
+..., took 1.014125 s
+26/11/25 05:28:40 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.p3_iceberg.merge_history, format=PARQUET) is committing.
+26/11/25 05:28:40 INFO SparkWrite: Committing append with 4 new data files to table polaris.p3_iceberg.merge_history
+26/11/25 05:28:40 INFO SnapshotProducer: Committed snapshot 5501494365755575584 (MergeAppend)
+26/11/25 05:28:40 INFO LoggingMetricsReporter: Received metrics report: CommitReport{tableName=polaris.p3_iceberg.merge_history, snapshotId=5501494365755575584, sequenceNumber=1, operation=append, commitMetrics=CommitMetricsResult{totalDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.186135804S, count=1}, attempts=CounterResult{unit=COUNT, value=1}, addedDataFiles=CounterResult{unit=COUNT, value=4}, removedDataFiles=null, totalDataFiles=CounterResult{unit=COUNT, value=4}, addedDeleteFiles=null, addedEqualityDeleteFiles=null, addedPositionalDeleteFiles=null, addedDVs=null, removedDeleteFiles=null, removedEqualityDeleteFiles=null, removedPositionalDeleteFiles=null, removedDVs=null, totalDeleteFiles=CounterResult{unit=COUNT, value=0}, addedRecords=CounterResult{unit=COUNT, value=12000}, removedRecords=null, totalRecords=CounterResult{unit=COUNT, value=12000}, addedFilesSizeInBytes=CounterResult{unit=BYTES, value=17313}, removedFilesSizeInBytes=null, totalFilesSizeInBytes=CounterResult{unit=BYTES, value=17313}, addedPositionalDeletes=null, removedPositionalDeletes=null, totalPositionalDeletes=CounterResult{unit=COUNT, value=0}, addedEqualityDeletes=null, removedEqualityDeletes=null, totalEqualityDeletes=CounterResult{unit=COUNT, value=0}, manifestsCreated=CounterResult{unit=COUNT, value=1}, manifestsReplaced=CounterResult{unit=COUNT, value=0}, manifestsKept=CounterResult{unit=COUNT, value=0}, manifestEntriesProcessed=null}, metadata={engine-version=3.5.10, app-id=local-1795584514661, engine-name=spark, iceberg-version=Apache Iceberg 1.12.0 (commit 212aa894e919ff9fdf89160da4aadcbe6858ac01), app-name=org.apache.spark.sql.connect.service.SparkConnectServer}}
+26/11/25 05:28:40 INFO SparkWrite: Committed in 205 ms
+26/11/25 05:28:40 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=polaris.p3_iceberg.merge_history, format=PARQUET) committed.
+26/11/25 05:28:40 WARN RESTMetricsReporter: Failed to report metrics to REST endpoint v1/poc/namespaces/p3_iceberg/tables/merge_history/metrics
+org.apache.iceberg.exceptions.RESTException: Unable to process (code: 404, type: NoSuchTableException): Table does not exist: p3_iceberg.merge_history
+	at org.apache.iceberg.rest.ErrorHandlers.createRESTException(ErrorHandlers.java:115)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:357)
+	at org.apache.iceberg.rest.ErrorHandlers$DefaultErrorHandler.accept(ErrorHandlers.java:321)
+	at org.apache.iceberg.rest.HTTPClient.throwFailure(HTTPClient.java:242)
+	at org.apache.iceberg.rest.HTTPClient.handleResponse(HTTPClient.java:367)
+	at org.apache.iceberg.rest.HTTPClient.lambda$execute$1(HTTPClient.java:325)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:247)
+	at org.apache.iceberg.shaded.org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:188)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:321)
+	at org.apache.iceberg.rest.HTTPClient.execute(HTTPClient.java:299)
+	at org.apache.iceberg.rest.BaseHTTPClient.post(BaseHTTPClient.java:112)
+	at org.apache.iceberg.rest.RESTClient.post(RESTClient.java:150)
+	at org.apache.iceberg.rest.RESTMetricsReporter.lambda$report$0(RESTMetricsReporter.java:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/11/25 05:28:40 INFO ExecuteGrpcResponseSender: Stream finished for opId=e67c49a0-5045-4c6c-bc54-9ab3542672dd, sent all responses up to last index 3. totalTime=2192361890ns waitingForResults=2191483695ns waitingForSend=0ns
+26/11/25 05:28:40 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,72c1b4c4-04c6-4e5b-9902-72445a95d383) is created.
+26/11/25 05:28:40 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,e67c49a0-5045-4c6c-bc54-9ab3542672dd) is removed.
+26/11/25 05:28:40 INFO ExecuteResponseObserver: Release all for opId=e67c49a0-5045-4c6c-bc54-9ab3542672dd. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 05:28:40 INFO ExecuteGrpcResponseSender: Starting for opId=72c1b4c4-04c6-4e5b-9902-72445a95d383, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:40 INFO ExecuteResponseObserver: Release all for opId=e67c49a0-5045-4c6c-bc54-9ab3542672dd. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(298,2) maxCachedUntilProduced=CachedSize(298,2)
+26/11/25 05:28:40 INFO CodeGenerator: Code generated in 5.362438 ms
+26/11/25 05:28:40 INFO ExecuteGrpcResponseSender: Stream finished for opId=72c1b4c4-04c6-4e5b-9902-72445a95d383, sent all responses up to last index 4. totalTime=14595952ns waitingForResults=13809572ns waitingForSend=0ns
+26/11/25 05:28:40 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,72c1b4c4-04c6-4e5b-9902-72445a95d383) is removed.
+26/11/25 05:28:40 INFO ExecuteResponseObserver: Release all for opId=72c1b4c4-04c6-4e5b-9902-72445a95d383. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(571,3) maxCachedUntilProduced=CachedSize(571,3)
+26/11/25 05:28:40 INFO ExecuteResponseObserver: Release all for opId=72c1b4c4-04c6-4e5b-9902-72445a95d383. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(571,3) maxCachedUntilProduced=CachedSize(571,3)
+26/11/25 05:28:40 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,0d550f8c-6420-4d30-8c19-0098e473bdee) is created.
+26/11/25 05:28:40 INFO ExecuteGrpcResponseSender: Starting for opId=0d550f8c-6420-4d30-8c19-0098e473bdee, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.aws.s3.S3FileIO
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=0d550f8c-6420-4d30-8c19-0098e473bdee, sent all responses up to last index 3. totalTime=286709044ns waitingForResults=285688688ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,0d550f8c-6420-4d30-8c19-0098e473bdee) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=0d550f8c-6420-4d30-8c19-0098e473bdee. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(576,3) maxCachedUntilProduced=CachedSize(576,3)
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,1f5bce0d-1775-4fec-99bf-283ddf9602f1) is created.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=0d550f8c-6420-4d30-8c19-0098e473bdee. Execution stats: total=CachedSize(576,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(576,3) maxCachedUntilProduced=CachedSize(576,3)
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=1f5bce0d-1775-4fec-99bf-283ddf9602f1, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 5.073748 ms
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=1f5bce0d-1775-4fec-99bf-283ddf9602f1, sent all responses up to last index 4. totalTime=15361273ns waitingForResults=13832350ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,1f5bce0d-1775-4fec-99bf-283ddf9602f1) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=1f5bce0d-1775-4fec-99bf-283ddf9602f1. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(690,4) maxCachedUntilProduced=CachedSize(690,4)
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=1f5bce0d-1775-4fec-99bf-283ddf9602f1. Execution stats: total=CachedSize(690,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(690,4) maxCachedUntilProduced=CachedSize(690,4)
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,2c6b8c25-54dd-48ac-a41d-9295d8245267) is created.
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=2c6b8c25-54dd-48ac-a41d-9295d8245267, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=2c6b8c25-54dd-48ac-a41d-9295d8245267, sent all responses up to last index 3. totalTime=147709047ns waitingForResults=146731043ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,893fe39b-11cb-4dd8-b5b0-f43b7f5ff087) is created.
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,2c6b8c25-54dd-48ac-a41d-9295d8245267) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=2c6b8c25-54dd-48ac-a41d-9295d8245267. Execution stats: total=CachedSize(2312,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2312,3) maxCachedUntilProduced=CachedSize(2312,3)
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=2c6b8c25-54dd-48ac-a41d-9295d8245267. Execution stats: total=CachedSize(2312,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2312,3) maxCachedUntilProduced=CachedSize(2312,3)
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=893fe39b-11cb-4dd8-b5b0-f43b7f5ff087, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 16.755206 ms
+26/11/25 05:28:41 INFO DAGScheduler: Registering RDD 9 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) as input to shuffle 0
+26/11/25 05:28:41 INFO DAGScheduler: Got map stage job 2 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 4 output partitions
+26/11/25 05:28:41 INFO DAGScheduler: Final stage: ShuffleMapStage 2 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:41 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 05:28:41 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:41 INFO DAGScheduler: Submitting ShuffleMapStage 2 (MapPartitionsRDD[9] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 15.5 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 7.4 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:41 INFO SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:41 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 2 (MapPartitionsRDD[9] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Adding task set 2.0 with 4 tasks resource profile 0
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 5) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 1.0 in stage 2.0 (TID 6) (ip-10-0-128-130.ec2.internal, executor driver, partition 1, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 2.0 in stage 2.0 (TID 7) (ip-10-0-128-130.ec2.internal, executor driver, partition 2, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 3.0 in stage 2.0 (TID 8) (ip-10-0-128-130.ec2.internal, executor driver, partition 3, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO Executor: Running task 0.0 in stage 2.0 (TID 5)
+26/11/25 05:28:41 INFO Executor: Running task 3.0 in stage 2.0 (TID 8)
+26/11/25 05:28:41 INFO Executor: Running task 2.0 in stage 2.0 (TID 7)
+26/11/25 05:28:41 INFO Executor: Running task 1.0 in stage 2.0 (TID 6)
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 22.299688 ms
+26/11/25 05:28:41 INFO Executor: Finished task 1.0 in stage 2.0 (TID 6). 1901 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 1.0 in stage 2.0 (TID 6) in 62 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/4)
+26/11/25 05:28:41 INFO Executor: Finished task 3.0 in stage 2.0 (TID 8). 1944 bytes result sent to driver
+26/11/25 05:28:41 INFO Executor: Finished task 2.0 in stage 2.0 (TID 7). 1944 bytes result sent to driver
+26/11/25 05:28:41 INFO Executor: Finished task 0.0 in stage 2.0 (TID 5). 1901 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 3.0 in stage 2.0 (TID 8) in 64 ms on ip-10-0-128-130.ec2.internal (executor driver) (2/4)
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 2.0 in stage 2.0 (TID 7) in 66 ms on ip-10-0-128-130.ec2.internal (executor driver) (3/4)
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 5) in 67 ms on ip-10-0-128-130.ec2.internal (executor driver) (4/4)
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool 
+26/11/25 05:28:41 INFO DAGScheduler: ShuffleMapStage 2 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.080 s
+26/11/25 05:28:41 INFO DAGScheduler: looking for newly runnable stages
+26/11/25 05:28:41 INFO DAGScheduler: running: Set()
+26/11/25 05:28:41 INFO DAGScheduler: waiting: Set()
+26/11/25 05:28:41 INFO DAGScheduler: failed: Set()
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 8.247362 ms
+26/11/25 05:28:41 INFO DAGScheduler: Got job 3 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 1 output partitions
+26/11/25 05:28:41 INFO DAGScheduler: Final stage: ResultStage 4 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:41 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 3)
+26/11/25 05:28:41 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:41 INFO DAGScheduler: Submitting ResultStage 4 (MapPartitionsRDD[12] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 14.6 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 6.8 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:41 INFO SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:41 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 4 (MapPartitionsRDD[12] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0))
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Adding task set 4.0 with 1 tasks resource profile 0
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 0.0 in stage 4.0 (TID 9) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, NODE_LOCAL, 9231 bytes) 
+26/11/25 05:28:41 INFO Executor: Running task 0.0 in stage 4.0 (TID 9)
+26/11/25 05:28:41 INFO BlockManagerInfo: Removed broadcast_3_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:41 INFO ShuffleBlockFetcherIterator: Getting 4 (240.0 B) non-empty blocks including 4 (240.0 B) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/11/25 05:28:41 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 6 ms
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 13.197553 ms
+26/11/25 05:28:41 INFO Executor: Finished task 0.0 in stage 4.0 (TID 9). 4213 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 0.0 in stage 4.0 (TID 9) in 52 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/1)
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Removed TaskSet 4.0, whose tasks have all completed, from pool 
+26/11/25 05:28:41 INFO DAGScheduler: ResultStage 4 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.078 s
+26/11/25 05:28:41 INFO DAGScheduler: Job 3 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Killing all running tasks in stage 4: Stage finished
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=893fe39b-11cb-4dd8-b5b0-f43b7f5ff087, sent all responses up to last index 4. totalTime=318200884ns waitingForResults=316659230ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,893fe39b-11cb-4dd8-b5b0-f43b7f5ff087) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=893fe39b-11cb-4dd8-b5b0-f43b7f5ff087. Execution stats: total=CachedSize(2944,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2776,3) maxCachedUntilProduced=CachedSize(2776,3)
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=893fe39b-11cb-4dd8-b5b0-f43b7f5ff087. Execution stats: total=CachedSize(2944,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2776,3) maxCachedUntilProduced=CachedSize(2776,3)
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,8ea4f36c-0ef7-4402-9e2d-3076df282fea) is created.
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=8ea4f36c-0ef7-4402-9e2d-3076df282fea, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=8ea4f36c-0ef7-4402-9e2d-3076df282fea, sent all responses up to last index 3. totalTime=29062255ns waitingForResults=28231864ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,e3e927c3-633b-44ec-b94f-c4be00b6f0f6) is created.
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,8ea4f36c-0ef7-4402-9e2d-3076df282fea) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=8ea4f36c-0ef7-4402-9e2d-3076df282fea. Execution stats: total=CachedSize(2312,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2312,3) maxCachedUntilProduced=CachedSize(2312,3)
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=8ea4f36c-0ef7-4402-9e2d-3076df282fea. Execution stats: total=CachedSize(2312,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2312,3) maxCachedUntilProduced=CachedSize(2312,3)
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=e3e927c3-633b-44ec-b94f-c4be00b6f0f6, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 13.202317 ms
+26/11/25 05:28:41 INFO DAGScheduler: Registering RDD 16 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) as input to shuffle 1
+26/11/25 05:28:41 INFO DAGScheduler: Got map stage job 4 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 4 output partitions
+26/11/25 05:28:41 INFO DAGScheduler: Final stage: ShuffleMapStage 5 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:41 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 05:28:41 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:41 INFO DAGScheduler: Submitting ShuffleMapStage 5 (MapPartitionsRDD[16] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 15.5 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 7.4 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:41 INFO SparkContext: Created broadcast 5 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:41 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 5 (MapPartitionsRDD[16] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Adding task set 5.0 with 4 tasks resource profile 0
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 0.0 in stage 5.0 (TID 10) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 1.0 in stage 5.0 (TID 11) (ip-10-0-128-130.ec2.internal, executor driver, partition 1, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 2.0 in stage 5.0 (TID 12) (ip-10-0-128-130.ec2.internal, executor driver, partition 2, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 3.0 in stage 5.0 (TID 13) (ip-10-0-128-130.ec2.internal, executor driver, partition 3, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO Executor: Running task 0.0 in stage 5.0 (TID 10)
+26/11/25 05:28:41 INFO Executor: Running task 2.0 in stage 5.0 (TID 12)
+26/11/25 05:28:41 INFO Executor: Running task 1.0 in stage 5.0 (TID 11)
+26/11/25 05:28:41 INFO Executor: Running task 3.0 in stage 5.0 (TID 13)
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 20.111545 ms
+26/11/25 05:28:41 INFO Executor: Finished task 0.0 in stage 5.0 (TID 10). 1901 bytes result sent to driver
+26/11/25 05:28:41 INFO Executor: Finished task 2.0 in stage 5.0 (TID 12). 1901 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 0.0 in stage 5.0 (TID 10) in 34 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/4)
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 2.0 in stage 5.0 (TID 12) in 33 ms on ip-10-0-128-130.ec2.internal (executor driver) (2/4)
+26/11/25 05:28:41 INFO Executor: Finished task 1.0 in stage 5.0 (TID 11). 1901 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 1.0 in stage 5.0 (TID 11) in 35 ms on ip-10-0-128-130.ec2.internal (executor driver) (3/4)
+26/11/25 05:28:41 INFO Executor: Finished task 3.0 in stage 5.0 (TID 13). 1901 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 3.0 in stage 5.0 (TID 13) in 36 ms on ip-10-0-128-130.ec2.internal (executor driver) (4/4)
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Removed TaskSet 5.0, whose tasks have all completed, from pool 
+26/11/25 05:28:41 INFO DAGScheduler: ShuffleMapStage 5 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.044 s
+26/11/25 05:28:41 INFO DAGScheduler: looking for newly runnable stages
+26/11/25 05:28:41 INFO DAGScheduler: running: Set()
+26/11/25 05:28:41 INFO DAGScheduler: waiting: Set()
+26/11/25 05:28:41 INFO DAGScheduler: failed: Set()
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 6.786391 ms
+26/11/25 05:28:41 INFO DAGScheduler: Got job 5 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 1 output partitions
+26/11/25 05:28:41 INFO DAGScheduler: Final stage: ResultStage 7 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:41 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 6)
+26/11/25 05:28:41 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:41 INFO DAGScheduler: Submitting ResultStage 7 (MapPartitionsRDD[19] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 14.6 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 6.8 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:41 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:41 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 7 (MapPartitionsRDD[19] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0))
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Adding task set 7.0 with 1 tasks resource profile 0
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 0.0 in stage 7.0 (TID 14) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, NODE_LOCAL, 9231 bytes) 
+26/11/25 05:28:41 INFO Executor: Running task 0.0 in stage 7.0 (TID 14)
+26/11/25 05:28:41 INFO ShuffleBlockFetcherIterator: Getting 4 (240.0 B) non-empty blocks including 4 (240.0 B) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/11/25 05:28:41 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+26/11/25 05:28:41 INFO Executor: Finished task 0.0 in stage 7.0 (TID 14). 4213 bytes result sent to driver
+26/11/25 05:28:41 INFO TaskSetManager: Finished task 0.0 in stage 7.0 (TID 14) in 10 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/1)
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Removed TaskSet 7.0, whose tasks have all completed, from pool 
+26/11/25 05:28:41 INFO DAGScheduler: ResultStage 7 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.016 s
+26/11/25 05:28:41 INFO DAGScheduler: Job 5 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Killing all running tasks in stage 7: Stage finished
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=e3e927c3-633b-44ec-b94f-c4be00b6f0f6, sent all responses up to last index 4. totalTime=138860717ns waitingForResults=136450021ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,e3e927c3-633b-44ec-b94f-c4be00b6f0f6) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=e3e927c3-633b-44ec-b94f-c4be00b6f0f6. Execution stats: total=CachedSize(2950,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2782,3) maxCachedUntilProduced=CachedSize(2782,3)
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=e3e927c3-633b-44ec-b94f-c4be00b6f0f6. Execution stats: total=CachedSize(2950,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2782,3) maxCachedUntilProduced=CachedSize(2782,3)
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,8f7341e0-9949-4b23-a1e2-3532a7711d43) is created.
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=8f7341e0-9949-4b23-a1e2-3532a7711d43, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Stream finished for opId=8f7341e0-9949-4b23-a1e2-3532a7711d43, sent all responses up to last index 3. totalTime=34056463ns waitingForResults=33180818ns waitingForSend=0ns
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,7bc76462-760c-49cc-a0de-2f9d822c8225) is created.
+26/11/25 05:28:41 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,8f7341e0-9949-4b23-a1e2-3532a7711d43) is removed.
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=8f7341e0-9949-4b23-a1e2-3532a7711d43. Execution stats: total=CachedSize(2319,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2131,2) maxCachedUntilProduced=CachedSize(2131,2)
+26/11/25 05:28:41 INFO ExecuteResponseObserver: Release all for opId=8f7341e0-9949-4b23-a1e2-3532a7711d43. Execution stats: total=CachedSize(2319,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2131,2) maxCachedUntilProduced=CachedSize(2131,2)
+26/11/25 05:28:41 INFO ExecuteGrpcResponseSender: Starting for opId=7bc76462-760c-49cc-a0de-2f9d822c8225, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:41 INFO CodeGenerator: Code generated in 10.903036 ms
+26/11/25 05:28:41 INFO DAGScheduler: Registering RDD 23 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) as input to shuffle 2
+26/11/25 05:28:41 INFO DAGScheduler: Got map stage job 6 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 4 output partitions
+26/11/25 05:28:41 INFO DAGScheduler: Final stage: ShuffleMapStage 8 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:41 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 05:28:41 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:41 INFO DAGScheduler: Submitting ShuffleMapStage 8 (MapPartitionsRDD[23] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 15.5 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 7.4 KiB, free 5.2 GiB)
+26/11/25 05:28:41 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:41 INFO SparkContext: Created broadcast 7 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:41 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 8 (MapPartitionsRDD[23] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/11/25 05:28:41 INFO TaskSchedulerImpl: Adding task set 8.0 with 4 tasks resource profile 0
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 0.0 in stage 8.0 (TID 15) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 1.0 in stage 8.0 (TID 16) (ip-10-0-128-130.ec2.internal, executor driver, partition 1, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 2.0 in stage 8.0 (TID 17) (ip-10-0-128-130.ec2.internal, executor driver, partition 2, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO TaskSetManager: Starting task 3.0 in stage 8.0 (TID 18) (ip-10-0-128-130.ec2.internal, executor driver, partition 3, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:41 INFO Executor: Running task 1.0 in stage 8.0 (TID 16)
+26/11/25 05:28:41 INFO Executor: Running task 2.0 in stage 8.0 (TID 17)
+26/11/25 05:28:41 INFO Executor: Running task 3.0 in stage 8.0 (TID 18)
+26/11/25 05:28:42 INFO Executor: Running task 0.0 in stage 8.0 (TID 15)
+26/11/25 05:28:42 INFO CodeGenerator: Code generated in 15.402149 ms
+26/11/25 05:28:42 INFO Executor: Finished task 2.0 in stage 8.0 (TID 17). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO Executor: Finished task 1.0 in stage 8.0 (TID 16). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO Executor: Finished task 0.0 in stage 8.0 (TID 15). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 2.0 in stage 8.0 (TID 17) in 28 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/4)
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 0.0 in stage 8.0 (TID 15) in 28 ms on ip-10-0-128-130.ec2.internal (executor driver) (2/4)
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 1.0 in stage 8.0 (TID 16) in 29 ms on ip-10-0-128-130.ec2.internal (executor driver) (3/4)
+26/11/25 05:28:42 INFO Executor: Finished task 3.0 in stage 8.0 (TID 18). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 3.0 in stage 8.0 (TID 18) in 29 ms on ip-10-0-128-130.ec2.internal (executor driver) (4/4)
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Removed TaskSet 8.0, whose tasks have all completed, from pool 
+26/11/25 05:28:42 INFO DAGScheduler: ShuffleMapStage 8 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.036 s
+26/11/25 05:28:42 INFO DAGScheduler: looking for newly runnable stages
+26/11/25 05:28:42 INFO DAGScheduler: running: Set()
+26/11/25 05:28:42 INFO DAGScheduler: waiting: Set()
+26/11/25 05:28:42 INFO DAGScheduler: failed: Set()
+26/11/25 05:28:42 INFO CodeGenerator: Code generated in 6.004659 ms
+26/11/25 05:28:42 INFO DAGScheduler: Got job 7 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 1 output partitions
+26/11/25 05:28:42 INFO DAGScheduler: Final stage: ResultStage 10 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:42 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 9)
+26/11/25 05:28:42 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:42 INFO DAGScheduler: Submitting ResultStage 10 (MapPartitionsRDD[26] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:42 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 14.6 KiB, free 5.2 GiB)
+26/11/25 05:28:42 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 6.8 KiB, free 5.2 GiB)
+26/11/25 05:28:42 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO SparkContext: Created broadcast 8 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:42 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 10 (MapPartitionsRDD[26] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0))
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Adding task set 10.0 with 1 tasks resource profile 0
+26/11/25 05:28:42 INFO TaskSetManager: Starting task 0.0 in stage 10.0 (TID 19) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, NODE_LOCAL, 9231 bytes) 
+26/11/25 05:28:42 INFO Executor: Running task 0.0 in stage 10.0 (TID 19)
+26/11/25 05:28:42 INFO ShuffleBlockFetcherIterator: Getting 4 (240.0 B) non-empty blocks including 4 (240.0 B) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/11/25 05:28:42 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+26/11/25 05:28:42 INFO Executor: Finished task 0.0 in stage 10.0 (TID 19). 4213 bytes result sent to driver
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 0.0 in stage 10.0 (TID 19) in 9 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/1)
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Removed TaskSet 10.0, whose tasks have all completed, from pool 
+26/11/25 05:28:42 INFO DAGScheduler: ResultStage 10 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.012 s
+26/11/25 05:28:42 INFO DAGScheduler: Job 7 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Killing all running tasks in stage 10: Stage finished
+26/11/25 05:28:42 INFO ExecuteGrpcResponseSender: Stream finished for opId=7bc76462-760c-49cc-a0de-2f9d822c8225, sent all responses up to last index 4. totalTime=115477142ns waitingForResults=113524205ns waitingForSend=0ns
+26/11/25 05:28:42 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,7bc76462-760c-49cc-a0de-2f9d822c8225) is removed.
+26/11/25 05:28:42 INFO ExecuteResponseObserver: Release all for opId=7bc76462-760c-49cc-a0de-2f9d822c8225. Execution stats: total=CachedSize(2946,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2778,3) maxCachedUntilProduced=CachedSize(2778,3)
+26/11/25 05:28:42 INFO ExecuteResponseObserver: Release all for opId=7bc76462-760c-49cc-a0de-2f9d822c8225. Execution stats: total=CachedSize(2946,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2778,3) maxCachedUntilProduced=CachedSize(2778,3)
+26/11/25 05:28:42 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,915cd523-adb6-4286-ac3a-e0f99b6eb2e8) is created.
+26/11/25 05:28:42 INFO ExecuteGrpcResponseSender: Starting for opId=915cd523-adb6-4286-ac3a-e0f99b6eb2e8, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:42 INFO ExecuteGrpcResponseSender: Stream finished for opId=915cd523-adb6-4286-ac3a-e0f99b6eb2e8, sent all responses up to last index 3. totalTime=25485101ns waitingForResults=24738651ns waitingForSend=0ns
+26/11/25 05:28:42 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,915cd523-adb6-4286-ac3a-e0f99b6eb2e8) is removed.
+26/11/25 05:28:42 INFO ExecuteResponseObserver: Release all for opId=915cd523-adb6-4286-ac3a-e0f99b6eb2e8. Execution stats: total=CachedSize(2319,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2319,3) maxCachedUntilProduced=CachedSize(2319,3)
+26/11/25 05:28:42 INFO ExecuteResponseObserver: Release all for opId=915cd523-adb6-4286-ac3a-e0f99b6eb2e8. Execution stats: total=CachedSize(2319,3) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2319,3) maxCachedUntilProduced=CachedSize(2319,3)
+26/11/25 05:28:42 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,fbf72bea-a4fd-4282-8dae-4d2bb5f2b16a) is created.
+26/11/25 05:28:42 INFO ExecuteGrpcResponseSender: Starting for opId=fbf72bea-a4fd-4282-8dae-4d2bb5f2b16a, reattachable=true, lastConsumedStreamIndex=0
+26/11/25 05:28:42 INFO CodeGenerator: Code generated in 12.793939 ms
+26/11/25 05:28:42 INFO DAGScheduler: Registering RDD 30 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) as input to shuffle 3
+26/11/25 05:28:42 INFO DAGScheduler: Got map stage job 8 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 4 output partitions
+26/11/25 05:28:42 INFO DAGScheduler: Final stage: ShuffleMapStage 11 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:42 INFO DAGScheduler: Parents of final stage: List()
+26/11/25 05:28:42 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:42 INFO DAGScheduler: Submitting ShuffleMapStage 11 (MapPartitionsRDD[30] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:42 INFO MemoryStore: Block broadcast_9 stored as values in memory (estimated size 15.5 KiB, free 5.2 GiB)
+26/11/25 05:28:42 INFO MemoryStore: Block broadcast_9_piece0 stored as bytes in memory (estimated size 7.4 KiB, free 5.2 GiB)
+26/11/25 05:28:42 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO SparkContext: Created broadcast 9 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:42 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 11 (MapPartitionsRDD[30] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Adding task set 11.0 with 4 tasks resource profile 0
+26/11/25 05:28:42 INFO TaskSetManager: Starting task 0.0 in stage 11.0 (TID 20) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:42 INFO TaskSetManager: Starting task 1.0 in stage 11.0 (TID 21) (ip-10-0-128-130.ec2.internal, executor driver, partition 1, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:42 INFO TaskSetManager: Starting task 2.0 in stage 11.0 (TID 22) (ip-10-0-128-130.ec2.internal, executor driver, partition 2, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:42 INFO TaskSetManager: Starting task 3.0 in stage 11.0 (TID 23) (ip-10-0-128-130.ec2.internal, executor driver, partition 3, PROCESS_LOCAL, 9345 bytes) 
+26/11/25 05:28:42 INFO Executor: Running task 2.0 in stage 11.0 (TID 22)
+26/11/25 05:28:42 INFO Executor: Running task 1.0 in stage 11.0 (TID 21)
+26/11/25 05:28:42 INFO Executor: Running task 3.0 in stage 11.0 (TID 23)
+26/11/25 05:28:42 INFO Executor: Running task 0.0 in stage 11.0 (TID 20)
+26/11/25 05:28:42 INFO CodeGenerator: Code generated in 17.890818 ms
+26/11/25 05:28:42 INFO Executor: Finished task 1.0 in stage 11.0 (TID 21). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO Executor: Finished task 0.0 in stage 11.0 (TID 20). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO Executor: Finished task 3.0 in stage 11.0 (TID 23). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 1.0 in stage 11.0 (TID 21) in 30 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/4)
+26/11/25 05:28:42 INFO Executor: Finished task 2.0 in stage 11.0 (TID 22). 1901 bytes result sent to driver
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 0.0 in stage 11.0 (TID 20) in 31 ms on ip-10-0-128-130.ec2.internal (executor driver) (2/4)
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 3.0 in stage 11.0 (TID 23) in 31 ms on ip-10-0-128-130.ec2.internal (executor driver) (3/4)
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 2.0 in stage 11.0 (TID 22) in 32 ms on ip-10-0-128-130.ec2.internal (executor driver) (4/4)
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Removed TaskSet 11.0, whose tasks have all completed, from pool 
+26/11/25 05:28:42 INFO DAGScheduler: ShuffleMapStage 11 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.040 s
+26/11/25 05:28:42 INFO DAGScheduler: looking for newly runnable stages
+26/11/25 05:28:42 INFO DAGScheduler: running: Set()
+26/11/25 05:28:42 INFO DAGScheduler: waiting: Set()
+26/11/25 05:28:42 INFO DAGScheduler: failed: Set()
+26/11/25 05:28:42 INFO CodeGenerator: Code generated in 6.962587 ms
+26/11/25 05:28:42 INFO DAGScheduler: Got job 9 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) with 1 output partitions
+26/11/25 05:28:42 INFO DAGScheduler: Final stage: ResultStage 13 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...)
+26/11/25 05:28:42 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 12)
+26/11/25 05:28:42 INFO DAGScheduler: Missing parents: List()
+26/11/25 05:28:42 INFO DAGScheduler: Submitting ResultStage 13 (MapPartitionsRDD[33] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...), which has no missing parents
+26/11/25 05:28:42 INFO MemoryStore: Block broadcast_10 stored as values in memory (estimated size 14.6 KiB, free 5.2 GiB)
+26/11/25 05:28:42 INFO MemoryStore: Block broadcast_10_piece0 stored as bytes in memory (estimated size 6.8 KiB, free 5.2 GiB)
+26/11/25 05:28:42 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on ip-10-0-128-130.ec2.internal:37735 (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO SparkContext: Created broadcast 10 from broadcast at DAGScheduler.scala:1611
+26/11/25 05:28:42 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 13 (MapPartitionsRDD[33] at Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) (first 15 tasks are for partitions Vector(0))
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Adding task set 13.0 with 1 tasks resource profile 0
+26/11/25 05:28:42 INFO TaskSetManager: Starting task 0.0 in stage 13.0 (TID 24) (ip-10-0-128-130.ec2.internal, executor driver, partition 0, NODE_LOCAL, 9231 bytes) 
+26/11/25 05:28:42 INFO Executor: Running task 0.0 in stage 13.0 (TID 24)
+26/11/25 05:28:42 INFO ShuffleBlockFetcherIterator: Getting 4 (240.0 B) non-empty blocks including 4 (240.0 B) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/11/25 05:28:42 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 2 ms
+26/11/25 05:28:42 INFO BlockManagerInfo: Removed broadcast_8_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO Executor: Finished task 0.0 in stage 13.0 (TID 24). 4213 bytes result sent to driver
+26/11/25 05:28:42 INFO TaskSetManager: Finished task 0.0 in stage 13.0 (TID 24) in 10 ms on ip-10-0-128-130.ec2.internal (executor driver) (1/1)
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Removed TaskSet 13.0, whose tasks have all completed, from pool 
+26/11/25 05:28:42 INFO BlockManagerInfo: Removed broadcast_5_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO DAGScheduler: ResultStage 13 (Spark Connect - session_id: "3593b256-bf5a-48a8-8c68-22b78043ec13"
+user_context {
+  user_id: "runner"
+}
+plan {
+  root {
+    common {
+      pl...) finished in 0.027 s
+26/11/25 05:28:42 INFO DAGScheduler: Job 9 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/25 05:28:42 INFO TaskSchedulerImpl: Killing all running tasks in stage 13: Stage finished
+26/11/25 05:28:42 INFO ExecuteGrpcResponseSender: Stream finished for opId=fbf72bea-a4fd-4282-8dae-4d2bb5f2b16a, sent all responses up to last index 4. totalTime=139623338ns waitingForResults=138161035ns waitingForSend=0ns
+26/11/25 05:28:42 INFO BlockManagerInfo: Removed broadcast_9_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 7.4 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO SparkConnectExecutionManager: ExecuteHolder ExecuteKey(runner,3593b256-bf5a-48a8-8c68-22b78043ec13,fbf72bea-a4fd-4282-8dae-4d2bb5f2b16a) is removed.
+26/11/25 05:28:42 INFO ExecuteResponseObserver: Release all for opId=fbf72bea-a4fd-4282-8dae-4d2bb5f2b16a. Execution stats: total=CachedSize(2949,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2781,3) maxCachedUntilProduced=CachedSize(2781,3)
+26/11/25 05:28:42 INFO ExecuteResponseObserver: Release all for opId=fbf72bea-a4fd-4282-8dae-4d2bb5f2b16a. Execution stats: total=CachedSize(2949,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2781,3) maxCachedUntilProduced=CachedSize(2781,3)
+26/11/25 05:28:42 INFO BlockManagerInfo: Removed broadcast_6_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO BlockManagerInfo: Removed broadcast_4_piece0 on ip-10-0-128-130.ec2.internal:37735 in memory (size: 6.8 KiB, free: 5.2 GiB)
+26/11/25 05:28:42 INFO SparkContext: Invoking stop() from shutdown hook
+26/11/25 05:28:42 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/11/25 05:28:42 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/11/25 05:28:42 INFO MemoryStore: MemoryStore cleared
+26/11/25 05:28:42 INFO BlockManager: BlockManager stopped
+26/11/25 05:28:42 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/11/25 05:28:42 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/11/25 05:28:42 INFO SparkContext: Successfully stopped SparkContext
+26/11/25 05:28:42 INFO ShutdownHookManager: Shutdown hook called
+26/11/25 05:28:42 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-818d1852-342c-4712-b9df-e968d567a749
+26/11/25 05:28:42 INFO ShutdownHookManager: Deleting directory /tmp/spark-6f90699d-44bd-4065-9458-3765ce7640ff
+26/11/25 05:28:42 INFO ShutdownHookManager: Deleting directory /tmp/spark-583154b8-8179-41ee-b15c-6cdaacb96d55

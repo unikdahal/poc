@@ -1,0 +1,1181 @@
+{
+  "task": "iceberg-deep",
+  "variant": "maintenance",
+  "revision": "cc014d3404c1089bd94bab14769f02e491bac709",
+  "run_id": "45553493787",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.iceberg_deep"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464306176,
+    "disk": "/dev/mapper/cow-root 154894188544 44080984064 110796427264  29% /"
+  },
+  "engines": {
+    "spark-maintenance-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 5.261079549789429,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8116107019999959
+      }
+    },
+    "sail-merge-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50220,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.10210950200001889,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006172908999985793
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 3887,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:42.688884798Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:42.688884798Z",
+        "FinishedAt": "2026-11-25T05:28:56.059712401Z"
+      }
+    },
+    "spark-files-1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15220
+      },
+      "listen_s": 2.5050015449523926,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9883236320000037
+      }
+    },
+    "sail-merge-5": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50221,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.09983649899999136,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007237453000016103
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4895,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:05.593051301Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:05.593051301Z",
+        "FinishedAt": "2026-11-25T05:29:19.272508981Z"
+      }
+    },
+    "spark-files-5": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15221
+      },
+      "listen_s": 2.504066228866577,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.959931130999962
+      }
+    },
+    "sail-merge-20": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50222,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.10279940899999929,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007618763000039053
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5935,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:29.132291383Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:29.132291383Z",
+        "FinishedAt": "2026-11-25T05:29:41.362208614Z"
+      }
+    },
+    "spark-files-20": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15222
+      },
+      "listen_s": 2.504500389099121,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.0109622310000077
+      }
+    },
+    "sail-merge-50": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50223,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.10037521800001059,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007332672000018192
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6999,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:52.431601723Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:52.431601723Z",
+        "FinishedAt": "2026-11-25T05:30:16.981742805Z"
+      }
+    },
+    "spark-files-50": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15223
+      },
+      "listen_s": 2.505096912384033,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8857695429999808
+      }
+    },
+    "spark-compaction": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15250
+      },
+      "listen_s": 2.5049386024475098,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9636215470000025
+      }
+    },
+    "sail-after-compaction": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50250,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.1449047180000207,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006883397000024161
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 13129,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:31:54.540100315Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:31:54.540100315Z",
+        "FinishedAt": "2026-11-25T05:32:07.702210007Z"
+      }
+    }
+  },
+  "cases": {
+    "create-maintenance-table": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.41786694600000374,
+        "sql": "CREATE NAMESPACE polaris.p3_iceberg",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 2.2222129340000265,
+        "sql": "CREATE TABLE polaris.p3_iceberg.merge_history USING iceberg TBLPROPERTIES ('format-version'='2','write.merge.mode'='merge-on-read','write.distribution-mode'='hash','write.target-file-size-bytes'='1048576') AS SELECT id, CAST(0 AS BIGINT) AS v FROM range(12000)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3123867369999971,
+        "sql": "ALTER TABLE polaris.p3_iceberg.merge_history WRITE ORDERED BY id",
+        "output": []
+      }
+    ],
+    "merge_attempts": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.13261763100001644
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.11293239600001925
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.08183017700002893
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.0995436869999935
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.09522508600002766
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.1350858760000051
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.10273938699998553
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.12025715300001139
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.12376053799999909
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.12105344700000842
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.12726607800004786
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.14343267099997092
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.1478198730000031
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.14846641300005103
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.17280008199998065
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.17365449999999782
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.17872690799998736
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.1990600480000353
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.22740010299997948
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.21178457000002027
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.24632589200001576
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.23384732900001381
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.23976448600001277
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.24725718199999847
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.25475896100005
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.277579070999991
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.28396270999996887
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.2839075740000112
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3015810859999988
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.31941962199999807
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3252285850000476
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3432507289999762
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.37429055599994854
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.37831092400000443
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.39804165099997135
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3896590659999788
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.4062394700000027
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.4331038579999813
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.4419899789999704
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.45823966900002233
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.4805238530000224
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5181361840000136
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5075699689999738
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5392082609999989
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5627818059999754
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5846662810000112
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.7185958800000094
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.7345637829999987
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.7880978090000212
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.7697108670000148
+      }
+    ],
+    "sail-after-1": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.026003546999959326,
+          "cpu_s": 0.012206000000000022,
+          "peak_bytes": 118669312,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.03199388699999872,
+          "cpu_s": 0.011244999999999977,
+          "peak_bytes": 118931456,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.02566647000003286,
+          "cpu_s": 0.010646000000000017,
+          "peak_bytes": 119193600,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.02883017850001579,
+        "cpu_s": 0.010945499999999997,
+        "peak_bytes": 119062528.0
+      }
+    },
+    "spark-after-1": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 2.002734533000023,
+          "cpu_s": 5.119999999999999,
+          "peak_bytes": 662048768,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.3565394999999967,
+          "cpu_s": 0.9199999999999982,
+          "peak_bytes": 677412864,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.34802155200003426,
+          "cpu_s": 0.9300000000000033,
+          "peak_bytes": 699514880,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.35228052600001547,
+        "cpu_s": 0.9250000000000007,
+        "peak_bytes": 688463872.0
+      }
+    },
+    "files-after-1": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.7957061719999956,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 1,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 1,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2171
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.27934478700001364,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 3
+          }
+        ]
+      }
+    ],
+    "sail-after-5": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.039468915000043125,
+          "cpu_s": 0.02572100000000005,
+          "peak_bytes": 132030464,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.043030799999996816,
+          "cpu_s": 0.026199999999999946,
+          "peak_bytes": 131727360,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.040589085000021896,
+          "cpu_s": 0.025222000000000022,
+          "peak_bytes": 115466240,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.041809942500009356,
+        "cpu_s": 0.025710999999999984,
+        "peak_bytes": 123596800.0
+      }
+    },
+    "spark-after-5": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 2.300526518999959,
+          "cpu_s": 6.5000000000000036,
+          "peak_bytes": 638648320,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.47635606699998334,
+          "cpu_s": 1.4800000000000004,
+          "peak_bytes": 680435712,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.4497316619999765,
+          "cpu_s": 1.4899999999999984,
+          "peak_bytes": 740159488,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.4630438644999799,
+        "cpu_s": 1.4849999999999994,
+        "peak_bytes": 710297600.0
+      }
+    },
+    "files-after-5": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.7278198139999859,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 5,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 5,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2181
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.2167980410000041,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 11
+          }
+        ]
+      }
+    ],
+    "sail-after-20": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.1735537899999713,
+          "cpu_s": 0.13247399999999998,
+          "peak_bytes": 161734656,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.16310192999998208,
+          "cpu_s": 0.1305989999999999,
+          "peak_bytes": 161959936,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.16642308199999434,
+          "cpu_s": 0.13412400000000013,
+          "peak_bytes": 161849344,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.1647625059999882,
+        "cpu_s": 0.13236150000000002,
+        "peak_bytes": 161904640.0
+      }
+    },
+    "spark-after-20": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 2.53802118699997,
+          "cpu_s": 7.76,
+          "peak_bytes": 661200896,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.7528249850000179,
+          "cpu_s": 2.5400000000000027,
+          "peak_bytes": 724365312,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.6722372309999969,
+          "cpu_s": 2.2900000000000027,
+          "peak_bytes": 742731776,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.7125311080000074,
+        "cpu_s": 2.4150000000000027,
+        "peak_bytes": 733548544.0
+      }
+    },
+    "files-after-20": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.9988206829999626,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 20,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 20,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2181
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.25436425999998846,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 41
+          }
+        ]
+      }
+    ],
+    "sail-after-50": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.7528294840000171,
+          "cpu_s": 0.5328179999999989,
+          "peak_bytes": 173678592,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.7403355480000187,
+          "cpu_s": 0.515333,
+          "peak_bytes": 174063616,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.7510008269999844,
+          "cpu_s": 0.5398239999999994,
+          "peak_bytes": 174493696,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.7456681875000015,
+        "cpu_s": 0.5275784999999997,
+        "peak_bytes": 174278656.0
+      }
+    },
+    "spark-after-50": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 3.132302600999992,
+          "cpu_s": 9.31,
+          "peak_bytes": 668704768,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 1.07208461700003,
+          "cpu_s": 3.5700000000000003,
+          "peak_bytes": 863178752,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 1.0292901959999767,
+          "cpu_s": 3.469999999999999,
+          "peak_bytes": 1066926080,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 1.0506874065000034,
+        "cpu_s": 3.5199999999999996,
+        "peak_bytes": 965052416.0
+      }
+    },
+    "files-after-50": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.0375057770000353,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 50,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 50,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2181
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.24445129500003304,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 101
+          }
+        ]
+      }
+    ],
+    "compaction": [
+      {
+        "status": "ok",
+        "elapsed_s": 4.9452224460000025,
+        "sql": "CALL polaris.system.rewrite_data_files(table => 'p3_iceberg.merge_history', options => map('rewrite-all','true'))",
+        "output": [
+          {
+            "rewritten_data_files_count": 54,
+            "added_data_files_count": 3,
+            "rewritten_bytes_count": 77263,
+            "failed_data_files_count": 0,
+            "removed_delete_files_count": 0
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.2133340119999616,
+        "sql": "CALL polaris.system.rewrite_position_delete_files(table => 'p3_iceberg.merge_history')",
+        "output": [
+          {
+            "rewritten_delete_files_count": 0,
+            "added_delete_files_count": 0,
+            "rewritten_bytes_count": 0,
+            "added_bytes_count": 0
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 1.1436404940000102,
+        "sql": "SELECT content,count(*) FROM polaris.p3_iceberg.merge_history.files GROUP BY content",
+        "output": [
+          {
+            "content": 0,
+            "count(1)": 3
+          },
+          {
+            "content": 1,
+            "count(1)": 1
+          }
+        ]
+      }
+    ],
+    "spark-after-compaction": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.385436962999961,
+          "cpu_s": 1.2500000000000036,
+          "peak_bytes": 1140703232,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.26569255999999086,
+          "cpu_s": 0.8599999999999994,
+          "peak_bytes": 1160249344,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.24077379999999948,
+          "cpu_s": 0.9199999999999946,
+          "peak_bytes": 1180680192,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.2532331799999952,
+        "cpu_s": 0.889999999999997,
+        "peak_bytes": 1170464768.0
+      }
+    },
+    "metadata_growth": {
+      "completed_commits": 500,
+      "1": {
+        "metadata_json_bytes": 1910,
+        "manifest_count": 1
+      },
+      "50": {
+        "metadata_json_bytes": 57854,
+        "manifest_count": 50
+      },
+      "100": {
+        "metadata_json_bytes": 114976,
+        "manifest_count": 1
+      },
+      "250": {
+        "metadata_json_bytes": 262663,
+        "manifest_count": 52
+      },
+      "500": {
+        "metadata_json_bytes": 509033,
+        "manifest_count": 5
+      }
+    },
+    "sail-after-compaction": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.11709299900002179,
+          "cpu_s": 0.064338,
+          "peak_bytes": 88993792,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.10984927599997718,
+          "cpu_s": 0.051441000000000014,
+          "peak_bytes": 97615872,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.09876692099999218,
+          "cpu_s": 0.04866300000000001,
+          "peak_bytes": 98050048,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.10430809849998468,
+        "cpu_s": 0.05005200000000001,
+        "peak_bytes": 97832960.0
+      }
+    }
+  }
+}

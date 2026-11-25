@@ -5,7 +5,7 @@ The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correc
 
 ### Format and delete interoperability
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/interop/result.json) · [Run 45558181996](https://github.com/unikdahal/poc/actions/runs/45558181996)
+[Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/interop/result.json) · [Run 45558181996](https://github.com/unikdahal/poc/actions/runs/45558181996)
 
 | Writer and fixture | Spark 3.5.10 | Sail | PyIceberg 0.10.0 | Flink 1.20.4 |
 | --- | --- | --- | --- | --- |
@@ -35,11 +35,11 @@ Position deletes and deletion vectors are distinguished using the content type, 
 
 ### Schema and partition evolution
 
-**FACT.** Nested changes applied 9/9 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+**FACT.** Nested changes applied 9/9 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
-**FACT.** Partition evolution applied 6/6 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+**FACT.** Partition evolution applied 6/6 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
-The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files': 1}]. The Sail analyzed plan enumerated three Parquet file ranges across the old and evolved specs for `id=42 AND v='abcdef'`. [Spec IDs and analyzed plan](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/evolution/result.json)
+The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files': 1}]. The Sail analyzed plan enumerated three Parquet file ranges across the old and evolved specs for `id=42 AND v='abcdef'`. [Spec IDs and analyzed plan](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/evolution/result.json)
 
 ### Write amplification and maintenance
 
@@ -50,7 +50,7 @@ The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files
 | 20 | 24 | 20 | 0.165 | 0.713 |
 | 50 | 54 | 50 | 0.746 | 1.051 |
 
-**FACT.** The metadata growth fixture completed 500 commits. The checkpoint records current metadata bytes and current manifest count. The MERGE fixture uses hash distribution and a 1 MiB target size. [Raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/maintenance/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+**FACT.** The metadata growth fixture completed 500 commits. The checkpoint records current metadata bytes and current manifest count. The MERGE fixture uses hash distribution and a 1 MiB target size. [Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/maintenance/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
 | Commit | metadata.json bytes | Manifest count |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files
 | 250 | 262663 | 52 |
 | 500 | 509033 | 5 |
 
-**FACT.** The compaction treatments called `rewrite_data_files` and `rewrite_position_delete_files`. The after-compaction metadata and the final read are in the raw evidence. [Maintenance raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/maintenance/result.json)
+**FACT.** The compaction treatments called `rewrite_data_files` and `rewrite_position_delete_files`. The after-compaction metadata and the final read are in the raw evidence. [Maintenance raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/maintenance/result.json)
 
 ### Overlapping MERGEs
 
@@ -73,14 +73,18 @@ The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files
 | serializable_sail_1 | error | ok | True | [{'v': 1, 'n': 100}] | ok |
 | serializable_sail_2 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
 | snapshot_spark_0 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
-| snapshot_spark_1 | None | None | None | None | — |
-| snapshot_spark_2 | None | None | None | None | — |
-| snapshot_sail_0 | None | None | None | None | — |
-| snapshot_sail_1 | None | None | None | None | — |
-| snapshot_sail_2 | None | None | None | None | — |
+| snapshot_spark_1 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
+| snapshot_spark_2 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
+| snapshot_sail_0 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
+| snapshot_sail_1 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
+| snapshot_sail_2 | error | ok | True | [{'v': 1, 'n': 100}] | ok |
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/conflict/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+[Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/conflict/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787) · [Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/conflict-snapshot/result.json) · [Run 45559915681](https://github.com/unikdahal/poc/actions/runs/45559915681)
+
+### Physical file ordering
+
+**FACT.** The layout fixture observed 16 files, with 16 files sorted by id and 16 files matching their declared partition. File sizes ranged from 310512 to 589586 bytes. Logical readback matched Spark as `True`. [Raw JSON](https://github.com/unikdahal/poc/blob/89c31bc4e602959784e9d21763767b0c1afc975f/layout/result.json) · [Run 45558533058](https://github.com/unikdahal/poc/actions/runs/45558533058)
 
 ### Coverage limits
 
-The nested evolution treatment applied Spark DDL, then read old data with both engines. The maintenance evidence includes reported sort-order IDs and object sizes. It cannot generalize file layout to larger partitions or establish global range distribution. Serializable and snapshot results apply to the synthetic overlapping predicates used here.
+The nested evolution treatment applied Spark DDL, then read old data with both engines. The maintenance evidence includes reported sort-order IDs and object sizes. Physical ordering was limited to the partitioned layout fixture. Serializable and snapshot results apply to the synthetic overlapping predicates used here.

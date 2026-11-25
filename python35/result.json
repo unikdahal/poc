@@ -1,0 +1,1196 @@
+{
+  "task": "api-coverage",
+  "variant": "python35",
+  "revision": "7e6420162a2a963481832119c1c2ea8b11b0186a",
+  "run_id": "45554682627",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.api_coverage"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ],
+    "client_spark": "3.5.10",
+    "client_language": "Python"
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464302080,
+    "disk": "/dev/mapper/cow-root 154894188544 44081070080 110796341248  29% /"
+  },
+  "engines": {
+    "reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 6.009995937347412,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9854932519999977
+      }
+    },
+    "python35": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.18843702500001314,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007134750999995276
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4614,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:39:28.692577018Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:39:28.692577018Z",
+        "FinishedAt": "2026-11-25T05:39:41.97116514Z"
+      }
+    }
+  },
+  "cases": {
+    "aggregate": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.10977494499999807,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "3261878651993d085f5f4a3d93121d09a67827bc7c3b90e181215b60a1cc0961"
+        },
+        "sample": [
+          "Row(id=0, aggregate(a, 0, lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()), lambdafunction(namedlambdavariable(), namedlambdavariable()))=1)",
+          "Row(id=1, aggregate(a, 0, lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()), lambdafunction(namedlambdavariable(), namedlambdavariable()))=3)",
+          "Row(id=2, aggregate(a, 0, lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()), lambdafunction(namedlambdavariable(), namedlambdavariable()))=5)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003763841999983697,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "3261878651993d085f5f4a3d93121d09a67827bc7c3b90e181215b60a1cc0961"
+        },
+        "sample": [
+          "Row(id=0, aggregate(a, CAST(0 AS BIGINT), lambdafunction((x_5 + y_6), x_5, y_6))=1)",
+          "Row(id=1, aggregate(a, CAST(0 AS BIGINT), lambdafunction((x_5 + y_6), x_5, y_6))=3)",
+          "Row(id=2, aggregate(a, CAST(0 AS BIGINT), lambdafunction((x_5 + y_6), x_5, y_6))=5)"
+        ]
+      }
+    },
+    "applyInPandas": {
+      "verdict": "unsupported",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.27236372499999106,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "efcf724bf7305bbcfa7da8152cce33098b720c816d711dc1f135b46c55764913"
+        },
+        "sample": [
+          "Row(id=12)",
+          "Row(id=16)"
+        ]
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: Python version used to compile the UDF (3.11) does not match the Python version at runtime (3.14.10 (main, Nov 24 2026, 04:58:47) [GCC 14.2.0])",
+        "elapsed_s": 0.003250770999983388
+      }
+    },
+    "approx_count_distinct": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.2932328309999832,
+        "fingerprint": {
+          "rows": 1,
+          "sha256": "6005b697e19bf6e1cf57364e2da969abde5bf6e308ec54fe12ed9db4dc033cdc"
+        },
+        "sample": [
+          "Row(approx_count_distinct(id)=8)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003469059999986257,
+        "fingerprint": {
+          "rows": 1,
+          "sha256": "6005b697e19bf6e1cf57364e2da969abde5bf6e308ec54fe12ed9db4dc033cdc"
+        },
+        "sample": [
+          "Row(approx_count_distinct(id)=8)"
+        ]
+      }
+    },
+    "approx_percentile": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.11479397799999447,
+        "fingerprint": {
+          "rows": 1,
+          "sha256": "230b883eac628babee8ef5314a44028283728429817e51d99bc19d09ec692211"
+        },
+        "sample": [
+          "Row(percentile_approx(a, array(0.1, 0.5, 0.9), 10000)=[1, 4, 8])"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003203227999989622,
+        "fingerprint": {
+          "rows": 1,
+          "sha256": "230b883eac628babee8ef5314a44028283728429817e51d99bc19d09ec692211"
+        },
+        "sample": [
+          "Row(percentile_approx(a, array(0.1, 0.5, 0.9), 10000)=[1, 4, 8])"
+        ]
+      }
+    },
+    "cache": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.23889546000000905,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "ab6b5075342decfd9cea85edc6f99248a212dbf45b9ebbbe9da2acec0a6fb28e"
+        },
+        "sample": [
+          "Row(id=5)",
+          "Row(id=6)",
+          "Row(id=7)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004289324999973587,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "ab6b5075342decfd9cea85edc6f99248a212dbf45b9ebbbe9da2acec0a6fb28e"
+        },
+        "sample": [
+          "Row(id=5)",
+          "Row(id=6)",
+          "Row(id=7)"
+        ]
+      }
+    },
+    "checkpoint": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "PySparkNotImplementedError: [NOT_IMPLEMENTED] checkpoint() is not implemented.",
+        "elapsed_s": 0.0008798119999937626
+      },
+      "sail": {
+        "status": "error",
+        "error": "PySparkNotImplementedError: [NOT_IMPLEMENTED] checkpoint() is not implemented.",
+        "elapsed_s": 0.00033758700001840225
+      }
+    },
+    "cube": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.2640116800000101,
+        "fingerprint": {
+          "rows": 19,
+          "sha256": "8263c60e2ba7aca2def9079702da4a12209861a63cdf9a230fc744a5c23ca30c"
+        },
+        "sample": [
+          "Row(g=0, a=1, sum(b)=0, grouping_id()=0)",
+          "Row(g=0, a=None, sum(b)=24, grouping_id()=1)",
+          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
+          "Row(g=None, a=2, sum(b)=2, grouping_id()=2)",
+          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
+          "Row(g=1, a=2, sum(b)=2, grouping_id()=0)",
+          "Row(g=None, a=1, sum(b)=0, grouping_id()=2)",
+          "Row(g=None, a=4, sum(b)=6, grouping_id()=2)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004555129999999963,
+        "fingerprint": {
+          "rows": 19,
+          "sha256": "8263c60e2ba7aca2def9079702da4a12209861a63cdf9a230fc744a5c23ca30c"
+        },
+        "sample": [
+          "Row(g=1, a=2, sum(b)=2, grouping_id()=0)",
+          "Row(g=0, a=3, sum(b)=4, grouping_id()=0)",
+          "Row(g=0, a=5, sum(b)=8, grouping_id()=0)",
+          "Row(g=1, a=6, sum(b)=10, grouping_id()=0)",
+          "Row(g=1, a=8, sum(b)=14, grouping_id()=0)",
+          "Row(g=None, a=2, sum(b)=2, grouping_id()=2)",
+          "Row(g=None, a=3, sum(b)=4, grouping_id()=2)",
+          "Row(g=None, a=4, sum(b)=6, grouping_id()=2)"
+        ]
+      }
+    },
+    "date_arithmetic": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.1328355950000173,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "1f54f1c135a620388ac1a2f944097894361b54a50db6004b61fd84686fa64fab"
+        },
+        "sample": [
+          "Row(add_months(d, 1)=datetime.date(2024, 3, 28), last_day(d)=datetime.date(2024, 2, 29), datediff(d, 2024-01-01)=58)",
+          "Row(add_months(d, 1)=datetime.date(2024, 3, 29), last_day(d)=datetime.date(2024, 2, 29), datediff(d, 2024-01-01)=59)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.0034421910000048683,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "1f54f1c135a620388ac1a2f944097894361b54a50db6004b61fd84686fa64fab"
+        },
+        "sample": [
+          "Row(add_months(d, 1)=datetime.date(2024, 3, 28), last_day(d)=datetime.date(2024, 2, 29), datediff(d, 2024-01-01)=58)",
+          "Row(add_months(d, 1)=datetime.date(2024, 3, 29), last_day(d)=datetime.date(2024, 2, 29), datediff(d, 2024-01-01)=59)"
+        ]
+      }
+    },
+    "day_time_interval": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "TypeError: Object of type timedelta is not JSON serializable",
+        "elapsed_s": 0.13249478800000247
+      },
+      "sail": {
+        "status": "error",
+        "error": "TypeError: Object of type timedelta is not JSON serializable",
+        "elapsed_s": 0.0026637279999874863
+      }
+    },
+    "explode": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.1515148740000143,
+        "fingerprint": {
+          "rows": 6,
+          "sha256": "cf93fd35d58a50dd60d03f6caf28b5d74343037e2064f2a0e559894ad559b895"
+        },
+        "sample": [
+          "Row(id=0, col=0)",
+          "Row(id=0, col=1)",
+          "Row(id=1, col=1)",
+          "Row(id=1, col=2)",
+          "Row(id=2, col=2)",
+          "Row(id=2, col=3)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003685988999990286,
+        "fingerprint": {
+          "rows": 6,
+          "sha256": "cf93fd35d58a50dd60d03f6caf28b5d74343037e2064f2a0e559894ad559b895"
+        },
+        "sample": [
+          "Row(id=0, col=0)",
+          "Row(id=0, col=1)",
+          "Row(id=1, col=1)",
+          "Row(id=1, col=2)",
+          "Row(id=2, col=2)",
+          "Row(id=2, col=3)"
+        ]
+      }
+    },
+    "explode_outer": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.13940247899998326,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "83210b3ae9d86f65249ff0667b948953ba8006254c98e5348a933004362c7eba"
+        },
+        "sample": [
+          "Row(id=0, col=0)",
+          "Row(id=1, col=None)",
+          "Row(id=2, col=2)",
+          "Row(id=3, col=None)",
+          "Row(id=4, col=4)",
+          "Row(id=5, col=None)",
+          "Row(id=6, col=6)",
+          "Row(id=7, col=None)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003347223999980997,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "83210b3ae9d86f65249ff0667b948953ba8006254c98e5348a933004362c7eba"
+        },
+        "sample": [
+          "Row(id=0, col=0)",
+          "Row(id=1, col=None)",
+          "Row(id=2, col=2)",
+          "Row(id=3, col=None)",
+          "Row(id=4, col=4)",
+          "Row(id=5, col=None)",
+          "Row(id=6, col=6)",
+          "Row(id=7, col=None)"
+        ]
+      }
+    },
+    "filter_exists_forall": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.18516597400000023,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "89abb4580daa3bcfb56b71373dcd2ee79fc99314c91876ab6ff11477e161f4e1"
+        },
+        "sample": [
+          "Row(id=0, filter(a, lambdafunction((namedlambdavariable() > 1), namedlambdavariable()))=[], exists(a, lambdafunction((namedlambdavariable() > 1), namedlambdavariable()))=False, forall(a, lambdafunction((namedlambdavariable() >= 0), namedlambdavariable()))=True)",
+          "Row(id=1, filter(a, lambdafunction((namedlambdavariable() > 1), namedlambdavariable()))=[2], exists(a, lambdafunction((namedlambdavariable() > 1), namedlambdavariable()))=True, forall(a, lambdafunction((namedlambdavariable() >= 0), namedlambdavariable()))=True)",
+          "Row(id=2, filter(a, lambdafunction((namedlambdavariable() > 1), namedlambdavariable()))=[2, 3], exists(a, lambdafunction((namedlambdavariable() > 1), namedlambdavariable()))=True, forall(a, lambdafunction((namedlambdavariable() >= 0), namedlambdavariable()))=True)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004518441999977085,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "89abb4580daa3bcfb56b71373dcd2ee79fc99314c91876ab6ff11477e161f4e1"
+        },
+        "sample": [
+          "Row(id=0, filter(a, lambdafunction((x_2 > 1), x_2))=[], exists(a, lambdafunction((x_3 > 1), x_3))=False, forall(a, lambdafunction((x_4 >= 0), x_4))=True)",
+          "Row(id=1, filter(a, lambdafunction((x_2 > 1), x_2))=[2], exists(a, lambdafunction((x_3 > 1), x_3))=True, forall(a, lambdafunction((x_4 >= 0), x_4))=True)",
+          "Row(id=2, filter(a, lambdafunction((x_2 > 1), x_2))=[2, 3], exists(a, lambdafunction((x_3 > 1), x_3))=True, forall(a, lambdafunction((x_4 >= 0), x_4))=True)"
+        ]
+      }
+    },
+    "from_to_csv": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
+        "elapsed_s": 0.0064886400000148114
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
+        "elapsed_s": 0.0013665570000114258
+      }
+    },
+    "from_to_json": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
+        "elapsed_s": 0.14301159999999413
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
+        "elapsed_s": 0.0014769649999948342
+      }
+    },
+    "get_json_object": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
+        "elapsed_s": 0.007041519999972934
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
+        "elapsed_s": 0.0012551680000001397
+      }
+    },
+    "grouping_sets_sql": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.328879244999996,
+        "fingerprint": {
+          "rows": 11,
+          "sha256": "781baa0e7b59073a59ac4af05f3a01b335be56ef1a6c544b765a6235a240fc4e"
+        },
+        "sample": [
+          "Row(g=0, a=None, sum(b)=24, grouping_id()=1)",
+          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
+          "Row(g=None, a=2, sum(b)=2, grouping_id()=2)",
+          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
+          "Row(g=None, a=1, sum(b)=0, grouping_id()=2)",
+          "Row(g=None, a=4, sum(b)=6, grouping_id()=2)",
+          "Row(g=None, a=3, sum(b)=4, grouping_id()=2)",
+          "Row(g=None, a=6, sum(b)=10, grouping_id()=2)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.007204388000019435,
+        "fingerprint": {
+          "rows": 11,
+          "sha256": "781baa0e7b59073a59ac4af05f3a01b335be56ef1a6c544b765a6235a240fc4e"
+        },
+        "sample": [
+          "Row(g=1, a=None, SUM(b)=32, grouping_id()=1)",
+          "Row(g=None, a=None, SUM(b)=56, grouping_id()=3)",
+          "Row(g=None, a=1, SUM(b)=0, grouping_id()=2)",
+          "Row(g=None, a=7, SUM(b)=12, grouping_id()=2)",
+          "Row(g=0, a=None, SUM(b)=24, grouping_id()=1)",
+          "Row(g=None, a=2, SUM(b)=2, grouping_id()=2)",
+          "Row(g=None, a=3, SUM(b)=4, grouping_id()=2)",
+          "Row(g=None, a=4, SUM(b)=6, grouping_id()=2)"
+        ]
+      }
+    },
+    "json_tuple_path": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
+        "elapsed_s": 0.008584272999996756
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
+        "elapsed_s": 0.0010908540000116318
+      }
+    },
+    "local_checkpoint": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "PySparkNotImplementedError: [NOT_IMPLEMENTED] localCheckpoint() is not implemented.",
+        "elapsed_s": 0.0017341500000043197
+      },
+      "sail": {
+        "status": "error",
+        "error": "PySparkNotImplementedError: [NOT_IMPLEMENTED] localCheckpoint() is not implemented.",
+        "elapsed_s": 0.00018348800000467236
+      }
+    },
+    "mapInPandas": {
+      "verdict": "unsupported",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 1.114528631000013,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "239523dbd41c8abd5564e0eef01467baad2249fce0605c637c759bd374850e23"
+        },
+        "sample": [
+          "Row(id=1)",
+          "Row(id=2)",
+          "Row(id=3)",
+          "Row(id=4)",
+          "Row(id=5)",
+          "Row(id=6)",
+          "Row(id=7)",
+          "Row(id=8)"
+        ]
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: Python version used to compile the UDF (3.11) does not match the Python version at runtime (3.14.10 (main, Nov 24 2026, 04:58:47) [GCC 14.2.0])",
+        "elapsed_s": 0.003401761999981545
+      }
+    },
+    "map_filter_transform": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.19427787399999374,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "3ffbc216bec9ed8c054a3838871507ab081e8c4309c5ff5404e25f7008dd05de"
+        },
+        "sample": [
+          "Row(id=0, map_filter(m, lambdafunction((namedlambdavariable() > 0), namedlambdavariable(), namedlambdavariable()))={'b': 1}, transform_values(m, lambdafunction((namedlambdavariable() + 1), namedlambdavariable(), namedlambdavariable()))={'a': 1, 'b': 2})",
+          "Row(id=1, map_filter(m, lambdafunction((namedlambdavariable() > 0), namedlambdavariable(), namedlambdavariable()))={'a': 1, 'b': 2}, transform_values(m, lambdafunction((namedlambdavariable() + 1), namedlambdavariable(), namedlambdavariable()))={'a': 2, 'b': 3})",
+          "Row(id=2, map_filter(m, lambdafunction((namedlambdavariable() > 0), namedlambdavariable(), namedlambdavariable()))={'a': 2, 'b': 3}, transform_values(m, lambdafunction((namedlambdavariable() + 1), namedlambdavariable(), namedlambdavariable()))={'a': 3, 'b': 4})"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004379255999992893,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "3ffbc216bec9ed8c054a3838871507ab081e8c4309c5ff5404e25f7008dd05de"
+        },
+        "sample": [
+          "Row(id=0, map_filter(m, lambdafunction((y_10 > 0), x_9, y_10))={'b': 1}, transform_values(m, lambdafunction((y_12 + 1), x_11, y_12))={'a': 1, 'b': 2})",
+          "Row(id=1, map_filter(m, lambdafunction((y_10 > 0), x_9, y_10))={'a': 1, 'b': 2}, transform_values(m, lambdafunction((y_12 + 1), x_11, y_12))={'a': 2, 'b': 3})",
+          "Row(id=2, map_filter(m, lambdafunction((y_10 > 0), x_9, y_10))={'a': 2, 'b': 3}, transform_values(m, lambdafunction((y_12 + 1), x_11, y_12))={'a': 3, 'b': 4})"
+        ]
+      }
+    },
+    "map_keys_entries_access": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.1596825339999839,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "fddc50522b8ecf8de442078b58912c3ad305abd13b5efbfde792fdc435880ab9"
+        },
+        "sample": [
+          "Row(id=0, sort_array(map_keys(m), true)=['a', 'b'], sort_array(map_entries(m), true)=[Row(key='a', value=0), Row(key='b', value=1)], element_at(m, b)=1)",
+          "Row(id=1, sort_array(map_keys(m), true)=['a', 'b'], sort_array(map_entries(m), true)=[Row(key='a', value=1), Row(key='b', value=2)], element_at(m, b)=2)",
+          "Row(id=2, sort_array(map_keys(m), true)=['a', 'b'], sort_array(map_entries(m), true)=[Row(key='a', value=2), Row(key='b', value=3)], element_at(m, b)=3)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004220279999998411,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "fddc50522b8ecf8de442078b58912c3ad305abd13b5efbfde792fdc435880ab9"
+        },
+        "sample": [
+          "Row(id=0, sort_array(map_keys(m), true)=['a', 'b'], sort_array(map_entries(m), true)=[Row(key='a', value=0), Row(key='b', value=1)], element_at(m, b)=1)",
+          "Row(id=1, sort_array(map_keys(m), true)=['a', 'b'], sort_array(map_entries(m), true)=[Row(key='a', value=1), Row(key='b', value=2)], element_at(m, b)=2)",
+          "Row(id=2, sort_array(map_keys(m), true)=['a', 'b'], sort_array(map_entries(m), true)=[Row(key='a', value=2), Row(key='b', value=3)], element_at(m, b)=3)"
+        ]
+      }
+    },
+    "percentile": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.10379626499999972,
+        "fingerprint": {
+          "rows": 1,
+          "sha256": "76a7e59f18cee3344f1c2b1d717b334f57cf45764c61aacf1375ebaf2e390617"
+        },
+        "sample": [
+          "Row(percentile(a, array(0.25, 0.5), 1)=[2.75, 4.5])"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003219582000014043,
+        "fingerprint": {
+          "rows": 1,
+          "sha256": "76a7e59f18cee3344f1c2b1d717b334f57cf45764c61aacf1375ebaf2e390617"
+        },
+        "sample": [
+          "Row(percentile(a, array(0.25, 0.5), 1)=[2.75, 4.5])"
+        ]
+      }
+    },
+    "pivot_discovery": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.6637804570000014,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "7eceade66c6ec1238a61e3d9495fd7e234aa56b416eba9590d19d40fd6250601"
+        },
+        "sample": [
+          "Row(g=0, 0=0, 1=None, 2=4, 3=None, 4=8, 5=None, 6=12, 7=None)",
+          "Row(g=1, 0=None, 1=2, 2=None, 3=6, 4=None, 5=10, 6=None, 7=14)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.007094201999990446,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "7eceade66c6ec1238a61e3d9495fd7e234aa56b416eba9590d19d40fd6250601"
+        },
+        "sample": [
+          "Row(g=1, 0=None, 1=2, 2=None, 3=6, 4=None, 5=10, 6=None, 7=14)",
+          "Row(g=0, 0=0, 1=None, 2=4, 3=None, 4=8, 5=None, 6=12, 7=None)"
+        ]
+      }
+    },
+    "pivot_values": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.6246950960000106,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "648d9f6cc0134054b30e89f5c3dbe53c510b66860f4fb9de192845e2d0ecece6"
+        },
+        "sample": [
+          "Row(g=0, 0=1, 1=None, 2=3, 3=None)",
+          "Row(g=1, 0=None, 1=2, 2=None, 3=4)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.00675121800000511,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "648d9f6cc0134054b30e89f5c3dbe53c510b66860f4fb9de192845e2d0ecece6"
+        },
+        "sample": [
+          "Row(g=0, 0=1, 1=None, 2=3, 3=None)",
+          "Row(g=1, 0=None, 1=2, 2=None, 3=4)"
+        ]
+      }
+    },
+    "posexplode": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.12647568399998477,
+        "fingerprint": {
+          "rows": 6,
+          "sha256": "f70139dcc310c2c3bf261926a168f86403a6baea6884c468c9cdb496fb5d8ae3"
+        },
+        "sample": [
+          "Row(id=0, pos=0, key='a', value=0)",
+          "Row(id=0, pos=1, key='b', value=1)",
+          "Row(id=1, pos=0, key='a', value=1)",
+          "Row(id=1, pos=1, key='b', value=2)",
+          "Row(id=2, pos=0, key='a', value=2)",
+          "Row(id=2, pos=1, key='b', value=3)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.00427129799999193,
+        "fingerprint": {
+          "rows": 6,
+          "sha256": "f70139dcc310c2c3bf261926a168f86403a6baea6884c468c9cdb496fb5d8ae3"
+        },
+        "sample": [
+          "Row(id=0, pos=0, key='a', value=0)",
+          "Row(id=0, pos=1, key='b', value=1)",
+          "Row(id=1, pos=0, key='a', value=1)",
+          "Row(id=1, pos=1, key='b', value=2)",
+          "Row(id=2, pos=0, key='a', value=2)",
+          "Row(id=2, pos=1, key='b', value=3)"
+        ]
+      }
+    },
+    "regexp_count": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
+        "elapsed_s": 0.005934837000012294
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
+        "elapsed_s": 0.0011773950000133482
+      }
+    },
+    "regexp_extract_replace": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near ','.(line 1, pos 2)\n\n== SQL ==\nid, concat('key-',id,'-123') AS text,\n--^^^\n        concat('{\"a\":',id,'}') AS js, concat(id,',text') AS csv\n",
+        "elapsed_s": 0.005790673000007018
+      },
+      "sail": {
+        "status": "error",
+        "error": "IllegalArgumentException: invalid argument: found , at 2:3 expected '->', '.', '(', '[', '::', 'ESCAPE', 'IS', 'NOT', 'IN', '*', '/', '%', 'DIV', '+', '-', '||', '>>>', '>>', '<<', '&', '^', '|', '!=', '!>', '!<', '==', '=', '>=', '>', '<=>', '<=', '<>', '<', 'BETWEEN', 'LIKE', 'ILIKE', 'RLIKE', 'REGEXP', 'SIMILAR', 'AND', 'OR', 'AS', identifier, something else, or end of input",
+        "elapsed_s": 0.0012297119999971073
+      }
+    },
+    "rollup": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.1753109279999876,
+        "fingerprint": {
+          "rows": 11,
+          "sha256": "25f76cbaf9df2b4568070a50fbc096af7294354f681ae8ee13506eb8e482ce47"
+        },
+        "sample": [
+          "Row(g=0, a=1, sum(b)=0, grouping_id()=0)",
+          "Row(g=0, a=None, sum(b)=24, grouping_id()=1)",
+          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
+          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
+          "Row(g=1, a=2, sum(b)=2, grouping_id()=0)",
+          "Row(g=0, a=3, sum(b)=4, grouping_id()=0)",
+          "Row(g=1, a=4, sum(b)=6, grouping_id()=0)",
+          "Row(g=0, a=5, sum(b)=8, grouping_id()=0)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004367768000008709,
+        "fingerprint": {
+          "rows": 11,
+          "sha256": "25f76cbaf9df2b4568070a50fbc096af7294354f681ae8ee13506eb8e482ce47"
+        },
+        "sample": [
+          "Row(g=None, a=None, sum(b)=56, grouping_id()=3)",
+          "Row(g=1, a=None, sum(b)=32, grouping_id()=1)",
+          "Row(g=1, a=4, sum(b)=6, grouping_id()=0)",
+          "Row(g=0, a=1, sum(b)=0, grouping_id()=0)",
+          "Row(g=0, a=7, sum(b)=12, grouping_id()=0)",
+          "Row(g=0, a=None, sum(b)=24, grouping_id()=1)",
+          "Row(g=1, a=2, sum(b)=2, grouping_id()=0)",
+          "Row(g=0, a=3, sum(b)=4, grouping_id()=0)"
+        ]
+      }
+    },
+    "row_number_rank_lag": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.9345725130000062,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "708ec998d816a21361b9c160c172a66c5cd75baaea17963feddf37e5e7abb564"
+        },
+        "sample": [
+          "Row(id=0, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=1, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=1, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=None)",
+          "Row(id=2, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=2, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=2, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=1)",
+          "Row(id=4, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=3, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=3, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=3)",
+          "Row(id=6, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=4, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=4, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=5)",
+          "Row(id=1, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=1, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=1, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=None)",
+          "Row(id=3, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=2, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=2, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=2)",
+          "Row(id=5, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=3, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=3, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=4)",
+          "Row(id=7, row_number() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=4, RANK() OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)=4, lag(a, 1, NULL) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND -1 FOLLOWING)=6)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.009549691999978904,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "708ec998d816a21361b9c160c172a66c5cd75baaea17963feddf37e5e7abb564"
+        },
+        "sample": [
+          "Row(id=0, row_number()=1, rank()=1, lag(a, 1)=None)",
+          "Row(id=2, row_number()=2, rank()=2, lag(a, 1)=1)",
+          "Row(id=4, row_number()=3, rank()=3, lag(a, 1)=3)",
+          "Row(id=6, row_number()=4, rank()=4, lag(a, 1)=5)",
+          "Row(id=1, row_number()=1, rank()=1, lag(a, 1)=None)",
+          "Row(id=3, row_number()=2, rank()=2, lag(a, 1)=2)",
+          "Row(id=5, row_number()=3, rank()=3, lag(a, 1)=4)",
+          "Row(id=7, row_number()=4, rank()=4, lag(a, 1)=6)"
+        ]
+      }
+    },
+    "struct_fields": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.10923346000001288,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "c4148f3117861aa14bc6a20f0a6697a5fe13fe346a45fbdd4a19e46db56fcabf"
+        },
+        "sample": [
+          "Row(id=0, update_fields(st, WithField(3), dropfield())=Row(b=1, added=3))",
+          "Row(id=1, update_fields(st, WithField(3), dropfield())=Row(b=2, added=3))",
+          "Row(id=2, update_fields(st, WithField(3), dropfield())=Row(b=3, added=3))"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.0035770289999845772,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "c4148f3117861aa14bc6a20f0a6697a5fe13fe346a45fbdd4a19e46db56fcabf"
+        },
+        "sample": [
+          "Row(id=0, update_fields(st, WithField(3), dropfield())=Row(b=1, added=3))",
+          "Row(id=1, update_fields(st, WithField(3), dropfield())=Row(b=2, added=3))",
+          "Row(id=2, update_fields(st, WithField(3), dropfield())=Row(b=3, added=3))"
+        ]
+      }
+    },
+    "timestamp_ntz": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.17193704299998558,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "c3024be3fc24410a8f2fffc640369197036464d659824a9bc7dcdd0ecfb8fc37"
+        },
+        "sample": [
+          "Row(t=datetime.datetime(2024, 3, 10, 2, 10), next=datetime.datetime(2024, 3, 10, 3, 10))",
+          "Row(t=datetime.datetime(2024, 3, 10, 2, 10), next=datetime.datetime(2024, 3, 10, 3, 10))"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.0032119039999827237,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "c3024be3fc24410a8f2fffc640369197036464d659824a9bc7dcdd0ecfb8fc37"
+        },
+        "sample": [
+          "Row(t=datetime.datetime(2024, 3, 10, 2, 10), next=datetime.datetime(2024, 3, 10, 3, 10))",
+          "Row(t=datetime.datetime(2024, 3, 10, 2, 10), next=datetime.datetime(2024, 3, 10, 3, 10))"
+        ]
+      }
+    },
+    "transform": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.13875319800001762,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "b9026960eb897fea60356c89fab049cfc1ea07b7530a24ab702655576b978e19"
+        },
+        "sample": [
+          "Row(id=0, transform(a, lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()))=[0, 2])",
+          "Row(id=1, transform(a, lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()))=[1, 3])",
+          "Row(id=2, transform(a, lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()))=[2, 4])"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.0034860910000134027,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "b9026960eb897fea60356c89fab049cfc1ea07b7530a24ab702655576b978e19"
+        },
+        "sample": [
+          "Row(id=0, transform(a, lambdafunction((x_0 + y_1), x_0, y_1))=[0, 2])",
+          "Row(id=1, transform(a, lambdafunction((x_0 + y_1), x_0, y_1))=[1, 3])",
+          "Row(id=2, transform(a, lambdafunction((x_0 + y_1), x_0, y_1))=[2, 4])"
+        ]
+      }
+    },
+    "unpivot": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.1438497400000074,
+        "fingerprint": {
+          "rows": 16,
+          "sha256": "135282e31aabb2bdc7cb18dd7df5f4f6a4dce6b54f1c937687932d8a33321e6e"
+        },
+        "sample": [
+          "Row(id=0, key='a', value=1)",
+          "Row(id=0, key='b', value=0)",
+          "Row(id=1, key='a', value=2)",
+          "Row(id=1, key='b', value=2)",
+          "Row(id=2, key='a', value=3)",
+          "Row(id=2, key='b', value=4)",
+          "Row(id=3, key='a', value=4)",
+          "Row(id=3, key='b', value=6)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.00411014699997736,
+        "fingerprint": {
+          "rows": 16,
+          "sha256": "135282e31aabb2bdc7cb18dd7df5f4f6a4dce6b54f1c937687932d8a33321e6e"
+        },
+        "sample": [
+          "Row(id=0, key='a', value=1)",
+          "Row(id=0, key='b', value=0)",
+          "Row(id=1, key='a', value=2)",
+          "Row(id=1, key='b', value=2)",
+          "Row(id=2, key='a', value=3)",
+          "Row(id=2, key='b', value=4)",
+          "Row(id=3, key='a', value=4)",
+          "Row(id=3, key='b', value=6)"
+        ]
+      }
+    },
+    "window_range": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.2832883990000141,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "2898a2465b978904ff5125383688422133b01624a7571fb747cc94773b5234f9"
+        },
+        "sample": [
+          "Row(id=0, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=2.0)",
+          "Row(id=2, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=3.0)",
+          "Row(id=4, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=5.0)",
+          "Row(id=6, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=6.0)",
+          "Row(id=1, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=3.0)",
+          "Row(id=3, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=4.0)",
+          "Row(id=5, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=6.0)",
+          "Row(id=7, avg(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST RANGE BETWEEN -2 FOLLOWING AND 2 FOLLOWING)=7.0)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004076585000007071,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "2898a2465b978904ff5125383688422133b01624a7571fb747cc94773b5234f9"
+        },
+        "sample": [
+          "Row(id=0, avg(a)=2.0)",
+          "Row(id=2, avg(a)=3.0)",
+          "Row(id=4, avg(a)=5.0)",
+          "Row(id=6, avg(a)=6.0)",
+          "Row(id=1, avg(a)=3.0)",
+          "Row(id=3, avg(a)=4.0)",
+          "Row(id=5, avg(a)=6.0)",
+          "Row(id=7, avg(a)=7.0)"
+        ]
+      }
+    },
+    "window_rows": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.3426183660000106,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "1c4ef7e788d2da1dcee48d603a2b1f5166c4be0e37a9cc9792a328499cf9dd7a"
+        },
+        "sample": [
+          "Row(id=0, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=4)",
+          "Row(id=2, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=9)",
+          "Row(id=4, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=15)",
+          "Row(id=6, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=12)",
+          "Row(id=1, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=6)",
+          "Row(id=3, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=12)",
+          "Row(id=5, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=18)",
+          "Row(id=7, sum(a) OVER (PARTITION BY g ORDER BY id ASC NULLS FIRST ROWS BETWEEN -1 FOLLOWING AND 1 FOLLOWING)=14)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.0044377840000038304,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "1c4ef7e788d2da1dcee48d603a2b1f5166c4be0e37a9cc9792a328499cf9dd7a"
+        },
+        "sample": [
+          "Row(id=0, sum(a)=4)",
+          "Row(id=2, sum(a)=9)",
+          "Row(id=4, sum(a)=15)",
+          "Row(id=6, sum(a)=12)",
+          "Row(id=1, sum(a)=6)",
+          "Row(id=3, sum(a)=12)",
+          "Row(id=5, sum(a)=18)",
+          "Row(id=7, sum(a)=14)"
+        ]
+      }
+    },
+    "writer_iceberg": {
+      "verdict": "unsupported",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 3.218540138999998,
+        "fingerprint": {
+          "rows": 9,
+          "sha256": "a28918621d749a6892dfc4014e0c938e741f95f2c7ff0bb12e5e60e55ad6c46e"
+        },
+        "sample": [
+          "Row(id=1)",
+          "Row(id=0)",
+          "Row(id=1)",
+          "Row(id=2)",
+          "Row(id=3)",
+          "Row(id=4)",
+          "Row(id=5)",
+          "Row(id=6)"
+        ]
+      },
+      "sail": {
+        "status": "error",
+        "error": "AnalysisException: Iceberg table already exists at path: s3://warehouse/poc/p3_api/writer_probe/",
+        "elapsed_s": 0.05964939300000083
+      }
+    },
+    "writer_parquet_options": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 1.1849380940000174,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "aadb413449f054cd35fb1deb08f4cc2f145a4f56374dbb852377ebb0553394b9"
+        },
+        "sample": [
+          "Row(id=4, g=0)",
+          "Row(id=0, g=0)",
+          "Row(id=6, g=0)",
+          "Row(id=5, g=1)",
+          "Row(id=7, g=1)",
+          "Row(id=3, g=1)",
+          "Row(id=2, g=0)",
+          "Row(id=1, g=1)"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.00794221699999298,
+        "fingerprint": {
+          "rows": 8,
+          "sha256": "aadb413449f054cd35fb1deb08f4cc2f145a4f56374dbb852377ebb0553394b9"
+        },
+        "sample": [
+          "Row(id=0, g=0)",
+          "Row(id=2, g=0)",
+          "Row(id=4, g=0)",
+          "Row(id=6, g=0)",
+          "Row(id=1, g=1)",
+          "Row(id=3, g=1)",
+          "Row(id=5, g=1)",
+          "Row(id=7, g=1)"
+        ]
+      }
+    },
+    "year_month_interval": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.1199565340000106,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "079c7635b25d7e4fe542f5f0a420d7a61a1a82e85c4e8562291b0756418547f6"
+        },
+        "sample": [
+          "Row(d + INTERVAL '1-2' YEAR TO MONTH=datetime.date(2025, 4, 28))",
+          "Row(d + INTERVAL '1-2' YEAR TO MONTH=datetime.date(2025, 4, 29))"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.003206578999993326,
+        "fingerprint": {
+          "rows": 2,
+          "sha256": "079c7635b25d7e4fe542f5f0a420d7a61a1a82e85c4e8562291b0756418547f6"
+        },
+        "sample": [
+          "Row((d + INTERVAL '1-2' YEAR TO MONTH)=datetime.date(2025, 4, 28))",
+          "Row((d + INTERVAL '1-2' YEAR TO MONTH)=datetime.date(2025, 4, 29))"
+        ]
+      }
+    },
+    "zip_with": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "elapsed_s": 0.11853341599999112,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "e8cdd2ec46fb9ab1d5e0c3ae02c2a4094f025ed1bde6a79d7bfab22bfaad5e61"
+        },
+        "sample": [
+          "Row(id=0, zip_with(a, array(2), lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()))=[2, None])",
+          "Row(id=1, zip_with(a, array(2), lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()))=[3, None])",
+          "Row(id=2, zip_with(a, array(2), lambdafunction((namedlambdavariable() + namedlambdavariable()), namedlambdavariable(), namedlambdavariable()))=[4, None])"
+        ]
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.004003579000027457,
+        "fingerprint": {
+          "rows": 3,
+          "sha256": "e8cdd2ec46fb9ab1d5e0c3ae02c2a4094f025ed1bde6a79d7bfab22bfaad5e61"
+        },
+        "sample": [
+          "Row(id=0, zip_with(a, array(2), lambdafunction((x_7 + y_8), x_7, y_8))=[2, None])",
+          "Row(id=1, zip_with(a, array(2), lambdafunction((x_7 + y_8), x_7, y_8))=[3, None])",
+          "Row(id=2, zip_with(a, array(2), lambdafunction((x_7 + y_8), x_7, y_8))=[4, None])"
+        ]
+      }
+    }
+  },
+  "reference_client": "3.5.10"
+}

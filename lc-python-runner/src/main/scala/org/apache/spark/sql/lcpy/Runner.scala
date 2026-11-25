@@ -58,6 +58,24 @@ final class OwnedBatch(val vectors: Array[FieldVector], val rows: Int) extends A
   override def close(): Unit = vectors.foreach(v => if (v != null) v.close())
 }
 
+/**
+ * Everything a runner allocates is registered here until ownership is handed to a consumer-visible
+ * batch that is itself registered. `closeAll` (after the writer thread is joined) frees whatever
+ * is left, so a teardown racing with an in-flight read (task kill, LIMIT, a consumer on another
+ * thread) cannot leak. Closing Arrow vectors twice is harmless.
+ */
+final class ResourceTracker {
+  private val open = java.util.Collections.newSetFromMap(
+    new java.util.concurrent.ConcurrentHashMap[AutoCloseable, java.lang.Boolean]())
+  def add[T <: AutoCloseable](r: T): T = { open.add(r); r }
+  def remove(r: AutoCloseable): Unit = open.remove(r)
+  def size: Int = open.size()
+  def closeAll(): Unit = {
+    val it = open.iterator()
+    while (it.hasNext) { val r = it.next(); try r.close() catch { case NonFatal(_) => }; it.remove() }
+  }
+}
+
 /** Counters touched by the writer thread; folded into SQLMetrics on the task thread. */
 final class RunnerStats {
   val inputRows = new AtomicLong()
@@ -102,10 +120,12 @@ abstract class LcRunnerBase(
   protected val mem = new TaskArrow(s"lcpy-$label-${if (ctx != null) ctx.taskAttemptId() else 0}",
     conf.failOnLeak)
   protected val stats = new RunnerStats
+  protected val tracker = new ResourceTracker
   protected val worker = new WorkerProcess(conf, label)
   private val pipe = new DataOutputStream(new CountingStream(worker.stdin, stats.bytesSent))
 
   @volatile protected var writerError: Throwable = null
+  private val closeOnce = new java.util.concurrent.atomic.AtomicBoolean(false)
   @volatile protected var closed = false
   @volatile private var finished = false
   private var reader: ArrowStreamReader = _
@@ -284,7 +304,7 @@ abstract class LcRunnerBase(
     val results = root.getFieldVectors.asScala.map { v =>
       val tp = v.getTransferPair(mem.alloc)
       tp.transfer()
-      tp.getTo.asInstanceOf[FieldVector]
+      tracker.add(tp.getTo.asInstanceOf[FieldVector])
     }.toArray
     val b = try assemble(results, rows) catch {
       case t: Throwable => results.foreach(_.close()); throw t
@@ -293,15 +313,24 @@ abstract class LcRunnerBase(
     b
   }
 
-  override def hasNext: Boolean = {
+  // Guards reader state against close(). Deliberately NOT `this`: Scala lazy vals initialise
+  // under `this`'s monitor, and the writer thread touches lazy vals while a reader blocks here.
+  private val readLock = new Object
+
+  override def hasNext: Boolean = readLock.synchronized {
     if (lookahead != null) return true
     if (finished || closed) return false
-    if (current != null) { current.close(); current = null }
-    lookahead = fetch()
+    if (current != null) { current.close(); tracker.remove(current); current = null }
+    val b = fetch()
+    if (b != null) {
+      tracker.add(b)
+      if (closed) { b.close(); tracker.remove(b); return false } // lost a race with close()
+    }
+    lookahead = b
     if (lookahead == null) { publishMetrics(); false } else true
   }
 
-  override def next(): ColumnarBatch = {
+  override def next(): ColumnarBatch = readLock.synchronized {
     if (!hasNext) throw new NoSuchElementException
     current = lookahead
     lookahead = null
@@ -322,15 +351,21 @@ abstract class LcRunnerBase(
   }
 
   /** Exactly-once teardown, from task completion (success, failure or kill). */
-  def close(): Unit = synchronized {
-    if (closed) return
+  def close(): Unit = {
+    // Flag first and kill the worker WITHOUT the lock: a reader blocked on the pipe holds it and
+    // only returns once the worker is gone.
     val clean = finished && writerError == null
+    if (!closeOnce.compareAndSet(false, true)) return
     closed = true
+    worker.close(if (clean) conf.shutdownGraceMs else 0L)
+    closeLocked()
+  }
+
+  private def closeLocked(): Unit = readLock.synchronized {
     publishMetrics()
     try {
       Seq(lookahead, current).foreach(b => if (b != null) b.close())
       lookahead = null; current = null
-      worker.close(if (clean) conf.shutdownGraceMs else 0L)
       writer.interrupt()
       writer.join(10000)
       if (writer.isAlive) logWarning(s"lcpy writer ${writer.getName} still busy after close; " +
@@ -338,6 +373,8 @@ abstract class LcRunnerBase(
       monitor.interrupt()
       drainQueues()
       if (reader != null) try reader.close() catch { case NonFatal(_) => }
+      if (tracker.size > 0) logDebug(s"lcpy ${worker.id}: freeing ${tracker.size} in-flight buffers")
+      tracker.closeAll()
     } finally {
       mem.release()
     }
@@ -388,21 +425,23 @@ final class RowModeRunner(
         vs(i) = LcArrowIngest.copyColumn(b.column(i), n, s"c$i", childTypes(i), tz, mem.alloc)
         i += 1
       }
-      new OwnedBatch(vs, n)
+      tracker.add(new OwnedBatch(vs, n))
     } catch { case t: Throwable => new OwnedBatch(vs, n).close(); throw t }
   }
 
   private def ingestRows(it: Iterator[InternalRow]): OwnedBatch = {
     val vs = childTypes.zipWithIndex.map { case (dt, i) =>
       LcArrowIngest.newVector(s"c$i", dt, tz, mem.alloc) }
+    val owned = tracker.add(new OwnedBatch(vs.toArray, 0))
     val root = new VectorSchemaRoot(vs.map(_.getField).asJava, vs.asJava, 0)
     try {
       val app = new LcArrowIngest.RowAppender(root)
       var n = 0
       while (n < conf.batchRows && it.hasNext) { app.write(it.next()); n += 1 }
       app.finish()
-      new OwnedBatch(vs.toArray, n)
-    } catch { case t: Throwable => vs.foreach(_.close()); throw t }
+      tracker.remove(owned)
+      tracker.add(new OwnedBatch(vs.toArray, n))
+    } catch { case t: Throwable => owned.close(); tracker.remove(owned); throw t }
   }
 
   private def enqueueAndSend(owned: OwnedBatch): Unit = {
@@ -426,7 +465,8 @@ final class RowModeRunner(
           checkWriterAlive()
           acquire()
           val owned = ingestRows(it)
-          if (owned.rows > 0) enqueueAndSend(owned) else { owned.close(); inflight.release() }
+          if (owned.rows > 0) enqueueAndSend(owned)
+          else { owned.close(); tracker.remove(owned); inflight.release() }
         }
     }
     queue.put(End)
@@ -452,6 +492,8 @@ final class RowModeRunner(
             s"of ${owned.rows} input rows (1-to-1 contract violated)")
         }
         inflight.release()
+        tracker.remove(owned) // now owned by the emitted batch (which hasNext registers)
+        results.foreach(tracker.remove)
         val cols: Array[ColumnVector] =
           (owned.vectors.map(v => new ArrowColumnVector(v): ColumnVector) ++
             results.map(v => new ArrowColumnVector(v): ColumnVector))
@@ -537,7 +579,9 @@ final class GroupedRunner(
     }
 
     def emit(wire: Seq[FieldVector], gids: IntVector, n: Int): Unit = {
-      try send(wire :+ gids, n) finally { wire.foreach(_.close()); gids.close() }
+      try send(wire :+ gids, n) finally {
+        (wire :+ gids).foreach { v => v.close(); tracker.remove(v) }
+      }
     }
 
     input match {
@@ -548,14 +592,14 @@ final class GroupedRunner(
           val n = b.numRows()
           if (n > 0) {
             waitForRoom()
-            val gids = new IntVector("__lcpy_gid", mem.alloc)
+            val gids = tracker.add(new IntVector("__lcpy_gid", mem.alloc))
             gids.allocateNew(n)
             val rowsIt = b.rowIterator()
             var i = 0
             while (rowsIt.hasNext) { tag(rowsIt.next(), gids, i); i += 1 }
             gids.setValueCount(n)
-            val wire = wireOrdinals.map(o => LcArrowIngest.copyColumn(
-              b.column(o), n, s"c$o", childTypes(o), tz, mem.alloc))
+            val wire = wireOrdinals.map(o => tracker.add(LcArrowIngest.copyColumn(
+              b.column(o), n, s"c$o", childTypes(o), tz, mem.alloc)))
             emit(wire, gids, n)
           }
         }
@@ -566,10 +610,11 @@ final class GroupedRunner(
         while (it.hasNext) {
           checkWriterAlive()
           waitForRoom()
-          val vs = wireOrdinals.map(o => LcArrowIngest.newVector(s"c$o", childTypes(o), tz, mem.alloc))
+          val vs = wireOrdinals.map(o =>
+            tracker.add(LcArrowIngest.newVector(s"c$o", childTypes(o), tz, mem.alloc)))
           val root = new VectorSchemaRoot(vs.map(_.getField).asJava, vs.asJava, 0)
           val app = new LcArrowIngest.RowAppender(root)
-          val gids = new IntVector("__lcpy_gid", mem.alloc)
+          val gids = tracker.add(new IntVector("__lcpy_gid", mem.alloc))
           gids.allocateNew(conf.batchRows)
           var n = 0
           while (n < conf.batchRows && it.hasNext) {
@@ -580,7 +625,8 @@ final class GroupedRunner(
           }
           app.finish()
           gids.setValueCount(n)
-          if (n > 0) emit(vs, gids, n) else { vs.foreach(_.close()); gids.close() }
+          if (n > 0) emit(vs, gids, n)
+          else (vs :+ gids).foreach { v => v.close(); tracker.remove(v) }
         }
     }
   }
@@ -604,6 +650,7 @@ final class GroupedRunner(
     room.synchronized(room.notifyAll())
     val keyVecs = keyTypes.zipWithIndex.map { case (dt, j) =>
       LcArrowIngest.newVector(s"k$j", dt, tz, mem.alloc) }
+    results.foreach(tracker.remove) // owned by the emitted batch from here on
     if (keyVecs.nonEmpty) {
       val root = new VectorSchemaRoot(keyVecs.map(_.getField).asJava, keyVecs.asJava, 0)
       val app = new LcArrowIngest.RowAppender(root)

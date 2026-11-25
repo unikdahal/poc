@@ -438,13 +438,24 @@ class Suites(spark: SparkSession, comet: Boolean) {
     }
 
     test("[comet] Spark-fallback upstream operator (rows) still works under Comet") {
-      spark.udf.register("plus_one", (x: Int) => x + 1)
-      val df = spark.sql(s"""SELECT id, lc_python_runner(my_mod.inner(plus_one(col1))).x AS x
-        FROM t WHERE id < 100""")
-      val p = plan(df)
-      println(p.treeString)
-      val bad = df.join(spark.table("t"), "id").where("x != (col1 + 1) * 2")
-      eq(bad.count(), 0L)
+      // Disabling Comet's project operator forces a genuine Spark ProjectExec (row output) right
+      // below us, inside an otherwise native plan.
+      spark.conf.set("spark.comet.exec.project.enabled", "false")
+      try {
+        val df = spark.sql(s"""SELECT id, lc_python_runner(my_mod.inner(col1 + 1)).x AS x
+          FROM t WHERE id < 100""")
+        val p = plan(df)
+        println(p.treeString)
+        val lcs = nodes(df).collect { case l: LcExecBase => l }
+        check(lcs.nonEmpty, "operator missing")
+        lcs.foreach { l =>
+          check(!isTransition(l.child), s"transition below: ${l.child.nodeName}")
+          check(!l.child.getClass.getName.contains("comet") && !l.child.supportsColumnar,
+            s"expected a row-based Spark operator below, got ${l.child.getClass.getName}")
+        }
+        val bad = df.join(spark.table("t"), "id").where("x != (col1 + 1) * 2")
+        eq(bad.count(), 0L)
+      } finally spark.conf.unset("spark.comet.exec.project.enabled")
     }
   }
 }
@@ -685,6 +696,11 @@ class SandboxSuites(spark: SparkSession) {
       eq(spark.sql(q).collect().head.getBoolean(0), false, "a later worker saw an earlier worker's /tmp")
     }
 
+    if (sys.env.get("LCPY_KILL9").contains("1")) test("[kill9] long-running sandboxed query") {
+      spark.conf.set(LcConf.BATCH_ROWS, "1")
+      spark.sql("SELECT lc_python_runner(sandbox_probe.sleepy(id)).x FROM range(200)").collect()
+    }
+
     test("[sandbox] task cancellation tears down the worker and its cgroup") {
       val sc = spark.sparkContext
       val t = new Thread(() => try {
@@ -693,10 +709,15 @@ class SandboxSuites(spark: SparkSession) {
       } catch { case NonFatal(_) => })
       t.start()
       waitFor("workers started", 30)(workerCgroups().nonEmpty)
+      waitFor("python running in the sandbox", 30)(pgrep("^/usr/bin/python3 .*lcpy/worker.py").nonEmpty)
+      println(s"before cancel: ${pgrep("lcpy/worker.py").mkString(" | ")}")
       sc.cancelJobGroup("lcpy-cancel")
       t.join(30000)
-      waitFor("workers and cgroups gone after cancel", 15)(
-        workerCgroups().isEmpty && pgrep("lcpy/worker.py").isEmpty)
+      try waitFor("workers and cgroups gone after cancel", 15)(
+        workerCgroups().isEmpty && pgrep("lcpy/worker.py").isEmpty && WorkerProcess.live.isEmpty)
+      finally println(s"after cancel: cgroups=${workerCgroups()} procs=${pgrep("lcpy/worker.py")} " +
+        s"live=${WorkerProcess.live.keySet()}")
+      eq(LcMemory.leaks.get(), 0L, "leaked allocators after cancellation")
     }
 
     test("[sandbox] no Arrow memory leaked, no workers left") {

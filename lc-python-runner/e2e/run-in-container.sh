@@ -8,9 +8,9 @@ REPORT=${2:-/out/report-sandbox-$MODE.json}
 JARS=$(ls /opt/lcpy/jars/*.jar | tr '\n' ',')
 CONF_ARGS=(
   --conf spark.ui.enabled=false
-  --conf "spark.driver.extraJavaOptions=-Dlog4j2.level=WARN"
   --conf spark.lcpy.sandbox.mode=bwrap
   --conf spark.lcpy.debug.failOnLeak=true
+  --conf "spark.driver.extraJavaOptions=-Dlog4j2.level=WARN -Darrow.memory.debug.allocator=true"
   --conf spark.executorEnv.LCPY_TEST_SECRET=lcpy-topsecret
 )
 export LCPY_TEST_SECRET=lcpy-topsecret     # must never be visible inside a worker

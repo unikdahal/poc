@@ -107,7 +107,7 @@ class Forward(BaseHTTPRequestHandler):
                 self.close_connection = True
                 return
 
-        if self.command == "GET" and path.endswith("/tables/token_query") and relay.token_pacing_remaining > 0:
+        if self.command == "GET" and "/tables/token_piece_" in path and relay.token_pacing_remaining > 0:
             with relay.token_pacing_lock:
                 if relay.token_pacing_remaining > 0:
                     relay.token_pacing_remaining -= 1
@@ -247,8 +247,9 @@ def provision():
 def setup(session, *_):
     collect(session, f"CREATE NAMESPACE {NS}")
     if VARIANT == "token":
-        collect(session, f"CREATE TABLE {NS}.token_query USING iceberg AS SELECT CAST(1 AS INT) AS id")
-        return {"token": fingerprint(collect(session, token_sql()))}
+        for i in range(130):
+            collect(session, f"CREATE TABLE {NS}.token_piece_{i} USING iceberg AS SELECT {i + 1} AS id", 45)
+        return {"token": fingerprint(collect(session, token_sql(), 180))}
     collect(session, f"CREATE TABLE {NS}.scan USING iceberg AS SELECT /*+ REPARTITION(112) */ id, sha2(CAST(id AS STRING), 512) AS payload "
                      "FROM range(1800000)", 450)
     reference = {"scan": fingerprint(collect(session, READ, 240))}
@@ -387,13 +388,13 @@ def verify(result, reference, spark, *_):
 
 
 def token_sql():
-    branches = [f"SELECT id + {i} AS v FROM {NS}.token_query" for i in range(130)]
+    branches = [f"SELECT id AS v FROM {NS}.token_piece_{i}" for i in range(130)]
     return "SELECT count(*), sum(v) FROM (" + " UNION ALL ".join(branches) + ") p"
 
 
 def expiration(result, relays, expected, session, stats_, container):
     token, exp, ttl = write_token()
-    point = f"{base.POLARIS}/api/catalog/v1/{CATALOG}/namespaces/test/tables/token_query"
+    point = f"{base.POLARIS}/api/catalog/v1/{CATALOG}/namespaces/test/tables/token_piece_0"
     relay = relays["catalog"]
     statement = token_sql()
     evidence = result["cases"]["token_expiry"] = {"issued_expires_at": exp, "reported_ttl_s": ttl,

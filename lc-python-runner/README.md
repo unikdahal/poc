@@ -374,9 +374,9 @@ pod. CI reports are uploaded as artifacts.
 | Spark → us | `row-based and columnar inputs…`, `[comet] Spark-fallback upstream…` (Comet project disabled → real `ProjectExec`) |
 | Us → Comet | `[comet] downstream Comet operators consume our output natively` |
 | Us → Spark rows / pure Spark | `[spark] no transitions directly below…`, every non-Comet test |
-| Buffer reuse / off-heap safety | `[comet] small Comet batches (buffer reuse)…` (64-row batches vs Spark results); `failOnLeak=true` everywhere; leak counters; Arrow debug allocator in e2e; `ingest:` unit test |
+| Buffer reuse / off-heap safety | `[comet] small Comet batches (buffer reuse)…` (64-row batches vs Spark results); `failOnLeak=true` in every run plus zero-leak assertions; `ingest:` unit test |
 | Streaming and deadlock freedom | tiny-batch and tiny-in-flight tests; `LIMIT stops early…` |
-| Task / context teardown | `LIMIT…`, `task cancellation tears down…`, `kill9.sh` (SIGKILL JVM with live workers) |
+| Task / context teardown | `LIMIT…`, `task cancellation tears down…`, `e2e/kill9.sh` (SIGKILL of the JVM while two workers run; then a fresh JVM must clean up) |
 | FS / PID / user / env isolation | `[sandbox] filesystem, process, user and environment isolation` |
 | seccomp | `[sandbox] seccomp + no-new-userns…` |
 | Network allowlist | `[sandbox] egress…` (allowlisted 127.0.0.2 connects; listening 127.0.0.1, 169.254.169.254, 10.96.0.1, 1.1.1.1 rejected; the JVM still reaches 127.0.0.1) |
@@ -395,9 +395,19 @@ java <add-opens…> -cp "target/classes:target/test-classes:$(cat cp.txt)" \
 ## 7. Facts vs. hypotheses, and known limits
 
 **Verified in CI (GitHub-hosted Ubuntu 24.04 runners; Spark 3.5.10, Comet 1.2.0, bwrap 0.9.0):**
-everything in the table above. The Comet plans in the logs show `CometNativeScan → CometFilter →
-CometProject → LcPythonEval → CometSparkColumnarToColumnar → CometProject/CometHashAggregate`,
-with Comet reporting our operator as the only non-native one. Observed inside the sandbox:
+everything in the table above, in four configurations. Plain Spark 23/23 and Spark + Comet 25/25
+ran with unsandboxed workers. Inside the pod-equivalent container, the Spark suites passed 34/34
+and the Comet suites 36/36, plus both kill-9 checks. The kill-9 check SIGKILLed the JVM with 2
+Python workers running: 0 processes survived, and the 2 leftover cgroups were removed by the next
+JVM.
+
+The Comet plans in the logs show:
+
+* `CometNativeScan → CometFilter → CometProject → LcPythonEval → CometSparkColumnarToColumnar →
+  CometProject / CometHashAggregate / CometExchange / CometBroadcastHashJoin`, with Comet
+  reporting our operator as the only non-native one ("accelerated 6 out of 7 eligible
+  operators");
+* `LcPythonAggregate`'s required exchange and sort planned as `CometExchange` + `CometSort`. Observed inside the sandbox:
 uid 65534, PID 2, hostname `lcpy-sandbox`, cleared env (no injected secret); `/etc/shadow`, the
 K8s token, host paths and `/sys` absent; writes to `/usr` and the registry fail with EROFS;
 AF_UNIX / netlink / raw sockets, `unshare`, `mount` and `setuid(0)` refused; fork bomb stopped

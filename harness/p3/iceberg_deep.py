@@ -1,6 +1,13 @@
 """Exercise Iceberg reader/writer pairs, evolution, maintenance, and concurrent commits."""
 
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
+import hashlib
+import os
+from pathlib import Path
+import re
+import subprocess
+import tempfile
 from importlib.metadata import version
 import threading
 import time
@@ -8,7 +15,7 @@ import time
 import boto3
 
 from harness import common as base
-from harness.p3.common import VARIANT, begin, bounded, collect, fingerprint, group, median_if_valid, save, timed
+from harness.p3.common import VARIANT, begin, bounded, cmd, collect, error, fingerprint, group, median_if_valid, save, timed
 
 TASK = "iceberg-deep"
 NS = "polaris.p3_iceberg"
@@ -35,38 +42,109 @@ def statements(result, key, spark, sqls):
 def pycatalog():
     from pyiceberg.catalog import load_catalog
     return load_catalog("p3", type="rest", uri=f"{base.POLARIS}/api/catalog", warehouse="poc",
-        token=base.polaris_token(), **{"s3.endpoint": "http://localhost:9000", "s3.access-key-id": base.S3["key"],
+        token=base.polaris_token(), **{"header.X-Iceberg-Access-Delegation": "", "s3.endpoint": "http://localhost:9000", "s3.access-key-id": base.S3["key"],
         "s3.secret-access-key": base.S3["secret"], "s3.region": base.S3["region"], "s3.force-virtual-addressing": "false"})
+
+
+FLINK_VERSION = "1.20.4"
+FLINK_SHA512 = "980120df8c57011c49899b848b13c219949f1e645d829f6deec9ee8e12fe65dacba8105de8faef7f8aecd372c46022394f0b2dfb32c5a0067a45b54df5a49ddc"
+ICEBERG_VERSION = "1.12.0"
+FLINK_CATALOG = """CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',
+'uri'='http://localhost:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',
+'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',
+'s3.endpoint'='http://localhost:9000','s3.path-style-access'='true','s3.access-key-id'='admin',
+'s3.secret-access-key'='password','client.region'='us-east-1');"""
+
+
+@contextmanager
+def flink_service(result):
+    result["versions"]["flink"] = {"version": FLINK_VERSION, "sha512": FLINK_SHA512,
+                                     "iceberg_runtime": ICEBERG_VERSION, "scala": "2.12"}
+    with tempfile.TemporaryDirectory(prefix="p3-flink-") as directory:
+        work = Path(directory)
+        archive = work / "flink.tgz"
+        url = f"https://archive.apache.org/dist/flink/flink-{FLINK_VERSION}/flink-{FLINK_VERSION}-bin-scala_2.12.tgz"
+        cmd("curl", "-fsSL", "--retry", "3", url, "-o", str(archive), timeout=300)
+        with archive.open("rb") as source:
+            if hashlib.file_digest(source, "sha512").hexdigest() != FLINK_SHA512:
+                raise RuntimeError("Flink archive checksum differs")
+        cmd("tar", "xzf", str(archive), "-C", str(work), timeout=90)
+        archive.unlink()
+        home = work / f"flink-{FLINK_VERSION}"
+        for name in ("iceberg-flink-runtime-1.20", "iceberg-aws-bundle"):
+            artifact = f"{name}-{ICEBERG_VERSION}.jar"
+            cmd("curl", "-fsSL", "--retry", "3",
+                f"https://repo.maven.apache.org/maven2/org/apache/iceberg/{name}/{ICEBERG_VERSION}/{artifact}",
+                "-o", str(home / "lib" / artifact), timeout=180)
+        env = os.environ | {"AWS_REGION": "us-east-1", "AWS_ACCESS_KEY_ID": "admin", "AWS_SECRET_ACCESS_KEY": "password"}
+        with (base.OUT / "flink-start.log").open("w") as log:
+            subprocess.run([str(home / "bin/start-cluster.sh")], cwd=home, env=env,
+                           stdout=log, stderr=subprocess.STDOUT, check=True, timeout=60)
+        base.wait_port(8081, timeout=60)
+        try:
+            yield home, env
+        finally:
+            subprocess.run([str(home / "bin/stop-cluster.sh")], cwd=home, env=env, check=False,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT, timeout=60)
+            for log in (home / "log").glob("*.log"):
+                (base.OUT / log.name).write_bytes(log.read_bytes()[-900000:])
+
+
+def flink_sql(handle, label, *statements_):
+    home, env = handle
+    path = home / "p3.sql"
+    path.write_text("
+".join([
+        "SET 'table.dml-sync'='true';",
+        "SET 'sql-client.execution.result-mode'='tableau';",
+        "SET 'parallelism.default'='1';", FLINK_CATALOG, *statements_, "QUIT;",
+    ]))
+    with (base.OUT / f"flink-{label}.log").open("w") as log:
+        end = subprocess.run([str(home / "bin/sql-client.sh"), "embedded", "-f", str(path)],
+                             cwd=home, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=240)
+    raw = (base.OUT / f"flink-{label}.log").read_text(errors="replace")
+    plain = re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", raw)
+    if end.returncode or "[ERROR]" in plain or "Could not execute SQL" in plain:
+        raise RuntimeError(plain[-1900:])
+    return plain
 
 
 def interop(result):
     ref = {}
-    targets = [(writer, v, f"{NS}.{writer}_v{v}") for writer in ("spark", "sail", "pyiceberg") for v in (2, 3)]
+    ordinary = [(writer, v, "base", f"{NS}.{writer}_v{v}") for writer in ("spark", "sail", "pyiceberg", "flink") for v in (2, 3)]
+    deleted = [(writer, v, "delete", f"{NS}.{writer}_delete_v{v}") for writer in ("spark", "sail") for v in (2, 3)]
+    equality = [("flink", 2, "equality", f"{NS}.flink_equality_v2")]
+    targets = ordinary + deleted + equality
     row_sql = "SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)"
     digest_sql = lambda table: f"SELECT id, payload FROM {table} ORDER BY id"
 
+    def writes(label, session, *_):
+        for writer, v, kind, table in targets:
+            if writer != label:
+                continue
+            options = f"'format-version'='{v}', 'write.delete.mode'='merge-on-read'"
+            sql = [f"CREATE TABLE {table} USING iceberg TBLPROPERTIES ({options}) AS {row_sql}"]
+            if kind == "delete":
+                sql.append(f"DELETE FROM {table} WHERE id IN (1, 7)")
+            statements(result, f"write-{table.rsplit('.', 1)[-1]}", session, sql)
+
     def spark_setup(spark, *_):
         collect(spark, f"CREATE NAMESPACE {NS}")
-        ref["rows"] = fingerprint(collect(spark, row_sql), True)
-        for writer, v, table in targets:
-            if writer == "spark":
-                statements(result, f"write-{writer}-{v}", spark, [
-                    f"CREATE TABLE {table} USING iceberg TBLPROPERTIES ('format-version'='{v}') AS {row_sql}"])
-    group(result, "spark-writer", spark_setup, "spark")
+        ref["base"] = fingerprint(collect(spark, f"{row_sql} ORDER BY id"), True)
+        ref["delete"] = fingerprint(collect(spark, f"{row_sql} WHERE id NOT IN (1,7) ORDER BY id"), True)
+        ref["equality"] = fingerprint(collect(spark, "SELECT id, IF(id=4,'changed',concat('row-',id)) FROM range(12) ORDER BY id"), True)
+        writes("spark", spark)
 
-    def writes(sail, *_):
-        for writer, v, table in targets:
-            if writer == "sail":
-                statements(result, f"write-{writer}-{v}", sail, [
-                    f"CREATE TABLE {table} USING iceberg TBLPROPERTIES ('format-version'='{v}') AS {row_sql}"])
-    group(result, "sail-writer", writes, "sail")
+    group(result, "spark-writer", spark_setup, "spark")
+    group(result, "sail-writer", lambda *args: writes("sail", *args), "sail")
+    pc = None
     try:
         import pyarrow as pa
         from pyiceberg.schema import Schema
         from pyiceberg.types import LongType, NestedField, StringType
         result["versions"]["pyiceberg"] = version("pyiceberg")
         pc = pycatalog()
-        for writer, v, table in targets:
+        for writer, v, kind, table in ordinary:
             if writer == "pyiceberg":
                 def write():
                     t = pc.create_table(table.removeprefix("polaris."), Schema(
@@ -74,32 +152,62 @@ def interop(result):
                         properties={"format-version": str(v)})
                     t.append(pa.table({"id": list(range(12)), "payload": [f"row-{i}" for i in range(12)]}))
                 record, _ = timed(write)
-                result["cases"][f"write-{writer}-{v}"] = record
+                result["cases"][f"write-{table.rsplit('.', 1)[-1]}"] = record
     except Exception as exc:
-        from harness.p3.common import error
         result["cases"]["pyiceberg-startup"] = {"error": error(exc)}
-        pc = None
     save(result)
 
+    def observe_rows(key, record, rows, fixture):
+        result["cases"][key] = record | {"fixture": fixture, "rows": rows, "expected": ref.get(fixture),
+                                        "matches_spark": rows is not None and fingerprint(rows, True) == ref.get(fixture)}
+        save(result)
+
+    try:
+        with flink_service(result) as handle:
+            values = ",".join(f"({i},'row-{i}')" for i in range(12))
+            for writer, v, fixture, table in ordinary + equality:
+                if writer != "flink":
+                    continue
+                name = table.replace("polaris.", "p3cat.")
+                key = table.rsplit(".", 1)[-1]
+                fields = "id BIGINT, payload STRING" if fixture == "base" else "id BIGINT NOT NULL, payload STRING, PRIMARY KEY(id) NOT ENFORCED"
+                opts = f"'format-version'='{v}'"
+                if fixture == "equality":
+                    opts += ",'write.upsert.enabled'='true','write.distribution-mode'='hash'"
+                commands = ["SET 'execution.runtime-mode'='STREAMING';", "SET 'execution.checkpointing.interval'='2 s';",
+                            f"CREATE TABLE {name} ({fields}) WITH ({opts});",
+                            f"INSERT INTO {name} VALUES {values};"]
+                if fixture == "equality":
+                    commands.append(f"INSERT INTO {name} VALUES (4,'changed');")
+                record, _ = timed(lambda: flink_sql(handle, f"write-{key}", *commands))
+                result["cases"][f"write-{key}"] = record
+                save(result)
+            for _, _, fixture, table in targets:
+                name = table.replace("polaris.", "p3cat.")
+                key = table.rsplit(".", 1)[-1]
+                record, plain = timed(lambda: flink_sql(handle, f"read-{key}",
+                    "SET 'execution.runtime-mode'='BATCH';", f"SELECT id,payload FROM {name} ORDER BY id;"))
+                rows = [[int(i), payload] for i, payload in re.findall(r"(?m)^\|\s*(\d+)\s*\|\s*([^| ]+)\s*\|", plain or "")]
+                observe_rows(f"{key}-to-flink", record, rows if plain else None, fixture)
+    except Exception as exc:
+        result["cases"]["flink-startup"] = {"error": error(exc)}
+
     def check(reader, spark, *_):
-        for writer, v, table in targets:
+        for writer, v, fixture, table in targets:
+            key = table.rsplit(".", 1)[-1]
             record, rows = timed(lambda: collect(spark, digest_sql(table), 60))
-            record["matches_spark"] = rows is not None and fingerprint(rows, True) == ref.get("rows")
-            record["rows"] = [list(row) for row in rows] if rows is not None else None
-            result["cases"][f"{writer}-v{v}-to-{reader}"] = record
+            observe_rows(f"{key}-to-{reader}", record, [list(row) for row in rows] if rows is not None else None, fixture)
+            if reader == "spark" and fixture != "base":
+                statements(result, f"files-{key}", spark, [f"SELECT * FROM {table}.files"])
 
     for reader in ("spark", "sail"):
         group(result, f"{reader}-reader", lambda *args: check(reader, *args), reader, port=15018 if reader == "spark" else 50052)
     if pc:
-        for writer, v, table in targets:
+        for writer, v, fixture, table in targets:
             record, payload = timed(lambda: pc.load_table(table.removeprefix("polaris.")).scan().to_arrow().to_pylist())
             rows = sorted((r["id"], r["payload"]) for r in payload) if payload is not None else None
-            result["cases"][f"{writer}-v{v}-to-pyiceberg"] = record | {
-                "rows": rows, "matches_spark": rows is not None and fingerprint(rows, True) == ref.get("rows")}
-    result["limits"] = {"trino_or_flink": "additional JVM engine excluded from this matrix under the hosted disk and memory limits",
-                         "equality_delete_writer": "no supported PyIceberg equality-delete writer API was used"}
+            observe_rows(f"{table.rsplit('.', 1)[-1]}-to-pyiceberg", record, rows, fixture)
     save(result)
-
 
 def evolution(result):
     table = f"{NS}.nested"

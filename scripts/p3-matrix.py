@@ -15,10 +15,10 @@ variants = {
 }
 
 if __name__ == "__main__":
-    selected = os.environ.get("P3_TASKS", "").split(",")
+    selected = {task.strip() for task in os.environ.get("P3_TASKS", "").split(",")}
     matrix = [{"task": task, "variant": variant, "step_timeout": 342 if task == "soak" else 310}
-              for task, cases in variants.items() if task in selected or "all" in selected
-              for variant in cases]
+              for task, cases in variants.items() for variant in cases
+              if {task, f"{task}/{variant}", "all"} & selected]
     with open(os.environ["GITHUB_OUTPUT"], "a") as output:
         print(f"matrix={json.dumps({'include': matrix}, separators=(',', ':'))}", file=output)
         print(f"enabled={str(bool(matrix)).lower()}", file=output)

@@ -12,38 +12,53 @@ from harness.p3.common import (PIN, UPSTREAM, begin, bounded, collect, group, lo
 
 DS = (7, 9, 12, 18, 20, 26, 27, 28, 31, 36, 47, 49, 53, 57, 59, 63, 66, 77, 83, 89, 98)
 H = (1, 8, 14, 17)
-AVG = "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
-DIV = "SELECT CAST(10 AS DECIMAL(20,2)) / CAST(3 AS DECIMAL(20,2)) AS v"
-SUM_DIV = "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
-WINDOW_DIV = "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
-DECIMAL = "crates/sail-plan/src/resolver/expression/predicate.rs#L832"
-AGGREGATE = "crates/sail-plan/src/function/aggregate.rs#L67"
-WINDOW = "crates/sail-plan/src/function/window.rs#L102"
-CONVERSION = "crates/sail-plan/src/resolver/expression/cast.rs#L399"
+AVG = "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
+DIV = "SELECT CAST(10 AS DECIMAL(10,2)) / CAST(3 AS DECIMAL(10,2)) AS v"
+SUM_DIV = "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
+WINDOW_DIV = "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(7,2))), (2.00) AS t(x) ORDER BY x"
+WINDOW_AVG = "SELECT DISTINCT avg(x) OVER () FROM VALUES (CAST(0.01 AS DECIMAL(17,2))), (0.01), (0.00) AS t(x)"
+MATH = "crates/sail-plan/src/function/scalar/math.rs"
+DECIMAL = MATH + "#L437-L447"
+ADD = MATH + "#L126-L177"
+AGGREGATE = "crates/sail-plan/src/function/aggregate.rs#L67-L85"
+WINDOW = "crates/sail-plan/src/function/window.rs#L102-L130"
+CONVERSION = "crates/sail-plan/src/resolver/expression/cast.rs"
 STRING = "crates/sail-plan/src/function/scalar/string.rs"
 DATETIME = "crates/sail-plan/src/function/scalar/datetime.rs"
+TIE = "SELECT id, x FROM VALUES (1, CAST(NULL AS INT)), (2, NULL) AS t(id,x) ORDER BY x"
 COMPAT = {
     "dec_div": ("decimal precision or scale", DIV, DECIMAL, "decimal division"),
     "dec_sum_avg": ("rounding mode", AVG, AGGREGATE, "decimal avg"),
-    "dec_overflow_38": ("ANSI behaviour", "SELECT CAST(9999999999999999999999999999.99 AS DECIMAL(30,2)) * CAST(99999999.99 AS DECIMAL(10,2))", DECIMAL, "decimal overflow"),
-    "bround": ("rounding mode", "SELECT bround(2.5), bround(-2.5)", "crates/sail-function/src/scalar/math/bround.rs#L138", "bround"),
-    "round_double": ("rounding mode", "SELECT round(CAST(1.005 AS DOUBLE), 2)", "crates/sail-plan/src/function/scalar/math.rs#L750", "round double"),
-    "double_nan_inf": ("a function semantic", "SELECT log(0)", "crates/sail-plan/src/function/scalar/math.rs#L879", "log function"),
-    "cast_str_decimal": ("a type coercion", "SELECT CAST('1e3' AS DECIMAL(10,2))", CONVERSION, "decimal cast"),
-    "cast_double_string": ("a type coercion", "SELECT CAST(1.0E10 AS STRING)", CONVERSION, "float cast string"),
-    "cast_float_string": ("a type coercion", "SELECT CAST(CAST(1e20 AS FLOAT) AS STRING)", CONVERSION, "float cast string"),
-    "cast_decimal_to_int": ("ANSI behaviour", "SELECT CAST(CAST(3e9 AS DOUBLE) AS INT)", CONVERSION, "cast overflow"),
-    "implicit_coercion": ("a type coercion", "SELECT 1 + '2'", DECIMAL, "type coercion"),
-    "typeof_literals": ("decimal precision or scale", "SELECT typeof(CAST(1 AS DECIMAL(5,2)) + 1)", DECIMAL, "decimal precision"),
+    "dec_overflow_38": ("ANSI behaviour", "SELECT CAST(9999999999999999999999999999.99 AS DECIMAL(30,2)) * CAST(99999999.99 AS DECIMAL(10,2))", MATH + "#L280-L311", "decimal overflow"),
+    "bround": ("rounding mode", "SELECT bround(2.5), bround(-2.5)", "crates/sail-function/src/scalar/math/bround.rs#L111-L120", "bround"),
+    "round_double": ("rounding mode", "SELECT round(CAST(1.005 AS DOUBLE), 2)", MATH + "#L747-L750", "round double"),
+    "double_nan_inf": ("a function semantic", "SELECT log(0)", MATH + "#L867-L871", "log function"),
+    "cast_str_decimal": ("a type coercion", "SELECT CAST('1e3' AS DECIMAL(10,2))", CONVERSION + "#L348-L364", "decimal cast"),
+    "cast_double_string": ("a type coercion", "SELECT CAST(1.0E10 AS STRING)", CONVERSION + "#L330-L341", "float cast string"),
+    "cast_float_string": ("a type coercion", "SELECT CAST(CAST(1e20 AS FLOAT) AS STRING)", CONVERSION + "#L330-L341", "float cast string"),
+    "cast_decimal_to_int": ("ANSI behaviour", "SELECT CAST(CAST(3e9 AS DOUBLE) AS INT)", CONVERSION + "#L348-L364", "cast overflow"),
+    "implicit_coercion": ("a type coercion", "SELECT 1 + '2'", ADD, "type coercion"),
+    "typeof_literals": ("decimal precision or scale", "SELECT typeof(CAST(1 AS DECIMAL(5,2)) + 1)", ADD, "decimal precision"),
     "str_basic": ("a function semantic", "SELECT initcap('foo-bar')", f"{STRING}#L538", "initcap"),
-    "regexp_lookahead": ("a function semantic", "SELECT regexp_replace('price100usd', '[0-9]+(?=usd)', 'N')", f"{STRING}#L79", "regexp lookahead"),
-    "date_trunc": ("a function semantic", "SELECT trunc(DATE'2024-05-17', 'Q')", f"{DATETIME}#L156", "trunc date"),
+    "regexp_lookahead": ("a function semantic", "SELECT regexp_replace('price100usd', '[0-9]+(?=usd)', 'N')", f"{STRING}#L79-L84", "regexp lookahead"),
+    "date_trunc": ("a function semantic", "SELECT trunc(DATE'2024-05-17', 'Q')", f"{DATETIME}#L156-L211", "trunc date"),
     "make_date_ts": ("ANSI behaviour", "SELECT make_date(2023, 2, 29)", f"{DATETIME}#L397", "make_date"),
-    "null_agg": ("rounding mode", AVG, AGGREGATE, "decimal avg"),
+    "null_agg": ("rounding mode", "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00), (NULL) AS t(x)", AGGREGATE, "decimal avg"),
     "pivot": ("a function semantic", "SELECT * FROM (SELECT 1 AS id) PIVOT (count(*) FOR id IN (1, 2))",
-              "crates/sail-plan/src/resolver/query/pivoting.rs#L259", "pivot"),
+              "crates/sail-sql-parser/src/ast/query.rs#L414-L425", "pivot"),
     "conditional_funcs": ("a function semantic", "SELECT decode(2, 1, 'one', 2, 'two', 'other')",
-                          "crates/sail-function/src/scalar/string/encode_decode.rs#L290", "decode"),
+                          "crates/sail-function/src/scalar/string/encode_decode.rs#L307-L314", "decode"),
+}
+CONTROLS = {
+    "tpcds-77": [TIE + ", id"],
+    "cast_decimal_to_int": ["SELECT try_cast(CAST(3e9 AS DOUBLE) AS INT)"],
+    "implicit_coercion": ["SELECT 1 + CAST('2' AS DOUBLE)"],
+    "typeof_literals": ["SELECT typeof(CAST(1 AS DECIMAL(5,2)) + CAST(1 AS DECIMAL(1,0)))"],
+    "regexp_lookahead": ["SELECT regexp_replace('price100usd', '[0-9]+', 'N')"],
+    "date_trunc": ["SELECT trunc(DATE'2024-05-17', 'MM')"],
+    "pivot": ["SELECT * FROM (SELECT 1 AS id) PIVOT (count(*) FOR (id) IN (1, 2))"],
+    "double_nan_inf": ["SELECT log(10, 100)"],
+    "conditional_funcs": ["SELECT CASE 2 WHEN 1 THEN 'one' WHEN 2 THEN 'two' ELSE 'other' END"],
 }
 TZ = [
     "CREATE NAMESPACE IF NOT EXISTS polaris.p3_timezone",
@@ -59,16 +74,25 @@ def cases():
     for q in DS:
         if q in (7, 9, 18, 26, 27, 28):
             expr, category, code, search = AVG, "rounding mode", AGGREGATE, "decimal avg"
-        elif q in (12, 20, 47, 53, 57, 63, 89, 98):
-            expr, category, code, search = WINDOW_DIV, "decimal precision or scale", WINDOW, "window decimal"
+        elif q in (12, 20, 98):
+            expr, category, code, search = WINDOW_DIV, "decimal precision or scale", DECIMAL, "decimal division"
+        elif q in (47, 53, 57, 63, 89):
+            expr, category, code, search = WINDOW_AVG, "rounding mode", WINDOW, "decimal avg"
+        elif q == 66:
+            expr = "SELECT sum(x / y) FROM VALUES (CAST(5 AS DECIMAL(38,2)), CAST(7 AS INT)) AS t(x,y)"
+            category, code, search = "rounding mode", DECIMAL, "decimal division"
+        elif q == 83:
+            expr, category, code, search = "SELECT CAST(1 AS BIGINT) / 3.0", "decimal precision or scale", DECIMAL, "decimal division"
         elif q == 77:
-            expr = "SELECT id, x FROM VALUES (1, 0), (2, 0) AS t(id,x) ORDER BY x"
-            category, code, search = "tie ordering", "crates/sail-plan/src/resolver/expression/predicate.rs#L832", "sort tie"
+            expr = TIE
+            category, code, search = "tie ordering", "crates/sail-plan/src/resolver/query/sort.rs#L23", "sort tie"
         else:
             expr, category, code, search = SUM_DIV, "decimal precision or scale", DECIMAL, "decimal division"
         all_cases[f"tpcds-{q}"] = (query_file(QUERY_DIR / f"q{q}.sql"), [expr], category, code, search)
     for q in H:
-        all_cases[f"tpch-{q}"] = (tpch.statements(q), [AVG if q == 1 else SUM_DIV],
+        expr = (AVG if q == 1 else "SELECT sum(x) / 7.0 FROM VALUES (CAST(5 AS DECIMAL(15,2))) AS t(x)"
+                if q == 17 else SUM_DIV)
+        all_cases[f"tpch-{q}"] = (tpch.statements(q), [expr],
                                    "rounding mode" if q in (1, 17) else "decimal precision or scale",
                                    AGGREGATE if q == 1 else DECIMAL, "decimal avg" if q == 1 else "decimal division")
     for key, _, sql in Q:
@@ -183,7 +207,20 @@ def run_suite(result, suite, name, spark, *_):
             rec[name]["utc_control"] = output(spark, control)
         else:
             rec[name] = {"original": output(spark, full), "repro": output(spark, repro)}
+        control_expr = CONTROLS.get(case)
+        if control_expr:
+            rec["control_sql"] = control_expr
+            rec[name]["control"] = output(spark, control_expr)
         if name == "sail":
+            if control_expr:
+                rec["control_diff"] = compare(rec["spark"]["control"], rec[name]["control"], control_expr)
+            if case == "tpcds-77":
+                a = rec["spark"]["original"]["outputs"][0]["rows"]
+                b = rec["sail"]["original"]["outputs"][0]["rows"]
+                changed = [i for i, (left, right) in enumerate(zip(a, b)) if left != right]
+                rec["ordering_ties"] = {"sql_sort_columns": ["channel", "id"], "different_positions": changed,
+                    "same_declared_keys_by_position": [r[:2] for r in a] == [r[:2] for r in b],
+                    "spark_keys_at_changed_positions": [a[i][:2] for i in changed]}
             for kind, expressions in (("original", full), ("repro", repro)):
                 rec[kind + "_diff"] = compare(rec["spark"][kind], rec[name][kind], expressions)
         save(result)

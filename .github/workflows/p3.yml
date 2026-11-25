@@ -47,7 +47,8 @@ jobs:
         run: bash scripts/p3-publish.sh rootcause build-latest out
 
   rootcause:
-    if: github.ref == 'refs/heads/agent2-phase3' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,') || contains(format(',{0},', inputs.tasks), ',rootcause-newer,'))
+    needs: latest-image
+    if: always() && github.ref == 'refs/heads/agent2-phase3' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,') || contains(format(',{0},', inputs.tasks), ',rootcause-newer,'))
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     strategy:
@@ -68,7 +69,7 @@ jobs:
           distribution: temurin
           java-version: "17.0.21"
       - name: Set up pinned services
-        if: matrix.variant == 'pinned' || contains(format(',{0},', inputs.tasks), ',rootcause-newer,')
+        if: ((matrix.variant == 'pinned' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,'))) || (matrix.variant == 'newer' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause-newer,'))))
         id: setup
         env:
           GH_TOKEN: ${{ github.token }}
@@ -79,7 +80,7 @@ jobs:
         timeout-minutes: 280
         run: python -m harness.p3.rootcause
       - name: Publish correctness evidence
-        if: always() && (matrix.variant == 'pinned' || contains(format(',{0},', inputs.tasks), ',rootcause-newer,'))
+        if: always() && ((matrix.variant == 'pinned' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,'))) || (matrix.variant == 'newer' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause-newer,'))))
         env:
           GH_TOKEN: ${{ github.token }}
         run: bash scripts/p3-publish.sh rootcause "$P3_VARIANT" out

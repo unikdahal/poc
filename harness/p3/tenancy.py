@@ -19,11 +19,13 @@ from harness.suite_flight import any_cmd_statement_query
 TENANTS = ("tenant_a", "tenant_b")
 HEAVY = ("SELECT sum(a.id+b.id) FROM range(40000) a CROSS JOIN range(40000) b")
 REFERENCE = "SELECT CAST(40000 AS BIGINT)*40000*39999"
-MEMORY_HEAVY = """SELECT sum(v) FROM (
-  SELECT pmod(id,1000)*25000 + id DIV 1000 AS k, max(pmod(id,31)) AS v FROM range(25000000)
-  GROUP BY pmod(id,1000)*25000 + id DIV 1000
+MEMORY_ROWS = 50000000 if VARIANT.startswith("memory-heavy-") else 25000000
+MEMORY_KEY = f"pmod(id,1000)*{MEMORY_ROWS // 1000} + id DIV 1000"
+MEMORY_HEAVY = f"""SELECT sum(v) FROM (
+  SELECT {MEMORY_KEY} AS k, max(pmod(id,31)) AS v FROM range({MEMORY_ROWS})
+  GROUP BY {MEMORY_KEY}
 )"""
-MEMORY_REFERENCE = "SELECT sum(pmod(id,31)) FROM range(25000000)"
+MEMORY_REFERENCE = f"SELECT sum(pmod(id,31)) FROM range({MEMORY_ROWS})"
 TOKEN_URL = f"{base.POLARIS}/api/catalog/v1/oauth/tokens"
 SOURCE = "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/"
 

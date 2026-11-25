@@ -314,4 +314,6 @@ All attempted queries, including timeouts after an earlier driver stopped, remai
 
 ### Coverage limits
 
-Disk space is measured during generation and execution. The sample is a filesystem gauge. Table data, shuffle caches and spill contribute to the total. Failure classification is reported from query and container diagnostics, including data generation failures, errors and OOM kills when present.
+**FACT.** The primary SF50 runner started generation with 103.19 GiB free. Its sampled minima were 72.60 GiB during loading and 82.06 GiB during queries. Preparation used up to 30.58 GiB of additional filesystem space in this run, so the recorded procedure requires more headroom than the nominal 14 GB budget. The three SF10 TPC-DS jobs used 7.12–7.20 GiB of additional filesystem space while loading. [SF50](https://github.com/unikdahal/poc/blob/3bb3e47a3419ac1e53b97e34a61ae020039f8693/tpch50/result.json) · [TPC-DS sharded run](https://github.com/unikdahal/poc/actions/runs/45557918310)
+
+The filesystem gauge includes generated input, local data, caches and spill. The sample interval can miss transient peaks. Failure classification uses the observed query, process and container diagnostics.

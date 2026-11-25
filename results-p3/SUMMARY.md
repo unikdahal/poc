@@ -30,5 +30,5 @@ The alternate SHA `da1e7351d28046452f0ec3e8232aee28458f3852` resolved none of th
 
 - The system process counters did not expose Tokio task counts. The soak report tracks duration, session counts and any minimum-observation limit for trend estimates. [Soak evidence](soak.md)
 - The execution stage table exposes no payload-byte counter. The kind job captured cross-node wire bytes separately. Exact shuffle payload bytes per stage and same-node traffic were outside that measurement. [Kind evidence](k8s-scale.md)
-- A per-process JVM heap and off-heap budget are different from an 8 GiB container envelope. The scale-up report records the configured memory method and any disk-related limits. [Scale evidence](scale-up.md)
+- SF50 preparation consumed 30.58 GiB at its sampled peak on a runner with 103.19 GiB free before generation. Coverage under a 14 GB disk envelope remains unverified. [Scale evidence](scale-up.md)
 - The published JSON and logs retain individual failures, timeouts, mismatched outputs and container status. The summary uses only correctness-gated timings.

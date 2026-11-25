@@ -1,6 +1,5 @@
 """Measure the operator-visible surface and lifecycle of the pinned image."""
 
-import gzip
 import json
 import socket
 import ssl
@@ -8,7 +7,7 @@ import statistics
 import threading
 import time
 from contextlib import contextmanager
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -22,59 +21,51 @@ WORK = "SELECT SUM(pmod(a.id*b.id,4301)) FROM range(32000) a CROSS JOIN range(24
 
 @contextmanager
 def telemetry_sink(result):
+    import grpc
     from opentelemetry.proto.collector.logs.v1.logs_service_pb2 import ExportLogsServiceRequest
     from opentelemetry.proto.collector.metrics.v1.metrics_service_pb2 import ExportMetricsServiceRequest
     from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 
-    messages = {"traces": (ExportTraceServiceRequest, "resource_spans", "scope_spans", "spans"),
-                "metrics": (ExportMetricsServiceRequest, "resource_metrics", "scope_metrics", "metrics"),
-                "logs": (ExportLogsServiceRequest, "resource_logs", "scope_logs", "log_records")}
+    messages = {"traces": (ExportTraceServiceRequest, "resource_spans", "scope_spans", "spans", "trace.v1.TraceService"),
+                "metrics": (ExportMetricsServiceRequest, "resource_metrics", "scope_metrics", "metrics", "metrics.v1.MetricsService"),
+                "logs": (ExportLogsServiceRequest, "resource_logs", "scope_logs", "log_records", "logs.v1.LogsService")}
     evidence = result["telemetry"] = {}
+    lock = threading.Lock()
 
-    class OtlpRequest(BaseHTTPRequestHandler):
-        def do_POST(self):
-            kind = self.path.rsplit("/", 1)[-1]
-            if kind not in messages:
-                self.send_error(404)
-                return
-            data = self.rfile.read(int(self.headers["Content-Length"]))
-            if self.headers.get("Content-Encoding") == "gzip":
-                data = gzip.decompress(data)
-            cls, resource_attr, scope_attr, events_attr = messages[kind]
+    def handler(kind, cls, resource_attr, scope_attr, events_attr):
+        def receive(data, _):
             envelope = cls.FromString(data)
-            record = evidence.setdefault(kind, {"requests": 0, "wire_bytes": 0, "events": 0, "examples": []})
-            record["requests"] += 1
-            record["wire_bytes"] += len(data)
-            for resource in getattr(envelope, resource_attr):
-                for scope in getattr(resource, scope_attr):
-                    for event in getattr(scope, events_attr):
-                        record["events"] += 1
-                        if len(record["examples"]) < 40:
-                            if kind == "logs":
-                                example = {"level": event.severity_text, "body": event.body.string_value[:220]}
-                            elif kind == "traces":
-                                example = {"name": event.name, "duration_ns": event.end_time_unix_nano - event.start_time_unix_nano}
-                            else:
-                                example = {"name": event.name, "unit": event.unit, "data_type": event.WhichOneof("data")}
-                            record["examples"].append(example)
-            self.send_response(200)
-            self.send_header("Content-Type", "application/x-protobuf")
-            self.send_header("Content-Length", "0")
-            self.end_headers()
+            with lock:
+                record = evidence.setdefault(kind, {"requests": 0, "wire_bytes": 0, "events": 0, "examples": []})
+                record["requests"] += 1
+                record["wire_bytes"] += len(data)
+                for resource in getattr(envelope, resource_attr):
+                    for scope in getattr(resource, scope_attr):
+                        for event in getattr(scope, events_attr):
+                            record["events"] += 1
+                            if len(record["examples"]) < 40:
+                                if kind == "logs":
+                                    example = {"level": event.severity_text, "body": event.body.string_value[:220]}
+                                elif kind == "traces":
+                                    example = {"name": event.name, "duration_ns": event.end_time_unix_nano - event.start_time_unix_nano}
+                                else:
+                                    example = {"name": event.name, "unit": event.unit, "data_type": event.WhichOneof("data")}
+                                record["examples"].append(example)
+            return b""
+        return grpc.unary_unary_rpc_method_handler(receive)
 
-        def log_message(self, *_):
-            pass
-
-    server = ThreadingHTTPServer(("0.0.0.0", SINK_PORT), OtlpRequest)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    try:
-        yield
-    finally:
-        server.shutdown()
-        server.server_close()
-        thread.join()
-
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        server = grpc.server(pool)
+        server.add_generic_rpc_handlers([grpc.method_handlers_generic_handler("opentelemetry.proto.collector." + name,
+            {"Export": handler(kind, cls, resource, scope, events)})
+            for kind, (cls, resource, scope, events, name) in messages.items()])
+        if not server.add_insecure_port(f"0.0.0.0:{SINK_PORT}"):
+            raise RuntimeError("Could not bind the synthetic OTLP listener")
+        server.start()
+        try:
+            yield
+        finally:
+            server.stop(3).wait(5)
 
 def sql_probe(result, label, session, sql):
     rec, rows = timed(lambda: collect(session, sql, 90))
@@ -127,10 +118,11 @@ def observe(result, session, _, name):
     for endpoint in ("/metrics", "/health", "/healthz"):
         label = f"connect-http{endpoint}"
         rec, response = timed(lambda: requests.get(f"http://127.0.0.1:50051{endpoint}", timeout=3))
-        result["cases"][label] = rec | ({"http": response.status_code, "body": response.text[:200]} if response else {})
+        result["cases"][label] = rec | ({"http": response.status_code, "body": response.text[:200]} if response is not None else {})
     result["listeners"] = cmd("docker", "exec", name, "cat", "/proc/net/tcp", "/proc/net/tcp6", check=False)
     # Give periodic export a chance to flush after the operation and plan probes.
     time.sleep(12)
+    return True
 
 
 def lifecycle(result, signal, trial, expected):
@@ -189,11 +181,13 @@ def main():
              "SAIL_TELEMETRY__EXPORT_METRICS": "true", "SAIL_TELEMETRY__EXPORT_LOGS": "true",
              "SAIL_TELEMETRY__EXPORTER__SYSTEM__ENABLED": "true",
              "SAIL_TELEMETRY__EXPORTER__OTLP__ENDPOINT": f"http://host.docker.internal:{SINK_PORT}",
-             "SAIL_TELEMETRY__EXPORTER__OTLP__PROTOCOL": "http-binary"}
+             "SAIL_TELEMETRY__EXPORTER__OTLP__PROTOCOL": "grpc"}
     print("operator probe OpenTelemetry", flush=True)
     with telemetry_sink(result):
-        group(result, "telemetry", lambda *args: observe(result, *args), "sail", extra=extra,
-              options=("--add-host=host.docker.internal:host-gateway",))
+        observed = group(result, "telemetry", lambda *args: observe(result, *args), "sail", extra=extra,
+                         options=("--add-host=host.docker.internal:host-gateway",))
+    if not observed:
+        group(result, "connect-probes", lambda *args: observe(result, *args), "sail")
     print("operator probe Flight", flush=True)
     group(result, "flight", lambda *args: flight_probe(result, *args), "flight", extra={"RUST_LOG": "info"})
     result["startup"] = []

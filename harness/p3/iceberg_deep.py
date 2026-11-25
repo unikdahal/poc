@@ -48,6 +48,7 @@ def pycatalog():
 FLINK_VERSION = "1.20.4"
 FLINK_IMAGE = "flink:1.20.4-scala_2.12-java17@sha256:912157e4e22718a5fa712cd3d3ce90fe0be10679b40fcb56aeaae42aad19f254"
 ICEBERG_VERSION = "1.12.0"
+HADOOP_CLIENT_VERSION = "3.3.4"
 FLINK_CATALOG = """CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',
 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',
 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',
@@ -60,15 +61,19 @@ def flink_service(result):
     from harness.p3.common import sail_state
 
     result["versions"]["flink"] = {"version": FLINK_VERSION, "image": FLINK_IMAGE,
-                                     "iceberg_runtime": ICEBERG_VERSION, "scala": "2.12"}
+                                     "iceberg_runtime": ICEBERG_VERSION, "hadoop_client": HADOOP_CLIENT_VERSION, "scala": "2.12"}
     with tempfile.TemporaryDirectory(prefix="p3-flink-") as directory:
         work = Path(directory)
         mounts = []
-        for name in ("iceberg-flink-runtime-1.20", "iceberg-aws-bundle"):
-            artifact = f"{name}-{ICEBERG_VERSION}.jar"
+        dependencies = [("org/apache/iceberg", name, ICEBERG_VERSION)
+                        for name in ("iceberg-flink-runtime-1.20", "iceberg-aws-bundle")]
+        dependencies += [("org/apache/hadoop", name, HADOOP_CLIENT_VERSION)
+                         for name in ("hadoop-client-api", "hadoop-client-runtime")]
+        for organization, name, release in dependencies:
+            artifact = f"{name}-{release}.jar"
             path = work / artifact
             cmd("curl", "-fsSL", "--retry", "3", "--retry-all-errors",
-                f"https://repo.maven.apache.org/maven2/org/apache/iceberg/{name}/{ICEBERG_VERSION}/{artifact}",
+                f"https://repo.maven.apache.org/maven2/{organization}/{name}/{release}/{artifact}",
                 "-o", str(path), timeout=180)
             mounts.extend(("-v", f"{path}:/opt/flink/lib/{artifact}:ro"))
         container = "p3-flink"

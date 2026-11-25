@@ -183,12 +183,13 @@ def shuffle_bytes():
                for o in page.get("Contents", []))
 
 
-def benchmark(result, backend, count, reference):
+def benchmark(result, backend, reference, queries=QUERIES, profile=None):
     spark = base.connect(PORT)
     tpch.use(spark, "tpch_sf10")
     internal = internal_id(spark)
-    entries = result["cases"]["queries"] = {}
-    for q in QUERIES:
+    cases = result["cases"] if profile is None else profile["cases"]
+    entries = cases["queries"] = {}
+    for q in queries:
         samples = []
         for rep in range(3):
             started_at = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
@@ -210,13 +211,14 @@ def benchmark(result, backend, count, reference):
 
             clock = [time.perf_counter()]
             rec, rows = timed(lambda: bounded(execute, 180, spark.interruptAll))
+            completed_at = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
             rec["matches_spark"] = rows is not None and fingerprint(rows, tpch.ordered(q)) == reference.get(q)
             if rec["matches_spark"]:
                 rec["client_first_row_s"] = first.get("elapsed_s")
             rec["started_at"] = started_at.isoformat()
-            if rep == 2:
+            if profile is not None or rep == 2:
                 stage_status, stage = timed(lambda: stage_rows(spark, internal, started_at))
-                rec["stage_records"] = stage if stage is not None else stage_status
+                rec["stage_records"] = [r for r in stage if r["created_at"] < completed_at] if stage is not None else stage_status
                 if backend == "storage":
                     observation, size = timed(shuffle_bytes)
                     rec["retained_shuffle_bytes"] = size if size is not None else observation
@@ -470,10 +472,11 @@ def startup_cells(result, image, reference, processes, watcher):
 def main():
     result = begin(TASK)
     reference = {}
+    queries = (6, 9) if VARIANT == "stage-profile" else QUERIES
 
     def load(spark, *_):
         result["data_load"] = load_tpch(spark, 10)
-        for q in QUERIES:
+        for q in queries:
             rec, rows = timed(lambda: tpch_rows(spark, "tpch_sf10", q))
             if rows is not None:
                 reference[q] = fingerprint(rows, tpch.ordered(q))
@@ -485,11 +488,33 @@ def main():
     processes = []
     try:
         failure = VARIANT in FAULTS or VARIANT == "burst"
-        backend, count = ("flight", 1 if VARIANT in ("startup","burst") else 2) if failure or VARIANT in ("startup","shuffle-traffic") else VARIANT.split("-")
-        result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}}
+        limits = {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}
+        if VARIANT == "stage-profile":
+            result["deployment"] = {"limits": limits, "queries": queries, "profiles": {}}
+        else:
+            shared_variant = failure or VARIANT in ("startup", "shuffle-traffic")
+            backend, count = ("flight", 1 if VARIANT in ("startup", "burst") else 2) if shared_variant else VARIANT.split("-")
+            result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": limits}
         with Watcher() as watcher:
             if VARIANT == "startup":
                 startup_cells(result, image, reference, processes, watcher)
+            elif VARIANT == "stage-profile":
+                profiles = result["deployment"]["profiles"]
+                for profile_backend in ("flight", "storage"):
+                    for workers_count in (1, 2, 4):
+                        label = f"{profile_backend}-{workers_count}"
+                        if processes:
+                            base.stop_proc(processes.pop())
+                        print(f"Profiling stages for {label}", flush=True)
+                        profile = {"cases": {}, "workers": workers_count, "shuffle": profile_backend}
+                        profiles[label] = profile
+                        try:
+                            processes.append(deploy(image, profile_backend, workers_count))
+                            benchmark(result, profile_backend, reference, queries, profile)
+                        except Exception as exc:
+                            profile["error"] = error(exc)
+                        profile["pods"] = [pod_record(pod) for pod in get_pods()]
+                        save(result)
             elif VARIANT == "shuffle-traffic":
                 shuffle_traffic(result, image, reference, processes)
             elif VARIANT == "burst":
@@ -504,7 +529,7 @@ def main():
                     fault(result, VARIANT, reference.get(9))
             else:
                 processes.append(deploy(image, backend, int(count)))
-                benchmark(result, backend, int(count), reference)
+                benchmark(result, backend, reference)
         result["pod_timeline"] = watcher.events
     finally:
         for proc in processes:

@@ -5,7 +5,7 @@ import os
 variants = {
     "tenancy": ("isolation", "memory-2g", "memory-8g", "memory-heavy-2g", "memory-heavy-8g"),
     "k8s-scale": ("flight-1", "flight-2", "flight-4", "storage-1", "storage-2", "storage-4",
-                  "map-kill", "reduce-kill", "drain", "netem", "pod-oom", "driver-restart", "burst", "startup", "shuffle-traffic"),
+                  "map-kill", "reduce-kill", "drain", "netem", "pod-oom", "driver-restart", "burst", "startup", "shuffle-traffic", "stage-profile"),
     "soak": ("local", "local-cluster"),
     "iceberg-deep": ("interop", "evolution", "nested-collections", "maintenance", "maintenance-files", "conflict", "conflict-snapshot", "layout"),
     "cpu-scaling": ("runner-1", "runner-2"),

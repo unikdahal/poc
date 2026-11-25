@@ -1,8 +1,8 @@
 {
   "task": "tenancy",
   "variant": "isolation",
-  "revision": "c17f24c45051b369d87aba70b86281648610916c",
-  "run_id": "45555042191",
+  "revision": "8396aea9486fd8741bd33d1b3ffa3c86d7ac469e",
+  "run_id": "45557689391",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,7 +19,7 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
       "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
@@ -66,8 +66,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464306176,
-    "disk": "/dev/mapper/cow-root 154894188544 44081123328 110796288000  29% /"
+    "total_memory_bytes": 16464293888,
+    "disk": "/dev/mapper/cow-root 154894188544 44081287168 110796124160  29% /"
   },
   "engines": {
     "spark-reference": {
@@ -77,6 +77,7 @@
         "driver_memory": "9g",
         "catalog_cache": false,
         "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
           "spark.sql.catalog.tenant_a": "org.apache.iceberg.spark.SparkCatalog",
           "spark.sql.catalog.tenant_a.type": "rest",
           "spark.sql.catalog.tenant_a.uri": "http://localhost:8181/api/catalog",
@@ -106,10 +107,10 @@
         },
         "port": 15002
       },
-      "listen_s": 6.260971784591675,
+      "listen_s": 8.764541387557983,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.063632542000022
+        "elapsed_s": 2.0144921639999893
       }
     },
     "connect-global": {
@@ -130,10 +131,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.1936313329999848,
+      "listen_s": 0.1866079959999638,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.006402299000001221
+        "elapsed_s": 0.006555197000011503
       },
       "before_shutdown": {
         "Status": "running",
@@ -142,10 +143,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 4128,
+        "Pid": 4201,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:41:57.666119484Z",
+        "StartedAt": "2026-11-25T06:06:10.473200858Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -158,8 +159,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:41:57.666119484Z",
-        "FinishedAt": "2026-11-25T05:42:07.362428043Z"
+        "StartedAt": "2026-11-25T06:06:10.473200858Z",
+        "FinishedAt": "2026-11-25T06:06:23.794964697Z"
       }
     },
     "connect-aliases": {
@@ -180,10 +181,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.10169162699997969,
+      "listen_s": 0.10137126800003671,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.0067758589999868946
+        "elapsed_s": 0.008599985000046217
       },
       "before_shutdown": {
         "Status": "running",
@@ -192,10 +193,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 4568,
+        "Pid": 4685,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:07.496752873Z",
+        "StartedAt": "2026-11-25T06:06:23.950510443Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -208,8 +209,158 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:07.496752873Z",
-        "FinishedAt": "2026-11-25T05:42:17.309886403Z"
+        "StartedAt": "2026-11-25T06:06:23.950510443Z",
+        "FinishedAt": "2026-11-25T06:06:33.728628019Z"
+      }
+    },
+    "connect-dynamic": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50053,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10407375899995941,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007159915999977784
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5089,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:06:33.859384159Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:06:33.859384159Z",
+        "FinishedAt": "2026-11-25T06:06:43.221696249Z"
+      }
+    },
+    "vending-valid": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\",access_delegation=\"vended-credentials\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_b\",access_delegation=\"vended-credentials\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10057575300004373,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.0067055439999990085
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5464,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:06:43.35995651Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:06:43.35995651Z",
+        "FinishedAt": "2026-11-25T06:06:52.722357243Z"
+      }
+    },
+    "vending-invalid": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\",access_delegation=\"vended-credentials\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_b\",access_delegation=\"vended-credentials\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10473634999999604,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00699342500001876
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5845,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:06:52.854489289Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:06:52.854489289Z",
+        "FinishedAt": "2026-11-25T06:07:05.809648526Z"
       }
     },
     "flight-global": {
@@ -230,7 +381,7 @@
           "RUST_LOG": "info"
         }
       },
-      "listen_s": 0.0999691490000032,
+      "listen_s": 0.10386356500004013,
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -238,10 +389,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 4975,
+        "Pid": 6285,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:17.453491945Z",
+        "StartedAt": "2026-11-25T06:07:05.951830431Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -254,11 +405,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:17.453491945Z",
-        "FinishedAt": "2026-11-25T05:42:26.310497634Z"
+        "StartedAt": "2026-11-25T06:07:05.951830431Z",
+        "FinishedAt": "2026-11-25T06:07:14.76325284Z"
       }
     },
-    "fairness-local-8g-0": {
+    "fairness-cpu-local-8g-0": {
       "settings": {
         "mode": "local",
         "cores": 4,
@@ -276,10 +427,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.10421423400001117,
+      "listen_s": 0.09575215699999262,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.0074012330000243765
+        "elapsed_s": 0.0064540750000219305
       },
       "before_shutdown": {
         "Status": "running",
@@ -288,10 +439,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 5362,
+        "Pid": 6673,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:26.447992463Z",
+        "StartedAt": "2026-11-25T06:07:14.904482198Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -304,11 +455,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:26.447992463Z",
-        "FinishedAt": "2026-11-25T05:42:36.491185038Z"
+        "StartedAt": "2026-11-25T06:07:14.904482198Z",
+        "FinishedAt": "2026-11-25T06:07:24.83769718Z"
       }
     },
-    "fairness-local-8g-1": {
+    "fairness-cpu-local-8g-1": {
       "settings": {
         "mode": "local",
         "cores": 4,
@@ -326,10 +477,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.10364019499999699,
+      "listen_s": 0.0950426059999927,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.007404206000018121
+        "elapsed_s": 0.007410194999977193
       },
       "before_shutdown": {
         "Status": "running",
@@ -338,10 +489,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 5944,
+        "Pid": 7171,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:36.624833388Z",
+        "StartedAt": "2026-11-25T06:07:24.974269484Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -354,11 +505,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:36.624833388Z",
-        "FinishedAt": "2026-11-25T05:42:50.073487444Z"
+        "StartedAt": "2026-11-25T06:07:24.974269484Z",
+        "FinishedAt": "2026-11-25T06:07:56.592900547Z"
       }
     },
-    "fairness-local-8g-2": {
+    "fairness-cpu-local-8g-2": {
       "settings": {
         "mode": "local",
         "cores": 4,
@@ -376,11 +527,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.09925427100000661,
+      "listen_s": 0.10076679700000568,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.008048371000000998
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00133805799999
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00133805799999}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -388,10 +541,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 6596,
+        "Pid": 8129,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:50.218358463Z",
+        "StartedAt": "2026-11-25T06:07:56.738960139Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -404,11 +557,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:42:50.218358463Z",
-        "FinishedAt": "2026-11-25T05:43:00.109190446Z"
+        "StartedAt": "2026-11-25T06:07:56.738960139Z",
+        "FinishedAt": "2026-11-25T06:09:42.678408925Z"
       }
     },
-    "fairness-local-cluster-8g-0": {
+    "fairness-cpu-local-cluster-8g-0": {
       "settings": {
         "mode": "local-cluster",
         "cores": 4,
@@ -426,11 +579,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.11185778300000493,
+      "listen_s": 0.10251557100002628,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.008297625000011521
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00118098200005
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00118098200005}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -438,10 +593,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 7066,
+        "Pid": 10073,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:00.257586392Z",
+        "StartedAt": "2026-11-25T06:09:42.818381258Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -454,11 +609,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:00.257586392Z",
-        "FinishedAt": "2026-11-25T05:43:10.191639631Z"
+        "StartedAt": "2026-11-25T06:09:42.818381258Z",
+        "FinishedAt": "2026-11-25T06:11:25.109859769Z"
       }
     },
-    "fairness-local-cluster-8g-1": {
+    "fairness-cpu-local-cluster-8g-1": {
       "settings": {
         "mode": "local-cluster",
         "cores": 4,
@@ -476,11 +631,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.1004463200000032,
+      "listen_s": 0.09682084000007762,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.007757358999981534
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00132657100005
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00132657100005}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -488,10 +645,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 7535,
+        "Pid": 11917,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:10.328120398Z",
+        "StartedAt": "2026-11-25T06:11:25.259056511Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -504,11 +661,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:10.328120398Z",
-        "FinishedAt": "2026-11-25T05:43:20.259312692Z"
+        "StartedAt": "2026-11-25T06:11:25.259056511Z",
+        "FinishedAt": "2026-11-25T06:13:10.827682993Z"
       }
     },
-    "fairness-local-cluster-8g-2": {
+    "fairness-cpu-local-cluster-8g-2": {
       "settings": {
         "mode": "local-cluster",
         "cores": 4,
@@ -526,11 +683,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.09848480699997708,
+      "listen_s": 0.09423987100001341,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.00815343300001814
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00140867899995
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00140867899995}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -538,10 +697,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 8039,
+        "Pid": 13792,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:20.406595951Z",
+        "StartedAt": "2026-11-25T06:13:10.976032299Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -554,11 +713,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:20.406595951Z",
-        "FinishedAt": "2026-11-25T05:43:30.350975365Z"
+        "StartedAt": "2026-11-25T06:13:10.976032299Z",
+        "FinishedAt": "2026-11-25T06:14:56.703703155Z"
       }
     },
-    "fairness-local-2g-0": {
+    "fairness-cpu-local-2g-0": {
       "settings": {
         "mode": "local",
         "cores": 4,
@@ -576,11 +735,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.10062286100003348,
+      "listen_s": 0.10658087700005581,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.00903421100002788
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00128694400007
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00128694400007}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -588,10 +749,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 8518,
+        "Pid": 15685,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:30.485563483Z",
+        "StartedAt": "2026-11-25T06:14:56.847017757Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -604,11 +765,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:30.485563483Z",
-        "FinishedAt": "2026-11-25T05:43:40.511405712Z"
+        "StartedAt": "2026-11-25T06:14:56.847017757Z",
+        "FinishedAt": "2026-11-25T06:16:39.142728526Z"
       }
     },
-    "fairness-local-2g-1": {
+    "fairness-cpu-local-2g-1": {
       "settings": {
         "mode": "local",
         "cores": 4,
@@ -626,11 +787,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.09886940000001232,
+      "listen_s": 0.10673707900002682,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.007981427999993684
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00146394800004
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00146394800004}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -638,10 +801,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 9087,
+        "Pid": 17506,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:40.646866996Z",
+        "StartedAt": "2026-11-25T06:16:39.279003264Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -654,11 +817,11 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:40.646866996Z",
-        "FinishedAt": "2026-11-25T05:43:50.633075033Z"
+        "StartedAt": "2026-11-25T06:16:39.279003264Z",
+        "FinishedAt": "2026-11-25T06:18:21.574609684Z"
       }
     },
-    "fairness-local-2g-2": {
+    "fairness-cpu-local-2g-2": {
       "settings": {
         "mode": "local",
         "cores": 4,
@@ -676,11 +839,13 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.09863940799999682,
+      "listen_s": 0.10066341399999601,
       "readiness_select1": {
-        "status": "ok",
-        "elapsed_s": 0.007132766999973228
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00146145100007
       },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00146145100007}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -688,10 +853,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 9692,
+        "Pid": 19344,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:50.775340322Z",
+        "StartedAt": "2026-11-25T06:18:21.716105311Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -704,8 +869,320 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:43:50.775340322Z",
-        "FinishedAt": "2026-11-25T05:44:00.808203503Z"
+        "StartedAt": "2026-11-25T06:18:21.716105311Z",
+        "FinishedAt": "2026-11-25T06:20:07.548487353Z"
+      }
+    },
+    "fairness-memory-local-2g-0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "2g",
+        "port": 50500,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.09902467300003082,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00151918699999
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00151918699999}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 21238,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:20:07.690532531Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:20:07.690532531Z",
+        "FinishedAt": "2026-11-25T06:21:53.299840671Z"
+      }
+    },
+    "fairness-memory-local-2g-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "2g",
+        "port": 50501,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.09752986500006955,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00143924999998
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00143924999998}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 23117,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:21:53.446749592Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:21:53.446749592Z",
+        "FinishedAt": "2026-11-25T06:23:35.734786339Z"
+      }
+    },
+    "fairness-memory-local-2g-2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "2g",
+        "port": 50502,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10523675199988247,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00152191799998
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00152191799998}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 24940,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:23:35.874490362Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:23:35.874490362Z",
+        "FinishedAt": "2026-11-25T06:25:18.16923315Z"
+      }
+    },
+    "fairness-memory-local-8g-0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50500,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.0968999359999998,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00146115500002
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00146115500002}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 26811,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:25:18.303101655Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:25:18.303101655Z",
+        "FinishedAt": "2026-11-25T06:27:00.587683794Z"
+      }
+    },
+    "fairness-memory-local-8g-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50501,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.09488214900011371,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00142588899985
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00142588899985}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 28625,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:27:00.725736043Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:27:00.725736043Z",
+        "FinishedAt": "2026-11-25T06:28:43.009572618Z"
+      }
+    },
+    "fairness-memory-local-8g-2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50502,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.09950076900008753,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.001282855
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.001282855}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 30470,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:28:43.164071937Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:28:43.164071937Z",
+        "FinishedAt": "2026-11-25T06:30:25.452417914Z"
       }
     }
   },
@@ -862,63 +1339,63 @@
     },
     "sts-assume-role": {
       "status": "ok",
-      "elapsed_s": 0.008183840000015152
+      "elapsed_s": 0.00781649599997536
     },
     "sts-tenant_a-tenant_a-anchor": {
       "bucket": "tenant-a",
-      "object": "isolated/anchor/data/00000-1-10df6dd9-a8cf-424a-b28a-25cdd08b3712-0-00001.parquet",
+      "object": "isolated/anchor/data/00000-1-c01659e7-5f39-43c7-9b9d-61fcfdff708d-0-00001.parquet",
       "http": 206,
       "prefix_hex": "50415231"
     },
     "sts-tenant_a-tenant_a-other_table": {
       "bucket": "tenant-a",
-      "object": "isolated/connect_a/data/00000-2-2f67b8a5-f26b-42a9-bd5f-95e054f3423f-0-00001.parquet",
+      "object": "isolated/connect_a/data/00000-2-49680edd-f872-42af-abd1-be8d5a951cb9-0-00001.parquet",
       "error": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: Access Denied",
       "http": 403
     },
     "sts-tenant_a-tenant_b-anchor": {
       "bucket": "tenant-b",
-      "object": "isolated/anchor/data/00000-8-c06347e8-7262-42a5-8d57-9f9b57c06444-0-00001.parquet",
+      "object": "isolated/anchor/data/00000-8-0b65f09b-1f84-4c62-9f2b-80e879492ef7-0-00001.parquet",
       "error": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: Access Denied",
       "http": 403
     },
     "sts-tenant_a-tenant_b-other_table": {
       "bucket": "tenant-b",
-      "object": "isolated/connect_a/data/00000-9-e1d5f697-5594-40da-9e18-fb33bd032f14-0-00001.parquet",
+      "object": "isolated/connect_a/data/00000-9-e1486d05-7d3e-495e-b185-536da97769c7-0-00001.parquet",
       "error": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: Access Denied",
       "http": 403
     },
     "sts-tenant_b-tenant_a-anchor": {
       "bucket": "tenant-a",
-      "object": "isolated/anchor/data/00000-1-10df6dd9-a8cf-424a-b28a-25cdd08b3712-0-00001.parquet",
+      "object": "isolated/anchor/data/00000-1-c01659e7-5f39-43c7-9b9d-61fcfdff708d-0-00001.parquet",
       "error": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: Access Denied",
       "http": 403
     },
     "sts-tenant_b-tenant_a-other_table": {
       "bucket": "tenant-a",
-      "object": "isolated/connect_a/data/00000-2-2f67b8a5-f26b-42a9-bd5f-95e054f3423f-0-00001.parquet",
+      "object": "isolated/connect_a/data/00000-2-49680edd-f872-42af-abd1-be8d5a951cb9-0-00001.parquet",
       "error": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: Access Denied",
       "http": 403
     },
     "sts-tenant_b-tenant_b-anchor": {
       "bucket": "tenant-b",
-      "object": "isolated/anchor/data/00000-8-c06347e8-7262-42a5-8d57-9f9b57c06444-0-00001.parquet",
+      "object": "isolated/anchor/data/00000-8-0b65f09b-1f84-4c62-9f2b-80e879492ef7-0-00001.parquet",
       "http": 206,
       "prefix_hex": "50415231"
     },
     "sts-tenant_b-tenant_b-other_table": {
       "bucket": "tenant-b",
-      "object": "isolated/connect_a/data/00000-9-e1d5f697-5594-40da-9e18-fb33bd032f14-0-00001.parquet",
+      "object": "isolated/connect_a/data/00000-9-e1486d05-7d3e-495e-b185-536da97769c7-0-00001.parquet",
       "error": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: Access Denied",
       "http": 403
     },
     "connect-tenant_a-session-option": {
       "status": "ok",
-      "elapsed_s": 0.010562233999991122
+      "elapsed_s": 0.010477251999986947
     },
     "connect-tenant_a-tenant_a-read": {
       "status": "ok",
-      "elapsed_s": 0.04033855700001254,
+      "elapsed_s": 0.039433844000029694,
       "rows": [
         [
           1
@@ -928,13 +1405,13 @@
     },
     "connect-tenant_a-tenant_a-write": {
       "status": "ok",
-      "elapsed_s": 0.08028166300002226,
+      "elapsed_s": 0.07129637399998501,
       "rows": [],
       "sql": "INSERT INTO tenant_a.isolated.connect_a VALUES (99)"
     },
     "connect-tenant_a-tenant_a-drop": {
       "status": "ok",
-      "elapsed_s": 0.011388533000001644,
+      "elapsed_s": 0.010061919999998281,
       "rows": [
         [
           true
@@ -945,28 +1422,28 @@
     "connect-tenant_a-tenant_b-read": {
       "status": "error",
       "error": "AnalysisException: Failed to load table isolated.connect_a: response error: status code 403 Forbidden",
-      "elapsed_s": 0.011210140000002866,
+      "elapsed_s": 0.01016364499997735,
       "sql": "SELECT id FROM tenant_b.isolated.connect_a"
     },
     "connect-tenant_a-tenant_b-write": {
       "status": "error",
       "error": "AnalysisException: Failed to load table isolated.connect_a: response error: status code 403 Forbidden",
-      "elapsed_s": 0.004187763000004452,
+      "elapsed_s": 0.004379074999974364,
       "sql": "INSERT INTO tenant_b.isolated.connect_a VALUES (99)"
     },
     "connect-tenant_a-tenant_b-drop": {
       "status": "error",
       "error": "AnalysisException: external error: Failed to drop table: response error: status code 403 Forbidden",
-      "elapsed_s": 0.004361872000004041,
+      "elapsed_s": 0.004467914999963796,
       "sql": "DROP TABLE tenant_b.isolated.connect_a"
     },
     "connect-tenant_b-session-option": {
       "status": "ok",
-      "elapsed_s": 0.010198997999992798
+      "elapsed_s": 0.010311248999983036
     },
     "connect-tenant_b-tenant_a-read": {
       "status": "ok",
-      "elapsed_s": 0.03754504600001951,
+      "elapsed_s": 0.03457532400000218,
       "rows": [
         [
           1
@@ -976,13 +1453,13 @@
     },
     "connect-tenant_b-tenant_a-write": {
       "status": "ok",
-      "elapsed_s": 0.06843440400001555,
+      "elapsed_s": 0.06622385200000735,
       "rows": [],
       "sql": "INSERT INTO tenant_a.isolated.connect_b VALUES (99)"
     },
     "connect-tenant_b-tenant_a-drop": {
       "status": "ok",
-      "elapsed_s": 0.006977444999989757,
+      "elapsed_s": 0.007515913000020191,
       "rows": [
         [
           true
@@ -993,24 +1470,24 @@
     "connect-tenant_b-tenant_b-read": {
       "status": "error",
       "error": "AnalysisException: Failed to load table isolated.connect_b: response error: status code 403 Forbidden",
-      "elapsed_s": 0.010692900999998756,
+      "elapsed_s": 0.010317233000023407,
       "sql": "SELECT id FROM tenant_b.isolated.connect_b"
     },
     "connect-tenant_b-tenant_b-write": {
       "status": "error",
       "error": "AnalysisException: Failed to load table isolated.connect_b: response error: status code 403 Forbidden",
-      "elapsed_s": 0.004431783000001133,
+      "elapsed_s": 0.005768789000001107,
       "sql": "INSERT INTO tenant_b.isolated.connect_b VALUES (99)"
     },
     "connect-tenant_b-tenant_b-drop": {
       "status": "error",
       "error": "AnalysisException: external error: Failed to drop table: response error: status code 403 Forbidden",
-      "elapsed_s": 0.004892211999987239,
+      "elapsed_s": 0.006070290000025125,
       "sql": "DROP TABLE tenant_b.isolated.connect_b"
     },
     "session-a-CREATE": {
       "status": "ok",
-      "elapsed_s": 0.005157960000019557,
+      "elapsed_s": 0.005707771999993838,
       "rows": [
         [
           true
@@ -1020,7 +1497,7 @@
     },
     "session-a-SET": {
       "status": "ok",
-      "elapsed_s": 0.004327385999999933,
+      "elapsed_s": 0.00382030800000166,
       "rows": [
         [
           "spark.sql.session.timeZone",
@@ -1031,16 +1508,16 @@
     },
     "python-udf-register-a": {
       "status": "ok",
-      "elapsed_s": 0.0022069590000057815
+      "elapsed_s": 0.0016355079999925692
     },
     "session-a-config-zone": {
       "status": "ok",
-      "elapsed_s": 0.0007007970000074693,
+      "elapsed_s": 0.0006417189999865514,
       "value": "Pacific/Honolulu"
     },
     "session-a-view": {
       "status": "ok",
-      "elapsed_s": 0.004156373999990137,
+      "elapsed_s": 0.004091949999974531,
       "rows": [
         [
           71
@@ -1050,7 +1527,7 @@
     },
     "session-a-zone": {
       "status": "ok",
-      "elapsed_s": 0.0035723720000078174,
+      "elapsed_s": 0.004177003999984663,
       "rows": [
         [
           "Pacific/Honolulu"
@@ -1060,7 +1537,7 @@
     },
     "session-a-context": {
       "status": "ok",
-      "elapsed_s": 0.0033589370000015606,
+      "elapsed_s": 0.0031976469999790424,
       "rows": [
         [
           "tenant_a",
@@ -1072,23 +1549,23 @@
     "session-a-udf": {
       "status": "error",
       "error": "IllegalArgumentException: invalid argument: Python version used to compile the UDF (3.11) does not match the Python version at runtime (3.14.10 (main, Nov 24 2026, 04:58:47) [GCC 14.2.0])",
-      "elapsed_s": 0.002467615000000478,
+      "elapsed_s": 0.0022099330000173723,
       "sql": "SELECT tenant_increment(1)"
     },
     "session-b-config-zone": {
       "status": "ok",
-      "elapsed_s": 0.0004014429999870117,
+      "elapsed_s": 0.0004573100000015984,
       "value": "Etc/UTC"
     },
     "session-b-view": {
       "status": "error",
       "error": "AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: default.tenant_marker",
-      "elapsed_s": 0.014213616000006368,
+      "elapsed_s": 0.009558157000014944,
       "sql": "SELECT * FROM tenant_marker"
     },
     "session-b-zone": {
       "status": "ok",
-      "elapsed_s": 0.005827218000007406,
+      "elapsed_s": 0.003548242000022128,
       "rows": [
         [
           "Etc/UTC"
@@ -1098,7 +1575,7 @@
     },
     "session-b-context": {
       "status": "ok",
-      "elapsed_s": 0.0034845879999920726,
+      "elapsed_s": 0.003271043000040663,
       "rows": [
         [
           "tenant_a",
@@ -1110,16 +1587,16 @@
     "session-b-udf": {
       "status": "error",
       "error": "UnsupportedOperationException: unknown function: tenant_increment",
-      "elapsed_s": 0.002918725000000677,
+      "elapsed_s": 0.002176270999996177,
       "sql": "SELECT tenant_increment(1)"
     },
     "aliases-tenant_a-session-option": {
       "status": "ok",
-      "elapsed_s": 0.010349721000011414
+      "elapsed_s": 0.010253352000006544
     },
     "aliases-tenant_a-tenant_a-read": {
       "status": "ok",
-      "elapsed_s": 0.05061440900001912,
+      "elapsed_s": 0.049159674999998515,
       "rows": [
         [
           1
@@ -1129,13 +1606,13 @@
     },
     "aliases-tenant_a-tenant_a-write": {
       "status": "ok",
-      "elapsed_s": 0.0717137379999997,
+      "elapsed_s": 0.07519912800000839,
       "rows": [],
       "sql": "INSERT INTO tenant_a.isolated.aliases_a VALUES (99)"
     },
     "aliases-tenant_a-tenant_a-drop": {
       "status": "ok",
-      "elapsed_s": 0.007530960999986291,
+      "elapsed_s": 0.0068132320000131585,
       "rows": [
         [
           true
@@ -1145,7 +1622,7 @@
     },
     "aliases-tenant_a-tenant_b-read": {
       "status": "ok",
-      "elapsed_s": 0.038240650999995296,
+      "elapsed_s": 0.0314859019999858,
       "rows": [
         [
           2
@@ -1155,13 +1632,13 @@
     },
     "aliases-tenant_a-tenant_b-write": {
       "status": "ok",
-      "elapsed_s": 0.06262878699999419,
+      "elapsed_s": 0.05552413399999523,
       "rows": [],
       "sql": "INSERT INTO tenant_b.isolated.aliases_a VALUES (99)"
     },
     "aliases-tenant_a-tenant_b-drop": {
       "status": "ok",
-      "elapsed_s": 0.008685681000002887,
+      "elapsed_s": 0.008312686000010672,
       "rows": [
         [
           true
@@ -1171,11 +1648,11 @@
     },
     "aliases-tenant_b-session-option": {
       "status": "ok",
-      "elapsed_s": 0.010635767999986001
+      "elapsed_s": 0.010027250999996795
     },
     "aliases-tenant_b-tenant_a-read": {
       "status": "ok",
-      "elapsed_s": 0.03565735899999822,
+      "elapsed_s": 0.03498511000003646,
       "rows": [
         [
           1
@@ -1185,13 +1662,13 @@
     },
     "aliases-tenant_b-tenant_a-write": {
       "status": "ok",
-      "elapsed_s": 0.06565903199998502,
+      "elapsed_s": 0.06247330400003648,
       "rows": [],
       "sql": "INSERT INTO tenant_a.isolated.aliases_b VALUES (99)"
     },
     "aliases-tenant_b-tenant_a-drop": {
       "status": "ok",
-      "elapsed_s": 0.008416430000011133,
+      "elapsed_s": 0.0075859720000153175,
       "rows": [
         [
           true
@@ -1201,7 +1678,7 @@
     },
     "aliases-tenant_b-tenant_b-read": {
       "status": "ok",
-      "elapsed_s": 0.03303397199999836,
+      "elapsed_s": 0.031082213999980013,
       "rows": [
         [
           2
@@ -1211,13 +1688,13 @@
     },
     "aliases-tenant_b-tenant_b-write": {
       "status": "ok",
-      "elapsed_s": 0.07011870399998088,
+      "elapsed_s": 0.06931734200003348,
       "rows": [],
       "sql": "INSERT INTO tenant_b.isolated.aliases_b VALUES (99)"
     },
     "aliases-tenant_b-tenant_b-drop": {
       "status": "ok",
-      "elapsed_s": 0.010848745999993525,
+      "elapsed_s": 0.005933916000003592,
       "rows": [
         [
           true
@@ -1225,15 +1702,91 @@
       ],
       "sql": "DROP TABLE tenant_b.isolated.aliases_b"
     },
+    "dynamic-tenant_a-set": {
+      "status": "ok",
+      "elapsed_s": 0.010021988000005422
+    },
+    "dynamic-tenant_a-set.uri": {
+      "status": "ok",
+      "elapsed_s": 0.00048275100004957494
+    },
+    "dynamic-tenant_a-set.warehouse": {
+      "status": "ok",
+      "elapsed_s": 0.00039860100002897525
+    },
+    "dynamic-tenant_a-set.bearer_access_token": {
+      "status": "ok",
+      "elapsed_s": 0.00033832499997288323
+    },
+    "dynamic-tenant_a-own-catalog": {
+      "status": "error",
+      "error": "AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: per_session.isolated.anchor",
+      "elapsed_s": 0.021204610999973283,
+      "sql": "SELECT id FROM per_session.isolated.anchor"
+    },
+    "dynamic-tenant_b-set": {
+      "status": "ok",
+      "elapsed_s": 0.009675004999962766
+    },
+    "dynamic-tenant_b-set.uri": {
+      "status": "ok",
+      "elapsed_s": 0.00044661099997256315
+    },
+    "dynamic-tenant_b-set.warehouse": {
+      "status": "ok",
+      "elapsed_s": 0.0003659810000158359
+    },
+    "dynamic-tenant_b-set.bearer_access_token": {
+      "status": "ok",
+      "elapsed_s": 0.0004289369999810333
+    },
+    "dynamic-tenant_b-own-catalog": {
+      "status": "error",
+      "error": "AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: per_session.isolated.anchor",
+      "elapsed_s": 0.015292192000003979,
+      "sql": "SELECT id FROM per_session.isolated.anchor"
+    },
+    "sail-vending-valid-tenant_a": {
+      "status": "ok",
+      "elapsed_s": 0.037812194000025556,
+      "rows": [
+        [
+          1
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_a.isolated.anchor"
+    },
+    "sail-vending-valid-tenant_b": {
+      "status": "ok",
+      "elapsed_s": 0.025528468999993947,
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_b.isolated.anchor"
+    },
+    "sail-vending-invalid-tenant_a": {
+      "status": "error",
+      "error": "SparkRuntimeException: Server returned non-2xx status code: 403 Forbidden: <?xml version=\"1.0\" encoding=\"UTF-8\"?><Error><Code>InvalidAccessKeyId</Code><Message>The Access Key Id you provided does not exist in our records.</Message></Error>",
+      "elapsed_s": 0.03161171499999682,
+      "sql": "SELECT id FROM tenant_a.isolated.anchor"
+    },
+    "sail-vending-invalid-tenant_b": {
+      "status": "error",
+      "error": "SparkRuntimeException: Server returned non-2xx status code: 403 Forbidden: <?xml version=\"1.0\" encoding=\"UTF-8\"?><Error><Code>InvalidAccessKeyId</Code><Message>The Access Key Id you provided does not exist in our records.</Message></Error>",
+      "elapsed_s": 0.02647879699998157,
+      "sql": "SELECT id FROM tenant_b.isolated.anchor"
+    },
     "flight-ready-0": {
       "status": "error",
       "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
-      "elapsed_s": 0.0007312220000130765,
+      "elapsed_s": 0.0006863350000116952,
       "sql": "SELECT 1"
     },
     "flight-ready-1": {
       "status": "ok",
-      "elapsed_s": 0.04912423400000421,
+      "elapsed_s": 0.0470213340000214,
       "rows": [
         [
           1
@@ -1243,7 +1796,7 @@
     },
     "flight-tenant_a-tenant_a-read": {
       "status": "ok",
-      "elapsed_s": 0.05178192500000023,
+      "elapsed_s": 0.04037043300002097,
       "rows": [
         [
           1
@@ -1253,13 +1806,13 @@
     },
     "flight-tenant_a-tenant_a-write": {
       "status": "ok",
-      "elapsed_s": 0.06854289900002186,
+      "elapsed_s": 0.05187244199998986,
       "rows": [],
       "sql": "INSERT INTO tenant_a.isolated.flight_a VALUES (99)"
     },
     "flight-tenant_a-tenant_a-drop": {
       "status": "ok",
-      "elapsed_s": 0.004738979999984849,
+      "elapsed_s": 0.003556625999976859,
       "rows": [
         [
           true
@@ -1270,24 +1823,24 @@
     "flight-tenant_a-tenant_b-read": {
       "status": "error",
       "error": "FlightInternalError: Flight returned internal error, with message: plan error: analysis error: Failed to load table isolated.flight_a: response error: status code 403 Forbidden",
-      "elapsed_s": 0.007467246000004479,
+      "elapsed_s": 0.00691424100000404,
       "sql": "SELECT id FROM tenant_b.isolated.flight_a"
     },
     "flight-tenant_a-tenant_b-write": {
       "status": "error",
       "error": "FlightInternalError: Flight returned internal error, with message: plan error: analysis error: Failed to load table isolated.flight_a: response error: status code 403 Forbidden",
-      "elapsed_s": 0.003083730000014384,
+      "elapsed_s": 0.0029131750000033207,
       "sql": "INSERT INTO tenant_b.isolated.flight_a VALUES (99)"
     },
     "flight-tenant_a-tenant_b-drop": {
       "status": "error",
       "error": "FlightInternalError: Flight returned internal error, with message: execution error: Execution error: external error: Failed to drop table: response error: status code 403 Forbidden",
-      "elapsed_s": 0.003711329999987356,
+      "elapsed_s": 0.0032044980000023315,
       "sql": "DROP TABLE tenant_b.isolated.flight_a"
     },
     "flight-create-temp-view": {
       "status": "ok",
-      "elapsed_s": 0.001349922999992259,
+      "elapsed_s": 0.001167452000004232,
       "rows": [
         [
           true
@@ -1297,13 +1850,13 @@
     },
     "flight-set-zone": {
       "status": "ok",
-      "elapsed_s": 0.0010287629999936598,
+      "elapsed_s": 0.0009568730000069081,
       "rows": [],
       "sql": "SET timezone = 'Pacific/Honolulu'"
     },
     "flight-tenant_a-view": {
       "status": "ok",
-      "elapsed_s": 0.001472199000005503,
+      "elapsed_s": 0.0014382479999994757,
       "rows": [
         [
           71
@@ -1313,7 +1866,7 @@
     },
     "flight-tenant_a-zone": {
       "status": "ok",
-      "elapsed_s": 0.0015536260000033053,
+      "elapsed_s": 0.001575598999977501,
       "rows": [
         [
           "Pacific/Honolulu"
@@ -1323,7 +1876,7 @@
     },
     "flight-tenant_a-context": {
       "status": "ok",
-      "elapsed_s": 0.0010804560000110541,
+      "elapsed_s": 0.0011674639999910141,
       "rows": [
         [
           "tenant_a",
@@ -1334,7 +1887,7 @@
     },
     "flight-tenant_b-tenant_a-read": {
       "status": "ok",
-      "elapsed_s": 0.021315463999997064,
+      "elapsed_s": 0.018545842000037283,
       "rows": [
         [
           1
@@ -1344,13 +1897,13 @@
     },
     "flight-tenant_b-tenant_a-write": {
       "status": "ok",
-      "elapsed_s": 0.055917625999995835,
+      "elapsed_s": 0.04403766499996209,
       "rows": [],
       "sql": "INSERT INTO tenant_a.isolated.flight_b VALUES (99)"
     },
     "flight-tenant_b-tenant_a-drop": {
       "status": "ok",
-      "elapsed_s": 0.003919370999994953,
+      "elapsed_s": 0.00315430899996727,
       "rows": [
         [
           true
@@ -1361,24 +1914,24 @@
     "flight-tenant_b-tenant_b-read": {
       "status": "error",
       "error": "FlightInternalError: Flight returned internal error, with message: plan error: analysis error: Failed to load table isolated.flight_b: response error: status code 403 Forbidden",
-      "elapsed_s": 0.0033751599999902737,
+      "elapsed_s": 0.0026664829999845097,
       "sql": "SELECT id FROM tenant_b.isolated.flight_b"
     },
     "flight-tenant_b-tenant_b-write": {
       "status": "error",
       "error": "FlightInternalError: Flight returned internal error, with message: plan error: analysis error: Failed to load table isolated.flight_b: response error: status code 403 Forbidden",
-      "elapsed_s": 0.00402959300001271,
+      "elapsed_s": 0.002629609999985405,
       "sql": "INSERT INTO tenant_b.isolated.flight_b VALUES (99)"
     },
     "flight-tenant_b-tenant_b-drop": {
       "status": "error",
       "error": "FlightInternalError: Flight returned internal error, with message: execution error: Execution error: external error: Failed to drop table: response error: status code 403 Forbidden",
-      "elapsed_s": 0.003613736000005474,
+      "elapsed_s": 0.0037009339999940494,
       "sql": "DROP TABLE tenant_b.isolated.flight_b"
     },
     "flight-tenant_b-view": {
       "status": "ok",
-      "elapsed_s": 0.001703956000000062,
+      "elapsed_s": 0.001181654999982129,
       "rows": [
         [
           71
@@ -1388,7 +1941,7 @@
     },
     "flight-tenant_b-zone": {
       "status": "ok",
-      "elapsed_s": 0.001164916999982779,
+      "elapsed_s": 0.0011018290000492925,
       "rows": [
         [
           "Pacific/Honolulu"
@@ -1398,7 +1951,7 @@
     },
     "flight-tenant_b-context": {
       "status": "ok",
-      "elapsed_s": 0.0011985780000145496,
+      "elapsed_s": 0.001138070000024527,
       "rows": [
         [
           "tenant_a",
@@ -1407,3320 +1960,836 @@
       ],
       "sql": "SELECT current_catalog(), current_database()"
     },
-    "fairness-local-8g-0": {
+    "fairness-cpu-local-8g-0": {
       "idle": [
         {
           "status": "ok",
-          "elapsed_s": 0.014739984999977196,
+          "elapsed_s": 0.013125374000026113,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003649309999985917,
+          "elapsed_s": 0.0031226280000282713,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033847459999947205,
+          "elapsed_s": 0.0031659530000069935,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003328101999983346,
+          "elapsed_s": 0.0032002529999886065,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033677250000039294,
+          "elapsed_s": 0.0028882519999910983,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003247977000000901,
+          "elapsed_s": 0.0033917920000021695,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033969889999809766,
+          "elapsed_s": 0.0030252020000034463,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003376680999991777,
+          "elapsed_s": 0.0033226000000468048,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031286679999880107,
+          "elapsed_s": 0.003047467999977016,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0036497239999846443,
+          "elapsed_s": 0.003493036000008942,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031991459999858307,
+          "elapsed_s": 0.0032591190000061943,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003231661999990365,
+          "elapsed_s": 0.003097582999998849,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035297119999881943,
+          "elapsed_s": 0.002979942999957075,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0029017620000217903,
+          "elapsed_s": 0.0031719140000063817,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003572966999996652,
+          "elapsed_s": 0.0034100699999726203,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0032633600000053775,
+          "elapsed_s": 0.0029131260000099246,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031520670000020345,
+          "elapsed_s": 0.003126837999957388,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003384848999985479,
+          "elapsed_s": 0.0031926890000022468,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003436837999998943,
+          "elapsed_s": 0.003353039999979046,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033860140000001593,
+          "elapsed_s": 0.003091983999979675,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0032589559999962603,
+          "elapsed_s": 0.003216433000034158,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003061293000001797,
+          "elapsed_s": 0.003025116000003436,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035276510000130656,
+          "elapsed_s": 0.003271020999989105,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033426200000121753,
+          "elapsed_s": 0.0029802490000179205,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0030648770000141212,
+          "elapsed_s": 0.0031981829999949696,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003338829000000487,
+          "elapsed_s": 0.0029471629999875404,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031588710000107767,
+          "elapsed_s": 0.003613748999953259,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0034411000000034164,
+          "elapsed_s": 0.0030533230000173717,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031418899999948735,
+          "elapsed_s": 0.0032737519999841425,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003315512999989778,
+          "elapsed_s": 0.0032956179999814594,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031418920000021444,
+          "elapsed_s": 0.002814736000004814,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003368948000002092,
+          "elapsed_s": 0.0031680069999993066,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0032924369999989267,
+          "elapsed_s": 0.003533104000041476,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0032691680000027645,
+          "elapsed_s": 0.0029465869999967254,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0028598150000220812,
+          "elapsed_s": 0.003167039000004479,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003633116000003156,
+          "elapsed_s": 0.003091295999979593,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003319243999982291,
+          "elapsed_s": 0.0031022509999729664,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003373667000005298,
+          "elapsed_s": 0.003021492999948805,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033536459999936596,
+          "elapsed_s": 0.0033496070000182954,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033765120000168736,
+          "elapsed_s": 0.0029845399999999245,
           "matches_spark": true
         }
       ],
       "under_load": [
         {
           "status": "ok",
-          "elapsed_s": 0.13475516700000867,
+          "elapsed_s": 0.20545266900001025,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.007313483999979553,
+          "elapsed_s": 0.015123963000007734,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00353602199999159,
+          "elapsed_s": 0.015098477999970328,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004303335999992441,
+          "elapsed_s": 0.006816357999980482,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003977018999989923,
+          "elapsed_s": 0.003658320999988973,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00411908399999561,
+          "elapsed_s": 0.0040077770000266355,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003591905999996925,
+          "elapsed_s": 0.003100824000000557,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.009424013000000286,
+          "elapsed_s": 0.003474016000041047,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.006690198000001146,
+          "elapsed_s": 0.002775373000019954,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004255484999987402,
+          "elapsed_s": 0.0030607450000275094,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.007401163999986693,
+          "elapsed_s": 0.00296043200000895,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005740904999981922,
+          "elapsed_s": 0.0032590590000154407,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.006976879000006875,
+          "elapsed_s": 0.0029918280000060804,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0041650119999872,
+          "elapsed_s": 0.0030757049999579067,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004242074999979195,
+          "elapsed_s": 0.003488486999970064,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0036103700000182926,
+          "elapsed_s": 0.0030058240000130354,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003880173999988301,
+          "elapsed_s": 0.0029224470000031033,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004951620999975148,
+          "elapsed_s": 0.0030493240000168953,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00871582099998136,
+          "elapsed_s": 0.0030614829999535687,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003723293999996713,
+          "elapsed_s": 0.002893298000003597,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0037031189999936487,
+          "elapsed_s": 0.0035843869999894196,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0037909480000166695,
+          "elapsed_s": 0.0029285649999906127,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003545076000023073,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004021041000015657,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0064424359999861736,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0057875459999934264,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006359253999988823,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004230022000001554,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004432315999991943,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004189636000006658,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038497490000111156,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004662872000011475,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004738438999993377,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00573543799998788,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0044994330000065474,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004844508999980235,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004410474999986036,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0046814300000050935,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004651191999982984,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004514248999981874,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004729889000003595,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004547922000000426,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004307878000020082,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004930830000006381,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0046629340000095,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003407982999988235,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003658342999983688,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034159830000248803,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004072116000003234,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037587360000088665,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037233129999947323,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032781919999820275,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032944109999846205,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.007746560999976282,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031761999999844193,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004442928000003121,
+          "elapsed_s": 0.0031899240000257123,
           "matches_spark": true
         }
       ],
       "heavy": {
         "status": "ok",
-        "elapsed_s": 0.5943271159999881,
+        "elapsed_s": 0.447188916000016,
+        "cpu_s": 1.694531,
+        "peak_bytes": 113917952,
         "matches_spark": true
       },
-      "p99_idle_s": 0.014739984999977196,
-      "p99_under_load_s": 0.13475516700000867
+      "sql": "SELECT sum(a.id+b.id) FROM range(40000) a CROSS JOIN range(40000) b",
+      "p99_idle_s": 0.013125374000026113,
+      "p99_under_load_s": 0.20545266900001025
     },
-    "fairness-local-8g-1": {
+    "fairness-cpu-local-8g-1": {
       "idle": [
         {
           "status": "ok",
-          "elapsed_s": 0.014118964000005008,
+          "elapsed_s": 0.013653903999966133,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004091737000010198,
+          "elapsed_s": 0.0036566040000138855,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0034573799999861876,
+          "elapsed_s": 0.0032383019999997487,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00374482199998738,
+          "elapsed_s": 0.0032822640000063075,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003298747999991747,
+          "elapsed_s": 0.00301584900000762,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0032821949999970457,
+          "elapsed_s": 0.003195812000001297,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031697430000008353,
+          "elapsed_s": 0.0033280249999734224,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031518469999980425,
+          "elapsed_s": 0.0031069849999880716,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003661039000007804,
+          "elapsed_s": 0.0032307920000107515,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033334510000031514,
+          "elapsed_s": 0.003249714999981279,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0028871469999955934,
+          "elapsed_s": 0.0031618059999800607,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0027534130000219648,
+          "elapsed_s": 0.003067334999968807,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003185465000001386,
+          "elapsed_s": 0.0031944859999839537,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0034029210000028343,
+          "elapsed_s": 0.003148718000034023,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035584340000127668,
+          "elapsed_s": 0.0030210979999765186,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0030049140000016905,
+          "elapsed_s": 0.003030996999996205,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035656700000004093,
+          "elapsed_s": 0.003034619000004568,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003392826999998988,
+          "elapsed_s": 0.003557910000040465,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003112271000020428,
+          "elapsed_s": 0.0031524979999630887,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0030565079999860245,
+          "elapsed_s": 0.0030942390000063824,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00337474099998758,
+          "elapsed_s": 0.0029714030000036473,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033263459999943734,
+          "elapsed_s": 0.00323888299999453,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0034731389999933526,
+          "elapsed_s": 0.003094749000013053,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031504519999998593,
+          "elapsed_s": 0.003426348000004964,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003284247999999934,
+          "elapsed_s": 0.002769429000011314,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0030618349999826933,
+          "elapsed_s": 0.003004710000027444,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035653829999944264,
+          "elapsed_s": 0.003240041999958976,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031226260000210004,
+          "elapsed_s": 0.003665781000051993,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003051551999988078,
+          "elapsed_s": 0.002862063999998554,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0030875449999996363,
+          "elapsed_s": 0.0028944430000024113,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003415989999979274,
+          "elapsed_s": 0.0029621610000276632,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0030197730000054435,
+          "elapsed_s": 0.0029538480000042,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0037302570000008473,
+          "elapsed_s": 0.0031626749999986714,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003176685999989104,
+          "elapsed_s": 0.003125178999994205,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0029305639999961386,
+          "elapsed_s": 0.0029755329999829883,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003378717000003917,
+          "elapsed_s": 0.002998248999972475,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035654929999964224,
+          "elapsed_s": 0.003425465000020722,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003130252999994809,
+          "elapsed_s": 0.0033008209999820792,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003131678999977794,
+          "elapsed_s": 0.0031885159999660573,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0032131419999927857,
+          "elapsed_s": 0.0031744870000238734,
           "matches_spark": true
         }
       ],
       "under_load": [
         {
           "status": "ok",
-          "elapsed_s": 0.1246524270000009,
+          "elapsed_s": 0.12619952000000012,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005917637000010245,
+          "elapsed_s": 0.018771641999990152,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003563612999982979,
+          "elapsed_s": 0.008006918000035057,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0035569759999987127,
+          "elapsed_s": 0.0056776189999823146,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00459785399999646,
+          "elapsed_s": 0.008372250000036274,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004805539000017234,
+          "elapsed_s": 0.0046915810000314195,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004152204999996911,
+          "elapsed_s": 0.009372896000002129,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0041612889999953495,
+          "elapsed_s": 0.003237350000006245,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0045550639999873965,
+          "elapsed_s": 0.0036867329999950016,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003509878000016897,
+          "elapsed_s": 0.0037938169999733873,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003925442999985762,
+          "elapsed_s": 0.004576599999950304,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004748723000005839,
+          "elapsed_s": 0.003411017000019001,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004755566000000044,
+          "elapsed_s": 0.0037880170000335056,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004362334999996165,
+          "elapsed_s": 0.004539641999997457,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005431275000006508,
+          "elapsed_s": 0.004193743000030281,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.00475335500001961,
+          "elapsed_s": 0.005520418999992671,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005089311999995516,
+          "elapsed_s": 0.004688841000017874,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005247851000007131,
+          "elapsed_s": 0.0036930950000169105,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005550357999993594,
+          "elapsed_s": 0.004613082000048507,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004883727000020599,
+          "elapsed_s": 0.004966430000024502,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004958646999995153,
+          "elapsed_s": 0.004107080999972368,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005022797999998829,
+          "elapsed_s": 0.0044495620000475355,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0042524929999956385,
+          "elapsed_s": 0.0036792230000060044,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005572665000016741,
+          "elapsed_s": 0.004166117000011127,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005153425999992578,
+          "elapsed_s": 0.003942585000004328,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033801879999941775,
+          "elapsed_s": 0.005475653999951646,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0042752589999963675,
+          "elapsed_s": 0.0042135070000313135,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004950167999993482,
+          "elapsed_s": 0.00485443699994903,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0039015240000139784,
+          "elapsed_s": 0.004821397000000616,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005030720999997129,
+          "elapsed_s": 0.004472087999999985,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004223903999985623,
+          "elapsed_s": 0.003848647999973309,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004255978000003324,
+          "elapsed_s": 0.004025433000037992,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005011306999989529,
+          "elapsed_s": 0.004237452000040776,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004296695999983058,
+          "elapsed_s": 0.0036998699999912787,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004632602999976143,
+          "elapsed_s": 0.004650685999990856,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004690535000008822,
+          "elapsed_s": 0.0038333229999807372,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0045419890000175656,
+          "elapsed_s": 0.004036762999987786,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004535622999981115,
+          "elapsed_s": 0.0037685199999941688,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.005073712000012165,
+          "elapsed_s": 0.004560318000017105,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003830506000014111,
+          "elapsed_s": 0.0035733150000396563,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0031900249999807784,
+          "elapsed_s": 0.003744133999987298,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0033789599999920483,
+          "elapsed_s": 0.003066686000011032,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0036437720000037643,
+          "elapsed_s": 0.004667167999969024,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0037977039999930184,
+          "elapsed_s": 0.003432387000032122,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0038951049999980114,
+          "elapsed_s": 0.003956592999998065,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.003355140999985906,
+          "elapsed_s": 0.0033639139999763756,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0037881750000110515,
+          "elapsed_s": 0.0036986129999831974,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.004151829999983647,
+          "elapsed_s": 0.003367162999950324,
           "matches_spark": true
         },
         {
           "status": "ok",
-          "elapsed_s": 0.0041763209999885476,
+          "elapsed_s": 0.00368974299999536,
           "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033074980000264986,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036154570000235253,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003792993999979899,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003394008999975995,
+          "matches_spark": true
+        },
+        {
+          "status": "error",
+          "error": "ValueError: Pool not running",
+          "elapsed_s": 0.0033766089999858195,
+          "matches_spark": false
+        },
+        {
+          "status": "timeout",
+          "error": "TimeoutError: 15s deadline, client active=True",
+          "elapsed_s": 18.001157965000004,
+          "matches_spark": false
         }
       ],
       "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.5364227459999995,
-        "matches_spark": true
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.5713144020000414,
+        "cpu_s": 1.416194,
+        "peak_bytes": 101957632,
+        "matches_spark": false
       },
-      "p99_idle_s": 0.014118964000005008,
-      "p99_under_load_s": 0.1246524270000009
-    },
-    "fairness-local-8g-2": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.01416117900001268,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034849950000079843,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003688140999997813,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003347797999992963,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003423193000003266,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032180540000013025,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036110659999906147,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0028630170000099042,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031871560000240606,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031155500000181746,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035398559999748613,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00326766399999201,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032699520000107896,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003063486000002058,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034266100000195365,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00315525400000638,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003076746999994384,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033737410000185264,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003476397000014231,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033060910000131116,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035144649999949706,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00311880600000336,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032871029999910206,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003233940000001212,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003686181999995597,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003396562999995467,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031794660000059594,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003380440999990242,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034219309999912184,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003508901999992986,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003079818999992767,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003350643999993963,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034221800000011626,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033388420000051156,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031275690000143186,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00311122100001171,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034057020000091143,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033892609999952583,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0028806349999968006,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003426216000008253,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.21207443000000126,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.010279005999990432,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005327072999989468,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036406469999974433,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006803674000025239,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003943988999992598,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004318832999985034,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.4438577809999913,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.01416117900001268,
-      "p99_under_load_s": 0.21207443000000126
-    },
-    "fairness-local-cluster-8g-0": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.014846303000012995,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0039961790000120345,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038107540000282825,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003986268000005566,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004010385000015049,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036522309999895697,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00358300400000644,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00382789299999331,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037170240000250487,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003921989999980724,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003571791000013036,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036783539999873938,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0041322669999885875,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003417806000015844,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003754645000014989,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003997018999996271,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035773660000018026,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003538737999974728,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035119730000019445,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035634070000014617,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037471230000392097,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038896320000390006,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00441601699998273,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003741214999990916,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0039006439999980103,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003534016999992673,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0040046260000394795,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003985175000025265,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036641730000042116,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004180856000004951,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003932471999974041,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003931330999989768,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003955227000005834,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003805768999995962,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0039632839999512726,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034599929999785672,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036129789999677087,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038176499999735825,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038660769999978584,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036601169999812555,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.2432827509999811,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00941671700002189,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.45189794300000585,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.014846303000012995,
-      "p99_under_load_s": 0.2432827509999811
-    },
-    "fairness-local-cluster-8g-1": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.015014603999986775,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0041365710000036415,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00362665500000503,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004023628999959783,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004000555000004624,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003978690999986156,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003709721999996418,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003801057000032415,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036288120000449453,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037149419999877864,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038966519999803495,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00367094799997858,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003644392000012431,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003914183000006233,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037364439999691967,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003870932000040739,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003541935999976431,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004005594000034307,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036073439999881884,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038804289999916364,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003823122999961015,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038352249999888954,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005157031999999617,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005021430999988752,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037896869999940463,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035136829999942165,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00370111399996631,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036773890000176834,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035561920000191094,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037737150000225483,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036885769999912554,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038338429999953405,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036900860000059765,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036168540000289795,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003825684000048568,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003751451000027828,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037449270000138313,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035264300000221738,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003626403999987815,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038980369999990216,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.2208540039999889,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006889489000002413,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.013270570999964093,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.007069315000023835,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005865434999975605,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037664800000243304,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0049857899999778965,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.46273242799998116,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.015014603999986775,
-      "p99_under_load_s": 0.2208540039999889
-    },
-    "fairness-local-cluster-8g-2": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.01554039699999521,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004252017999988311,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004176952000022993,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004095947999985583,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037550769999938893,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003751962000023923,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038572220000219204,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036980060000360027,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037311570000042593,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0041296680000186825,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004090598000004775,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003872339999986707,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004011386999991373,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003925696000010248,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00399835999996867,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004233685000031073,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003917052000019794,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003646001999982218,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004188728000031006,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036958250000225235,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004119286999980432,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038638830000081725,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00386762299996235,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035412629999882483,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035633389999816245,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036561879999794655,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037733809999735968,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034753389999764295,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003822497999976804,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00375554300001113,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004052197999953933,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0042676150000033886,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003852952999977788,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003917918000013287,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035721379999813507,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004298373000040101,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003819478000025356,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034298109999895132,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004014160999986416,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00394576399997959,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.22543877700002213,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.007196523000004618,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.013963558000000376,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004415410999968117,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004122322000000622,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00412286400000994,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005226424999989376,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.46412830100001656,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.01554039699999521,
-      "p99_under_load_s": 0.22543877700002213
-    },
-    "fairness-local-2g-0": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.019447287999980745,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006429374999981974,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006808650999971633,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006172628999991048,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.002953013999956511,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034944540000196866,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034266499999944244,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003469944000016767,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0028763119999553055,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003906988999972327,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035368890000313513,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031668650000256093,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035563339999953314,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033494839999548276,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032690549999756513,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034160940000447226,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030842209999946135,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003530471999965812,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003150757000014437,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031166989999746875,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003387282000005598,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032364290000259643,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034345509999980095,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003406905000019833,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034545199999911347,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003565389000016239,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031242349999729413,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0029272269999864875,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035714260000077047,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032200929999817163,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003139873999998599,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033350949999544355,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0028909170000019913,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003377838000005795,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035643919999870377,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003123694000009891,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030189789999894856,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003636728999993011,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032953890000158026,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032106460000136394,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.12867700300000706,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.009002343000020119,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.007048012999973707,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004710391000003256,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003529590999960419,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004140221999989535,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004828427000006741,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004067960999975639,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004323628999998164,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038893029999940154,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.008316610000008495,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005319127000007029,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.008651405999955841,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004470308000009027,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004806137999992188,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005616177999968386,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036816209999983585,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004536306999966655,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004678647999980967,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006215852000025279,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005051786000024094,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00390365999999176,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035668079999595648,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0041485250000050655,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00466865499998903,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005102736000026198,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004247804999977234,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004309613000032186,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00516249700001481,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037597650000407157,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004013466999992943,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035670820000177628,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004465120999952887,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004829103000020041,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004053959999964718,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004632839000009881,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004472213999974883,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004175099999997656,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0051993910000192045,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.009478913999998895,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005758412999966822,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004605410000010579,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004466366999963611,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00527067400003034,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004977516999986165,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003699089000008371,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034313730000121723,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0044728089999921394,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.5597621210000057,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.019447287999980745,
-      "p99_under_load_s": 0.12867700300000706
-    },
-    "fairness-local-2g-1": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.015136901999994734,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0040241169999717386,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005053943000007166,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038990830000216192,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004099780000046849,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032306580000067697,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033377510000036636,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003399743999978,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003008834000013394,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003471015000002353,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031903409999927135,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032308319999856394,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003241391000017302,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003225148000012723,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003401148000023113,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035340579999569854,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031865969999671506,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031630459999973937,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003522443999997904,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030570609999927,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031854039999643646,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034610750000183543,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003359822000049917,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003170398000008845,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003352994000010767,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030950469999879715,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003727319000006446,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032797480000112955,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003369461999966461,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036200779999830957,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0029842239999879894,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035664989999872887,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003456504999974186,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030331739999951424,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030557329999965077,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033540470000161804,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035004410000283315,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032818650000194793,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035862579999843547,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003131822000000284,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.1262424919999603,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0042406740000160426,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004595571999971071,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003456781000011233,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00393691800002216,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004319304999967244,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003611277999993945,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004405965999978889,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003541538999968452,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003656728999999359,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004112434999967718,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00412851400000136,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005472266000026593,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035649939999871094,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032066819999840845,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004065421000007063,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004083202000003894,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004176792000009755,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038166840000144475,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0051853049999976975,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004631783999968775,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0050571890000128406,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004466219999983423,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003922573000011198,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038243399999942085,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004365743999983351,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004738704999965648,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004846821000001,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00456617500003631,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004406501000005392,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.007445215000018379,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0041215999999622,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004788621999978204,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004609274000017649,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004047317000015482,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0048595780000368904,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005382578000023841,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003589946999966287,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003959104000045954,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004157083999984934,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004666139999983443,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004055250000021715,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00408987899999147,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034127899999703004,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.002954138999996303,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036078449999763507,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038344999999821994,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033702770000445526,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005630777999954262,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.5317821419999973,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.015136901999994734,
-      "p99_under_load_s": 0.1262424919999603
-    },
-    "fairness-local-2g-2": {
-      "idle": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.013907856000002994,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003956582000000708,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037433299999634073,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0046989520000124685,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004040322000037122,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004181569000024865,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003562911000017266,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003970181999989109,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037553970000203662,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033877330000109396,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035473359999969034,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004367842999954519,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003605972999991991,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034974029999830236,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032046809999997095,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033750140000279316,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0030693140000153107,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003248949999999695,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.002744973000005757,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036804769999889686,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003012165000029654,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034081889999697523,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033392820000130996,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003239613999994617,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003569536999975753,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0031906770000205142,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003339653000011822,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003224906000014016,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003311725999992632,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003642723999973896,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003128786000047512,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.002954923000004328,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036374860000023546,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032018220000509245,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003261446999999862,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032179089999999633,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003266895999956887,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0034806630000048244,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003264634999993632,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0033999380000295787,
-          "matches_spark": true
-        }
-      ],
-      "under_load": [
-        {
-          "status": "ok",
-          "elapsed_s": 0.12557902300000023,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006605179000018779,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004782580999972197,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005454003000011198,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.010228807000032702,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038753939999764953,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00778977599998143,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0038775920000375663,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035639930000002096,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004055505999986053,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0064643489999980375,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0051774589999808995,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.006212043000004996,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0035668780000150946,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004085100999986935,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036805990000061684,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.011269639000033749,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005947769999977481,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004693508000002566,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032622679999576576,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003967644999988806,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.012049925999974676,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00897683000005145,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005137608999973509,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004026695999982621,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003960426999981337,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003677024000012352,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036138120000259732,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005600822999952015,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004183061000048838,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00457807899999807,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00799133699996446,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.007634644999995999,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.005615805999980239,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004112957000018014,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0036562839999874086,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004882275999989361,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0037034239999798046,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0049047420000079,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004108418999976493,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004512161000036485,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00433190800004013,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004503645999989203,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004568789000018114,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0041974750000122185,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003775222000001577,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003966499999989992,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.003379121000023133,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.00328597399999353,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.0032010090000085256,
-          "matches_spark": true
-        },
-        {
-          "status": "ok",
-          "elapsed_s": 0.004324277000023358,
-          "matches_spark": true
-        }
-      ],
-      "heavy": {
-        "status": "ok",
-        "elapsed_s": 0.5796599639999727,
-        "matches_spark": true
-      },
-      "p99_idle_s": 0.013907856000002994,
-      "p99_under_load_s": 0.12557902300000023
-    }
-  },
-  "fairness_medians": {
-    "local-8g": {
-      "p99_idle_s": 0.014140071500008844,
-      "p99_under_load_s": 0.16836342850000108
-    },
-    "local-cluster-8g": {
-      "p99_idle_s": 0.015277500499990992,
-      "p99_under_load_s": 0.2231463905000055
-    },
-    "local-2g": {
-      "p99_idle_s": 0.014522378999998864,
-      "p99_under_load_s": 0.12591075749998026
+      "sql": "SELECT sum(a.id+b.id) FROM range(40000) a CROSS JOIN range(40000) b",
+      "p99_idle_s": 0.013653903999966133,
+      "p99_under_load_s": null
     }
   },
   "source_candidates": {
     "flight_session": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/service.rs#L58-L69",
-    "spark_session": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/session_manager/actor/handler.rs#L45"
+    "spark_session": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/session_manager/actor/handler.rs#L45",
+    "server_catalogs": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/catalog.rs#L28-L98",
+    "vending": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L106-L119"
   }
 }

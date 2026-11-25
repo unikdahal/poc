@@ -49,9 +49,12 @@ def sh(cmd: str, check: bool = True, capture: bool = True) -> str:
     return (r.stdout or "") + (r.stderr or "") if capture else ""
 
 
-def wait_port(port: int, host: str = "127.0.0.1", timeout: float = 180) -> float:
+def wait_port(port: int, host: str = "127.0.0.1", timeout: float = 180,
+              process: subprocess.Popen | None = None) -> float:
     start = time.time()
     while time.time() - start < timeout:
+        if process is not None and process.poll() is not None:
+            raise RuntimeError(f"Process exited with status {process.returncode} before port {port} opened")
         try:
             with socket.create_connection((host, port), timeout=1):
                 return time.time() - start
@@ -365,11 +368,16 @@ def start_spark_connect(port: int = 15002, comet: bool = False, memory: str = "6
     for k, val in conf.items():
         args += ["--conf", f"{k}={val}"]
     args.append("spark-internal")
-    logf = open(OUT / f"spark-connect-{port}{'-comet' if comet else ''}.log", "w")
     env = dict(os.environ, SPARK_HOME=str(spark_home), AWS_REGION=S3["region"])
     t0 = time.time()
-    proc = subprocess.Popen(args, stdout=logf, stderr=subprocess.STDOUT, env=env)
-    wait_port(port, timeout=600)
+    with (OUT / f"spark-connect-{port}{'-comet' if comet else ''}.log").open("w") as logf:
+        proc = subprocess.Popen(args, stdout=logf, stderr=subprocess.STDOUT, env=env)
+    try:
+        wait_port(port, timeout=600, process=proc)
+    except Exception:
+        if proc.poll() is None:
+            stop_proc(proc)
+        raise
     return proc, time.time() - t0
 
 

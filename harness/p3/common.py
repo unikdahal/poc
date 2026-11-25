@@ -219,8 +219,18 @@ def engine(result, name, *, label=None, memory=None, cores=4, mode="local", extr
             spark_conf = {"spark.jars.ivySettings": str(Path(__file__).with_name("tools") / "ivysettings.xml")} | (spark_conf or {})
             cfg["settings"] = {"comet": name == "comet", "cores": cores, "driver_memory": memory,
                                "catalog_cache": False, "overrides": spark_conf or {}, "port": port}
-            proc, cfg["listen_s"] = base.start_spark_connect(port=port, comet=name == "comet",
-                                                             memory=memory, cores=cores, extra_conf=spark_conf)
+            for attempt in range(3):
+                try:
+                    proc, cfg["listen_s"] = base.start_spark_connect(port=port, comet=name == "comet",
+                                                                     memory=memory, cores=cores, extra_conf=spark_conf)
+                    break
+                except RuntimeError as exc:
+                    log = base.OUT / f"spark-connect-{port}{'-comet' if name == 'comet' else ''}.log"
+                    if attempt == 2 or not log.exists() or "unresolved dependency" not in log.read_text():
+                        raise
+                    cfg.setdefault("dependency_retries", []).append(error(exc))
+                    log.replace(base.OUT / f"{label}-dependency-attempt-{attempt + 1}.log")
+                    time.sleep(12 * (attempt + 1))
             stats = base.PidStats(base.jvm_pid(proc))
         session = None if name == "flight" else base.connect(port)
         if session and ready:

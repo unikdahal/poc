@@ -285,7 +285,7 @@ function renderSuite() {
       const ref = by[engines[0]];
       const ratio = e !== engines[0] && ref?.ok ? ` <span class="muted">${fmt(ref.wall_median_s / x.wall_median_s, 1)}×</span>` : '';
       return `<td class="num"${x.wall_median_s === best ? ' style="font-weight:650"' : ''}>${fmt(x.wall_median_s)}${ratio}</td>`; }).join('');
-    const v = r.comparisons.map(c => `<span class="muted">${esc(label(c.engine))}</span> ${verdictBadge(c.verdict)}`).join(' &nbsp; ');
+    const v = r.comparisons.map(c => `<span class="muted">${esc(c.engine)}</span> ${verdictBadge(c.verdict.replace(/^equal within tolerance.*/, '≈ within tol.'))}`).join(' ');
     return `<tr><td>${esc(q)}</td>${cells}<td>${v}</td></tr>`;
   }).join('');
   const tot = engines.map(e => `<td class="num"><b>${fmt(totals[e].wall, 2)}</b>${e !== engines[0] && totals[e].wall ? ` <span class="muted">${fmt(totals[engines[0]].wall / totals[e].wall, 1)}×</span>` : ''}</td>`).join('');

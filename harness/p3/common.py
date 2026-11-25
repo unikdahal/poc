@@ -123,6 +123,8 @@ def typed(v):
         return {"decimal": str(v)}
     if isinstance(v, float):
         return {"float": repr(v)}
+    if isinstance(v, datetime.timedelta):
+        return {"interval_microseconds": (v.days * 86400 + v.seconds) * 1000000 + v.microseconds}
     if isinstance(v, (datetime.date, datetime.datetime)):
         return {"datetime": v.isoformat()}
     if isinstance(v, bytes):

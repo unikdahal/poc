@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 from harness.p3.common import VARIANT, base, begin, bounded, cmd, error, fingerprint, group, save, timed
@@ -13,7 +14,7 @@ PY4 = "4.0.1"
 TOOLS = Path(__file__).with_name("tools")
 
 
-def python_cases(s):
+def python_cases(s, port):
     import pandas as pd
     from pyspark.sql import Window, functions as f
     from pyspark.sql.types import LongType, StructField, StructType
@@ -21,8 +22,8 @@ def python_cases(s):
     df = s.range(8).selectExpr("id", "id % 2 AS g", "id + 1 AS a", "id * 2 AS b")
     nested = s.range(3).selectExpr("id", "array(id,id+1) AS a", "map('a',id,'b',id+1) AS m",
                                    "named_struct('old',id,'b',id+1) AS st")
-    strings = s.range(2).selectExpr("""id, concat('key-',id,'-123') AS text,
-        concat('{"a":',id,'}') AS js, concat(id,',text') AS csv""")
+    strings = s.range(2).selectExpr("id", "concat('key-',id,'-123') AS text",
+                                   """concat('{"a":',id,'}') AS js""", "concat(id,',text') AS csv")
     dates = s.range(2).selectExpr("date_add(DATE '2024-02-28', cast(id AS int)) AS d",
                                  "TIMESTAMP_NTZ '2024-03-10 02:10:00' AS t")
     window = Window.partitionBy("g").orderBy("id")
@@ -47,7 +48,7 @@ def python_cases(s):
 
     def roundtrip(iceberg):
         if iceberg:
-            table = "polaris.p3_api.writer_probe"
+            table = f"polaris.p3_api.writer_probe_{port}"
             s.sql("CREATE NAMESPACE IF NOT EXISTS polaris.p3_api").collect()
             s.sql(f"DROP TABLE IF EXISTS {table}").collect()
             df.writeTo(table).using("iceberg").tableProperty("format-version", "2").create()
@@ -106,7 +107,7 @@ def python_cases(s):
 def python_probe(port, path):
     session = base.connect(port)
     output = {}
-    for name, operation in python_cases(session).items():
+    for name, operation in python_cases(session, port).items():
         def evaluate():
             value = operation()
             rows = value if isinstance(value, list) else value.collect()
@@ -127,7 +128,8 @@ def execute(result, side, kind, invoke):
             raise RuntimeError(output[-1800:])
         return json.loads(path.read_text())
 
-    return group(result, side, run, kind)
+    extra = {"SAIL_EXECUTION__CHECKPOINT__PATH": "s3://warehouse/p3-checkpoint"} if kind == "sail" else None
+    return group(result, side, run, kind, extra=extra)
 
 
 def main():
@@ -146,15 +148,23 @@ def main():
             if is_jvm:
                 scala = "2.13" if newer else "2.12"
                 cp_path = scratch / "classpath"
-                cmd("mvn", "-B", "-q", "-f", str(TOOLS / "connect-pom.xml"),
-                    f"-Dspark.version={client_version}", f"-Dscala.binary.version={scala}",
-                    "org.apache.maven.plugins:maven-dependency-plugin:3.8.1:build-classpath",
-                    f"-Dmdep.outputFile={cp_path}", timeout=900)
+                for attempt in range(3):
+                    try:
+                        cmd("mvn", "-B", "-U", "-q", "-f", str(TOOLS / "connect-pom.xml"),
+                            f"-Dspark.version={client_version}", f"-Dscala.binary.version={scala}",
+                            "org.apache.maven.plugins:maven-dependency-plugin:3.8.1:build-classpath",
+                            f"-Dmdep.outputFile={cp_path}", timeout=900)
+                        break
+                    except RuntimeError as exc:
+                        result.setdefault("maven_setup_retries", []).append(error(exc))
+                        if attempt == 2 or "429" not in str(exc):
+                            raise
+                        time.sleep(20 * (attempt + 1))
                 cp = cp_path.read_text().strip()
                 cmd("javac", "-cp", cp, "-d", str(scratch), str(TOOLS / "ConnectProbe.java"), timeout=120)
 
                 def invoke(port, path):
-                    raw = cmd("java", "-cp", f"{scratch}:{cp}", "ConnectProbe",
+                    raw = cmd("java", "--add-opens=java.base/java.nio=ALL-UNNAMED", "-cp", f"{scratch}:{cp}", "ConnectProbe",
                               f"sc://127.0.0.1:{port}", timeout=420, check=False)
                     (base.OUT / f"jvm-{port}.log").write_text(raw)
                     rows = {}
@@ -171,7 +181,7 @@ def main():
                     venv = scratch / "client"
                     cmd(sys.executable, "-m", "venv", "--system-site-packages", str(venv))
                     executable = str(venv / "bin/python")
-                    cmd(executable, "-m", "pip", "install", f"pyspark[connect]=={client_version}",
+                    cmd(executable, "-m", "pip", "install", f"pyspark-client=={client_version}",
                         "pyarrow==17.0.0", "pandas==2.2.3", "py4j==0.10.9.9", timeout=900)
                     (base.OUT / "client-pip-freeze.txt").write_text(cmd(executable, "-m", "pip", "freeze"))
 

@@ -368,7 +368,7 @@ def verify(result, reference, spark, *_):
     result["post_fault_scan"] = rec | {"matches_spark": rows is not None and fingerprint(rows) == reference["scan"]}
 
 
-def expiration(result, relays, expected, session, stats_, _):
+def expiration(result, relays, expected, session, stats_, container):
     token, exp, ttl = write_token()
     point = f"{base.POLARIS}/api/catalog/v1/{CATALOG}/namespaces/test/tables/token_query"
     evidence = result["cases"]["token_expiry"] = {"issued_expires_at": exp, "reported_ttl_s": ttl, "wait_udf_s": 605,
@@ -376,23 +376,38 @@ def expiration(result, relays, expected, session, stats_, _):
     begin_at = time.time()
     marks = relays["catalog"].mark()
 
-    def hold(x):
-        import time
-        time.sleep(605)
-        return x
+    probe = f"""
+import json
+import time
+from pyspark.sql.connect.session import SparkSession
 
-    session.udf.register("p3_expiration_hold", hold, "int")
+def hold(value):
+    time.sleep(605)
+    return value
+
+session = SparkSession("sc://127.0.0.1:50051")
+session.udf.register("p3_expiration_hold", hold, "int")
+rows = session.sql("SELECT p3_expiration_hold(id) FROM {NS}.token_query").collect()
+print("P3_RESULT=" + json.dumps([list(row) for row in rows]), flush=True)
+"""
+    result["versions"]["long_query_client"] = cmd("docker", "exec", container, "python", "-c",
+        "import platform,pyspark; print(platform.python_version(),pyspark.__version__)")
     status = {}
 
     def query():
-        rec, rows = timed(lambda: collect(session, f"SELECT p3_expiration_hold(id) FROM {NS}.token_query", 690), stats_)
+        def execute():
+            output = cmd("docker", "exec", container, "python", "-u", "-c", probe, timeout=690)
+            encoded = next(line.removeprefix("P3_RESULT=") for line in output.splitlines() if line.startswith("P3_RESULT="))
+            return json.loads(encoded)
+
+        rec, rows = timed(execute, stats_)
         status.update(rec | {"matches_spark": rows is not None and fingerprint(rows) == expected})
         save(result)
 
     worker = threading.Thread(target=query, daemon=True)
     worker.start()
     while time.time() < exp + 3 and worker.is_alive():
-        worker.join(min(1, exp + 3 - time.time()))
+        worker.join(max(0, min(1, exp + 3 - time.time())))
     evidence["query_active_past_expiration"] = worker.is_alive() and time.time() >= exp
     if time.time() >= exp:
         evidence["direct_rest_expired"] = requests.get(point, headers=auth(token), timeout=10).status_code

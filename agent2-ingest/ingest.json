@@ -1,0 +1,1010 @@
+{
+  "task": "ingest",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.agent2.ingest"
+  ],
+  "revision": "e1a382c1e2ae0dca85f40cfb507f9a95c0033663",
+  "run_id": "45490127635",
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d",
+    "sail_image_digest": "[\"ghcr.io/unikdahal/poc/sail@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767\"]",
+    "infra_images": "{\"Command\":\"\\\"/entrypoint.sh rust\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:23:16 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"eb083650a82f\",\"Image\":\"rustfs/rustfs:1.0.0-beta.8\",\"Labels\":\"description=RustFS is a distributed object storage system written in Rust, supporting erasure coding, multi-tenant management, and observability.,name=RustFS,release=1.0.0-beta.8,summary=High-performance distributed object storage system compatible with S3 API,url=https://rustfs.com,build-date=,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,version=v1.0.0-beta.8,com.docker.compose.config-hash=23bdcebd18c8e9ef15f1d9eca851868fb5013fd2e2e4ec8889eb631048bccea1,com.docker.compose.depends_on=,com.docker.compose.version=5.1.3,org.opencontainers.image.title=RustFS,org.opencontainers.image.description=RustFS distributed object storage system,org.opencontainers.image.version=1.0.0-beta.8,org.opencontainers.image.revision=64c0ede0261eeb7ccd415221d6f102aa70829b6a,org.opencontainers.image.source=https://github.com/rustfs/rustfs,org.opencontainers.image.created=2026-06-10T10:22:17Z,org.opencontainers.image.build-type=prerelease,vcs-ref=,vendor=RustFS Team,com.docker.compose.image=sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3,com.docker.compose.project=poc,com.docker.compose.service=minio,license=Apache-2.0,maintainer=RustFS Team \\u003cdev@rustfs.com\\u003e,com.docker.compose.container-number=1,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml\",\"LocalVolumes\":\"1\",\"Mounts\":\"f04ce40afbb090\u2026\",\"Name\":\"poc-minio-1\",\"Names\":\"poc-minio-1\",\"Networks\":\"poc\",\"Ports\":\"0.0.0.0:9000-\\u003e9000/tcp, [::]:9000-\\u003e9000/tcp, 9001/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"0.0.0.0\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":9000,\"PublishedPort\":9000,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":9001,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"31 seconds ago\",\"Service\":\"minio\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 23 seconds (healthy)\"}\n{\"Command\":\"\\\"/opt/jboss/containe\u2026\\\"\",\"CreatedAt\":\"2026-11-24 21:23:24 +0000 UTC\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"14e565c2cae6\",\"Image\":\"apache/polaris:latest\",\"Labels\":\"org.opencontainers.image.created=2026-10-29T05:53:50Z,release=3.1793323798,com.docker.compose.version=5.1.3,com.redhat.license_terms=https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI,io.k8s.description=Platform for running plain Java applications (fat-jar and flat classpath),org.opencontainers.image.revision=ubi9,summary=Image for Red Hat OpenShift providing OpenJDK 21 runtime,version=1.24,com.docker.compose.container-number=1,com.docker.compose.depends_on=minio-setup:service_completed_successfully:false,com.redhat.component=openjdk-21-runtime-ubi9-container,io.k8s.display-name=Java Applications,io.openshift.expose-services=,org.opencontainers.image.source=https://github.com/apache/polaris,vendor=Red Hat, Inc.,com.docker.compose.config-hash=d7ea8dbea3647cc7f0120a26b514c25fc6d16a7b36b4bc663d4721896b4ff286,com.docker.compose.project.working_dir=/home/runner/work/poc/poc/compose,description=Image for Red Hat OpenShift providing OpenJDK 21 runtime,io.buildah.version=1.33.14,io.openshift.tags=java,org.jboss.product.openjdk.version=21,org.opencontainers.image.documentation=https://rh-openjdk.github.io/redhat-openjdk-containers/,url=https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/openjdk-21-runtime/images/1.24-3.1793323798,com.docker.compose.oneoff=False,maintainer=Red Hat OpenJDK \\u003copenjdk@redhat.com\\u003e,org.opencontainers.image.description=Apache Polaris,usage=https://rh-openjdk.github.io/redhat-openjdk-containers/,vcs-type=git,com.docker.compose.project=poc,com.docker.compose.project.config_files=/home/runner/work/poc/poc/compose/docker-compose.yml,cpe=cpe:/a:redhat:enterprise_linux:9::appstream,distribution-scope=public,org.opencontainers.image.licenses=Apache-2.0,architecture=x86_64,name=ubi9/openjdk-21-runtime,vcs-ref=f74d5e7c1c24af798478dbc512f9ddf0ffc4c411,build-date=2026-10-30T03:03:13,com.docker.compose.image=sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0,com.docker.compose.service=polaris,io.cekit.version=4.13.0.dev0,org.jboss.product=openjdk,org.jboss.product.version=21\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"poc-polaris-1\",\"Names\":\"poc-polaris-1\",\"Networks\":\"poc\",\"Ports\":\"8080/tcp, 8443/tcp, 0.0.0.0:8181-8182-\\u003e8181-8182/tcp, [::]:8181-8182-\\u003e8181-8182/tcp\",\"Project\":\"poc\",\"Publishers\":[{\"URL\":\"\",\"TargetPort\":8080,\"PublishedPort\":0,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8181,\"PublishedPort\":8181,\"Protocol\":\"tcp\"},{\"URL\":\"0.0.0.0\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8182,\"PublishedPort\":8182,\"Protocol\":\"tcp\"},{\"URL\":\"\",\"TargetPort\":8443,\"PublishedPort\":0,\"Protocol\":\"tcp\"}],\"RunningFor\":\"23 seconds ago\",\"Service\":\"polaris\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 16 seconds (healthy)\"}"
+  },
+  "runner": {
+    "cpus": 4,
+    "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.43",
+    "memory_bytes": 16758394880
+  },
+  "measurement": {
+    "cpu": "container cgroup v2 or Spark process tree",
+    "memory": "sampled at 100 ms",
+    "warm_samples": 2,
+    "query_timeout_s": 1200
+  },
+  "cases": {
+    "ctas_lineitem": {
+      "spark": [
+        {
+          "status": "ok",
+          "wall_s": 59.902032,
+          "cpu_s": 201.96,
+          "peak_bytes": 3412180992,
+          "table": "polaris.agent2_ingest.spark_ctas_lineitem_0",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 53.060281,
+          "cpu_s": 182.09,
+          "peak_bytes": 3478269952,
+          "table": "polaris.agent2_ingest.spark_ctas_lineitem_1",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 55.421416,
+          "cpu_s": 180.92,
+          "peak_bytes": 3507912704,
+          "table": "polaris.agent2_ingest.spark_ctas_lineitem_2",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        }
+      ],
+      "comet": [
+        {
+          "status": "ok",
+          "wall_s": 59.768413,
+          "cpu_s": 188.86,
+          "peak_bytes": 3857387520,
+          "table": "polaris.agent2_ingest.comet_ctas_lineitem_0",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 51.323077,
+          "cpu_s": 170.6,
+          "peak_bytes": 3954716672,
+          "table": "polaris.agent2_ingest.comet_ctas_lineitem_1",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 50.6843,
+          "cpu_s": 168.56,
+          "peak_bytes": 4286971904,
+          "table": "polaris.agent2_ingest.comet_ctas_lineitem_2",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 19,
+                "bytes": 1575065430,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        }
+      ],
+      "sail": [
+        {
+          "status": "ok",
+          "wall_s": 22.588548,
+          "cpu_s": 64.473996,
+          "peak_bytes": 1627705344,
+          "table": "polaris.agent2_ingest.sail_ctas_lineitem_0",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 4,
+                "bytes": 1730123133,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 4,
+                "bytes": 1730123133,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 19.769645,
+          "cpu_s": 65.005634,
+          "peak_bytes": 1713524736,
+          "table": "polaris.agent2_ingest.sail_ctas_lineitem_1",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 4,
+                "bytes": 1730149521,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 4,
+                "bytes": 1730149521,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 19.866699,
+          "cpu_s": 65.796678,
+          "peak_bytes": 1730084864,
+          "table": "polaris.agent2_ingest.sail_ctas_lineitem_2",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 4,
+                "bytes": 1730137112,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 4,
+                "bytes": 1730137112,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        }
+      ],
+      "sail-cluster": [
+        {
+          "status": "ok",
+          "wall_s": 20.865948,
+          "cpu_s": 64.944448,
+          "peak_bytes": 2550857728,
+          "table": "polaris.agent2_ingest.sail_cluster_ctas_lineitem_0",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 8,
+                "bytes": 1731641234,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 8,
+                "bytes": 1731641234,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 20.068444,
+          "cpu_s": 66.359601,
+          "peak_bytes": 2445590528,
+          "table": "polaris.agent2_ingest.sail_cluster_ctas_lineitem_1",
+          "base_snapshot": null,
+          "files": {
+            "current": {
+              "0": {
+                "files": 8,
+                "bytes": 1731641234,
+                "records": 59986052
+              }
+            },
+            "added": {
+              "0": {
+                "files": 8,
+                "bytes": 1731641234,
+                "records": 59986052
+              }
+            },
+            "removed": {}
+          },
+          "comparison": {
+            "extra": 0,
+            "missing": 0
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 21.174367,
+          "cpu_s": 64.013444,
+          "peak_bytes": 2670460928,
+          "table": "polaris.agent2_ingest.sail_cluster_ctas_lineitem_2",
+          "base_snapshot": null,
+          "files": {
+            "status": "error",
+            "error": "ValueError: Pool not running",
+            "wall_s": 0.081618
+          },
+          "comparison": {
+            "status": "timeout",
+            "error": "TimeoutError: deadline of 1200s exceeded (client still active: True)",
+            "wall_s": 1205.007058
+          }
+        }
+      ]
+    },
+    "ctas_orders": {
+      "spark": [
+        {
+          "status": "ok",
+          "wall_s": 15.487063,
+          "cpu_s": 35.3,
+          "peak_bytes": 3519385600,
+          "table": "polaris.agent2_ingest.spark_ctas_orders_0",
+          "base_snapshot": null,
+          "files": {
+            "status": "timeout",
+            "error": "TimeoutError: deadline of 1200s exceeded (client still active: True)",
+            "wall_s": 1205.004149
+          },
+          "comparison": {
+            "status": "timeout",
+            "error": "TimeoutError: deadline of 1200s exceeded (client still active: True)",
+            "wall_s": 1205.0021
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 12.730835,
+          "cpu_s": 33.89,
+          "peak_bytes": 3518136320,
+          "table": "polaris.agent2_ingest.spark_ctas_orders_1",
+          "base_snapshot": null,
+          "files": {
+            "status": "timeout",
+            "error": "TimeoutError: deadline of 1200s exceeded (client still active: True)",
+            "wall_s": 1205.0043
+          },
+          "comparison": {
+            "status": "timeout",
+            "error": "TimeoutError: deadline of 1200s exceeded (client still active: True)",
+            "wall_s": 1205.001195
+          }
+        },
+        {
+          "status": "ok",
+          "wall_s": 13.325581,
+          "cpu_s": 33.67,
+          "peak_bytes": 3529936896,
+          "table": "polaris.agent2_ingest.spark_ctas_orders_2",
+          "base_snapshot": null
+        }
+      ],
+      "comet": [
+        {
+          "status": "ok",
+          "wall_s": 13.520507,
+          "cpu_s": 31.47,
+          "peak_bytes": 4307427328,
+          "table": "polaris.agent2_ingest.comet_ctas_orders_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 12.191516,
+          "cpu_s": 30.46,
+          "peak_bytes": 4266254336,
+          "table": "polaris.agent2_ingest.comet_ctas_orders_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 12.602712,
+          "cpu_s": 30.21,
+          "peak_bytes": 4291272704,
+          "table": "polaris.agent2_ingest.comet_ctas_orders_2",
+          "base_snapshot": null
+        }
+      ],
+      "sail": [
+        {
+          "status": "ok",
+          "wall_s": 6.719988,
+          "cpu_s": 13.402049,
+          "peak_bytes": 1569435648,
+          "table": "polaris.agent2_ingest.sail_ctas_orders_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 5.317769,
+          "cpu_s": 13.481616,
+          "peak_bytes": 1446227968,
+          "table": "polaris.agent2_ingest.sail_ctas_orders_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 5.319551,
+          "cpu_s": 13.365885,
+          "peak_bytes": 1559515136,
+          "table": "polaris.agent2_ingest.sail_ctas_orders_2",
+          "base_snapshot": null
+        }
+      ],
+      "sail-cluster": [
+        {
+          "status": "ok",
+          "wall_s": 4.616163,
+          "cpu_s": 13.959259,
+          "peak_bytes": 1874354176,
+          "table": "polaris.agent2_ingest.sail_cluster_ctas_orders_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 4.62592,
+          "cpu_s": 14.022041,
+          "peak_bytes": 1889533952,
+          "table": "polaris.agent2_ingest.sail_cluster_ctas_orders_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 4.41655,
+          "cpu_s": 13.916973,
+          "peak_bytes": 1897254912,
+          "table": "polaris.agent2_ingest.sail_cluster_ctas_orders_2",
+          "base_snapshot": null
+        }
+      ]
+    },
+    "merge_v2_copy-on-write": {
+      "spark": [
+        {
+          "status": "ok",
+          "wall_s": 35.335041,
+          "cpu_s": 112.55,
+          "peak_bytes": 9393139712,
+          "table": "polaris.agent2_ingest.spark_merge_v2_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 30.957646,
+          "cpu_s": 92.38,
+          "peak_bytes": 9431400448,
+          "table": "polaris.agent2_ingest.spark_merge_v2_copy_on_write_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 29.541955,
+          "cpu_s": 92.44,
+          "peak_bytes": 9238433792,
+          "table": "polaris.agent2_ingest.spark_merge_v2_copy_on_write_2",
+          "base_snapshot": null
+        }
+      ],
+      "comet": [
+        {
+          "status": "ok",
+          "wall_s": 36.118624,
+          "cpu_s": 120.85,
+          "peak_bytes": 8034308096,
+          "table": "polaris.agent2_ingest.comet_merge_v2_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 32.692423,
+          "cpu_s": 110.97,
+          "peak_bytes": 9208672256,
+          "table": "polaris.agent2_ingest.comet_merge_v2_copy_on_write_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 34.161259,
+          "cpu_s": 105.75,
+          "peak_bytes": 9885704192,
+          "table": "polaris.agent2_ingest.comet_merge_v2_copy_on_write_2",
+          "base_snapshot": null
+        }
+      ],
+      "sail": [
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 630.926818,
+          "cpu_s": null,
+          "peak_bytes": 12884901888,
+          "table": "polaris.agent2_ingest.sail_merge_v2_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv6:%5B::1%5D:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv6:%5B::1%5D:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 611.429885,
+          "phase": "setup",
+          "table": "polaris.agent2_ingest.sail_merge_v2_copy_on_write_1"
+        }
+      ],
+      "sail-cluster": [
+        {
+          "status": "ok",
+          "wall_s": 42.689276,
+          "cpu_s": 84.349428,
+          "peak_bytes": 12884901888,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v2_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 33.127852,
+          "cpu_s": 81.666764,
+          "peak_bytes": 12884901888,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v2_copy_on_write_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 38.81902,
+          "cpu_s": 78.165023,
+          "peak_bytes": 12884901888,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v2_copy_on_write_2",
+          "base_snapshot": null
+        }
+      ]
+    },
+    "merge_v2_merge-on-read": {
+      "spark": [
+        {
+          "status": "ok",
+          "wall_s": 20.182817,
+          "cpu_s": 58.47,
+          "peak_bytes": 7541551104,
+          "table": "polaris.agent2_ingest.spark_merge_v2_merge_on_read_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 17.777548,
+          "cpu_s": 49.31,
+          "peak_bytes": 7444713472,
+          "table": "polaris.agent2_ingest.spark_merge_v2_merge_on_read_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 17.569629,
+          "cpu_s": 50.12,
+          "peak_bytes": 6737559552,
+          "table": "polaris.agent2_ingest.spark_merge_v2_merge_on_read_2",
+          "base_snapshot": null
+        }
+      ],
+      "comet": [
+        {
+          "status": "ok",
+          "wall_s": 26.858485,
+          "cpu_s": 58.57,
+          "peak_bytes": 12568752128,
+          "table": "polaris.agent2_ingest.comet_merge_v2_merge_on_read_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 21.017892,
+          "cpu_s": 48.57,
+          "peak_bytes": 12570673152,
+          "table": "polaris.agent2_ingest.comet_merge_v2_merge_on_read_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 20.589958,
+          "cpu_s": 48.45,
+          "peak_bytes": 12353605632,
+          "table": "polaris.agent2_ingest.comet_merge_v2_merge_on_read_2",
+          "base_snapshot": null
+        }
+      ],
+      "sail": [
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 611.667035,
+          "phase": "setup",
+          "table": "polaris.agent2_ingest.sail_merge_v2_merge_on_read_0"
+        }
+      ],
+      "sail-cluster": [
+        {
+          "status": "ok",
+          "wall_s": 8.838179,
+          "cpu_s": 31.419998,
+          "peak_bytes": 11557167104,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v2_merge_on_read_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 8.932993,
+          "cpu_s": 32.344971,
+          "peak_bytes": 12564017152,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v2_merge_on_read_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 8.734272,
+          "cpu_s": 31.822774,
+          "peak_bytes": 12302753792,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v2_merge_on_read_2",
+          "base_snapshot": null
+        }
+      ]
+    },
+    "merge_v3_copy-on-write": {
+      "spark": [
+        {
+          "status": "ok",
+          "wall_s": 33.239207,
+          "cpu_s": 104.72,
+          "peak_bytes": 9030541312,
+          "table": "polaris.agent2_ingest.spark_merge_v3_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 35.314666,
+          "cpu_s": 102.07,
+          "peak_bytes": 9235820544,
+          "table": "polaris.agent2_ingest.spark_merge_v3_copy_on_write_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 33.332647,
+          "cpu_s": 102.33,
+          "peak_bytes": 9297051648,
+          "table": "polaris.agent2_ingest.spark_merge_v3_copy_on_write_2",
+          "base_snapshot": null
+        }
+      ],
+      "comet": [
+        {
+          "status": "ok",
+          "wall_s": 35.912713,
+          "cpu_s": 118.76,
+          "peak_bytes": 11065073664,
+          "table": "polaris.agent2_ingest.comet_merge_v3_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 38.113189,
+          "cpu_s": 112.71,
+          "peak_bytes": 12142706688,
+          "table": "polaris.agent2_ingest.comet_merge_v3_copy_on_write_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 42.034732,
+          "cpu_s": 111.97,
+          "peak_bytes": 12921987072,
+          "table": "polaris.agent2_ingest.comet_merge_v3_copy_on_write_2",
+          "base_snapshot": null
+        }
+      ],
+      "sail": [
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 611.084464,
+          "phase": "setup",
+          "table": "polaris.agent2_ingest.sail_merge_v3_copy_on_write_0"
+        }
+      ],
+      "sail-cluster": [
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 647.852979,
+          "cpu_s": null,
+          "peak_bytes": 12884901888,
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v3_copy_on_write_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 610.914015,
+          "phase": "setup",
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v3_copy_on_write_1"
+        }
+      ]
+    },
+    "merge_v3_merge-on-read": {
+      "spark": [
+        {
+          "status": "ok",
+          "wall_s": 18.66072,
+          "cpu_s": 53.06,
+          "peak_bytes": 7935184896,
+          "table": "polaris.agent2_ingest.spark_merge_v3_merge_on_read_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 18.01432,
+          "cpu_s": 50.7,
+          "peak_bytes": 8089616384,
+          "table": "polaris.agent2_ingest.spark_merge_v3_merge_on_read_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 17.982514,
+          "cpu_s": 50.71,
+          "peak_bytes": 7861125120,
+          "table": "polaris.agent2_ingest.spark_merge_v3_merge_on_read_2",
+          "base_snapshot": null
+        }
+      ],
+      "comet": [
+        {
+          "status": "ok",
+          "wall_s": 34.269657,
+          "cpu_s": 52.17,
+          "peak_bytes": 14303817728,
+          "table": "polaris.agent2_ingest.comet_merge_v3_merge_on_read_0",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 29.223036,
+          "cpu_s": 49.77,
+          "peak_bytes": 12294225920,
+          "table": "polaris.agent2_ingest.comet_merge_v3_merge_on_read_1",
+          "base_snapshot": null
+        },
+        {
+          "status": "ok",
+          "wall_s": 22.441375,
+          "cpu_s": 48.75,
+          "peak_bytes": 14159462400,
+          "table": "polaris.agent2_ingest.comet_merge_v3_merge_on_read_2",
+          "base_snapshot": null
+        }
+      ],
+      "sail": [
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 611.143776,
+          "phase": "setup",
+          "table": "polaris.agent2_ingest.sail_merge_v3_merge_on_read_0"
+        }
+      ],
+      "sail-cluster": [
+        {
+          "status": "error",
+          "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:50051: Failed to connect to remote host: Connection refused\"\n>",
+          "wall_s": 610.699349,
+          "phase": "setup",
+          "table": "polaris.agent2_ingest.sail_cluster_merge_v3_merge_on_read_0"
+        }
+      ]
+    }
+  },
+  "engines": {
+    "load": {
+      "config": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "comet_off_heap_default": null,
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 7.2625391483306885,
+      "log_excerpt": "ner,62c61b2f-2589-4dd8-8c73-7140508e3ab4,e665caad-bc7e-4125-985d-8b4d28531cea) is removed.\n26/11/24 21:26:14 INFO ExecuteResponseObserver: Release all for opId=e665caad-bc7e-4125-985d-8b4d28531cea. Execution stats: total=CachedSize(2950,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2782,3) maxCachedUntilProduced=CachedSize(2782,3)\n26/11/24 21:26:14 INFO ExecuteResponseObserver: Release all for opId=e665caad-bc7e-4125-985d-8b4d28531cea. Execution stats: total=CachedSize(2950,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(2782,3) maxCachedUntilProduced=CachedSize(2782,3)\n26/11/24 21:26:14 INFO SparkContext: Invoking stop() from shutdown hook\n26/11/24 21:26:14 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/24 21:26:14 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/24 21:26:14 INFO MemoryStore: MemoryStore cleared\n26/11/24 21:26:14 INFO BlockManager: BlockManager stopped\n26/11/24 21:26:14 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/24 21:26:14 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/24 21:26:14 INFO SparkContext: Successfully stopped SparkContext\n26/11/24 21:26:14 INFO ShutdownHookManager: Shutdown hook called\n26/11/24 21:26:14 INFO ShutdownHookManager: Deleting directory /tmp/spark-5ab943bb-43fe-42e2-9869-2ce14d09c7ee\n26/11/24 21:26:14 INFO ShutdownHookManager: Deleting directory /tmp/spark-14bcf8d4-14f8-4c75-8b59-698501e67f71\n26/11/24 21:26:14 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-c76a2859-fbe0-49a4-b20e-a159c0c4458a\n"
+    },
+    "spark": {
+      "config": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "comet_off_heap_default": null,
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 3.7591753005981445,
+      "log_excerpt": "ey(runner,65e9ccb2-651a-4d9b-9955-ba8fe183873b,09bf5e49-9300-446f-987b-c44a14de2074) is removed.\n26/11/24 21:37:39 INFO ExecuteResponseObserver: Release all for opId=09bf5e49-9300-446f-987b-c44a14de2074. Execution stats: total=CachedSize(691,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(572,3) maxCachedUntilProduced=CachedSize(572,3)\n26/11/24 21:37:39 INFO ExecuteResponseObserver: Release all for opId=09bf5e49-9300-446f-987b-c44a14de2074. Execution stats: total=CachedSize(691,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(572,3) maxCachedUntilProduced=CachedSize(572,3)\n26/11/24 21:37:39 INFO SparkContext: Invoking stop() from shutdown hook\n26/11/24 21:37:39 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/24 21:37:39 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/24 21:37:39 INFO MemoryStore: MemoryStore cleared\n26/11/24 21:37:39 INFO BlockManager: BlockManager stopped\n26/11/24 21:37:39 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/24 21:37:39 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/24 21:37:39 INFO SparkContext: Successfully stopped SparkContext\n26/11/24 21:37:39 INFO ShutdownHookManager: Shutdown hook called\n26/11/24 21:37:39 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-c7457ce2-cb2c-46c6-b688-841f4c3bbc1a\n26/11/24 21:37:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-0a36f4f0-dcf6-4bf3-bccc-4fa09d53f9b2\n26/11/24 21:37:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-639ecf77-1597-469c-9af0-db6f1c64acd8\n"
+    },
+    "comet": {
+      "config": {
+        "comet": true,
+        "cores": 4,
+        "driver_memory": "8g",
+        "comet_off_heap_default": "4g",
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 6.264155387878418,
+      "log_excerpt": "r: Release all for opId=ab6f3ca8-84aa-4d8e-ba2f-9c99fe1438d7. Execution stats: total=CachedSize(691,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(572,3) maxCachedUntilProduced=CachedSize(572,3)\n26/11/24 21:49:49 INFO ExecuteResponseObserver: Release all for opId=ab6f3ca8-84aa-4d8e-ba2f-9c99fe1438d7. Execution stats: total=CachedSize(691,4) autoRemoved=CachedSize(0,0) cachedUntilConsumed=CachedSize(0,0) cachedUntilProduced=CachedSize(0,0) maxCachedUntilConsumed=CachedSize(572,3) maxCachedUntilProduced=CachedSize(572,3)\n26/11/24 21:49:49 INFO CometExecutorPlugin: CometExecutorPlugin shutdown\n26/11/24 21:49:49 INFO SparkContext: Invoking stop() from shutdown hook\n26/11/24 21:49:49 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/24 21:49:49 INFO CometDriverPlugin: CometDriverPlugin shutdown\n26/11/24 21:49:49 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/24 21:49:50 INFO MemoryStore: MemoryStore cleared\n26/11/24 21:49:50 INFO BlockManager: BlockManager stopped\n26/11/24 21:49:50 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/24 21:49:50 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/24 21:49:50 INFO SparkContext: Successfully stopped SparkContext\n26/11/24 21:49:50 INFO ShutdownHookManager: Shutdown hook called\n26/11/24 21:49:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-e255ca8f-f9d9-4764-a77a-de2fce82399e\n26/11/24 21:49:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-b1c827eb-4799-413f-8a1d-fd4bbaf5e486\n26/11/24 21:49:50 INFO ShutdownHookManager: Deleting directory /home/runner/work/poc/poc/artifacts/spark-4ea2041e-61e8-49da-bcee-26ab7a84174b\n"
+    },
+    "sail": {
+      "config": {
+        "mode": "local",
+        "environment": {},
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.5957386493682861,
+      "container_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": true,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-24T21:49:51.559889722Z",
+        "FinishedAt": "2026-11-24T21:51:37.355524035Z"
+      }
+    },
+    "sail-cluster": {
+      "config": {
+        "mode": "local-cluster",
+        "environment": {
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "2",
+          "SAIL_CLUSTER__WORKER_TASK_SLOTS": "16",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "8"
+        },
+        "cpus": 4,
+        "memory": "12g",
+        "server": "spark",
+        "docker_options": []
+      },
+      "boot_s": 0.15598058700561523,
+      "container_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": true,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-24T22:42:34.580209606Z",
+        "FinishedAt": "2026-11-24T22:47:37.537532384Z"
+      },
+      "log_excerpt": "[2026-11-24T22:42:52Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T22:42:52Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T22:42:52Z WARN sail_execution::driver::task_assigner::core] worker 1 was not pending\n[2026-11-24T22:42:52Z WARN sail_execution::driver::task_assigner::core] worker 2 was not pending\n[2026-11-24T22:43:52Z WARN sail_common::actor] aborting 1 task(s) for WorkerActor\n[2026-11-24T22:43:52Z WARN sail_common::actor] aborting 1 task(s) for WorkerActor\n[2026-11-24T22:43:54Z WARN sail_execution::driver::actor::handler] job 7 stage 0 partition 0 attempt 0 sequence 78 is stale\n[2026-11-24T22:46:56Z WARN sail_execution::driver::actor::handler] job 37 stage 0 partition 0 attempt 0 sequence 420 is stale\n"
+    },
+    "verify": {
+      "config": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "comet_off_heap_default": null,
+        "overrides": {},
+        "table_cache": false
+      },
+      "boot_s": 4.2606353759765625
+    }
+  },
+  "source_load": {
+    "nation": {
+      "rows": 25,
+      "seconds": 3.71
+    },
+    "region": {
+      "rows": 5,
+      "seconds": 0.63
+    },
+    "part": {
+      "rows": 2000000,
+      "seconds": 4.29
+    },
+    "supplier": {
+      "rows": 100000,
+      "seconds": 0.88
+    },
+    "partsupp": {
+      "rows": 8000000,
+      "seconds": 7.04
+    },
+    "customer": {
+      "rows": 1500000,
+      "seconds": 2.32
+    },
+    "orders": {
+      "rows": 15000000,
+      "seconds": 14.09
+    },
+    "lineitem": {
+      "rows": 59986052,
+      "seconds": 58.84
+    }
+  },
+  "merge_source_counts": {
+    "delete": 750000,
+    "insert": 750000,
+    "update": 1500000
+  },
+  "orders_row_count": 15000000,
+  "validated_metrics": {
+    "ctas_lineitem": {
+      "spark": {
+        "median_wall_s": 54.240848,
+        "median_cpu_s": 181.505,
+        "median_peak_bytes": 3493091328.0
+      },
+      "comet": {
+        "median_wall_s": 51.003688,
+        "median_cpu_s": 169.58,
+        "median_peak_bytes": 4120844288.0
+      },
+      "sail": {
+        "median_wall_s": 19.818172,
+        "median_cpu_s": 65.401156,
+        "median_peak_bytes": 1721804800.0
+      }
+    }
+  }
+}

@@ -19,7 +19,7 @@ public class ConnectProbe {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try (SparkSession session = SparkSession.builder().remote(args[0]).create()) {
             probe("select_literal", () -> session.sql("SELECT 1"));
             probe("range_filter", () -> session.range(8).where("id % 2 = 0").select("id"));

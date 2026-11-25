@@ -71,7 +71,7 @@ def start_cluster(result):
     return kind, local_image
 
 
-def deploy(image, backend, count, memory="2Gi", cpu="1"):
+def deploy(image, backend, count, memory="2Gi", cpu="1", session_idle=None):
     kubectl("delete", "deployment", NAME, "--ignore-not-found", "--wait=true", timeout=120)
     kubectl("delete", "pods", "-l", "app.kubernetes.io/component=worker", "--ignore-not-found", "--wait=true", timeout=120)
     existing.refresh_token_secret()
@@ -80,6 +80,8 @@ def deploy(image, backend, count, memory="2Gi", cpu="1"):
     container = deployment["spec"]["template"]["spec"]["containers"][0]
     container["resources"] = {"requests": {"cpu": "250m", "memory": "256Mi"},
                               "limits": {"cpu": "1", "memory": "3Gi"}}
+    if session_idle:
+        container["env"].append({"name": "SAIL_SPARK__SESSION_TIMEOUT_SECS", "value": str(session_idle)})
     for variable in container["env"]:
         name = variable["name"]
         if name in ("SAIL_CLUSTER__WORKER_INITIAL_COUNT", "SAIL_CLUSTER__WORKER_MAX_COUNT"):
@@ -344,8 +346,15 @@ def burst(result, reference):
         "p95_s": latency[max(0, -(-len(latency) * 95 // 100) - 1)] if latency else None}
     for client in clients:
         bounded(client.stop, 5)
-    time.sleep(70)
-    result["cases"]["burst"]["remaining"] = [pod_record(pod) for pod in get_pods()]
+    post_burst = time.monotonic()
+    cleanup = result["cases"]["burst"]["cleanup"] = []
+    for seconds in (70, 130, 190):
+        time.sleep(max(0, seconds - (time.monotonic() - post_burst)))
+        pods = [pod_record(pod) for pod in get_pods()]
+        cleanup.append({"elapsed_s": time.monotonic() - post_burst,
+                        "succeeded_worker_pods": sum(p["phase"] == "Succeeded" for p in workers(pods)), "pods": pods})
+        save(result)
+    result["cases"]["burst"]["remaining"] = pods
 
 
 def main():
@@ -370,7 +379,7 @@ def main():
         result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}}
         with Watcher() as watcher:
             if VARIANT == "burst":
-                processes.append(deploy(image, backend, int(count), memory="512Mi", cpu="250m"))
+                processes.append(deploy(image, backend, int(count), memory="512Mi", cpu="250m", session_idle=120))
                 burst(result, reference)
             elif failure:
                 for trial in range(3):

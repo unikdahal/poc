@@ -7,6 +7,7 @@ import re
 import subprocess
 import tempfile
 from importlib.metadata import version
+from io import BytesIO
 import threading
 import time
 
@@ -327,6 +328,46 @@ def maintenance(result):
               "sail-after-compaction", baseline[50]), "sail", port=50250)
 
 
+def layout(result):
+    table = f"{NS}.file_layout"
+    logical = f"SELECT count(*), sum(id), sum(g), sum(length(payload)) FROM {table}"
+    source = "SELECT 99999-id AS id, CAST(pmod(id,8) AS INT) AS g, sha2(CAST(id AS STRING),512) AS payload FROM range(100000)"
+    refs = {}
+
+    def prepare(spark, *_):
+        collect(spark, f"CREATE NAMESPACE {NS}")
+        collect(spark, f"CREATE TABLE {table} (id BIGINT, g INT, payload STRING) USING iceberg PARTITIONED BY (g) "
+                       "TBLPROPERTIES ('format-version'='2','write.distribution-mode'='hash',"
+                       "'write.target-file-size-bytes'='1048576')")
+        collect(spark, f"ALTER TABLE {table} WRITE ORDERED BY id")
+        refs["signature"] = fingerprint(collect(spark, logical.replace(table, f"({source})")))
+    group(result, "spark-layout-create", prepare, "spark")
+    if "signature" not in refs:
+        return
+
+    def write(sail, *_):
+        statements(result, "layout-write", sail, [f"INSERT INTO {table} {source}"])
+    group(result, "sail-layout-write", write, "sail")
+
+    def verify(spark, *_):
+        import pyarrow.parquet as pq
+        observed = fingerprint(collect(spark, logical))
+        result["cases"]["layout-readback"] = {"matches_spark": observed == refs["signature"], "expected": refs["signature"], "actual": observed}
+        files = collect(spark, f"SELECT file_path,sort_order_id,partition.g,record_count,file_size_in_bytes FROM {table}.files")
+        checks = result["cases"]["physical_layout"] = []
+        store = s3_client()
+        for path, order_id, g, rows, size in files:
+            bucket, key = path.removeprefix("s3://").split("/", 1)
+            with store.get_object(Bucket=bucket, Key=key)["Body"] as stream:
+                parquet = pq.read_table(BytesIO(stream.read()), columns=["id", "g"]).to_pydict()
+            ids, partitions = parquet["id"], set(parquet["g"])
+            checks.append({"file": path, "size_bytes": size, "records": rows, "sort_order_id": order_id,
+                           "partition": g, "content_matches_partition": partitions == {g},
+                           "ids_ascending": all(a <= b for a, b in zip(ids, ids[1:]))})
+        save(result)
+    group(result, "spark-layout-read", verify, "spark")
+
+
 def conflict(result):
     table = f"{NS}.conflict"
     isolation_levels = ("snapshot",) if VARIANT == "conflict-snapshot" else ("serializable", "snapshot")
@@ -379,7 +420,7 @@ def conflict(result):
 def main():
     result = begin(TASK)
     base.start_token_refresher()
-    {"interop": interop, "evolution": evolution, "maintenance": maintenance, "conflict": conflict, "conflict-snapshot": conflict}[VARIANT](result)
+    {"interop": interop, "evolution": evolution, "maintenance": maintenance, "conflict": conflict, "conflict-snapshot": conflict, "layout": layout}[VARIANT](result)
     save(result)
 
 

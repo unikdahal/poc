@@ -1,7 +1,6 @@
 """Compare Iceberg CTAS and MERGE writes, then verify the full table contents."""
 
-from harness import common as base, data
-from harness.agent2.common import attempt, begin, bounded, collect, engine, median, save
+from harness.agent2.common import EngineStartError, attempt, begin, collect, engine, load_h, median, save
 
 TASK = "ingest"
 SOURCE = "polaris.tpch_sf10"
@@ -14,7 +13,10 @@ SCENARIOS = (("ctas_lineitem", "lineitem", 2, None), ("ctas_orders", "orders", 2
 COLUMNS = ("o_orderkey", "o_custkey", "o_orderstatus", "o_totalprice", "o_orderdate",
            "o_orderpriority", "o_clerk", "o_shippriority", "o_comment")
 MERGE_INPUT = f"{DEST}.merge_input"
-DEADLINE = 1200
+EXPECTED_ORDERS = f"{DEST}.orders_expected"
+DEADLINE = 360
+VALIDATION_DEADLINE = 600
+REPS = 3
 
 
 def prepare(spark, result):
@@ -37,6 +39,19 @@ def prepare(spark, result):
         row.op: row.n for row in collect(spark, f"SELECT op, count(*) AS n FROM {MERGE_INPUT} GROUP BY op")
     }
     result["orders_row_count"] = collect(spark, f"SELECT count(*) FROM {SOURCE}.orders")[0][0]
+    retained = [
+        "CASE WHEN s.op = 'update' THEN CAST(o.o_totalprice + 1.00 AS DECIMAL(15,2)) "
+        "ELSE o.o_totalprice END AS o_totalprice" if col == "o_totalprice" else f"o.{col}"
+        for col in COLUMNS
+    ]
+    collect(spark, f"DROP TABLE IF EXISTS {EXPECTED_ORDERS} PURGE")
+    collect(spark, f"""
+        CREATE TABLE {EXPECTED_ORDERS} USING iceberg AS
+        SELECT {", ".join(retained)}
+        FROM {SOURCE}.orders o LEFT JOIN {MERGE_INPUT} s ON o.o_orderkey = s.o_orderkey
+        WHERE s.op IS NULL OR s.op = 'update'
+        UNION ALL SELECT {", ".join(COLUMNS)} FROM {MERGE_INPUT} WHERE op = 'insert'
+        """, DEADLINE)
 
 
 def table_for(name, scenario, rep):
@@ -76,92 +91,120 @@ def summarize_files(entries):
     return counts
 
 
-def validate(spark, table, reference_sql):
-    columns = ", ".join(COLUMNS) if ".merge_v" in table or "_merge_v" in table else "*"
-    target = f"SELECT {columns} FROM {table}"
-    sql = f"""
-        SELECT
-          (SELECT count(*) FROM ({target} EXCEPT ALL {reference_sql})) AS extra,
-          (SELECT count(*) FROM ({reference_sql} EXCEPT ALL {target})) AS missing
-        """
-    return collect(spark, sql, DEADLINE)[0].asDict()
+def key_columns(source):
+    return ("l_orderkey", "l_linenumber") if source == "lineitem" else ("o_orderkey",)
+
+
+def reference_schema(spark, table, source):
+    keys = key_columns(source)
+    grouped = ", ".join(keys)
+    null_key = " OR ".join(f"{key} IS NULL" for key in keys)
+    duplicate = collect(spark, f"""
+        SELECT {grouped} FROM {table}
+        GROUP BY {grouped} HAVING count(*) <> 1 OR {null_key} LIMIT 1
+        """, VALIDATION_DEADLINE)
+    if duplicate:
+        raise RuntimeError(f"{table} has a duplicate or null benchmark key: {duplicate[0]}")
+    schema = tuple(spark.table(table).columns)
+    rows = collect(spark, f"SELECT count(*) FROM {table}", VALIDATION_DEADLINE)[0][0]
+    return keys, schema, rows
+
+
+def validate(spark, table, reference, keys, columns, expected_count):
+    count = collect(spark, f"SELECT count(*) FROM {table}", VALIDATION_DEADLINE)[0][0]
+    condition = " AND ".join(f"t.{key} = r.{key}" for key in keys)
+    same_values = " AND ".join(f"t.{col} <=> r.{col}" for col in columns)
+    key = keys[0]
+    result = collect(spark, f"""
+        SELECT count_if(t.{key} IS NOT NULL AND (r.{key} IS NULL OR NOT ({same_values}))) AS extra,
+               count_if(r.{key} IS NOT NULL AND (t.{key} IS NULL OR NOT ({same_values}))) AS missing
+        FROM {table} t FULL OUTER JOIN {reference} r ON {condition}
+        """, VALIDATION_DEADLINE)[0]
+    # With a unique non-null reference key, matching every row and total count also excludes duplicates.
+    return {"extra": max(result.extra, count - expected_count, 0),
+            "missing": max(result.missing, expected_count - count, 0)}
+
+
+def write_case(result, label, name, scenario, source, version, mode, port):
+    runs = result["cases"].setdefault(scenario, {}).setdefault(name, [])
+    with engine(result, name, label=label, output_name=TASK, port=port) as (_, spark, stats, _):
+        for rep in range(REPS):
+            target = table_for(name, scenario, rep)
+            if mode:
+                prep, _ = attempt(lambda: collect(spark, ctas(target, source, version, mode), DEADLINE))
+                if prep["status"] != "ok":
+                    runs.append(prep | {"phase": "setup", "table": target})
+                    break
+            sql = merge(target) if mode else ctas(target, source, version, mode)
+            record, _ = attempt(lambda: collect(spark, sql, DEADLINE), stats)
+            runs.append(record | {"table": target})
+            save(TASK, result)
+            if record["status"] != "ok":
+                break
+
+
+def inspect_files(spark, table, mode):
+    current = files(spark, table)
+    before = {}
+    if mode:
+        snapshots = collect(spark, f"SELECT parent_id FROM {table}.snapshots WHERE parent_id IS NOT NULL", DEADLINE)
+        if not snapshots:
+            raise RuntimeError("MERGE parent snapshot unavailable")
+        before = files(spark, table, snapshots[0][0])
+    return {"current": summarize_files(current.values()),
+            "added": summarize_files(current[p] for p in current.keys() - before.keys()),
+            "removed": summarize_files(before[p] for p in before.keys() - current.keys())}
+
+
+def verify_scenario(result, scenario, mode, reference, schema, port):
+    with engine(result, "spark", label=f"verify-{scenario}", port=port, output_name=TASK,
+                extra={"spark.sql.shuffle.partitions": "96"}) as (_, spark, _, _):
+        for name, runs in result["cases"][scenario].items():
+            completed = [record for record in runs if record["status"] == "ok"]
+            for record in completed:
+                metadata, measured = attempt(lambda: inspect_files(spark, record["table"], mode))
+                record["files"] = measured if measured is not None else metadata
+            if not completed:
+                continue
+            final = completed[-1]
+            verdict, differences = attempt(lambda: validate(spark, final["table"], reference, *schema))
+            final["comparison"] = differences if differences is not None else verdict
+            if differences == {"extra": 0, "missing": 0} and len(completed) == REPS:
+                result.setdefault("validated_metrics", {}).setdefault(scenario, {})[name] = median(runs)
+            save(TASK, result)
+            if verdict["status"] == "timeout":
+                raise TimeoutError(verdict["error"])
 
 
 def main():
     result = begin(TASK)
-    result["measurement"]["query_timeout_s"] = DEADLINE
+    result["measurement"].update({"query_timeout_s": DEADLINE,
+                                   "validation_timeout_s": VALIDATION_DEADLINE,
+                                   "validation_scope": "exact final successful output per operation and engine"})
     result["cases"] = {}
-    with engine(result, "spark", label="load", output_name=TASK) as (_, spark, _, _):
-        from pathlib import Path
-        generated = data.generate(10, Path("/tmp/tpch"))
-        result["source_load"] = bounded(lambda: data.load(spark, 10, generated, "tpch_sf10"),
-                                        2400, spark.interruptAll)
+    schemas = {}
+    with engine(result, "spark", label="load", output_name=TASK,
+                extra={"spark.sql.shuffle.partitions": "96"}) as (_, spark, _, _):
+        result["source_load"] = load_h(spark, 10)
         prepare(spark, result)
-    if not result.get("merge_source_counts"):
+        for name, source in ((f"{SOURCE}.lineitem", "lineitem"), (f"{SOURCE}.orders", "orders"),
+                             (EXPECTED_ORDERS, "orders")):
+            schemas[name] = reference_schema(spark, name, source)
+    if len(schemas) != 3 or not result.get("merge_source_counts"):
         return
-    for name in ENGINES:
-        with engine(result, name, output_name=TASK) as (_, spark, stats, _):
-            for scenario, source, version, mode in SCENARIOS:
-                runs = result["cases"].setdefault(scenario, {}).setdefault(name, [])
-                for rep in range(3):
-                    target = table_for(name, scenario, rep)
-                    snapshot = None
-                    if mode:
-                        def setup_table():
-                            collect(spark, ctas(target, source, version, mode), DEADLINE)
-                            # Read the parent snapshot later through the reference engine.
-
-                        prep, snapshot = attempt(setup_table)
-                        if prep["status"] != "ok":
-                            runs.append(prep | {"phase": "setup", "table": target})
-                            break
-                    sql = merge(target) if mode else ctas(target, source, version, mode)
-                    record, _ = attempt(lambda: collect(spark, sql, DEADLINE), stats)
-                    runs.append(record | {"table": target, "base_snapshot": snapshot})
-                    save(TASK, result)
-                    if record["status"] == "timeout":
-                        raise TimeoutError(record["error"])
-
-    with engine(result, "spark", label="verify", output_name=TASK) as (_, spark, _, _):
-        for scenario, source, version, mode in SCENARIOS:
-            treatments = result["cases"].get(scenario, {})
-            ref = table_for("spark", scenario, 0)
-            reference = f"SELECT * FROM {SOURCE}.{source}"
-            if mode:
-                reference = f"SELECT {', '.join(COLUMNS)} FROM {ref}"
-            spark_runs = treatments.get("spark", [])
-            if not spark_runs or spark_runs[0]["status"] != "ok":
+    result["reference_schemas"] = schemas
+    for index, (scenario, source, version, mode) in enumerate(SCENARIOS):
+        for engine_index, name in enumerate(ENGINES):
+            label = f"{name}-{scenario}"
+            try:
+                write_case(result, label, name, scenario, source, version, mode, 18000 + index * 10 + engine_index)
+            except EngineStartError:
                 continue
-            for name, runs in treatments.items():
-                for record in runs:
-                    if record["status"] != "ok":
-                        continue
-                    table = record["table"]
-                    def inspect():
-                        current = files(spark, table)
-                        before = {}
-                        if mode:
-                            snapshot = record["base_snapshot"]
-                            if snapshot is None:
-                                snapshots = collect(spark, f"SELECT parent_id FROM {table}.snapshots "
-                                                           "WHERE parent_id IS NOT NULL", DEADLINE)
-                                snapshot = snapshots[0][0] if snapshots else None
-                            if snapshot is None:
-                                raise RuntimeError("MERGE parent snapshot unavailable")
-                            before = files(spark, table, snapshot)
-                        return {"current": summarize_files(current.values()),
-                                "added": summarize_files(current[p] for p in current.keys() - before.keys()),
-                                "removed": summarize_files(before[p] for p in before.keys() - current.keys())}
-
-                    analysis, measured = attempt(inspect)
-                    record["files"] = measured if measured is not None else analysis
-                    verdict, differences = attempt(lambda: validate(spark, table, reference))
-                    record["comparison"] = differences if differences is not None else verdict
-                    save(TASK, result)
-                if len(runs) == 3 and all(
-                    r.get("comparison") == {"extra": 0, "missing": 0} for r in runs
-                ):
-                    result.setdefault("validated_metrics", {}).setdefault(scenario, {})[name] = median(runs)
+        reference = EXPECTED_ORDERS if mode else f"{SOURCE}.{source}"
+        try:
+            verify_scenario(result, scenario, mode, reference, schemas[reference], 18000 + index * 10 + 9)
+        except EngineStartError:
+            continue
     save(TASK, result)
 
 

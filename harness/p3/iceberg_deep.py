@@ -93,8 +93,7 @@ def flink_service(result):
 def flink_sql(handle, label, *statements_):
     home, env = handle
     path = home / "p3.sql"
-    path.write_text("
-".join([
+    path.write_text("\n".join([
         "SET 'table.dml-sync'='true';",
         "SET 'sql-client.execution.result-mode'='tableau';",
         "SET 'parallelism.default'='1';", FLINK_CATALOG, *statements_, "QUIT;",

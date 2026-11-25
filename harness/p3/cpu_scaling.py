@@ -90,7 +90,7 @@ def main():
                 "parallel_efficiency": (base_time / wall) / cores,
                 "cpu_utilization_fraction": cpu / (cores * wall) if cpu is not None else None,
                 "median_query_wall_s": statistics.median(row["elapsed_s"] for row in samples)}
-    save(result)
+        save(result)
 
 
 if __name__ == "__main__":

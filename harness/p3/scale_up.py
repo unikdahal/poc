@@ -15,7 +15,7 @@ from harness.p3.common import (VARIANT, begin, bounded, cmd, collect, fingerprin
 
 TASK = "scale-up"
 SCALE = 50 if VARIANT == "tpch50" else 10
-TAILS = {"tpcds10-tail2": range(65,67), "tpcds10-tail3": range(74,100)}
+TAILS = {"tpcds10-tail1": range(16, 34), "tpcds10-tail2": range(65, 67), "tpcds10-tail3": range(74, 100)}
 if VARIANT in TAILS:
     QUERIES = TAILS[VARIANT]
 elif VARIANT == "tpch50":

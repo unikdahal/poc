@@ -289,7 +289,7 @@ class PeakSampler:
         def run():
             while not self._stop.is_set():
                 self.peak = max(self.peak, self.stats.mem_current())
-                time.sleep(0.1)
+                self._stop.wait(0.1)  # returns at once on exit, so it adds no wait to the timed block
 
         self._t = threading.Thread(target=run, daemon=True)
         self._t.start()

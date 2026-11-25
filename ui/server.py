@@ -231,13 +231,15 @@ def run_on(engine: Engine, sql: str, ns: str | None, reps: int, warmup: bool, ex
             for _ in range(max(1, reps)):
                 cpu0 = stats.cpu_seconds() if stats else float("nan")
                 peak = PeakSampler(stats) if stats else None
-                t0 = time.perf_counter()
                 if peak:
                     with peak:
+                        t0 = time.perf_counter()
                         result = bounded(engine, lambda: engine.execute(sql, ns), timeout)
+                        wall = time.perf_counter() - t0
                 else:
+                    t0 = time.perf_counter()
                     result = bounded(engine, lambda: engine.execute(sql, ns), timeout)
-                wall = time.perf_counter() - t0
+                    wall = time.perf_counter() - t0
                 cpu = (stats.cpu_seconds() - cpu0) if stats else float("nan")
                 res["runs"].append({"wall_s": round(wall, 4),
                                     "cpu_s": None if cpu != cpu else round(cpu, 3),

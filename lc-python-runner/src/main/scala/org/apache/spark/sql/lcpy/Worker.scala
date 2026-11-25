@@ -184,7 +184,7 @@ final class WorkerProcess(conf: RunnerConf, val label: String) extends Logging {
    * Idempotent teardown: close pipes, give the worker `grace` to exit, then kill the cgroup, wait
    * until it is empty and remove it.
    */
-  def close(graceMs: Long): Unit = {
+  def close(graceMs: Long): Unit = WorkerProcess.uninterruptibly {
     try stdin.close() catch { case NonFatal(_) => }
     if (waitExit(graceMs).isEmpty) kill()
     waitExit(10000)
@@ -197,6 +197,17 @@ final class WorkerProcess(conf: RunnerConf, val label: String) extends Logging {
 
 object WorkerProcess extends Logging {
   private val counter = new AtomicLong()
+
+  /**
+   * Run teardown with the interrupt flag cleared, restoring it afterwards. Spark cancels a task
+   * by interrupting its thread, and the completion listener that tears the worker down runs on
+   * that same thread: without this, the first waitFor()/sleep() throws and cleanup stops halfway
+   * (leaving a cgroup behind).
+   */
+  def uninterruptibly[T](body: => T): T = {
+    val wasInterrupted = Thread.interrupted()
+    try body finally if (wasInterrupted) Thread.currentThread().interrupt()
+  }
   /** All workers alive in this JVM, for executor-shutdown cleanup. */
   val live = new ConcurrentHashMap[String, WorkerProcess]()
 

@@ -14,11 +14,14 @@ fail=0
 LCPY_KILL9=1 submit 'local[2]' '\[kill9\].*' >/tmp/kill9-run.log 2>&1 &
 pid=$!
 for _ in $(seq 240); do
-  [[ $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') -ge 2 ]] && break; sleep 0.5
+  [[ $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') -ge 1 ]] && break; sleep 0.5
 done
 sleep 1
 echo "before SIGKILL: $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') python worker(s), $(pgrep -fc '^/usr/bin/bwrap') bwrap, cgroups: $(ls -d /sys/fs/cgroup/lcpy/sandbox/w-* 2>/dev/null | wc -l)"
-[[ $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') -ge 1 ]] || { echo "FAIL: no worker was running"; tail -50 /tmp/kill9-run.log; exit 1; }
+if [[ $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') -lt 1 ]]; then
+  echo "FAIL: no worker was running"; ps -eo pid,ppid,user,etimes,args | cut -c1-200
+  grep -v '^\s*at ' /tmp/kill9-run.log | tail -60; exit 1
+fi
 jvm=$(pgrep -f 'org.apache.spark.deploy.SparkSubmit' | head -1)
 kill -9 "$jvm"; wait "$pid" 2>/dev/null
 sleep 2

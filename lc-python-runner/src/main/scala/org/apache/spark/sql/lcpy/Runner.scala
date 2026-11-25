@@ -351,11 +351,14 @@ abstract class LcRunnerBase(
   }
 
   /** Exactly-once teardown, from task completion (success, failure or kill). */
-  def close(): Unit = {
+  def close(): Unit = WorkerProcess.uninterruptibly {
     // Flag first and kill the worker WITHOUT the lock: a reader blocked on the pipe holds it and
     // only returns once the worker is gone.
     val clean = finished && writerError == null
-    if (!closeOnce.compareAndSet(false, true)) return
+    if (closeOnce.compareAndSet(false, true)) closeOnceNow(clean)
+  }
+
+  private def closeOnceNow(clean: Boolean): Unit = {
     closed = true
     worker.close(if (clean) conf.shutdownGraceMs else 0L)
     closeLocked()

@@ -3,7 +3,7 @@
 Reproduce with `p3.yml`, `tasks=tenancy`. The suite command is `python -m harness.p3.tenancy` with `P3_VARIANT=isolation`.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
-**FACT.** The two Polaris principals each had a role and a separate catalog, namespace and bucket. The Sail tests exercised one configured identity and a second configuration with two preconfigured catalog aliases. Each action used its own synthetic fixture. [Raw JSON](https://github.com/unikdahal/poc/blob/c3b649375515aa3cd5c4539ddaad182f0ef0c201/isolation/result.json) · [Run 45555042191](https://github.com/unikdahal/poc/actions/runs/45555042191)
+**FACT.** The two Polaris principals each had a role and a separate catalog, namespace and bucket. The Sail tests exercised one configured identity and a second configuration with two preconfigured catalog aliases. Each action used its own synthetic fixture. [Raw JSON](https://github.com/unikdahal/poc/blob/fc2bc26a2c75a32fc1b5fa6ea1dff96599eaa497/isolation/result.json) · [Run 45557689391](https://github.com/unikdahal/poc/actions/runs/45557689391)
 
 ### Catalog and storage authorization
 
@@ -22,9 +22,9 @@ The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correc
 | aliases | tenant_b | tenant_a | ok | ok | ok |
 | aliases | tenant_b | tenant_b | ok | ok | ok |
 
-**FACT.** A tenant B session with a tenant B header could read, insert and drop tenant A's fixture through both protocols when the server was configured with tenant A's credential. Tenant B’s own catalog returned HTTP 403. Alias-specific credentials let both test sessions reach both catalogs. Session options and bearer metadata did not supply an independent catalog credential in these treatments. [Raw JSON](https://github.com/unikdahal/poc/blob/c3b649375515aa3cd5c4539ddaad182f0ef0c201/isolation/result.json) · [Run 45555042191](https://github.com/unikdahal/poc/actions/runs/45555042191)
+**FACT.** A tenant B session with a tenant B header could read, insert and drop tenant A's fixture through both protocols when the server was configured with tenant A's credential. Tenant B’s own catalog returned HTTP 403. Alias-specific credentials let both test sessions reach both catalogs. Session options and bearer metadata did not supply an independent catalog credential in these treatments. [Raw JSON](https://github.com/unikdahal/poc/blob/fc2bc26a2c75a32fc1b5fa6ea1dff96599eaa497/isolation/result.json) · [Run 45557689391](https://github.com/unikdahal/poc/actions/runs/45557689391)
 
-**FACT.** Polaris REST returned 200 for each principal against its own table with vending, and 403 against the other principal's table. The vended credentials read a four-byte range from their own table's Parquet file (206), and returned 403 for the other table in the same bucket and for both target objects in the other bucket. Both direct authorized reads returned the Parquet prefix. [Raw JSON](https://github.com/unikdahal/poc/blob/c3b649375515aa3cd5c4539ddaad182f0ef0c201/isolation/result.json) · [Run 45555042191](https://github.com/unikdahal/poc/actions/runs/45555042191)
+**FACT.** Polaris REST returned 200 for each principal against its own table with vending, and 403 against the other principal's table. The vended credentials read a four-byte range from their own table's Parquet file (206), and returned 403 for the other table in the same bucket and for both target objects in the other bucket. Both direct authorized reads returned the Parquet prefix. [Raw JSON](https://github.com/unikdahal/poc/blob/fc2bc26a2c75a32fc1b5fa6ea1dff96599eaa497/isolation/result.json) · [Run 45557689391](https://github.com/unikdahal/poc/actions/runs/45557689391)
 
 ### Session state and interference
 
@@ -45,6 +45,10 @@ The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correc
 | local-cluster-8g | 15.28 | 223.15 | 14.61 |
 | local-2g | 14.52 | 125.91 | 8.67 |
 
+**FACT.** Per-session Spark catalog options produced the following reads: `AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: per_session.isolated.anchor` · `AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: per_session.isolated.anchor`. [Raw JSON](https://github.com/unikdahal/poc/blob/fc2bc26a2c75a32fc1b5fa6ea1dff96599eaa497/isolation/result.json) · [Run 45557689391](https://github.com/unikdahal/poc/actions/runs/45557689391)
+
+**FACT.** For the Sail vending test the REST server used table-scoped credentials, then Sail was run with valid and invalid ambient object-store keys. sail-vending-invalid-tenant_a error · sail-vending-invalid-tenant_b error · sail-vending-valid-tenant_a ok · sail-vending-valid-tenant_b ok. [Raw JSON](https://github.com/unikdahal/poc/blob/fc2bc26a2c75a32fc1b5fa6ea1dff96599eaa497/isolation/result.json) · [Run 45557689391](https://github.com/unikdahal/poc/actions/runs/45557689391)
+
 **FACT from code.** Flight SQL resolves requests to a fixed session and user ID. Spark Connect resolves a session from the request. The REST client builds the outgoing Authorization header from configured catalog credentials. [Flight](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/service.rs#L58-L69) · [Connect session actor](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/session_manager/actor/handler.rs#L45) · [REST provider](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L179-L193)
 
 Upstream session-defined catalogs were proposed in [#2929](https://github.com/lakehq/sail/pull/2929) and use of vended S3 keys in execution was proposed in [#2932](https://github.com/lakehq/sail/pull/2932). Both proposals were closed without merge. The pinned provider disables default credential delegation because it does not use vended credentials. [Catalog initialization](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/catalog.rs#L28-L98) · [Delegation default](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L106-L119)
@@ -53,4 +57,4 @@ Upstream session-defined catalogs were proposed in [#2929](https://github.com/la
 
 ### Coverage limits
 
-The direct S3 tests establish the scope of Polaris-issued credentials. The Sail tests used a configured server credential and did not establish runtime use of separate per-session vended credentials. UDF registration and name visibility were probed. UDF execution from the 3.11 client encountered the pinned image's 3.14 version guard. Authorization on all Flight APIs and network-level tenant isolation had no separate treatment.
+The direct S3 tests establish the scope of Polaris-issued credentials. The invalid-key control failed both Sail reads at the object store, showing that enabling the delegation header still depended on the server's ambient storage credentials. UDF registration and name visibility were probed. UDF execution from the 3.11 client encountered the pinned image's 3.14 version guard. Authorization on all Flight APIs and network-level tenant isolation had no separate treatment.

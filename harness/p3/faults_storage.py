@@ -14,7 +14,7 @@ from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from subprocess import Popen
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import boto3
 import requests
@@ -61,6 +61,7 @@ class Relay(ThreadingHTTPServer):
         self.drop_every = None
         self.requests_since_armed = 0
         self.gate = None
+        self.on_unauthorized = None
         self.lock = threading.Lock()
 
     def mark(self):
@@ -80,7 +81,7 @@ class Forward(BaseHTTPRequestHandler):
 
     def forward(self):
         relay = self.server
-        path = urlparse(self.path).path
+        path = unquote(urlparse(self.path).path)
         entry = {"method": self.command, "path": path, "at": time.time()}
         with relay.lock:
             relay.history.append(entry)
@@ -114,6 +115,12 @@ class Forward(BaseHTTPRequestHandler):
             connection.request(self.command, self.path, body=body, headers=headers)
             response = connection.getresponse()
             entry["status"] = response.status
+            if response.status == 401:
+                with relay.lock:
+                    rotate, relay.on_unauthorized = relay.on_unauthorized, None
+                if rotate:
+                    rotate()
+                    entry["rotated_token_before_401_response"] = True
             self.send_response_only(response.status, response.reason)
             for key, value in response.getheaders():
                 if key.lower() not in HOP_HEADERS:
@@ -379,13 +386,13 @@ def expiration(result, relays, expected, session, stats_, container):
     probe = f"""
 import json
 import time
-from pyspark.sql.connect.session import SparkSession
+from pyspark.sql import SparkSession
 
 def hold(value):
     time.sleep(605)
     return value
 
-session = SparkSession("sc://127.0.0.1:50051")
+session = SparkSession.builder.remote("sc://127.0.0.1:50051").create()
 session.udf.register("p3_expiration_hold", hold, "int")
 rows = session.sql("SELECT p3_expiration_hold(id) FROM {NS}.token_query").collect()
 print("P3_RESULT=" + json.dumps([list(row) for row in rows]), flush=True)
@@ -406,23 +413,29 @@ print("P3_RESULT=" + json.dumps([list(row) for row in rows]), flush=True)
 
     worker = threading.Thread(target=query, daemon=True)
     worker.start()
-    while time.time() < exp + 3 and worker.is_alive():
-        worker.join(max(0, min(1, exp + 3 - time.time())))
+    while time.time() < exp + 3:
+        time.sleep(max(0, min(1, exp + 3 - time.time())))
     evidence["query_active_past_expiration"] = worker.is_alive() and time.time() >= exp
     if time.time() >= exp:
         evidence["direct_rest_expired"] = requests.get(point, headers=auth(token), timeout=10).status_code
         secondary = base.connect(50051)
         rec, rows = timed(lambda: collect(secondary, f"SELECT id FROM {NS}.token_query", 40))
         evidence["secondary_expired"] = rec | {"returned_rows": rows is not None}
-        _, next_exp, _ = write_token()
-        evidence["rotation_at"] = time.time()
-        evidence["new_token_expires_at"] = next_exp
+        def rotate():
+            _, next_exp, _ = write_token()
+            evidence["rotation_at"] = time.time()
+            evidence["new_token_expires_at"] = next_exp
+
+        relays["catalog"].on_unauthorized = rotate
         rec, rows = timed(lambda: collect(secondary, f"SELECT id FROM {NS}.token_query", 40))
         evidence["secondary_rotated"] = rec | {"matches_spark": rows is not None and fingerprint(rows) == expected}
+        relays["catalog"].on_unauthorized = None
     evidence["catalog_requests"] = relays["catalog"].since(marks)
     evidence["launch_at"] = begin_at
     save(result)
-    worker.join(695)
+    while worker.is_alive() and time.time() - begin_at < 705:
+        worker.join(30)
+        print(f"token expiry query still active={worker.is_alive()} elapsed={time.time() - begin_at:.0f}s", flush=True)
     evidence["query"] = status
     evidence["client_active"] = worker.is_alive()
     evidence["catalog_requests"] = relays["catalog"].since(marks)

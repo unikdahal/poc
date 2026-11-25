@@ -9,15 +9,22 @@ Sail uses a CPU quota and matching default parallelism. Comet runs with a matchi
 
 | Runner | Engine | Cores | Paired queries | Wall s | CPU s | Speedup | Efficiency | CPU utilization | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| runner-1 | sail | 1 | 19 | 57.852 | 53.087 | 1.000 | 1.000 | 0.918 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | sail | 2 | 19 | 38.085 | 65.345 | 1.519 | 0.760 | 0.858 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | sail | 3 | 19 | 31.804 | 79.176 | 1.819 | 0.606 | 0.830 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | sail | 4 | 19 | 28.980 | 89.482 | 1.996 | 0.499 | 0.772 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | comet | 1 | 22 | 233.432 | 255.135 | 1.000 | 1.000 | 1.093 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | comet | 2 | 22 | 131.005 | 266.335 | 1.782 | 0.891 | 1.017 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | comet | 3 | 22 | 112.804 | 311.735 | 2.069 | 0.690 | 0.921 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-1 | comet | 4 | 22 | 102.837 | 339.690 | 2.270 | 0.567 | 0.826 | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| runner-2 | — | — | — | — | — | — | — | — | [Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-2/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
+| runner-1 | comet | 1 | 22 | 223.155 | 245.320 | 1.000 | 1.000 | 1.099 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | comet | 2 | 22 | 127.112 | 260.535 | 1.756 | 0.878 | 1.025 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | comet | 3 | 22 | 108.910 | 300.555 | 2.049 | 0.683 | 0.920 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | comet | 4 | 22 | 98.381 | 330.665 | 2.268 | 0.567 | 0.840 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | sail | 1 | 19 | 54.045 | 49.951 | 1.000 | 1.000 | 0.924 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | sail | 2 | 19 | 35.271 | 61.081 | 1.532 | 0.766 | 0.866 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | sail | 3 | 19 | 29.606 | 74.198 | 1.825 | 0.608 | 0.835 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | sail | 4 | 19 | 27.529 | 84.774 | 1.963 | 0.491 | 0.770 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | comet | 1 | 22 | 295.106 | 328.035 | 1.000 | 1.000 | 1.112 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | comet | 2 | 22 | 165.141 | 339.515 | 1.787 | 0.893 | 1.028 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | comet | 3 | 22 | 143.886 | 399.930 | 2.051 | 0.684 | 0.926 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | comet | 4 | 22 | 130.734 | 433.830 | 2.257 | 0.564 | 0.830 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | sail | 1 | 19 | 76.033 | 71.549 | 1.000 | 1.000 | 0.941 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | sail | 2 | 19 | 49.893 | 88.200 | 1.524 | 0.762 | 0.884 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | sail | 3 | 19 | 41.754 | 106.731 | 1.821 | 0.607 | 0.852 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | sail | 4 | 19 | 38.331 | 121.287 | 1.984 | 0.496 | 0.791 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
 
 ### runner-1
 
@@ -25,32 +32,32 @@ Each number is the correctness-gated warm wall time in seconds. Blank entries ha
 
 | Query | sail-1 | sail-2 | sail-3 | sail-4 | comet-1 | comet-2 | comet-3 | comet-4 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Q1 | — | — | — | — | 8.879 | 5.040 | 4.494 | 4.239 |
-| Q2 | 0.768 | 0.492 | 0.448 | 0.379 | 3.042 | 2.332 | 2.346 | 2.275 |
-| Q3 | 2.393 | 1.597 | 1.354 | 1.248 | 10.296 | 6.402 | 4.662 | 4.361 |
-| Q4 | 1.488 | 0.988 | 0.826 | 0.733 | 4.906 | 2.941 | 2.477 | 2.267 |
-| Q5 | 3.334 | 2.244 | 1.968 | 1.739 | 19.318 | 11.026 | 9.443 | 8.816 |
-| Q6 | 1.766 | 1.015 | 0.862 | 0.787 | 1.586 | 1.058 | 1.088 | 0.919 |
-| Q7 | 3.106 | 1.873 | 1.623 | 1.486 | 17.695 | 8.667 | 7.253 | 6.572 |
-| Q8 | — | — | — | — | 14.577 | 8.491 | 7.302 | 6.847 |
-| Q9 | 5.876 | 3.621 | 2.979 | 2.734 | 21.970 | 12.121 | 10.743 | 10.184 |
-| Q10 | 3.067 | 1.946 | 1.673 | 1.471 | 8.317 | 4.894 | 4.237 | 3.844 |
-| Q11 | 0.587 | 0.357 | 0.347 | 0.293 | 1.292 | 0.977 | 0.943 | 0.905 |
-| Q12 | 2.678 | 1.867 | 1.380 | 1.275 | 4.627 | 2.983 | 2.430 | 2.270 |
-| Q13 | 2.675 | 1.633 | 1.322 | 1.276 | 5.879 | 3.442 | 2.985 | 2.943 |
-| Q14 | — | — | — | — | 2.882 | 1.807 | 1.525 | 1.420 |
-| Q15 | 3.753 | 2.256 | 1.960 | 1.802 | 5.658 | 3.513 | 3.067 | 2.863 |
-| Q16 | 0.600 | 0.575 | 0.555 | 0.503 | 2.075 | 1.396 | 1.386 | 1.274 |
-| Q17 | 5.317 | 3.589 | 3.118 | 2.796 | 16.960 | 9.104 | 7.958 | 7.693 |
-| Q18 | 5.577 | 4.858 | 3.581 | 3.334 | 19.948 | 10.223 | 8.905 | 7.376 |
-| Q19 | 4.111 | 2.342 | 1.941 | 1.735 | 4.808 | 2.816 | 2.441 | 2.147 |
-| Q20 | 3.085 | 1.841 | 1.544 | 1.406 | 4.631 | 2.976 | 2.539 | 2.389 |
-| Q21 | 7.022 | 4.547 | 3.944 | 3.626 | 51.107 | 26.950 | 23.077 | 19.731 |
-| Q22 | 0.648 | 0.444 | 0.379 | 0.357 | 2.983 | 1.847 | 1.501 | 1.501 |
+| Q1 | — | — | — | — | 8.775 | 4.969 | 4.561 | 4.185 |
+| Q2 | 0.731 | 0.445 | 0.422 | 0.371 | 2.836 | 2.212 | 2.141 | 2.172 |
+| Q3 | 2.255 | 1.525 | 1.280 | 1.189 | 10.246 | 6.097 | 4.459 | 4.191 |
+| Q4 | 1.360 | 0.908 | 0.756 | 0.689 | 4.700 | 2.824 | 2.446 | 2.195 |
+| Q5 | 3.186 | 2.138 | 1.850 | 1.686 | 18.474 | 10.769 | 9.266 | 8.545 |
+| Q6 | 1.688 | 0.967 | 0.816 | 0.752 | 1.405 | 1.058 | 0.942 | 0.853 |
+| Q7 | 2.934 | 1.796 | 1.524 | 1.428 | 16.912 | 8.526 | 7.013 | 6.222 |
+| Q8 | — | — | — | — | 14.082 | 8.415 | 7.151 | 6.436 |
+| Q9 | 5.562 | 3.509 | 2.824 | 2.610 | 21.176 | 11.821 | 10.418 | 9.659 |
+| Q10 | 2.932 | 1.850 | 1.585 | 1.415 | 7.719 | 4.648 | 3.959 | 3.661 |
+| Q11 | 0.559 | 0.335 | 0.331 | 0.280 | 1.164 | 0.929 | 0.891 | 0.813 |
+| Q12 | 2.563 | 1.773 | 1.358 | 1.223 | 4.258 | 2.759 | 2.313 | 2.241 |
+| Q13 | 2.362 | 1.424 | 1.196 | 1.222 | 5.838 | 3.375 | 2.920 | 2.813 |
+| Q14 | — | — | — | — | 2.612 | 1.649 | 1.518 | 1.360 |
+| Q15 | 3.511 | 2.068 | 1.846 | 1.737 | 5.107 | 3.382 | 2.905 | 2.700 |
+| Q16 | 0.623 | 0.510 | 0.508 | 0.476 | 1.919 | 1.305 | 1.236 | 1.231 |
+| Q17 | 4.611 | 3.018 | 2.643 | 2.430 | 14.399 | 8.491 | 7.431 | 7.031 |
+| Q18 | 5.175 | 4.353 | 3.204 | 3.123 | 19.114 | 9.840 | 8.519 | 7.090 |
+| Q19 | 3.979 | 2.262 | 1.876 | 1.693 | 4.625 | 2.878 | 2.316 | 2.102 |
+| Q20 | 2.850 | 1.702 | 1.471 | 1.366 | 4.398 | 2.806 | 2.335 | 2.281 |
+| Q21 | 6.553 | 4.281 | 3.770 | 3.494 | 50.516 | 26.544 | 22.751 | 19.240 |
+| Q22 | 0.611 | 0.409 | 0.348 | 0.346 | 2.880 | 1.813 | 1.417 | 1.359 |
 
 Attempt counts by status. `sail-1` {'mismatch': 9, 'ok': 57} · `sail-2` {'mismatch': 9, 'ok': 57} · `sail-3` {'mismatch': 9, 'ok': 57} · `sail-4` {'mismatch': 9, 'ok': 57} · `comet-1` {'ok': 66} · `comet-2` {'ok': 66} · `comet-3` {'ok': 66} · `comet-4` {'ok': 66}
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-1/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916)
+[Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
 
 ### runner-2
 
@@ -58,32 +65,44 @@ Each number is the correctness-gated warm wall time in seconds. Blank entries ha
 
 | Query | sail-1 | sail-2 | sail-3 | sail-4 | comet-1 | comet-2 | comet-3 | comet-4 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Q1 | — | — | — | — | — | — | — | — |
-| Q2 | 1.032 | 0.664 | — | — | — | — | — | — |
-| Q3 | 3.189 | 2.112 | — | — | — | — | — | — |
-| Q4 | 1.933 | 1.272 | — | — | — | — | — | — |
-| Q5 | 4.676 | 3.111 | — | — | — | — | — | — |
-| Q6 | 2.259 | 1.307 | — | — | — | — | — | — |
-| Q7 | 4.067 | 2.464 | — | — | — | — | — | — |
-| Q8 | — | — | — | — | — | — | — | — |
-| Q9 | 8.494 | 5.198 | — | — | — | — | — | — |
-| Q10 | 4.034 | 2.525 | — | — | — | — | — | — |
-| Q11 | 0.787 | 0.504 | — | — | — | — | — | — |
-| Q12 | 3.404 | 2.638 | — | — | — | — | — | — |
-| Q13 | 4.412 | 2.680 | — | — | — | — | — | — |
-| Q14 | — | — | — | — | — | — | — | — |
-| Q15 | 4.743 | — | — | — | — | — | — | — |
-| Q16 | 0.820 | — | — | — | — | — | — | — |
-| Q17 | 11.309 | — | — | — | — | — | — | — |
-| Q18 | 9.438 | — | — | — | — | — | — | — |
-| Q19 | 5.168 | — | — | — | — | — | — | — |
-| Q20 | 4.137 | — | — | — | — | — | — | — |
-| Q21 | 9.425 | — | — | — | — | — | — | — |
-| Q22 | 0.915 | — | — | — | — | — | — | — |
+| Q1 | — | — | — | — | 12.236 | 6.896 | 6.266 | 6.001 |
+| Q2 | 0.980 | 0.604 | 0.577 | 0.480 | 4.204 | 3.032 | 3.024 | 2.812 |
+| Q3 | 2.935 | 1.900 | 1.674 | 1.611 | 13.047 | 8.113 | 5.881 | 5.394 |
+| Q4 | 1.860 | 1.191 | 1.040 | 0.897 | 5.974 | 3.694 | 3.399 | 2.949 |
+| Q5 | 4.125 | 2.659 | 2.541 | 2.180 | 24.298 | 13.939 | 12.384 | 11.343 |
+| Q6 | 2.181 | 1.245 | 1.106 | 0.982 | 2.033 | 1.335 | 1.217 | 1.122 |
+| Q7 | 3.747 | 2.243 | 1.966 | 1.828 | 21.627 | 10.742 | 9.001 | 8.147 |
+| Q8 | — | — | — | — | 17.399 | 9.798 | 8.873 | 8.070 |
+| Q9 | 7.346 | 4.506 | 3.808 | 3.542 | 26.732 | 14.375 | 13.012 | 12.392 |
+| Q10 | 3.790 | 2.333 | 2.084 | 1.845 | 9.151 | 5.621 | 5.023 | 4.641 |
+| Q11 | 0.741 | 0.462 | 0.447 | 0.391 | 1.551 | 1.216 | 1.225 | 1.090 |
+| Q12 | 3.325 | 2.571 | 1.838 | 1.715 | 5.067 | 3.434 | 2.903 | 2.571 |
+| Q13 | 3.991 | 2.392 | 1.963 | 1.944 | 7.468 | 4.294 | 3.638 | 3.604 |
+| Q14 | — | — | — | — | 3.419 | 2.154 | 1.896 | 1.816 |
+| Q15 | 4.621 | 2.731 | 2.423 | 2.257 | 6.456 | 4.199 | 3.754 | 3.610 |
+| Q16 | 0.795 | 0.714 | 0.706 | 0.632 | 2.498 | 1.795 | 1.793 | 1.664 |
+| Q17 | 9.178 | 5.892 | 4.636 | 4.205 | 23.293 | 12.503 | 10.693 | 9.942 |
+| Q18 | 8.211 | 7.357 | 5.266 | 4.743 | 27.117 | 13.689 | 11.891 | 9.536 |
+| Q19 | 5.014 | 2.847 | 2.381 | 2.183 | 5.770 | 3.625 | 2.989 | 2.723 |
+| Q20 | 3.835 | 2.230 | 1.933 | 1.785 | 5.381 | 3.445 | 3.091 | 2.864 |
+| Q21 | 8.555 | 5.466 | 4.904 | 4.667 | 66.917 | 35.120 | 30.163 | 26.738 |
+| Q22 | 0.803 | 0.551 | 0.461 | 0.445 | 3.468 | 2.124 | 1.773 | 1.705 |
 
-Attempt counts by status. `sail-1` {'mismatch': 9, 'ok': 57} · `sail-2` {'mismatch': 6, 'ok': 33, 'timeout': 1}
+Attempt counts by status. `sail-1` {'mismatch': 9, 'ok': 57} · `sail-2` {'mismatch': 9, 'ok': 57} · `sail-3` {'mismatch': 9, 'ok': 57} · `sail-4` {'mismatch': 9, 'ok': 57} · `comet-1` {'ok': 66} · `comet-2` {'ok': 66} · `comet-3` {'ok': 66} · `comet-4` {'ok': 66}
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/6ccd9b089e799e83945f074d85c81f5646b59517/runner-2/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916)
+[Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+
+### Scaling across runners
+
+**FACT.** runner-1 comet cut paired wall time by 75.6%, 16.7%, 10.7% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 2.268×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+
+**FACT.** runner-1 sail cut paired wall time by 53.2%, 19.1%, 7.5% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.963×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+
+**FACT.** runner-2 comet cut paired wall time by 78.7%, 14.8%, 10.1% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 2.257×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+
+**FACT.** runner-2 sail cut paired wall time by 52.4%, 19.5%, 8.9% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.984×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+
+The run JSON contains the validated per-query medians. The report reconstructs the Sail aggregate from those medians because an intermediate report write in the harness omitted that aggregate.
 
 ### Coverage limits
 

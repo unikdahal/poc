@@ -3,7 +3,7 @@
 Reproduce with `p3.yml`, `tasks=ops`. The suite command is `python -m harness.p3.ops` with surface, term, int and hup variants.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
-**FACT.** The local image occupies 776702024 image bytes as reported by Docker. The checked warm median of fresh launches through the first correct `SELECT 1` was 1.301 s. [Raw JSON](https://github.com/unikdahal/poc/blob/46c9316f02693864e7611b6e1c298add635eec69/operator/result.json) · [Run 45554682627](https://github.com/unikdahal/poc/actions/runs/45554682627) · [Raw JSON](https://github.com/unikdahal/poc/blob/46c9316f02693864e7611b6e1c298add635eec69/surface/result.json) · [Run 45559297688](https://github.com/unikdahal/poc/actions/runs/45559297688)
+**FACT.** The local image occupies 776719925 image bytes as reported by Docker. The checked warm median of fresh launches through the first correct `SELECT 1` was 4.574 s. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/surface/result.json) · [Run 45561647744](https://github.com/unikdahal/poc/actions/runs/45561647744) · [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/surface/result.json) · [Run 45561647744](https://github.com/unikdahal/poc/actions/runs/45561647744)
 
 ### Listener and SQL probes
 
@@ -17,7 +17,7 @@ The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correc
 | connect-tls | error | SSLError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1018) |
 | sail EXPLAIN | ok | [['== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)]\n  ProjectionExec: expr=[g@0 as #1, sum(range.#0)@1 as #2]\n    AggregateExec: mode=FinalPartitioned, gby= |
 | sail EXPLAIN FORMATTED | ok | [['== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)], statistics=[Rows=Inexact(1000), Bytes=Inexact(16000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(id):In |
-| sail EXPLAIN ANALYZE | ok | [['== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)], metrics=[output_rows=2, elapsed_compute=784ns, output_bytes=2.1 KB, output_batches=2, expr_0_eval_time=12 |
+| sail EXPLAIN ANALYZE | ok | [['== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)], metrics=[output_rows=2, elapsed_compute=1.71µs, output_bytes=2.1 KB, output_batches=2, expr_0_eval_time=2 |
 | sail SHOW TABLES IN system.runtime | error | AnalysisException: Database not found: runtime |
 | sail SHOW TABLES IN system | error | AnalysisException: invalid argument: empty namespace |
 | sail SHOW NAMESPACES IN system | ok | [['cluster', 'system', 'The database containing cluster information.', None], ['execution', 'system', 'The database containing execution data.', None], ['session', 'system', 'The d |
@@ -48,13 +48,13 @@ The evaluator captures OTLP protobuf messages and records exporter transport in 
 | signal-int-2 | True | ok | True | True | 0 | False |
 | signal-hup-0 | True | ok | True | True | 0 | False |
 
-TERM signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/46c9316f02693864e7611b6e1c298add635eec69/term/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190)
+TERM signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/term/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190)
 
-INT signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/46c9316f02693864e7611b6e1c298add635eec69/int/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190)
+INT signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/int/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190)
 
-HUP signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/46c9316f02693864e7611b6e1c298add635eec69/hup/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190)
+HUP signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/hup/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190)
 
-**FACT.** The HTTP exporter treatment exited with `HTTP protocol is not compatible with gRPC transport` before accepting a SQL request. Its configured transport is built with the gRPC builder. This behavior is tracked in [#2973](https://github.com/lakehq/sail/issues/2973). [Pinned exporter](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-telemetry/src/telemetry.rs#L126-L135) · [Raw JSON](https://github.com/unikdahal/poc/blob/46c9316f02693864e7611b6e1c298add635eec69/operator/result.json) · [Run 45554682627](https://github.com/unikdahal/poc/actions/runs/45554682627)
+**FACT.** The HTTP exporter treatment exited with `HTTP protocol is not compatible with gRPC transport` before accepting a SQL request. Its configured transport is built with the gRPC builder. This behavior is tracked in [#2973](https://github.com/lakehq/sail/issues/2973). [Pinned exporter](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-telemetry/src/telemetry.rs#L126-L135) · [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/operator/result.json) · [Run 45554682627](https://github.com/unikdahal/poc/actions/runs/45554682627)
 
 **FACT from code.** The server loads defaults and process environment at startup. The CLI's shutdown future for both protocols awaits SIGINT through Tokio. Spark Connect binds a plain TCP listener. The Flight SQL standard CLI creates the service without a per-user auth mapping. [Config](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-common/src/config/application.rs#L76-L84) · [Connect](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-cli/src/spark/server.rs#L85-L100) · [Flight](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/entrypoint.rs#L25-L41)
 

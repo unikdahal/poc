@@ -26,16 +26,20 @@ for attempt in 1 2 3 4 5; do
     git -C "$dir" fetch -q --depth=1 origin "$ref"
     git -C "$dir" reset -q --hard FETCH_HEAD
   fi
-  mkdir -p "$dir/$variant"
-  find "$source_dir" -maxdepth 1 -name '*.json' -o -name '*.txt' | while IFS= read -r file; do
-    if [[ -f "$file" ]]; then cp "$file" "$dir/$variant/"; fi
+  target="$variant"
+  if [[ ! -f "$source_dir/result.json" && ! -f "$source_dir/build.json" && -d "$dir/$variant" ]]; then
+    target="attempts/$GITHUB_RUN_ID/$variant"
+  fi
+  git -C "$dir" rm -q -r --ignore-unmatch "$target"
+  mkdir -p "$dir/$target/logs"
+  find "$source_dir" -maxdepth 1 \( -name '*.json' -o -name '*.txt' \) -type f | while IFS= read -r file; do
+    cp "$file" "$dir/$target/"
   done
-  mkdir -p "$dir/$variant/logs"
   while IFS= read -r -d '' file; do
-    tail -c 1000000 "$file" > "$dir/$variant/logs/$(basename "$file")"
+    tail -c 1000000 "$file" > "$dir/$target/logs/$(basename "$file")"
   done < <(find "$source_dir" -maxdepth 1 -name '*.log' -print0)
   printf '{"run_id":"%s","revision":"%s","task":"%s","variant":"%s","attempt":"%s"}\n' \
-    "$GITHUB_RUN_ID" "$GITHUB_SHA" "$task" "$variant" "$GITHUB_RUN_ATTEMPT" > "$dir/$variant/run.json"
+    "$GITHUB_RUN_ID" "$GITHUB_SHA" "$task" "$variant" "$GITHUB_RUN_ATTEMPT" > "$dir/$target/run.json"
   git -C "$dir" add -A
   if git -C "$dir" diff --quiet --cached; then exit 0; fi
   git -C "$dir" commit -qm "Record $task $variant run $GITHUB_RUN_ID"

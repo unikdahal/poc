@@ -259,8 +259,12 @@ def fault(result, label, ref):
         applied = {"status": "configured", "worker_memory": "40Mi"}
     elif label == "driver-restart":
         time.sleep(2)
-        applied, _ = timed(lambda: kubectl("rollout", "restart", "deployment/" + NAME))
-        applied["client_active_at_injection"] = thread.is_alive()
+        pods = [pod_record(pod) for pod in get_pods() if pod["metadata"]["labels"].get("app") == "sail-server"]
+        active = thread.is_alive()
+        if pods and active:
+            previous = pods[0]
+            applied, _ = timed(lambda: kubectl("delete", "pod", previous["name"], "--grace-period=0", "--force", "--wait=false"))
+            applied.update({"client_active_at_injection": active, "server_pod": previous["name"], "server_uid": previous["uid"]})
     else:
         while thread.is_alive() and time.monotonic() - start < 40:
             running = [pod for pod in workers([pod_record(pod) for pod in get_pods()]) if pod["phase"] == "Running"]
@@ -291,6 +295,10 @@ def fault(result, label, ref):
     if label == "netem":
         for node in ("p3-worker", "p3-worker2", "p3-worker3"):
             cmd("docker", "exec", node, "tc", "qdisc", "del", "dev", "eth0", "root", check=False)
+    if applied and label == "driver-restart":
+        ready, output = timed(lambda: kubectl("rollout", "status", "deployment/" + NAME, "--timeout=90s", timeout=100))
+        applied["replacement_readiness"] = ready | {"output": output}
+        applied["current_driver"] = [pod_record(pod) for pod in get_pods() if pod["metadata"]["labels"].get("app") == "sail-server"]
     observations.append({"query": query, "injection": applied, "query_result": outcome,
                          "client_active": thread.is_alive(), "stage_probe_errors": stage_observations})
     save(result)

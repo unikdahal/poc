@@ -16,6 +16,10 @@ from harness.suite_flight import any_cmd_statement_query
 TENANTS = ("tenant_a", "tenant_b")
 HEAVY = ("SELECT sum(a.id+b.id) FROM range(40000) a CROSS JOIN range(40000) b")
 REFERENCE = "SELECT CAST(40000 AS BIGINT)*40000*39999"
+MEMORY_HEAVY = """SELECT sum(v) FROM (
+  SELECT id, max(pmod(id,31)) AS v FROM range(25000000) GROUP BY id
+)"""
+MEMORY_REFERENCE = "SELECT sum(pmod(id,31)) FROM range(25000000)"
 TOKEN_URL = f"{base.POLARIS}/api/catalog/v1/oauth/tokens"
 SOURCE = "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/"
 
@@ -80,12 +84,13 @@ def spark_catalogs():
     return conf
 
 
-def catalog_env(per_alias=False):
+def catalog_env(per_alias=False, vending=False):
     configs = []
     for name in TENANTS:
         identity = name if per_alias else TENANTS[0]
+        delegation = ',access_delegation="vended-credentials"' if vending else ""
         configs.append(f'{{type="iceberg-rest",name="{name}",uri="http://polaris:8181/api/catalog",'
-                       f'warehouse="{name}",bearer_access_token_file="/tokens/{identity}"}}')
+                       f'warehouse="{name}",bearer_access_token_file="/tokens/{identity}"{delegation}}}')
     return {"SAIL_CATALOG__LIST": "[" + ",".join(configs) + "]",
             "SAIL_CATALOG__DEFAULT_CATALOG": TENANTS[0]}
 
@@ -95,7 +100,7 @@ def setup_tables(spark, *_):
         collect(spark, f"CREATE NAMESPACE {name}.isolated")
         for suffix in ("anchor", "connect_a", "connect_b", "flight_a", "flight_b", "aliases_a", "aliases_b"):
             collect(spark, f"CREATE TABLE {name}.isolated.{suffix} USING iceberg AS SELECT {index} AS id")
-    return fingerprint(collect(spark, REFERENCE))
+    return {"cpu": fingerprint(collect(spark, REFERENCE)), "memory": fingerprint(collect(spark, MEMORY_REFERENCE))}
 
 
 def rest_checks(result, secrets):
@@ -201,7 +206,7 @@ def session_probes(result, a, b):
             op(result, f"session-{name}-{key}", sql, execute)
 
 
-def fairness(result, label, a, b, expected):
+def fairness(result, label, a, b, expected, heavy=HEAVY, stats=None):
     def sample():
         record, rows = timed(lambda: collect(b, "SELECT 1", 15))
         record["matches_spark"] = rows is not None and rows[0][0] == 1
@@ -212,7 +217,7 @@ def fairness(result, label, a, b, expected):
     load = {}
 
     def background():
-        record, rows = timed(lambda: collect(a, HEAVY, 90))
+        record, rows = timed(lambda: collect(a, heavy, 90), stats)
         load.update(record | {"matches_spark": rows is not None and fingerprint(rows) == expected})
 
     th = threading.Thread(target=background, daemon=True)
@@ -227,7 +232,7 @@ def fairness(result, label, a, b, expected):
         observations = sorted(r["elapsed_s"] for r in rows if r["matches_spark"])
         return observations[math.ceil(.99 * len(observations)) - 1] if observations else None
 
-    result["cases"][label] = {"idle": idle, "under_load": overlap, "heavy": load,
+    result["cases"][label] = {"idle": idle, "under_load": overlap, "heavy": load, "sql": heavy,
                               "p99_idle_s": p99(idle), "p99_under_load_s": p99(overlap) if load.get("matches_spark") else None}
 
 
@@ -253,6 +258,29 @@ def main():
 
     group(result, "connect-global", connect_test("connect", 50051), "sail", extra=catalog_env())
     group(result, "connect-aliases", connect_test("aliases", 50052), "sail", port=50052, extra=catalog_env(True))
+
+    def dynamic_catalog(*_):
+        for actor in TENANTS:
+            session = named_session(50053, actor, secrets[actor])
+            options = {"": "iceberg-rest", ".uri": "http://polaris:8181/api/catalog", ".warehouse": actor,
+                       ".bearer_access_token": secrets[actor]}
+            for suffix, value in options.items():
+                rec, _ = timed(lambda: session.conf.set(f"spark.sql.catalog.per_session{suffix}", value))
+                result["cases"][f"dynamic-{actor}-set{suffix}"] = rec
+            op(result, f"dynamic-{actor}-own-catalog", "SELECT id FROM per_session.isolated.anchor",
+               lambda sql: collect(session, sql, 30))
+
+    group(result, "connect-dynamic", dynamic_catalog, "sail", port=50053, extra=catalog_env())
+
+    for ambient in ("valid", "invalid"):
+        def vended_read(session, *_):
+            for actor in TENANTS:
+                op(result, f"sail-vending-{ambient}-{actor}", f"SELECT id FROM {actor}.isolated.anchor",
+                   lambda sql: collect(session, sql, 35))
+        settings = catalog_env(True, vending=True)
+        if ambient == "invalid":
+            settings |= {"AWS_ACCESS_KEY_ID": "invalid-synthetic", "AWS_SECRET_ACCESS_KEY": "invalid-synthetic"}
+        group(result, f"vending-{ambient}", vended_read, "sail", extra=settings)
 
     def flight_test(*_):
         def executor(client, opts):
@@ -280,24 +308,27 @@ def main():
                     op(result, f"flight-{actor}-{label}", sql, execute)
 
     group(result, "flight-global", flight_test, "flight", extra=catalog_env() | {"RUST_LOG": "info"})
-    for mode, mem in (("local", "8g"), ("local-cluster", "8g"), ("local", "2g")):
+    for mode, mem, profile in (("local", "8g", "cpu"), ("local-cluster", "8g", "cpu"),
+                               ("local", "2g", "cpu"), ("local", "2g", "memory"), ("local", "8g", "memory")):
         trial_labels = []
         for rep in range(3):
             port = 50500 + rep
-            label = f"fairness-{mode}-{mem}-{rep}"
-            def run(*_):
+            label = f"fairness-{profile}-{mode}-{mem}-{rep}"
+            def run(_, stats, __):
                 sessions = [named_session(port, name, secrets[name]) for name in TENANTS]
-                fairness(result, label, *sessions, expected)
+                fairness(result, label, *sessions, expected[profile], MEMORY_HEAVY if profile == "memory" else HEAVY, stats)
             group(result, label, run, "sail", port=port, memory=mem, mode=mode, extra=catalog_env())
             trial_labels.append(label)
         samples = [result["cases"].get(k, {}) for k in trial_labels[1:]]
         if all(s.get("p99_under_load_s") is not None for s in samples):
-            result.setdefault("fairness_medians", {})[f"{mode}-{mem}"] = {
+            result.setdefault("fairness_medians", {})[f"{profile}-{mode}-{mem}"] = {
                 name: statistics.median(s[name] for s in samples) for name in ("p99_idle_s", "p99_under_load_s")
             }
     result["source_candidates"] = {
         "flight_session": SOURCE + "crates/sail-flight/src/service.rs#L58-L69",
         "spark_session": SOURCE + "crates/sail-session/src/session_manager/actor/handler.rs#L45",
+        "server_catalogs": SOURCE + "crates/sail-session/src/catalog.rs#L28-L98",
+        "vending": SOURCE + "crates/sail-catalog-iceberg/src/provider.rs#L106-L119",
     }
     save(result)
 

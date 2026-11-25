@@ -9,7 +9,7 @@ variants = {
     "soak": ("local", "local-cluster"),
     "iceberg-deep": ("interop", "evolution", "maintenance", "conflict", "conflict-snapshot", "layout"),
     "cpu-scaling": ("runner-1", "runner-2"),
-    "faults-storage": ("storage", "catalog"),
+    "faults-storage": ("storage", "catalog", "token"),
     "api-coverage": ("python35", "python4", "jvm35", "jvm4"),
     "ops": ("surface", "term", "int", "hup"),
     "scale-up": ("tpch50", "tpcds10-1", "tpcds10-2", "tpcds10-3"),

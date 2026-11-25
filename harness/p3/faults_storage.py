@@ -62,6 +62,8 @@ class Relay(ThreadingHTTPServer):
         self.requests_since_armed = 0
         self.gate = None
         self.on_unauthorized = None
+        self.token_pacing_remaining = 0
+        self.token_pacing_lock = threading.Lock()
         self.lock = threading.Lock()
 
     def mark(self):
@@ -105,6 +107,12 @@ class Forward(BaseHTTPRequestHandler):
                 self.close_connection = True
                 return
 
+        if self.command == "GET" and path.endswith("/tables/token_query") and relay.token_pacing_remaining > 0:
+            with relay.token_pacing_lock:
+                if relay.token_pacing_remaining > 0:
+                    relay.token_pacing_remaining -= 1
+                    entry["pacing_delay_s"] = 5.1
+                    time.sleep(5.1)
         connection = http.client.HTTPConnection("127.0.0.1", relay.destination_port, timeout=90)
         try:
             headers = {k: v for k, v in self.headers.items() if k.lower() not in HOP_HEADERS}
@@ -117,7 +125,7 @@ class Forward(BaseHTTPRequestHandler):
             entry["status"] = response.status
             if response.status == 401:
                 with relay.lock:
-                    rotate, relay.on_unauthorized = relay.on_unauthorized, None
+                    rotate = relay.on_unauthorized
                 if rotate:
                     rotate()
                     entry["rotated_token_before_401_response"] = True
@@ -238,6 +246,9 @@ def provision():
 
 def setup(session, *_):
     collect(session, f"CREATE NAMESPACE {NS}")
+    if VARIANT == "token":
+        collect(session, f"CREATE TABLE {NS}.token_query USING iceberg AS SELECT CAST(1 AS INT) AS id")
+        return {"token": fingerprint(collect(session, token_sql()))}
     collect(session, f"CREATE TABLE {NS}.scan USING iceberg AS SELECT /*+ REPARTITION(112) */ id, sha2(CAST(id AS STRING), 512) AS payload "
                      "FROM range(1800000)", 450)
     reference = {"scan": fingerprint(collect(session, READ, 240))}
@@ -375,73 +386,53 @@ def verify(result, reference, spark, *_):
     result["post_fault_scan"] = rec | {"matches_spark": rows is not None and fingerprint(rows) == reference["scan"]}
 
 
+def token_sql():
+    branches = [f"SELECT id + {i} AS v FROM {NS}.token_query" for i in range(130)]
+    return "SELECT count(*), sum(v) FROM (" + " UNION ALL ".join(branches) + ") p"
+
+
 def expiration(result, relays, expected, session, stats_, container):
     token, exp, ttl = write_token()
     point = f"{base.POLARIS}/api/catalog/v1/{CATALOG}/namespaces/test/tables/token_query"
-    evidence = result["cases"]["token_expiry"] = {"issued_expires_at": exp, "reported_ttl_s": ttl, "wait_udf_s": 605,
-                                                 "direct_rest_before": requests.get(point, headers=auth(token), timeout=10).status_code}
+    relay = relays["catalog"]
+    statement = token_sql()
+    evidence = result["cases"]["token_expiry"] = {"issued_expires_at": exp, "reported_ttl_s": ttl,
+        "pacing_max_requests": 120, "pacing_s_per_request": 5.1, "query_sql": statement,
+        "direct_rest_before": requests.get(point, headers=auth(token), timeout=10).status_code, "rotations": []}
+    mark = relay.mark()
     begin_at = time.time()
-    marks = relays["catalog"].mark()
 
-    probe = f"""
-import json
-import time
-from pyspark.sql import SparkSession
-from pyspark.sql.connect.functions import udf
-from pyspark.sql.types import IntegerType
+    def rotate():
+        _, next_exp, _ = write_token()
+        evidence["rotations"].append({"at": time.time(), "expires_at": next_exp})
 
-def hold(value):
-    time.sleep(605)
-    return value
-
-session = SparkSession.builder.remote("sc://127.0.0.1:50051").create()
-delay = udf(hold, IntegerType(), useArrow=False)
-rows = session.table("{NS}.token_query").select(delay("id")).collect()
-print("P3_RESULT=" + json.dumps([list(row) for row in rows]), flush=True)
-"""
-    result["versions"]["long_query_client"] = cmd("docker", "exec", container, "python", "-c",
-        "import platform,pyspark; print(platform.python_version(),pyspark.__version__)")
+    relay.on_unauthorized = rotate
+    relay.token_pacing_remaining = 120
     status = {}
 
     def query():
-        def execute():
-            output = cmd("docker", "exec", container, "python", "-u", "-c", probe, timeout=690)
-            encoded = next(line.removeprefix("P3_RESULT=") for line in output.splitlines() if line.startswith("P3_RESULT="))
-            return json.loads(encoded)
-
-        rec, rows = timed(execute, stats_)
+        rec, rows = timed(lambda: collect(session, statement, 700), stats_)
         status.update(rec | {"matches_spark": rows is not None and fingerprint(rows) == expected})
-        save(result)
 
-    worker = threading.Thread(target=query, daemon=True)
-    worker.start()
-    while time.time() < exp + 3:
-        time.sleep(max(0, min(1, exp + 3 - time.time())))
-    evidence["query_active_past_expiration"] = worker.is_alive() and time.time() >= exp
-    if time.time() >= exp:
-        evidence["direct_rest_expired"] = requests.get(point, headers=auth(token), timeout=10).status_code
-        secondary = base.connect(50051)
-        rec, rows = timed(lambda: collect(secondary, f"SELECT id FROM {NS}.token_query", 40))
-        evidence["secondary_expired"] = rec | {"returned_rows": rows is not None}
-        def rotate():
-            _, next_exp, _ = write_token()
-            evidence["rotation_at"] = time.time()
-            evidence["new_token_expires_at"] = next_exp
-
-        relays["catalog"].on_unauthorized = rotate
-        rec, rows = timed(lambda: collect(secondary, f"SELECT id FROM {NS}.token_query", 40))
-        evidence["secondary_rotated"] = rec | {"matches_spark": rows is not None and fingerprint(rows) == expected}
-        relays["catalog"].on_unauthorized = None
-    evidence["catalog_requests"] = relays["catalog"].since(marks)
-    evidence["launch_at"] = begin_at
+    running = threading.Thread(target=query, daemon=True)
+    running.start()
+    while time.time() < exp + 2:
+        time.sleep(min(1, max(0, exp + 2 - time.time())))
+    evidence["query_active_past_expiration"] = running.is_alive()
+    evidence["direct_rest_expired"] = requests.get(point, headers=auth(token), timeout=10).status_code
     save(result)
-    while worker.is_alive() and time.time() - begin_at < 705:
-        worker.join(30)
-        print(f"token expiry query still active={worker.is_alive()} elapsed={time.time() - begin_at:.0f}s", flush=True)
+    while running.is_alive() and time.time() - begin_at < 714:
+        running.join(30)
+        print(f"token query active={running.is_alive()} elapsed={time.time() - begin_at:.0f}s", flush=True)
     evidence["query"] = status
-    evidence["client_active"] = worker.is_alive()
-    evidence["catalog_requests"] = relays["catalog"].since(marks)
-
+    evidence["client_active"] = running.is_alive()
+    evidence["catalog_requests"] = relay.since(mark)
+    evidence["paced_requests"] = sum(bool(r.get("pacing_delay_s")) for r in evidence["catalog_requests"])
+    evidence["request_statuses"] = {str(code): sum(r.get("status") == code for r in evidence["catalog_requests"])
+                                    for code in (200, 401, 403)}
+    relay.on_unauthorized = None
+    relay.token_pacing_remaining = 0
+    save(result)
 
 def main():
     result = begin("faults-storage")
@@ -454,6 +445,9 @@ def main():
                 return
             result["reference"] = reference
             options = {"extra": sail_env(), "options": (HOST_GATEWAY,)}
+            if VARIANT == "token":
+                group(result, "token-expiry", lambda *args: expiration(result, relays, reference["token"], *args), "sail", **options)
+                return
             read_cases = ("baseline", "latency-20", "latency-100", "http-503", "scan-reset")
             if VARIANT == "storage":
                 for case in read_cases:
@@ -466,8 +460,6 @@ def main():
                 write_token()
                 group(result, case, lambda *args: probe_commits(result, case, relays, *args), "sail", **options)
             group(result, "spark-integrity", lambda *args: verify(result, reference, *args), "spark", spark_conf=conf())
-            if VARIANT == "catalog":
-                group(result, "token-expiry", lambda *args: expiration(result, relays, reference["token"], *args), "sail", **options)
     except Exception as exc:
         result["error"] = error(exc)
     finally:

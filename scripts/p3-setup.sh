@@ -18,7 +18,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 YAML
-  if [[ "${P3_VARIANT:-}" == catalog ]]; then
+  if [[ "${P3_VARIANT:-}" == catalog || "${P3_VARIANT:-}" == token ]]; then
     cat >> "$override" <<'YAML'
     environment:
       polaris.authentication.token-broker.max-token-generation: PT2M

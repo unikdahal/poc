@@ -1,0 +1,622 @@
+{
+  "task": "faults-storage",
+  "variant": "commit-ack",
+  "revision": "e64d8f750ccdee939c7a872a1293aab15ab58fa0",
+  "run_id": "45562372333",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.faults_storage"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ],
+    "toxiproxy": {
+      "version": "2.12.0",
+      "sha256": "65e042d3fc2290c099527bc506446a6fd863a09f113b8944b636ece70221c2b3"
+    }
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16760336384,
+    "disk": "/dev/root      154894188544 47527727104 107349684224  31% /"
+  },
+  "engines": {
+    "spark-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.p3fault.type": "rest",
+          "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.p3fault.warehouse": "p3fault",
+          "spark.sql.catalog.p3fault.credential": "root:s3cr3t",
+          "spark.sql.catalog.p3fault.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.p3fault.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.p3fault.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.p3fault.s3.path-style-access": "true",
+          "spark.sql.catalog.p3fault.s3.access-key-id": "admin",
+          "spark.sql.catalog.p3fault.s3.secret-access-key": "password",
+          "spark.sql.catalog.p3fault.client.region": "us-east-1",
+          "spark.sql.catalog.p3fault.cache-enabled": "false"
+        },
+        "port": 15002
+      },
+      "listen_s": 9.76569676399231,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.645210124000016
+      }
+    },
+    "after_commit_reset": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.17914017700002205,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00699014599996417
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5098,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:44:43.477644643Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:44:43.477644643Z",
+        "FinishedAt": "2026-11-25T06:44:58.023222931Z"
+      }
+    },
+    "spark-integrity": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.p3fault.type": "rest",
+          "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.p3fault.warehouse": "p3fault",
+          "spark.sql.catalog.p3fault.credential": "root:s3cr3t",
+          "spark.sql.catalog.p3fault.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.p3fault.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.p3fault.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.p3fault.s3.path-style-access": "true",
+          "spark.sql.catalog.p3fault.s3.access-key-id": "admin",
+          "spark.sql.catalog.p3fault.s3.secret-access-key": "password",
+          "spark.sql.catalog.p3fault.client.region": "us-east-1",
+          "spark.sql.catalog.p3fault.cache-enabled": "false"
+        },
+        "port": 15002
+      },
+      "listen_s": 4.258065223693848,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.798814220000054
+      }
+    }
+  },
+  "cases": {
+    "p3fault.test.after_commit_reset_0": {
+      "sql": "INSERT INTO p3fault.test.after_commit_reset_0 SELECT id + 10000, 1 FROM p3fault.test.after_commit_reset_0",
+      "client": {
+        "status": "error",
+        "error": "SparkRuntimeException: commit state unknown: Iceberg REST catalog commit for test.after_commit_reset_0 may have succeeded: request error: error sending request for url (http://host.docker.internal:18181/api/catalog/v1/p3fault/namespaces/test/tables/after%5Fcommit%5Freset%5F0). Check the table state before retrying",
+        "elapsed_s": 1.6993097899999725,
+        "cpu_s": 0.046679000000000026,
+        "peak_bytes": 106315776
+      },
+      "fault": {
+        "injected": true,
+        "at": 1795589085.0442445,
+        "kind": "reset"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/config",
+          "at": 1795589084.8510993,
+          "status": 200,
+          "ended": 1795589084.8563764
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_0",
+          "at": 1795589084.8586805,
+          "status": 200,
+          "ended": 1795589084.8736682
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_0",
+          "at": 1795589084.896867,
+          "status": 200,
+          "ended": 1795589084.9129338
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_0",
+          "at": 1795589084.9144433,
+          "status": 200,
+          "ended": 1795589084.9290757
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_0",
+          "at": 1795589084.930555,
+          "status": 200,
+          "ended": 1795589084.944506
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_0",
+          "at": 1795589084.9784994,
+          "status": 200,
+          "ended": 1795589084.9924977
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_0",
+          "at": 1795589085.004199,
+          "gate_hit": true,
+          "status": 200,
+          "backend_reply_before_reset": 200,
+          "ended": 1795589086.5456445
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 2.729762177999987,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            7790501945492288897,
+            null,
+            "append"
+          ],
+          [
+            7810306465936786464,
+            7790501945492288897,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/after_commit_reset_0/data/00000-200-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/00001-201-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/00002-202-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/00003-203-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/part-7dfa835b-7b2f-4bed-bd89-7618d24d707b-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/after_commit_reset_0/data/00000-200-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/00001-201-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/00002-202-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/00003-203-92f2a389-9c71-48c7-ab89-642e99903b63-0-00001.parquet",
+          "test/after_commit_reset_0/data/part-7dfa835b-7b2f-4bed-bd89-7618d24d707b-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "p3fault.test.after_commit_reset_1": {
+      "sql": "INSERT INTO p3fault.test.after_commit_reset_1 SELECT id + 10000, 1 FROM p3fault.test.after_commit_reset_1",
+      "client": {
+        "status": "error",
+        "error": "SparkRuntimeException: commit state unknown: Iceberg REST catalog commit for test.after_commit_reset_1 may have succeeded: request error: error sending request for url (http://host.docker.internal:18181/api/catalog/v1/p3fault/namespaces/test/tables/after%5Fcommit%5Freset%5F1). Check the table state before retrying",
+        "elapsed_s": 1.6579493129999605,
+        "cpu_s": 0.023034999999999972,
+        "peak_bytes": 108863488
+      },
+      "fault": {
+        "injected": true,
+        "at": 1795589086.7095523,
+        "kind": "reset"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_1",
+          "at": 1795589086.5565355,
+          "status": 200,
+          "ended": 1795589086.5711787
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_1",
+          "at": 1795589086.5757551,
+          "status": 200,
+          "ended": 1795589086.5894516
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_1",
+          "at": 1795589086.5906727,
+          "status": 200,
+          "ended": 1795589086.6051373
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_1",
+          "at": 1795589086.6073942,
+          "status": 200,
+          "ended": 1795589086.623446
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_1",
+          "at": 1795589086.65648,
+          "status": 200,
+          "ended": 1795589086.6711576
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_1",
+          "at": 1795589086.6830719,
+          "gate_hit": true,
+          "status": 200,
+          "backend_reply_before_reset": 200,
+          "ended": 1795589088.2110093
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 0.41220651700001554,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            5450056636802292243,
+            null,
+            "append"
+          ],
+          [
+            8490771810875890085,
+            5450056636802292243,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/after_commit_reset_1/data/00000-209-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/00001-210-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/00002-211-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/00003-212-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/part-3bbcaa40-1970-4f17-afae-cdc0c7407759-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/after_commit_reset_1/data/00000-209-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/00001-210-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/00002-211-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/00003-212-eb81104a-a8e2-4bf5-9099-8fb591f1c03e-0-00001.parquet",
+          "test/after_commit_reset_1/data/part-3bbcaa40-1970-4f17-afae-cdc0c7407759-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "p3fault.test.after_commit_reset_2": {
+      "sql": "INSERT INTO p3fault.test.after_commit_reset_2 SELECT id + 10000, 1 FROM p3fault.test.after_commit_reset_2",
+      "client": {
+        "status": "error",
+        "error": "SparkRuntimeException: commit state unknown: Iceberg REST catalog commit for test.after_commit_reset_2 may have succeeded: request error: error sending request for url (http://host.docker.internal:18181/api/catalog/v1/p3fault/namespaces/test/tables/after%5Fcommit%5Freset%5F2). Check the table state before retrying",
+        "elapsed_s": 1.652140997999993,
+        "cpu_s": 0.022355999999999987,
+        "peak_bytes": 109330432
+      },
+      "fault": {
+        "injected": true,
+        "at": 1795589088.4103217,
+        "kind": "reset"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_2",
+          "at": 1795589088.2631907,
+          "status": 200,
+          "ended": 1795589088.2764587
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_2",
+          "at": 1795589088.280398,
+          "status": 200,
+          "ended": 1795589088.2942119
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_2",
+          "at": 1795589088.2954788,
+          "status": 200,
+          "ended": 1795589088.3086326
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_2",
+          "at": 1795589088.3098454,
+          "status": 200,
+          "ended": 1795589088.3240426
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_2",
+          "at": 1795589088.3546464,
+          "status": 200,
+          "ended": 1795589088.3695703
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/after_commit_reset_2",
+          "at": 1795589088.3816261,
+          "gate_hit": true,
+          "status": 200,
+          "backend_reply_before_reset": 200,
+          "ended": 1795589089.9118068
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 0.377846887999965,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            7257206085865413825,
+            null,
+            "append"
+          ],
+          [
+            4478318861962514486,
+            7257206085865413825,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/after_commit_reset_2/data/00000-218-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/00001-219-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/00002-220-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/00003-221-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/part-3af9e981-61f2-4159-ac55-0293a5e40459-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/after_commit_reset_2/data/00000-218-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/00001-219-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/00002-220-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/00003-221-a65a5edf-51bc-477a-bb76-b581c1dc3192-0-00001.parquet",
+          "test/after_commit_reset_2/data/part-3af9e981-61f2-4159-ac55-0293a5e40459-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    }
+  },
+  "proxy_routes": {
+    "s3": {
+      "toxiproxy": 19000,
+      "http_relay": 19001,
+      "service": 9000
+    },
+    "catalog": {
+      "toxiproxy": 18181,
+      "http_relay": 18182,
+      "service": 8181
+    }
+  },
+  "reference": {
+    "scan": {
+      "rows": 1,
+      "sha256": "b5358ec23ed290df69be06f48e9b174e13ab79d74d3e2c2c1b8ba597df4b625e"
+    },
+    "p3fault.test.commit_reset_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.commit_reset_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.commit_reset_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.after_commit_reset_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.after_commit_reset_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.after_commit_reset_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "token": {
+      "rows": 1,
+      "sha256": "3aad269d873e022370382ceacbce2d8f69556a6fea9f4b9aeec35bb7ed72a27e"
+    }
+  },
+  "post_fault_scan": {
+    "status": "ok",
+    "elapsed_s": 2.275806871000043,
+    "matches_spark": true
+  }
+}

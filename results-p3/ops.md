@@ -3,7 +3,7 @@
 Reproduce with `p3.yml`, `tasks=ops`. The suite command is `python -m harness.p3.ops` with surface, term, int and hup variants.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
-**FACT.** The local image occupies 776719925 image bytes as reported by Docker. The checked warm median of fresh launches through the first correct `SELECT 1` was 4.574 s. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/surface/result.json) · [Run 45561647744](https://github.com/unikdahal/poc/actions/runs/45561647744) · [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/surface/result.json) · [Run 45561647744](https://github.com/unikdahal/poc/actions/runs/45561647744)
+**FACT.** The local image occupies 776719925 image bytes as reported by Docker. The checked warm median of fresh launches through the first correct `SELECT 1` was 4.574 s. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c9097aa855b7ad10bebef7ca94c7c1b80/surface/result.json) · [Run 45561647744](https://github.com/unikdahal/poc/actions/runs/45561647744)
 
 ### Listener and SQL probes
 
@@ -58,7 +58,7 @@ HUP signal evidence. [Raw JSON](https://github.com/unikdahal/poc/blob/5b6b441c90
 
 **FACT from code.** The server loads defaults and process environment at startup. The CLI's shutdown future for both protocols awaits SIGINT through Tokio. Spark Connect binds a plain TCP listener. The Flight SQL standard CLI creates the service without a per-user auth mapping. [Config](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-common/src/config/application.rs#L76-L84) · [Connect](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-cli/src/spark/server.rs#L85-L100) · [Flight](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/entrypoint.rs#L25-L41)
 
-Upstream SIGTERM handling is tracked in [#2611](https://github.com/lakehq/sail/issues/2611) and [#3098](https://github.com/lakehq/sail/pull/3098).
+Upstream SIGTERM handling has an open issue [#2611](https://github.com/lakehq/sail/issues/2611) and an open PR [#3098](https://github.com/lakehq/sail/pull/3098).
 
 ### Coverage limits
 

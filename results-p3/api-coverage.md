@@ -74,6 +74,8 @@ Each treatment uses a fresh Spark reference and a fresh Sail server. The Python 
 
 **FACT.** The two pandas operations from the pinned Python 3.11 clients fail the Sail server's version guard because the image embeds Python 3.14.10. [Version guard](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-python-udf/src/cereal/mod.rs#L49-L57) · [Python 3.5 run](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/python35/result.json)
 
+**FACT.** The 4.0.1 client returned IDs 0 through 7 from both checkpoint methods on Sail. The Spark 3.5.10 baseline client raised `NOT_IMPLEMENTED` for both methods, so those cells have a reference error. [Checkpoint results](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/python4/result.json)
+
 ### Coverage limits
 
 The matrix uses the same Spark 3.5.10 correctness reference for both client versions. Checkpoint method availability differs by client. The raw output distinguishes a reference error from a Sail error. The JVM cases cover public Java APIs distributed in the same JVM artifact used by Scala applications.

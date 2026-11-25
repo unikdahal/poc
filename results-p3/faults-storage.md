@@ -39,7 +39,7 @@ The earlier same-request rotation test returned Spark-matching rows after Polari
 
 The pinned REST provider constructs each request from current credentials and retries once on HTTP 401. [REST retry code](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L258-L281)
 
-The commit tests compare clean failure and object cleanup separately. The public Iceberg epic tracks integration coverage. Searches for an exact orphan-on-failed-commit report yielded no match beyond the broader integration issue. [#172](https://github.com/lakehq/sail/issues/172)
+The commit tests compare clean failure and object cleanup separately. The pinned commit already contains the upstream fix that preserves unknown REST commit outcomes. The post-acceptance reset exercised that behavior. Searches found no exact public match for the orphan left by a pre-forward failure. [Unknown commit outcome report](https://github.com/lakehq/sail/issues/2738) · [Merged fix](https://github.com/lakehq/sail/pull/2772) · [Iceberg tracking issue](https://github.com/lakehq/sail/issues/172)
 
 ### Coverage limits
 

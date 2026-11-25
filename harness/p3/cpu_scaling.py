@@ -4,6 +4,7 @@ import json
 import statistics
 import subprocess
 import sys
+from pathlib import Path
 
 from harness import common as base, tpch
 from harness.p3.common import begin, cmd, fingerprint, group, load_tpch, median_if_valid, sail_state, save, timed, tpch_rows
@@ -16,12 +17,25 @@ def read_result():
     return json.loads((base.OUT / "result.json").read_text())
 
 
+def cpu_cgroup(cores):
+    return Path(f"/sys/fs/cgroup/p3-comet-cpu-{cores}")
+
+
 def treatment(name, cores):
     result = read_result()
     reference = result["cases"]["reference"]
     label = f"{name}-{cores}"
+    cgroup = cpu_cgroup(cores) if name == "comet" else None
 
     def run(session, stats, _):
+        if cgroup is not None:
+            cmd("sudo", "mkdir", str(cgroup), timeout=8)
+            cmd("sudo", "tee", str(cgroup / "cpu.max"), input=f"{cores * 100000} 100000\n", timeout=8)
+            for proc in [stats.proc, *stats.proc.children(recursive=True)]:
+                cmd("sudo", "tee", str(cgroup / "cgroup.procs"), input=f"{proc.pid}\n", timeout=8)
+            result["engines"][label]["cpu_cgroup"] = {"cpu_max": (cgroup / "cpu.max").read_text().strip(),
+                                                       "startup_outside_cgroup": True}
+            save(result)
         cases = result["cases"][label] = {}
         for q in QUERIES:
             print(f"{label} Q{q}", flush=True)
@@ -40,6 +54,11 @@ def treatment(name, cores):
     group(result, label, run, name, cores=cores,
           port=51000 + (10 if name == "comet" else 0) + cores,
           extra={"SAIL_EXECUTION__DEFAULT_PARALLELISM": str(cores)})
+    if cgroup is not None and (cgroup / "cpu.stat").exists():
+        stats = dict(line.split() for line in (cgroup / "cpu.stat").read_text().splitlines())
+        result["engines"][label].setdefault("cpu_cgroup", {})["cpu_stat"] = stats
+        cmd("sudo", "rmdir", str(cgroup), check=False, timeout=8)
+        save(result)
 
 
 def main():
@@ -75,6 +94,9 @@ def main():
                     cmd("docker", "stop", "-t", "8", container, check=False, timeout=20)
                     record["exit_state"] = sail_state(container)
                     cmd("docker", "rm", "-f", container, check=False)
+                elif (cgroup := cpu_cgroup(cores)).exists():
+                    cmd("sudo", "tee", str(cgroup / "cgroup.kill"), input="1\n", check=False, timeout=8)
+                    cmd("sudo", "rmdir", str(cgroup), check=False, timeout=8)
             save(result)
         matches = [str(q) for q in QUERIES if all(
             result["cases"].get(f"{name}-{c}", {}).get(str(q), {}).get("warm_median") for c in range(1, 5))]

@@ -132,6 +132,11 @@ jobs:
         run: |
           python -m pip install pyiceberg==0.10.0 'pyarrow==17.0.0' 'numpy==1.26.4'
           python -m pip freeze > out/pip-freeze.txt
+      - name: Install OTLP message schemas
+        if: matrix.task == 'ops'
+        run: |
+          python -m pip install opentelemetry-proto==1.43.0
+          python -m pip freeze > out/pip-freeze.txt
       - name: Run treatment
         continue-on-error: true
         timeout-minutes: ${{ matrix.step_timeout }}

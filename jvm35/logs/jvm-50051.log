@@ -1,0 +1,43 @@
+java.lang.RuntimeException: Failed to initialize MemoryUtil. Was Java started with `--add-opens=java.base/java.nio=ALL-UNNAMED`? (See https://arrow.apache.org/docs/java/install.html)
+	at org.sparkproject.org.apache.arrow.memory.util.MemoryUtil.<clinit>(MemoryUtil.java:138)
+	at org.sparkproject.org.apache.arrow.memory.ArrowBuf.getDirectBuffer(ArrowBuf.java:229)
+	at org.sparkproject.org.apache.arrow.memory.ArrowBuf.nioBuffer(ArrowBuf.java:224)
+	at org.sparkproject.org.apache.arrow.vector.ipc.ReadChannel.readFully(ReadChannel.java:87)
+	at org.sparkproject.org.apache.arrow.vector.ipc.message.MessageSerializer.readMessageBody(MessageSerializer.java:728)
+	at org.sparkproject.org.apache.arrow.vector.ipc.message.MessageChannelReader.readNext(MessageChannelReader.java:67)
+	at org.apache.spark.sql.connect.client.arrow.MessageIterator.hasNext(ConcatenatingArrowStreamReader.scala:159)
+	at org.apache.spark.sql.connect.client.SparkResult.org$apache$spark$sql$connect$client$SparkResult$$processResponses(SparkResult.scala:126)
+	at org.apache.spark.sql.connect.client.SparkResult.length(SparkResult.scala:153)
+	at org.apache.spark.sql.connect.client.SparkResult.toArray(SparkResult.scala:183)
+	at org.apache.spark.sql.Dataset.$anonfun$collect$1(Dataset.scala:2894)
+	at org.apache.spark.sql.Dataset.withResult(Dataset.scala:3334)
+	at org.apache.spark.sql.Dataset.collect(Dataset.scala:2893)
+	at org.apache.spark.sql.Dataset.collectAsList(Dataset.scala:2907)
+	at ConnectProbe.probe(ConnectProbe.java:14)
+	at ConnectProbe.main(ConnectProbe.java:24)
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make field long java.nio.Buffer.address accessible: module java.base does not "opens java.nio" to unnamed module @58dc58f9
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:354)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:297)
+	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:178)
+	at java.base/java.lang.reflect.Field.setAccessible(Field.java:172)
+	at org.sparkproject.org.apache.arrow.memory.util.MemoryUtil.<clinit>(MemoryUtil.java:84)
+	... 15 more
+P3	select_literal	error	java.lang.ExceptionInInitializerError
+P3	range_filter	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	groupby_sum	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	window	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	explode	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	higher_order	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	approx	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	timestamp_ntz	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+P3	json_regex	error	java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil
+05:39:20.373 [main] ERROR org.sparkproject.org.apache.arrow.memory.BaseAllocator - Memory was leaked by query. Memory leaked: (2688)
+Allocator(ROOT) 0/2688/2688/9223372036854775807 (res/actual/peak/limit)
+
+Exception in thread "main" java.lang.IllegalStateException: Memory was leaked by query. Memory leaked: (2688)
+Allocator(ROOT) 0/2688/2688/9223372036854775807 (res/actual/peak/limit)
+
+	at org.sparkproject.org.apache.arrow.memory.BaseAllocator.close(BaseAllocator.java:476)
+	at org.sparkproject.org.apache.arrow.memory.RootAllocator.close(RootAllocator.java:29)
+	at org.apache.spark.sql.SparkSession.close(SparkSession.scala:668)
+	at ConnectProbe.main(ConnectProbe.java:35)

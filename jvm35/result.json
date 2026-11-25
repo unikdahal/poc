@@ -1,0 +1,243 @@
+{
+  "task": "api-coverage",
+  "variant": "jvm35",
+  "revision": "7e6420162a2a963481832119c1c2ea8b11b0186a",
+  "run_id": "45554682627",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.api_coverage"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ],
+    "client_spark": "3.5.10",
+    "client_language": "Java"
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464306176,
+    "disk": "/dev/mapper/cow-root 154894188544 44081041408 110796369920  29% /"
+  },
+  "engines": {
+    "reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 4.258668422698975,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9415710959999615
+      }
+    },
+    "jvm35": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.20598589399992306,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.0061206150000998605
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4225,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:39:17.88386155Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:39:17.88386155Z",
+        "FinishedAt": "2026-11-25T05:39:28.742377881Z"
+      }
+    }
+  },
+  "cases": {
+    "approx": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "explode": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "groupby_sum": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "higher_order": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "json_regex": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "range_filter": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "select_literal": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.ExceptionInInitializerError"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.ExceptionInInitializerError"
+      }
+    },
+    "timestamp_ntz": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    },
+    "window": {
+      "verdict": "reference error",
+      "spark": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      },
+      "sail": {
+        "status": "error",
+        "error": "java.lang.NoClassDefFoundError: Could not initialize class org.sparkproject.org.apache.arrow.memory.util.MemoryUtil"
+      }
+    }
+  },
+  "reference_client": "3.5.10"
+}

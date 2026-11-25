@@ -38,6 +38,15 @@ The suite prepared 15000000 orders with operation counts `{'delete': 750000, 'in
 | orders v3 merge-on-read | sail-cluster | error | —/—/— | — |
 
 Rows without an equality verdict or warm timing lack complete verification. File-system write amplification beyond the Iceberg metadata was outside this run.
+The suite reached its 310-minute deadline while verifying the orders CTAS
+outputs. Three lineitem configurations verified all samples. The clustered
+lineitem case verified two outputs before its final comparison timed out.
+Both Sail write containers reported `OOMKilled=true` during the MERGE
+matrix. Once a container stopped, subsequent cases on that server hit
+connection errors, leaving their independent behavior unverified. The
+follow-up uses fresh servers per case and an exact keyed comparison.
+[Follow-up run](https://github.com/unikdahal/poc/actions/runs/45534164779)
+
 ## Anomalies and log excerpts
 
 ```text

@@ -75,6 +75,8 @@ def anomalies(d, extra=()):
             continue
         if case.get("error"):
             observations.append(f"{label} | {case['error']}")
+        if case.get("container_state", {}).get("OOMKilled"):
+            observations.append(f"{label} | Docker OOMKilled=true, exit {case['container_state'].get('ExitCode')}")
         for line in case.get("log_excerpt", "").splitlines():
             if re.search(r"\b(error|exception|panicked|killed|failed)\b", line, re.I) and line not in seen:
                 seen.add(line)
@@ -131,18 +133,26 @@ def ingest(d):
                 if record["status"] != "ok":
                     status = record["status"]
                 delta = record.get("comparison", {})
-                if "extra" in delta and any(delta.values()):
-                    status = f"differs ({delta['extra']} extra, {delta['missing']} missing)"
+                if "extra" in delta:
+                    if any(delta.values()):
+                        status = f"differs ({delta['extra']} extra, {delta['missing']} missing)"
+                    elif status == "unverified":
+                        status = "equal for final checked output"
                 files = record.get("files", {}).get("added")
                 if files is not None and i > 0:
                     written.append((sum(c["files"] for c in files.values()), sum(c["bytes"] for c in files.values())))
             sizes = f"{fmt(statistics.median(x[0] for x in written), 1)} / {kib(statistics.median(x[1] for x in written))}" if len(written) == 2 else "—"
             rows.append((label, name, status, parts(validated), sizes))
     CURRENT["ingest"] = f"{sum(r[2] == 'equal' for r in rows)}/{len(rows)} engine-operation cases with validated warm timings"
+    verification = (
+        "Spark checked the final successful output against a source or independently derived expected table. "
+        "The check validated unique reference keys, total row counts and all column values through a full outer join."
+        if d.get("measurement", {}).get("validation_scope") else
+        "Spark checked table content with `EXCEPT ALL` in both directions."
+    )
     return "\n\n".join([
         f"The suite prepared {text(d.get('orders_row_count'))} orders with operation counts `{d.get('merge_source_counts', {})}`. "
-        "Spark checked table content with `EXCEPT ALL` in both directions. The files column gives medians "
-        "over the two warm outputs from the reference engine's `.files` metadata.",
+        + verification + " The files column gives medians over the two warm outputs from the reference engine's `.files` metadata.",
         table(("Operation", "Engine", "Equality", "Warm wall s/CPU s/peak MiB", "Added files/MiB"), rows),
         "Rows without an equality verdict or warm timing lack complete verification. File-system write amplification beyond the Iceberg metadata was outside this run."
     ]) + anomalies(d, errors)

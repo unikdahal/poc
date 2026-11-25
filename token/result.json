@@ -1,8 +1,8 @@
 {
   "task": "faults-storage",
   "variant": "token",
-  "revision": "ea25ee9588bd3a1e63d520a247b464ff523dc24f",
-  "run_id": "45559834940",
+  "revision": "7c81f551a162059467eb37463790d81c05bc43e3",
+  "run_id": "45560828702",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -71,7 +71,7 @@
   "runner": {
     "cpu_count": 4,
     "total_memory_bytes": 16760344576,
-    "disk": "/dev/root      154894188544 47527768064 107349643264  31% /"
+    "disk": "/dev/root      154894188544 47532736512 107344674816  31% /"
   },
   "engines": {
     "spark-reference": {
@@ -98,10 +98,10 @@
         },
         "port": 15002
       },
-      "listen_s": 9.01467514038086,
+      "listen_s": 8.014044284820557,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.8666070769999976
+        "elapsed_s": 2.618489851000021
       }
     },
     "token-expiry": {
@@ -124,10 +124,10 @@
           "RUST_LOG": "info"
         }
       },
-      "listen_s": 1.5016471560000184,
+      "listen_s": 0.20811344999998482,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.005756883000003654
+        "elapsed_s": 0.008992568000024903
       },
       "before_shutdown": {
         "Status": "running",
@@ -136,10 +136,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 4466,
+        "Pid": 6375,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T06:23:27.490005558Z",
+        "StartedAt": "2026-11-25T06:31:39.977928527Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -152,27 +152,48 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T06:23:27.490005558Z",
-        "FinishedAt": "2026-11-25T06:25:38.056040368Z"
+        "StartedAt": "2026-11-25T06:31:39.977928527Z",
+        "FinishedAt": "2026-11-25T06:42:03.910778795Z"
       }
     }
   },
   "cases": {
     "token_expiry": {
-      "issued_expires_at": 1795587928,
+      "issued_expires_at": 1795588421,
       "reported_ttl_s": 120,
       "pacing_max_requests": 120,
       "pacing_s_per_request": 5.1,
-      "query_sql": "SELECT count(*), sum(v) FROM (SELECT id + 0 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 1 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 2 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 3 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 4 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 5 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 6 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 7 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 8 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 9 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 10 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 11 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 12 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 13 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 14 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 15 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 16 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 17 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 18 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 19 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 20 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 21 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 22 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 23 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 24 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 25 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 26 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 27 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 28 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 29 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 30 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 31 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 32 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 33 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 34 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 35 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 36 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 37 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 38 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 39 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 40 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 41 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 42 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 43 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 44 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 45 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 46 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 47 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 48 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 49 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 50 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 51 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 52 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 53 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 54 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 55 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 56 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 57 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 58 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 59 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 60 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 61 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 62 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 63 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 64 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 65 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 66 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 67 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 68 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 69 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 70 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 71 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 72 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 73 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 74 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 75 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 76 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 77 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 78 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 79 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 80 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 81 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 82 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 83 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 84 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 85 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 86 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 87 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 88 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 89 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 90 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 91 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 92 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 93 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 94 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 95 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 96 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 97 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 98 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 99 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 100 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 101 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 102 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 103 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 104 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 105 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 106 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 107 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 108 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 109 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 110 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 111 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 112 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 113 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 114 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 115 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 116 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 117 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 118 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 119 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 120 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 121 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 122 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 123 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 124 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 125 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 126 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 127 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 128 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 129 AS v FROM p3fault.test.token_query) p",
+      "query_sql": "SELECT count(*), sum(v) FROM (SELECT id AS v FROM p3fault.test.token_piece_0 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_1 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_2 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_3 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_4 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_5 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_6 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_7 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_8 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_9 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_10 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_11 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_12 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_13 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_14 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_15 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_16 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_17 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_18 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_19 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_20 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_21 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_22 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_23 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_24 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_25 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_26 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_27 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_28 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_29 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_30 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_31 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_32 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_33 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_34 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_35 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_36 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_37 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_38 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_39 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_40 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_41 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_42 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_43 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_44 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_45 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_46 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_47 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_48 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_49 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_50 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_51 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_52 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_53 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_54 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_55 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_56 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_57 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_58 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_59 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_60 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_61 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_62 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_63 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_64 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_65 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_66 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_67 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_68 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_69 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_70 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_71 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_72 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_73 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_74 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_75 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_76 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_77 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_78 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_79 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_80 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_81 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_82 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_83 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_84 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_85 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_86 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_87 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_88 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_89 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_90 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_91 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_92 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_93 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_94 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_95 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_96 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_97 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_98 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_99 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_100 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_101 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_102 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_103 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_104 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_105 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_106 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_107 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_108 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_109 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_110 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_111 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_112 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_113 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_114 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_115 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_116 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_117 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_118 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_119 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_120 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_121 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_122 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_123 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_124 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_125 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_126 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_127 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_128 UNION ALL SELECT id AS v FROM p3fault.test.token_piece_129) p",
       "direct_rest_before": 200,
-      "rotations": [],
-      "query_active_past_expiration": false,
+      "rotations": [
+        {
+          "at": 1795588424.2019873,
+          "expires_at": 1795588544
+        },
+        {
+          "at": 1795588546.9488566,
+          "expires_at": 1795588666
+        },
+        {
+          "at": 1795588669.712819,
+          "expires_at": 1795588789
+        },
+        {
+          "at": 1795588792.4669654,
+          "expires_at": 1795588912
+        },
+        {
+          "at": 1795588915.2141023,
+          "expires_at": 1795589035
+        }
+      ],
+      "query_active_past_expiration": true,
       "direct_rest_expired": 401,
       "query": {
         "status": "ok",
-        "elapsed_s": 5.43213172099999,
-        "cpu_s": 0.23493499999999998,
-        "peak_bytes": 108920832,
+        "elapsed_s": 614.419001663,
+        "cpu_s": 0.5691729999999999,
+        "peak_bytes": 113041408,
         "matches_spark": true
       },
       "client_active": false,
@@ -180,23 +201,1085 @@
         {
           "method": "GET",
           "path": "/api/catalog/v1/config",
-          "at": 1795587808.8178558,
+          "at": 1795588301.4015718,
           "status": 200,
-          "ended": 1795587808.8256884
+          "ended": 1795588301.4058137
         },
         {
           "method": "GET",
-          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_query",
-          "at": 1795587808.8270764,
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_0",
+          "at": 1795588301.4072335,
           "pacing_delay_s": 5.1,
           "status": 200,
-          "ended": 1795587813.9395735
+          "ended": 1795588306.5201192
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_1",
+          "at": 1795588306.5502276,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588311.661328
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_2",
+          "at": 1795588311.6674209,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588316.7791314
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_3",
+          "at": 1795588316.7831073,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588321.8972847
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_4",
+          "at": 1795588321.9014044,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588327.013891
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_5",
+          "at": 1795588327.0178118,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588332.1292655
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_6",
+          "at": 1795588332.1338096,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588337.2454028
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_7",
+          "at": 1795588337.249605,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588342.3601513
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_8",
+          "at": 1795588342.3642378,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588347.4749029
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_9",
+          "at": 1795588347.4787648,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588352.5890744
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_10",
+          "at": 1795588352.5929465,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588357.7031772
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_11",
+          "at": 1795588357.7078896,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588362.822111
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_12",
+          "at": 1795588362.8266299,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588367.9371917
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_13",
+          "at": 1795588367.9415226,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588373.0517175
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_14",
+          "at": 1795588373.0556765,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588378.1672578
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_15",
+          "at": 1795588378.1717823,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588383.2821481
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_16",
+          "at": 1795588383.2859435,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588388.398058
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_17",
+          "at": 1795588388.4020355,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588393.5121586
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_18",
+          "at": 1795588393.5159674,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588398.626524
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_19",
+          "at": 1795588398.6309404,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588403.7415555
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_20",
+          "at": 1795588403.745518,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588408.856944
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_21",
+          "at": 1795588408.8609738,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588413.9721022
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_22",
+          "at": 1795588413.9760172,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588419.086716
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_23",
+          "at": 1795588419.0906067,
+          "pacing_delay_s": 5.1,
+          "status": 401,
+          "rotated_token_before_401_response": true,
+          "ended": 1795588424.2021127
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_23",
+          "at": 1795588424.2032351,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588429.314124
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_24",
+          "at": 1795588429.317946,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588434.4285362
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_25",
+          "at": 1795588434.4324212,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588439.5424478
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_26",
+          "at": 1795588439.5464554,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588444.656926
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_27",
+          "at": 1795588444.6606572,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588449.7719088
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_28",
+          "at": 1795588449.7764668,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588454.8867617
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_29",
+          "at": 1795588454.890707,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588460.0008602
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_30",
+          "at": 1795588460.0047271,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588465.115578
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_31",
+          "at": 1795588465.1194842,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588470.2299228
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_32",
+          "at": 1795588470.2340162,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588475.3447545
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_33",
+          "at": 1795588475.3484974,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588480.4595032
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_34",
+          "at": 1795588480.463324,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588485.5747707
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_35",
+          "at": 1795588485.5790982,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588490.6894035
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_36",
+          "at": 1795588490.6930163,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588495.8035684
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_37",
+          "at": 1795588495.8076463,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588500.918042
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_38",
+          "at": 1795588500.9222162,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588506.03276
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_39",
+          "at": 1795588506.037237,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588511.1472967
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_40",
+          "at": 1795588511.1508546,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588516.2613215
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_41",
+          "at": 1795588516.2650795,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588521.3762467
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_42",
+          "at": 1795588521.3800855,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588526.490163
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_43",
+          "at": 1795588526.4940617,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588531.6041625
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_44",
+          "at": 1795588531.6079044,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588536.7178988
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_45",
+          "at": 1795588536.7215154,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588541.8365326
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_46",
+          "at": 1795588541.840579,
+          "pacing_delay_s": 5.1,
+          "status": 401,
+          "rotated_token_before_401_response": true,
+          "ended": 1795588546.948962
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_46",
+          "at": 1795588546.9501417,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588552.0604033
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_47",
+          "at": 1795588552.0642643,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588557.1750774
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_48",
+          "at": 1795588557.1790028,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588562.2894616
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_49",
+          "at": 1795588562.293605,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588567.4041464
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_50",
+          "at": 1795588567.4079313,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588572.5183904
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_51",
+          "at": 1795588572.5223105,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588577.6325104
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_52",
+          "at": 1795588577.6364107,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588582.7479408
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_53",
+          "at": 1795588582.752704,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588587.8641253
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_54",
+          "at": 1795588587.8679225,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588592.9821122
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_55",
+          "at": 1795588592.985842,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588598.098294
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_56",
+          "at": 1795588598.102568,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588603.2133563
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_57",
+          "at": 1795588603.217432,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588608.3286154
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_58",
+          "at": 1795588608.3331988,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588613.4434752
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_59",
+          "at": 1795588613.4471807,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588618.5594065
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_60",
+          "at": 1795588618.5639713,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588623.6759508
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_61",
+          "at": 1795588623.6802473,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588628.7918181
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_62",
+          "at": 1795588628.796156,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588633.9064357
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_63",
+          "at": 1795588633.9103253,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588639.0209084
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_64",
+          "at": 1795588639.0247676,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588644.1390963
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_65",
+          "at": 1795588644.1464443,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588649.2570443
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_66",
+          "at": 1795588649.2611825,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588654.3715498
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_67",
+          "at": 1795588654.375398,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588659.4860752
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_68",
+          "at": 1795588659.489775,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588664.600648
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_69",
+          "at": 1795588664.6045012,
+          "pacing_delay_s": 5.1,
+          "status": 401,
+          "rotated_token_before_401_response": true,
+          "ended": 1795588669.7129328
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_69",
+          "at": 1795588669.7140095,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588674.8259494
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_70",
+          "at": 1795588674.830539,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588679.9420915
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_71",
+          "at": 1795588679.9470851,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588685.059897
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_72",
+          "at": 1795588685.0637496,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588690.174512
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_73",
+          "at": 1795588690.178283,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588695.288609
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_74",
+          "at": 1795588695.2926943,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588700.4028633
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_75",
+          "at": 1795588700.4068677,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588705.5180268
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_76",
+          "at": 1795588705.5228965,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588710.6330013
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_77",
+          "at": 1795588710.6369436,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588715.7494867
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_78",
+          "at": 1795588715.7581818,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588720.8680434
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_79",
+          "at": 1795588720.8718946,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588725.9829366
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_80",
+          "at": 1795588725.9866183,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588731.0968087
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_81",
+          "at": 1795588731.1005177,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588736.210783
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_82",
+          "at": 1795588736.2147446,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588741.3255565
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_83",
+          "at": 1795588741.329488,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588746.4411852
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_84",
+          "at": 1795588746.4454076,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588751.5555568
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_85",
+          "at": 1795588751.5593007,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588756.669603
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_86",
+          "at": 1795588756.6734884,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588761.7836814
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_87",
+          "at": 1795588761.7875285,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588766.8980498
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_88",
+          "at": 1795588766.901904,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588772.0118272
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_89",
+          "at": 1795588772.0156143,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588777.125822
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_90",
+          "at": 1795588777.1296458,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588782.240617
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_91",
+          "at": 1795588782.2443926,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588787.3543253
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_92",
+          "at": 1795588787.3582952,
+          "pacing_delay_s": 5.1,
+          "status": 401,
+          "rotated_token_before_401_response": true,
+          "ended": 1795588792.4670775
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_92",
+          "at": 1795588792.468272,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588797.5790682
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_93",
+          "at": 1795588797.5836532,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588802.6939042
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_94",
+          "at": 1795588802.698039,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588807.8093958
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_95",
+          "at": 1795588807.8138697,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588812.924457
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_96",
+          "at": 1795588812.9284704,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588818.038913
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_97",
+          "at": 1795588818.0430024,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588823.1565216
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_98",
+          "at": 1795588823.160472,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588828.271263
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_99",
+          "at": 1795588828.2756076,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588833.3866003
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_100",
+          "at": 1795588833.391245,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588838.5010965
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_101",
+          "at": 1795588838.5049727,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588843.6157963
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_102",
+          "at": 1795588843.6200142,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588848.7305238
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_103",
+          "at": 1795588848.734449,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588853.8443189
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_104",
+          "at": 1795588853.848151,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588858.958069
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_105",
+          "at": 1795588858.9617417,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588864.0728734
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_106",
+          "at": 1795588864.0771592,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588869.1871004
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_107",
+          "at": 1795588869.1910472,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588874.3017023
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_108",
+          "at": 1795588874.3058891,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588879.4163625
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_109",
+          "at": 1795588879.420425,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588884.5305076
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_110",
+          "at": 1795588884.5343597,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588889.644489
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_111",
+          "at": 1795588889.6481855,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588894.7594655
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_112",
+          "at": 1795588894.7632978,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588899.8732886
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_113",
+          "at": 1795588899.877575,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588904.9880548
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_114",
+          "at": 1795588904.991866,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795588910.1020389
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_115",
+          "at": 1795588910.1060102,
+          "pacing_delay_s": 5.1,
+          "status": 401,
+          "rotated_token_before_401_response": true,
+          "ended": 1795588915.214236
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_115",
+          "at": 1795588915.2154312,
+          "status": 200,
+          "ended": 1795588915.2245076
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_116",
+          "at": 1795588915.2287407,
+          "status": 200,
+          "ended": 1795588915.238115
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_117",
+          "at": 1795588915.2419722,
+          "status": 200,
+          "ended": 1795588915.252661
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_118",
+          "at": 1795588915.256808,
+          "status": 200,
+          "ended": 1795588915.2662623
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_119",
+          "at": 1795588915.2701714,
+          "status": 200,
+          "ended": 1795588915.2791483
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_120",
+          "at": 1795588915.2827709,
+          "status": 200,
+          "ended": 1795588915.2917383
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_121",
+          "at": 1795588915.295553,
+          "status": 200,
+          "ended": 1795588915.3049288
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_122",
+          "at": 1795588915.3085542,
+          "status": 200,
+          "ended": 1795588915.3173707
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_123",
+          "at": 1795588915.3209953,
+          "status": 200,
+          "ended": 1795588915.330486
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_124",
+          "at": 1795588915.335778,
+          "status": 200,
+          "ended": 1795588915.3452811
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_125",
+          "at": 1795588915.3497396,
+          "status": 200,
+          "ended": 1795588915.3598046
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_126",
+          "at": 1795588915.3641505,
+          "status": 200,
+          "ended": 1795588915.3742175
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_127",
+          "at": 1795588915.3778317,
+          "status": 200,
+          "ended": 1795588915.3868456
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_128",
+          "at": 1795588915.390394,
+          "status": 200,
+          "ended": 1795588915.398849
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_piece_129",
+          "at": 1795588915.4023695,
+          "status": 200,
+          "ended": 1795588915.4107382
         }
       ],
-      "paced_requests": 1,
+      "paced_requests": 120,
       "request_statuses": {
-        "200": 2,
-        "401": 0,
+        "200": 131,
+        "401": 5,
         "403": 0
       }
     }

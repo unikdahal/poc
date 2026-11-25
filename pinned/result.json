@@ -1,8 +1,8 @@
 {
   "task": "rootcause",
   "variant": "pinned",
-  "revision": "efebe701c6d988843c27f24f304ccafce5a4d377",
-  "run_id": "45555369356",
+  "revision": "0699b35a477d50f93ba6d2a3c070706905957d08",
+  "run_id": "45555635573",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,7 +19,7 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
       "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
@@ -81,10 +81,10 @@
         },
         "port": 15002
       },
-      "listen_s": 7.509376287460327,
+      "listen_s": 7.510571718215942,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.8177434549999987
+        "elapsed_s": 1.8940965479999932
       }
     },
     "sail": {
@@ -105,10 +105,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.10613076099997443,
+      "listen_s": 0.10063795499996786,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.006817941999997856
+        "elapsed_s": 0.006057660000010401
       },
       "before_shutdown": {
         "Status": "running",
@@ -117,10 +117,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 7323,
+        "Pid": 7423,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:45:26.54881381Z",
+        "StartedAt": "2026-11-25T05:47:50.146011071Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -133,8 +133,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:45:26.54881381Z",
-        "FinishedAt": "2026-11-25T05:45:49.918104362Z"
+        "StartedAt": "2026-11-25T05:47:50.146011071Z",
+        "FinishedAt": "2026-11-25T05:48:13.821206374Z"
       }
     }
   },
@@ -144,10 +144,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 7 derived from TPC-DS query 7 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  avg(ss_quantity) agg1,\n  avg(ss_list_price) agg2,\n  avg(ss_coupon_amt) agg3,\n  avg(ss_sales_price) agg4\nfrom\n  store_sales,\n  customer_demographics,\n  date_dim,\n  item,\n  promotion\nwhere\n  ss_sold_date_sk = d_date_sk\n  and ss_item_sk = i_item_sk\n  and ss_cdemo_sk = cd_demo_sk\n  and ss_promo_sk = p_promo_sk\n  and cd_gender = 'M'\n  and cd_marital_status = 'M'\n  and cd_education_status = '4 yr Degree'\n  and (\n    p_channel_email = 'N'\n    or p_channel_event = 'N'\n  )\n  and d_year = 2001\ngroup by\n  i_item_id\norder by\n  i_item_id\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -1688,7 +1688,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -3233,7 +3233,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -3311,10 +3311,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -3350,10 +3350,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 9 derived from TPC-DS query 9 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  case\n    when (\n      select\n        count(*)\n      from\n        store_sales\n      where\n        ss_quantity between 1 and 20\n    ) > 31002 then (\n      select\n        avg(ss_ext_discount_amt)\n      from\n        store_sales\n      where\n        ss_quantity between 1 and 20\n    )\n    else (\n      select\n        avg(ss_net_profit)\n      from\n        store_sales\n      where\n        ss_quantity between 1 and 20\n    )\n  end bucket1,\n  case\n    when (\n      select\n        count(*)\n      from\n        store_sales\n      where\n        ss_quantity between 21 and 40\n    ) > 588 then (\n      select\n        avg(ss_ext_discount_amt)\n      from\n        store_sales\n      where\n        ss_quantity between 21 and 40\n    )\n    else (\n      select\n        avg(ss_net_profit)\n      from\n        store_sales\n      where\n        ss_quantity between 21 and 40\n    )\n  end bucket2,\n  case\n    when (\n      select\n        count(*)\n      from\n        store_sales\n      where\n        ss_quantity between 41 and 60\n    ) > 2456 then (\n      select\n        avg(ss_ext_discount_amt)\n      from\n        store_sales\n      where\n        ss_quantity between 41 and 60\n    )\n    else (\n      select\n        avg(ss_net_profit)\n      from\n        store_sales\n      where\n        ss_quantity between 41 and 60\n    )\n  end bucket3,\n  case\n    when (\n      select\n        count(*)\n      from\n        store_sales\n      where\n        ss_quantity between 61 and 80\n    ) > 21645 then (\n      select\n        avg(ss_ext_discount_amt)\n      from\n        store_sales\n      where\n        ss_quantity between 61 and 80\n    )\n    else (\n      select\n        avg(ss_net_profit)\n      from\n        store_sales\n      where\n        ss_quantity between 61 and 80\n    )\n  end bucket4,\n  case\n    when (\n      select\n        count(*)\n      from\n        store_sales\n      where\n        ss_quantity between 81 and 100\n    ) > 20553 then (\n      select\n        avg(ss_ext_discount_amt)\n      from\n        store_sales\n      where\n        ss_quantity between 81 and 100\n    )\n    else (\n      select\n        avg(ss_net_profit)\n      from\n        store_sales\n      where\n        ss_quantity between 81 and 100\n    )\n  end bucket5\nfrom\n  reason\nwhere\n  r_reason_sk = 1"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -3411,7 +3411,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -3473,7 +3473,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -3562,10 +3562,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -3601,11 +3601,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 12 derived from TPC-DS query 12 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  i_item_desc,\n  i_category,\n  i_class,\n  i_current_price,\n  sum(ws_ext_sales_price) as itemrevenue,\n  sum(ws_ext_sales_price) * 100 / sum(sum(ws_ext_sales_price)) over (\n    partition by\n      i_class\n  ) as revenueratio\nfrom\n  web_sales,\n  item,\n  date_dim\nwhere\n  ws_item_sk = i_item_sk\n  and i_category in ('Jewelry', 'Books', 'Women')\n  and ws_sold_date_sk = d_date_sk\n  and d_date between cast('2002-03-22' as date) and (cast('2002-03-22' as date) + INTERVAL '30 DAYS')\ngroup by\n  i_item_id,\n  i_item_desc,\n  i_category,\n  i_class,\n  i_current_price\norder by\n  i_category,\n  i_class,\n  i_item_id,\n  i_item_desc,\n  revenueratio\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(7,2))), (2.00) AS t(x) ORDER BY x"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
+      "upstream_search": "decimal division",
       "spark": {
         "original": {
           "status": "ok",
@@ -5141,12 +5141,12 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
+                    "decimal": "0.33333333333333333333"
                   }
                 ],
                 [
                   {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.66666666666666666667"
                   }
                 ]
               ],
@@ -5154,7 +5154,7 @@
                 "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(27,20)"
               ]
             }
           ]
@@ -6708,7 +6708,7 @@
                 "(x / sum(x))"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(13,6)"
               ]
             }
           ]
@@ -8260,10 +8260,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(13,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(27,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -8281,13 +8281,13 @@
                 "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
                 "sail_column": "(x / sum(x))",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "0.333333"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000999999999999990000009999999999999900000099999999999999000001E-7"
               },
               {
                 "spark_row": 1,
@@ -8296,13 +8296,13 @@
                 "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
                 "sail_column": "(x / sum(x))",
                 "spark": {
-                  "decimal": "0.6666666666666666666666667"
+                  "decimal": "0.66666666666666666667"
                 },
                 "sail": {
                   "decimal": "0.666666"
                 },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "6.6666666666667E-7",
+                "relative_error": "0.0000010000000000000049999949999999999999750000250000000000001249998749999999999993750"
               }
             ]
           }
@@ -8314,10 +8314,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 18 derived from TPC-DS query 18 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  ca_country,\n  ca_state,\n  ca_county,\n  avg(cast(cs_quantity as decimal(12, 2))) agg1,\n  avg(cast(cs_list_price as decimal(12, 2))) agg2,\n  avg(cast(cs_coupon_amt as decimal(12, 2))) agg3,\n  avg(cast(cs_sales_price as decimal(12, 2))) agg4,\n  avg(cast(cs_net_profit as decimal(12, 2))) agg5,\n  avg(cast(c_birth_year as decimal(12, 2))) agg6,\n  avg(cast(cd1.cd_dep_count as decimal(12, 2))) agg7\nfrom\n  catalog_sales,\n  customer_demographics cd1,\n  customer_demographics cd2,\n  customer,\n  customer_address,\n  date_dim,\n  item\nwhere\n  cs_sold_date_sk = d_date_sk\n  and cs_item_sk = i_item_sk\n  and cs_bill_cdemo_sk = cd1.cd_demo_sk\n  and cs_bill_customer_sk = c_customer_sk\n  and cd1.cd_gender = 'M'\n  and cd1.cd_education_status = 'Primary'\n  and c_current_cdemo_sk = cd2.cd_demo_sk\n  and c_current_addr_sk = ca_address_sk\n  and c_birth_month in (1, 2, 9, 5, 11, 3)\n  and d_year = 1998\n  and ca_state in ('MS', 'NE', 'IA', 'MI', 'GA', 'NY', 'CO')\ngroup by\n  rollup (i_item_id, ca_country, ca_state, ca_county)\norder by\n  ca_country,\n  ca_state,\n  ca_county,\n  i_item_id\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -11068,7 +11068,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -13823,7 +13823,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -13969,10 +13969,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -14008,11 +14008,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 20 derived from TPC-DS query 20 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  i_item_desc,\n  i_category,\n  i_class,\n  i_current_price,\n  sum(cs_ext_sales_price) as itemrevenue,\n  sum(cs_ext_sales_price) * 100 / sum(sum(cs_ext_sales_price)) over (\n    partition by\n      i_class\n  ) as revenueratio\nfrom\n  catalog_sales,\n  item,\n  date_dim\nwhere\n  cs_item_sk = i_item_sk\n  and i_category in ('Children', 'Sports', 'Music')\n  and cs_sold_date_sk = d_date_sk\n  and d_date between cast('2002-04-01' as date) and (cast('2002-04-01' as date) + INTERVAL '30 DAYS')\ngroup by\n  i_item_id,\n  i_item_desc,\n  i_category,\n  i_class,\n  i_current_price\norder by\n  i_category,\n  i_class,\n  i_item_id,\n  i_item_desc,\n  revenueratio\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(7,2))), (2.00) AS t(x) ORDER BY x"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
+      "upstream_search": "decimal division",
       "spark": {
         "original": {
           "status": "ok",
@@ -15548,12 +15548,12 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
+                    "decimal": "0.33333333333333333333"
                   }
                 ],
                 [
                   {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.66666666666666666667"
                   }
                 ]
               ],
@@ -15561,7 +15561,7 @@
                 "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(27,20)"
               ]
             }
           ]
@@ -17115,7 +17115,7 @@
                 "(x / sum(x))"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(13,6)"
               ]
             }
           ]
@@ -18667,10 +18667,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(13,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(27,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -18688,13 +18688,13 @@
                 "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
                 "sail_column": "(x / sum(x))",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "0.333333"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000999999999999990000009999999999999900000099999999999999000001E-7"
               },
               {
                 "spark_row": 1,
@@ -18703,13 +18703,13 @@
                 "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
                 "sail_column": "(x / sum(x))",
                 "spark": {
-                  "decimal": "0.6666666666666666666666667"
+                  "decimal": "0.66666666666666666667"
                 },
                 "sail": {
                   "decimal": "0.666666"
                 },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "6.6666666666667E-7",
+                "relative_error": "0.0000010000000000000049999949999999999999750000250000000000001249998749999999999993750"
               }
             ]
           }
@@ -18721,10 +18721,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 26 derived from TPC-DS query 26 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  avg(cs_quantity) agg1,\n  avg(cs_list_price) agg2,\n  avg(cs_coupon_amt) agg3,\n  avg(cs_sales_price) agg4\nfrom\n  catalog_sales,\n  customer_demographics,\n  date_dim,\n  item,\n  promotion\nwhere\n  cs_sold_date_sk = d_date_sk\n  and cs_item_sk = i_item_sk\n  and cs_bill_cdemo_sk = cd_demo_sk\n  and cs_promo_sk = p_promo_sk\n  and cd_gender = 'F'\n  and cd_marital_status = 'M'\n  and cd_education_status = '4 yr Degree'\n  and (\n    p_channel_email = 'N'\n    or p_channel_event = 'N'\n  )\n  and d_year = 2000\ngroup by\n  i_item_id\norder by\n  i_item_id\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -20265,7 +20265,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -21810,7 +21810,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -21873,10 +21873,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -21912,10 +21912,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 27 derived from TPC-DS query 27 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  s_state,\n  grouping(s_state) g_state,\n  avg(ss_quantity) agg1,\n  avg(ss_list_price) agg2,\n  avg(ss_coupon_amt) agg3,\n  avg(ss_sales_price) agg4\nfrom\n  store_sales,\n  customer_demographics,\n  date_dim,\n  store,\n  item\nwhere\n  ss_sold_date_sk = d_date_sk\n  and ss_item_sk = i_item_sk\n  and ss_store_sk = s_store_sk\n  and ss_cdemo_sk = cd_demo_sk\n  and cd_gender = 'M'\n  and cd_marital_status = 'U'\n  and cd_education_status = 'Secondary'\n  and d_year = 2000\n  and s_state in ('TN', 'TN', 'TN', 'TN', 'TN', 'TN')\ngroup by\n  rollup (i_item_id, s_state)\norder by\n  i_item_id,\n  s_state\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -23660,7 +23660,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -25409,7 +25409,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -25537,10 +25537,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -25576,10 +25576,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 28 derived from TPC-DS query 28 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  *\nfrom\n  (\n    select\n      avg(ss_list_price) B1_LP,\n      count(ss_list_price) B1_CNT,\n      count(distinct ss_list_price) B1_CNTD\n    from\n      store_sales\n    where\n      ss_quantity between 0 and 5\n      and (\n        ss_list_price between 28 and 28  + 10\n        or ss_coupon_amt between 12573 and 12573  + 1000\n        or ss_wholesale_cost between 33 and 33  + 20\n      )\n  ) B1,\n  (\n    select\n      avg(ss_list_price) B2_LP,\n      count(ss_list_price) B2_CNT,\n      count(distinct ss_list_price) B2_CNTD\n    from\n      store_sales\n    where\n      ss_quantity between 6 and 10\n      and (\n        ss_list_price between 143 and 143  + 10\n        or ss_coupon_amt between 5562 and 5562  + 1000\n        or ss_wholesale_cost between 45 and 45  + 20\n      )\n  ) B2,\n  (\n    select\n      avg(ss_list_price) B3_LP,\n      count(ss_list_price) B3_CNT,\n      count(distinct ss_list_price) B3_CNTD\n    from\n      store_sales\n    where\n      ss_quantity between 11 and 15\n      and (\n        ss_list_price between 159 and 159  + 10\n        or ss_coupon_amt between 2807 and 2807  + 1000\n        or ss_wholesale_cost between 24 and 24  + 20\n      )\n  ) B3,\n  (\n    select\n      avg(ss_list_price) B4_LP,\n      count(ss_list_price) B4_CNT,\n      count(distinct ss_list_price) B4_CNTD\n    from\n      store_sales\n    where\n      ss_quantity between 16 and 20\n      and (\n        ss_list_price between 24 and 24  + 10\n        or ss_coupon_amt between 3706 and 3706  + 1000\n        or ss_wholesale_cost between 46 and 46  + 20\n      )\n  ) B4,\n  (\n    select\n      avg(ss_list_price) B5_LP,\n      count(ss_list_price) B5_CNT,\n      count(distinct ss_list_price) B5_CNTD\n    from\n      store_sales\n    where\n      ss_quantity between 21 and 25\n      and (\n        ss_list_price between 76 and 76  + 10\n        or ss_coupon_amt between 2096 and 2096  + 1000\n        or ss_wholesale_cost between 50 and 50  + 20\n      )\n  ) B5,\n  (\n    select\n      avg(ss_list_price) B6_LP,\n      count(ss_list_price) B6_CNT,\n      count(distinct ss_list_price) B6_CNTD\n    from\n      store_sales\n    where\n      ss_quantity between 26 and 30\n      and (\n        ss_list_price between 169 and 169  + 10\n        or ss_coupon_amt between 10672 and 10672  + 1000\n        or ss_wholesale_cost between 58 and 58  + 20\n      )\n  ) B6\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -25678,7 +25678,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -25781,7 +25781,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -25896,10 +25896,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -25935,10 +25935,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 31 derived from TPC-DS query 31 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nwith\n  ss as (\n    select\n      ca_county,\n      d_qoy,\n      d_year,\n      sum(ss_ext_sales_price) as store_sales\n    from\n      store_sales,\n      date_dim,\n      customer_address\n    where\n      ss_sold_date_sk = d_date_sk\n      and ss_addr_sk = ca_address_sk\n    group by\n      ca_county,\n      d_qoy,\n      d_year\n  ),\n  ws as (\n    select\n      ca_county,\n      d_qoy,\n      d_year,\n      sum(ws_ext_sales_price) as web_sales\n    from\n      web_sales,\n      date_dim,\n      customer_address\n    where\n      ws_sold_date_sk = d_date_sk\n      and ws_bill_addr_sk = ca_address_sk\n    group by\n      ca_county,\n      d_qoy,\n      d_year\n  )\nselect\n  ss1.ca_county,\n  ss1.d_year,\n  ws2.web_sales / ws1.web_sales web_q1_q2_increase,\n  ss2.store_sales / ss1.store_sales store_q1_q2_increase,\n  ws3.web_sales / ws2.web_sales web_q2_q3_increase,\n  ss3.store_sales / ss2.store_sales store_q2_q3_increase\nfrom\n  ss ss1,\n  ss ss2,\n  ss ss3,\n  ws ws1,\n  ws ws2,\n  ws ws3\nwhere\n  ss1.d_qoy = 1\n  and ss1.d_year = 1999\n  and ss1.ca_county = ss2.ca_county\n  and ss2.d_qoy = 2\n  and ss2.d_year = 1999\n  and ss2.ca_county = ss3.ca_county\n  and ss3.d_qoy = 3\n  and ss3.d_year = 1999\n  and ss1.ca_county = ws1.ca_county\n  and ws1.d_qoy = 1\n  and ws1.d_year = 1999\n  and ws1.ca_county = ws2.ca_county\n  and ws2.d_qoy = 2\n  and ws2.d_year = 1999\n  and ws1.ca_county = ws3.ca_county\n  and ws3.d_qoy = 3\n  and ws3.d_year = 1999\n  and case\n    when ws1.web_sales > 0 then ws2.web_sales / ws1.web_sales\n    else null\n  end > case\n    when ss1.store_sales > 0 then ss2.store_sales / ss1.store_sales\n    else null\n  end\n  and case\n    when ws2.web_sales > 0 then ws3.web_sales / ws2.web_sales\n    else null\n  end > case\n    when ss2.store_sales > 0 then ss3.store_sales / ss2.store_sales\n    else null\n  end\norder by\n  ss1.ca_county"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -26725,7 +26725,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "3.33333333333333333333"
                   }
                 ]
               ],
@@ -26733,7 +26733,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(37,20)"
               ]
             }
           ]
@@ -27532,7 +27532,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(23,6)"
               ]
             }
           ]
@@ -30402,10 +30402,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(23,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(37,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -30423,13 +30423,13 @@
                 "spark_column": "(sum(x) / sum(y))",
                 "sail_column": "(sum(x) / sum(y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "3.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000099999999999999000000099999999999999000000099999999999999000E-8"
               }
             ]
           }
@@ -30441,10 +30441,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 36 derived from TPC-DS query 36 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  sum(ss_net_profit) / sum(ss_ext_sales_price) as gross_margin,\n  i_category,\n  i_class,\n  grouping(i_category) + grouping(i_class) as lochierarchy,\n  rank() over (\n    partition by\n      grouping(i_category) + grouping(i_class),\n      case\n        when grouping(i_class) = 0 then i_category\n      end\n    order by\n      sum(ss_net_profit) / sum(ss_ext_sales_price) asc\n  ) as rank_within_parent\nfrom\n  store_sales,\n  date_dim d1,\n  item,\n  store\nwhere\n  d1.d_year = 2001\n  and d1.d_date_sk = ss_sold_date_sk\n  and i_item_sk = ss_item_sk\n  and s_store_sk = ss_store_sk\n  and s_state in ('TN', 'TN', 'TN', 'TN', 'TN', 'TN', 'TN', 'TN')\ngroup by\n  rollup (i_category, i_class)\norder by\n  lochierarchy desc,\n  case\n    when lochierarchy = 0 then i_category\n  end,\n  rank_within_parent\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -31377,7 +31377,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "3.33333333333333333333"
                   }
                 ]
               ],
@@ -31385,7 +31385,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(37,20)"
               ]
             }
           ]
@@ -32330,7 +32330,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(23,6)"
               ]
             }
           ]
@@ -33880,10 +33880,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(23,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(37,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -33901,13 +33901,13 @@
                 "spark_column": "(sum(x) / sum(y))",
                 "sail_column": "(sum(x) / sum(y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "3.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000099999999999999000000099999999999999000000099999999999999000E-8"
               }
             ]
           }
@@ -33919,11 +33919,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 47 derived from TPC-DS query 47 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nwith\n  v1 as (\n    select\n      i_category,\n      i_brand,\n      s_store_name,\n      s_company_name,\n      d_year,\n      d_moy,\n      sum(ss_sales_price) sum_sales,\n      avg(sum(ss_sales_price)) over (\n        partition by\n          i_category,\n          i_brand,\n          s_store_name,\n          s_company_name,\n          d_year\n      ) avg_monthly_sales,\n      rank() over (\n        partition by\n          i_category,\n          i_brand,\n          s_store_name,\n          s_company_name\n        order by\n          d_year,\n          d_moy\n      ) rn\n    from\n      item,\n      store_sales,\n      date_dim,\n      store\n    where\n      ss_item_sk = i_item_sk\n      and ss_sold_date_sk = d_date_sk\n      and ss_store_sk = s_store_sk\n      and (\n        d_year = 2001\n        or (\n          d_year = 2001 -1\n          and d_moy = 12\n        )\n        or (\n          d_year = 2001 + 1\n          and d_moy = 1\n        )\n      )\n    group by\n      i_category,\n      i_brand,\n      s_store_name,\n      s_company_name,\n      d_year,\n      d_moy\n  ),\n  v2 as (\n    select\n      v1.i_category,\n      v1.i_brand,\n      v1.s_store_name,\n      v1.s_company_name,\n      v1.d_year,\n      v1.avg_monthly_sales,\n      v1.sum_sales,\n      v1_lag.sum_sales psum,\n      v1_lead.sum_sales nsum\n    from\n      v1,\n      v1 v1_lag,\n      v1 v1_lead\n    where\n      v1.i_category = v1_lag.i_category\n      and v1.i_category = v1_lead.i_category\n      and v1.i_brand = v1_lag.i_brand\n      and v1.i_brand = v1_lead.i_brand\n      and v1.s_store_name = v1_lag.s_store_name\n      and v1.s_store_name = v1_lead.s_store_name\n      and v1.s_company_name = v1_lag.s_company_name\n      and v1.s_company_name = v1_lead.s_company_name\n      and v1.rn = v1_lag.rn + 1\n      and v1.rn = v1_lead.rn - 1\n  )\nselect\n  *\nfrom\n  v2\nwhere\n  d_year = 2001\n  and avg_monthly_sales > 0\n  and case\n    when avg_monthly_sales > 0 then abs(sum_sales - avg_monthly_sales) / avg_monthly_sales\n    else null\n  end > 0.1\norder by\n  sum_sales - avg_monthly_sales,\n  nsum\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT DISTINCT avg(x) OVER () FROM VALUES (CAST(0.01 AS DECIMAL(17,2))), (0.01), (0.00) AS t(x)"
       ],
-      "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_category": "rounding mode",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102-L130",
+      "upstream_search": "decimal avg",
       "spark": {
         "original": {
           "status": "ok",
@@ -35863,20 +35863,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.006667"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
+                "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -37821,20 +37816,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.666666"
+                    "decimal": "0.006666"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x))"
+                "avg(x)"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -38505,16 +38495,16 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(21,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(21,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
-              2,
-              2
+              1,
+              1
             ],
             "positionally_equal": false,
             "unmatched_rows": [],
@@ -38523,31 +38513,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
+                "spark_column": "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+                "sail_column": "avg(x)",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.006667"
                 },
                 "sail": {
-                  "decimal": "0.333333"
+                  "decimal": "0.006666"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
-              },
-              {
-                "spark_row": 1,
-                "sail_row": 1,
-                "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
-                "spark": {
-                  "decimal": "0.6666666666666666666666667"
-                },
-                "sail": {
-                  "decimal": "0.666666"
-                },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "0.000001",
+                "relative_error": "0.00014999250037498125093745312734363281835908204589770511474426278686065696715164242"
               }
             ]
           }
@@ -38559,10 +38534,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 49 derived from TPC-DS query 49 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  channel,\n  item,\n  return_ratio,\n  return_rank,\n  currency_rank\nfrom\n  (\n    select\n      'web' as channel,\n      web.item,\n      web.return_ratio,\n      web.return_rank,\n      web.currency_rank\n    from\n      (\n        select\n          item,\n          return_ratio,\n          currency_ratio,\n          rank() over (\n            order by\n              return_ratio\n          ) as return_rank,\n          rank() over (\n            order by\n              currency_ratio\n          ) as currency_rank\n        from\n          (\n            select\n              ws.ws_item_sk as item,\n              (\n                cast(\n                  sum(coalesce(wr.wr_return_quantity, 0)) as decimal(15, 4)\n                ) / cast(\n                  sum(coalesce(ws.ws_quantity, 0)) as decimal(15, 4)\n                )\n              ) as return_ratio,\n              (\n                cast(\n                  sum(coalesce(wr.wr_return_amt, 0)) as decimal(15, 4)\n                ) / cast(\n                  sum(coalesce(ws.ws_net_paid, 0)) as decimal(15, 4)\n                )\n              ) as currency_ratio\n            from\n              web_sales ws\n              left outer join web_returns wr on (\n                ws.ws_order_number = wr.wr_order_number\n                and ws.ws_item_sk = wr.wr_item_sk\n              ),\n              date_dim\n            where\n              wr.wr_return_amt > 10000\n              and ws.ws_net_profit > 1\n              and ws.ws_net_paid > 0\n              and ws.ws_quantity > 0\n              and ws_sold_date_sk = d_date_sk\n              and d_year = 2000\n              and d_moy = 12\n            group by\n              ws.ws_item_sk\n          ) in_web\n      ) web\n    where\n      (\n        web.return_rank <= 10\n        or web.currency_rank <= 10\n      )\n    union\n    select\n      'catalog' as channel,\n      catalog.item,\n      catalog.return_ratio,\n      catalog.return_rank,\n      catalog.currency_rank\n    from\n      (\n        select\n          item,\n          return_ratio,\n          currency_ratio,\n          rank() over (\n            order by\n              return_ratio\n          ) as return_rank,\n          rank() over (\n            order by\n              currency_ratio\n          ) as currency_rank\n        from\n          (\n            select\n              cs.cs_item_sk as item,\n              (\n                cast(\n                  sum(coalesce(cr.cr_return_quantity, 0)) as decimal(15, 4)\n                ) / cast(\n                  sum(coalesce(cs.cs_quantity, 0)) as decimal(15, 4)\n                )\n              ) as return_ratio,\n              (\n                cast(\n                  sum(coalesce(cr.cr_return_amount, 0)) as decimal(15, 4)\n                ) / cast(\n                  sum(coalesce(cs.cs_net_paid, 0)) as decimal(15, 4)\n                )\n              ) as currency_ratio\n            from\n              catalog_sales cs\n              left outer join catalog_returns cr on (\n                cs.cs_order_number = cr.cr_order_number\n                and cs.cs_item_sk = cr.cr_item_sk\n              ),\n              date_dim\n            where\n              cr.cr_return_amount > 10000\n              and cs.cs_net_profit > 1\n              and cs.cs_net_paid > 0\n              and cs.cs_quantity > 0\n              and cs_sold_date_sk = d_date_sk\n              and d_year = 2000\n              and d_moy = 12\n            group by\n              cs.cs_item_sk\n          ) in_cat\n      ) catalog\n    where\n      (\n        catalog.return_rank <= 10\n        or catalog.currency_rank <= 10\n      )\n    union\n    select\n      'store' as channel,\n      store.item,\n      store.return_ratio,\n      store.return_rank,\n      store.currency_rank\n    from\n      (\n        select\n          item,\n          return_ratio,\n          currency_ratio,\n          rank() over (\n            order by\n              return_ratio\n          ) as return_rank,\n          rank() over (\n            order by\n              currency_ratio\n          ) as currency_rank\n        from\n          (\n            select\n              sts.ss_item_sk as item,\n              (\n                cast(\n                  sum(coalesce(sr.sr_return_quantity, 0)) as decimal(15, 4)\n                ) / cast(\n                  sum(coalesce(sts.ss_quantity, 0)) as decimal(15, 4)\n                )\n              ) as return_ratio,\n              (\n                cast(\n                  sum(coalesce(sr.sr_return_amt, 0)) as decimal(15, 4)\n                ) / cast(\n                  sum(coalesce(sts.ss_net_paid, 0)) as decimal(15, 4)\n                )\n              ) as currency_ratio\n            from\n              store_sales sts\n              left outer join store_returns sr on (\n                sts.ss_ticket_number = sr.sr_ticket_number\n                and sts.ss_item_sk = sr.sr_item_sk\n              ),\n              date_dim\n            where\n              sr.sr_return_amt > 10000\n              and sts.ss_net_profit > 1\n              and sts.ss_net_paid > 0\n              and sts.ss_quantity > 0\n              and ss_sold_date_sk = d_date_sk\n              and d_year = 2000\n              and d_moy = 12\n            group by\n              sts.ss_item_sk\n          ) in_store\n      ) store\n    where\n      (\n        store.return_rank <= 10\n        or store.currency_rank <= 10\n      )\n  )\norder by\n  1,\n  4,\n  5,\n  2\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -38883,7 +38858,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "3.33333333333333333333"
                   }
                 ]
               ],
@@ -38891,7 +38866,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(37,20)"
               ]
             }
           ]
@@ -39224,7 +39199,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(23,6)"
               ]
             }
           ]
@@ -39737,10 +39712,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(23,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(37,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -39758,13 +39733,13 @@
                 "spark_column": "(sum(x) / sum(y))",
                 "sail_column": "(sum(x) / sum(y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "3.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000099999999999999000000099999999999999000000099999999999999000E-8"
               }
             ]
           }
@@ -39776,11 +39751,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 53 derived from TPC-DS query 53 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  *\nfrom\n  (\n    select\n      i_manufact_id,\n      sum(ss_sales_price) sum_sales,\n      avg(sum(ss_sales_price)) over (\n        partition by\n          i_manufact_id\n      ) avg_quarterly_sales\n    from\n      item,\n      store_sales,\n      date_dim,\n      store\n    where\n      ss_item_sk = i_item_sk\n      and ss_sold_date_sk = d_date_sk\n      and ss_store_sk = s_store_sk\n      and d_month_seq in (\n        1197,\n        1197 + 1,\n        1197 + 2,\n        1197 + 3,\n        1197 + 4,\n        1197 + 5,\n        1197 + 6,\n        1197 + 7,\n        1197 + 8,\n        1197 + 9,\n        1197 + 10,\n        1197 + 11\n      )\n      and (\n        (\n          i_category in ('Books', 'Children', 'Electronics')\n          and i_class in ('personal', 'portable', 'reference', 'self-help')\n          and i_brand in (\n            'scholaramalgamalg #14',\n            'scholaramalgamalg #7',\n            'exportiunivamalg #9',\n            'scholaramalgamalg #9'\n          )\n        )\n        or (\n          i_category in ('Women', 'Music', 'Men')\n          and i_class in ('accessories', 'classical', 'fragrances', 'pants')\n          and i_brand in (\n            'amalgimporto #1',\n            'edu packscholar #1',\n            'exportiimporto #1',\n            'importoamalg #1'\n          )\n        )\n      )\n    group by\n      i_manufact_id,\n      d_qoy\n  ) tmp1\nwhere\n  case\n    when avg_quarterly_sales > 0 then abs(sum_sales - avg_quarterly_sales) / avg_quarterly_sales\n    else null\n  end > 0.1\norder by\n  avg_quarterly_sales,\n  sum_sales,\n  i_manufact_id\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT DISTINCT avg(x) OVER () FROM VALUES (CAST(0.01 AS DECIMAL(17,2))), (0.01), (0.00) AS t(x)"
       ],
-      "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_category": "rounding mode",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102-L130",
+      "upstream_search": "decimal avg",
       "spark": {
         "original": {
           "status": "ok",
@@ -40708,20 +40683,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.006667"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
+                "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -41654,20 +41624,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.666666"
+                    "decimal": "0.006666"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x))"
+                "avg(x)"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -41891,16 +41856,16 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(21,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(21,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
-              2,
-              2
+              1,
+              1
             ],
             "positionally_equal": false,
             "unmatched_rows": [],
@@ -41909,31 +41874,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
+                "spark_column": "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+                "sail_column": "avg(x)",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.006667"
                 },
                 "sail": {
-                  "decimal": "0.333333"
+                  "decimal": "0.006666"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
-              },
-              {
-                "spark_row": 1,
-                "sail_row": 1,
-                "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
-                "spark": {
-                  "decimal": "0.6666666666666666666666667"
-                },
-                "sail": {
-                  "decimal": "0.666666"
-                },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "0.000001",
+                "relative_error": "0.00014999250037498125093745312734363281835908204589770511474426278686065696715164242"
               }
             ]
           }
@@ -41945,11 +41895,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 57 derived from TPC-DS query 57 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nwith\n  v1 as (\n    select\n      i_category,\n      i_brand,\n      cc_name,\n      d_year,\n      d_moy,\n      sum(cs_sales_price) sum_sales,\n      avg(sum(cs_sales_price)) over (\n        partition by\n          i_category,\n          i_brand,\n          cc_name,\n          d_year\n      ) avg_monthly_sales,\n      rank() over (\n        partition by\n          i_category,\n          i_brand,\n          cc_name\n        order by\n          d_year,\n          d_moy\n      ) rn\n    from\n      item,\n      catalog_sales,\n      date_dim,\n      call_center\n    where\n      cs_item_sk = i_item_sk\n      and cs_sold_date_sk = d_date_sk\n      and cc_call_center_sk = cs_call_center_sk\n      and (\n        d_year = 2000\n        or (\n          d_year = 2000 -1\n          and d_moy = 12\n        )\n        or (\n          d_year = 2000 + 1\n          and d_moy = 1\n        )\n      )\n    group by\n      i_category,\n      i_brand,\n      cc_name,\n      d_year,\n      d_moy\n  ),\n  v2 as (\n    select\n      v1.cc_name,\n      v1.d_year,\n      v1.d_moy,\n      v1.avg_monthly_sales,\n      v1.sum_sales,\n      v1_lag.sum_sales psum,\n      v1_lead.sum_sales nsum\n    from\n      v1,\n      v1 v1_lag,\n      v1 v1_lead\n    where\n      v1.i_category = v1_lag.i_category\n      and v1.i_category = v1_lead.i_category\n      and v1.i_brand = v1_lag.i_brand\n      and v1.i_brand = v1_lead.i_brand\n      and v1.cc_name = v1_lag.cc_name\n      and v1.cc_name = v1_lead.cc_name\n      and v1.rn = v1_lag.rn + 1\n      and v1.rn = v1_lead.rn - 1\n  )\nselect\n  *\nfrom\n  v2\nwhere\n  d_year = 2000\n  and avg_monthly_sales > 0\n  and case\n    when avg_monthly_sales > 0 then abs(sum_sales - avg_monthly_sales) / avg_monthly_sales\n    else null\n  end > 0.1\norder by\n  sum_sales - avg_monthly_sales,\n  psum\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT DISTINCT avg(x) OVER () FROM VALUES (CAST(0.01 AS DECIMAL(17,2))), (0.01), (0.00) AS t(x)"
       ],
-      "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_category": "rounding mode",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102-L130",
+      "upstream_search": "decimal avg",
       "spark": {
         "original": {
           "status": "ok",
@@ -43685,20 +43635,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.006667"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
+                "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -45439,20 +45384,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.666666"
+                    "decimal": "0.006666"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x))"
+                "avg(x)"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -46014,16 +45954,16 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(21,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(21,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
-              2,
-              2
+              1,
+              1
             ],
             "positionally_equal": false,
             "unmatched_rows": [],
@@ -46032,31 +45972,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
+                "spark_column": "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+                "sail_column": "avg(x)",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.006667"
                 },
                 "sail": {
-                  "decimal": "0.333333"
+                  "decimal": "0.006666"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
-              },
-              {
-                "spark_row": 1,
-                "sail_row": 1,
-                "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
-                "spark": {
-                  "decimal": "0.6666666666666666666666667"
-                },
-                "sail": {
-                  "decimal": "0.666666"
-                },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "0.000001",
+                "relative_error": "0.00014999250037498125093745312734363281835908204589770511474426278686065696715164242"
               }
             ]
           }
@@ -46068,10 +45993,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 59 derived from TPC-DS query 59 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nwith\n  wss as (\n    select\n      d_week_seq,\n      ss_store_sk,\n      sum(\n        case\n          when (d_day_name = 'Sunday') then ss_sales_price\n          else null\n        end\n      ) sun_sales,\n      sum(\n        case\n          when (d_day_name = 'Monday') then ss_sales_price\n          else null\n        end\n      ) mon_sales,\n      sum(\n        case\n          when (d_day_name = 'Tuesday') then ss_sales_price\n          else null\n        end\n      ) tue_sales,\n      sum(\n        case\n          when (d_day_name = 'Wednesday') then ss_sales_price\n          else null\n        end\n      ) wed_sales,\n      sum(\n        case\n          when (d_day_name = 'Thursday') then ss_sales_price\n          else null\n        end\n      ) thu_sales,\n      sum(\n        case\n          when (d_day_name = 'Friday') then ss_sales_price\n          else null\n        end\n      ) fri_sales,\n      sum(\n        case\n          when (d_day_name = 'Saturday') then ss_sales_price\n          else null\n        end\n      ) sat_sales\n    from\n      store_sales,\n      date_dim\n    where\n      d_date_sk = ss_sold_date_sk\n    group by\n      d_week_seq,\n      ss_store_sk\n  )\nselect\n  s_store_name1,\n  s_store_id1,\n  d_week_seq1,\n  sun_sales1 / sun_sales2,\n  mon_sales1 / mon_sales2,\n  tue_sales1 / tue_sales2,\n  wed_sales1 / wed_sales2,\n  thu_sales1 / thu_sales2,\n  fri_sales1 / fri_sales2,\n  sat_sales1 / sat_sales2\nfrom\n  (\n    select\n      s_store_name s_store_name1,\n      wss.d_week_seq d_week_seq1,\n      s_store_id s_store_id1,\n      sun_sales sun_sales1,\n      mon_sales mon_sales1,\n      tue_sales tue_sales1,\n      wed_sales wed_sales1,\n      thu_sales thu_sales1,\n      fri_sales fri_sales1,\n      sat_sales sat_sales1\n    from\n      wss,\n      store,\n      date_dim d\n    where\n      d.d_week_seq = wss.d_week_seq\n      and ss_store_sk = s_store_sk\n      and d_month_seq between 1206 and 1206  + 11\n  ) y,\n  (\n    select\n      s_store_name s_store_name2,\n      wss.d_week_seq d_week_seq2,\n      s_store_id s_store_id2,\n      sun_sales sun_sales2,\n      mon_sales mon_sales2,\n      tue_sales tue_sales2,\n      wed_sales wed_sales2,\n      thu_sales thu_sales2,\n      fri_sales fri_sales2,\n      sat_sales sat_sales2\n    from\n      wss,\n      store,\n      date_dim d\n    where\n      d.d_week_seq = wss.d_week_seq\n      and ss_store_sk = s_store_sk\n      and d_month_seq between 1206 + 12 and 1206  + 23\n  ) x\nwhere\n  s_store_id1 = s_store_id2\n  and d_week_seq1 = d_week_seq2 -52\norder by\n  s_store_name1,\n  s_store_id1,\n  d_week_seq1\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -48714,7 +48639,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "3.33333333333333333333"
                   }
                 ]
               ],
@@ -48722,7 +48647,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(37,20)"
               ]
             }
           ]
@@ -51377,7 +51302,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(23,6)"
               ]
             }
           ]
@@ -61931,10 +61856,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(23,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(37,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -61952,13 +61877,13 @@
                 "spark_column": "(sum(x) / sum(y))",
                 "sail_column": "(sum(x) / sum(y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "3.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000099999999999999000000099999999999999000000099999999999999000E-8"
               }
             ]
           }
@@ -61970,11 +61895,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 63 derived from TPC-DS query 63 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  *\nfrom\n  (\n    select\n      i_manager_id,\n      sum(ss_sales_price) sum_sales,\n      avg(sum(ss_sales_price)) over (\n        partition by\n          i_manager_id\n      ) avg_monthly_sales\n    from\n      item,\n      store_sales,\n      date_dim,\n      store\n    where\n      ss_item_sk = i_item_sk\n      and ss_sold_date_sk = d_date_sk\n      and ss_store_sk = s_store_sk\n      and d_month_seq in (\n        1181,\n        1181 + 1,\n        1181 + 2,\n        1181 + 3,\n        1181 + 4,\n        1181 + 5,\n        1181 + 6,\n        1181 + 7,\n        1181 + 8,\n        1181 + 9,\n        1181 + 10,\n        1181 + 11\n      )\n      and (\n        (\n          i_category in ('Books', 'Children', 'Electronics')\n          and i_class in ('personal', 'portable', 'reference', 'self-help')\n          and i_brand in (\n            'scholaramalgamalg #14',\n            'scholaramalgamalg #7',\n            'exportiunivamalg #9',\n            'scholaramalgamalg #9'\n          )\n        )\n        or (\n          i_category in ('Women', 'Music', 'Men')\n          and i_class in ('accessories', 'classical', 'fragrances', 'pants')\n          and i_brand in (\n            'amalgimporto #1',\n            'edu packscholar #1',\n            'exportiimporto #1',\n            'importoamalg #1'\n          )\n        )\n      )\n    group by\n      i_manager_id,\n      d_moy\n  ) tmp1\nwhere\n  case\n    when avg_monthly_sales > 0 then abs(sum_sales - avg_monthly_sales) / avg_monthly_sales\n    else null\n  end > 0.1\norder by\n  i_manager_id,\n  avg_monthly_sales,\n  sum_sales\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT DISTINCT avg(x) OVER () FROM VALUES (CAST(0.01 AS DECIMAL(17,2))), (0.01), (0.00) AS t(x)"
       ],
-      "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_category": "rounding mode",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102-L130",
+      "upstream_search": "decimal avg",
       "spark": {
         "original": {
           "status": "ok",
@@ -62902,20 +62827,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.006667"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
+                "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -63848,20 +63768,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.666666"
+                    "decimal": "0.006666"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x))"
+                "avg(x)"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -64550,16 +64465,16 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(21,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(21,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
-              2,
-              2
+              1,
+              1
             ],
             "positionally_equal": false,
             "unmatched_rows": [],
@@ -64568,31 +64483,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
+                "spark_column": "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+                "sail_column": "avg(x)",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.006667"
                 },
                 "sail": {
-                  "decimal": "0.333333"
+                  "decimal": "0.006666"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
-              },
-              {
-                "spark_row": 1,
-                "sail_row": 1,
-                "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
-                "spark": {
-                  "decimal": "0.6666666666666666666666667"
-                },
-                "sail": {
-                  "decimal": "0.666666"
-                },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "0.000001",
+                "relative_error": "0.00014999250037498125093745312734363281835908204589770511474426278686065696715164242"
               }
             ]
           }
@@ -64604,10 +64504,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 66 derived from TPC-DS query 66 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  w_warehouse_name,\n  w_warehouse_sq_ft,\n  w_city,\n  w_county,\n  w_state,\n  w_country,\n  ship_carriers,\n  year,\n  sum(jan_sales) as jan_sales,\n  sum(feb_sales) as feb_sales,\n  sum(mar_sales) as mar_sales,\n  sum(apr_sales) as apr_sales,\n  sum(may_sales) as may_sales,\n  sum(jun_sales) as jun_sales,\n  sum(jul_sales) as jul_sales,\n  sum(aug_sales) as aug_sales,\n  sum(sep_sales) as sep_sales,\n  sum(oct_sales) as oct_sales,\n  sum(nov_sales) as nov_sales,\n  sum(dec_sales) as dec_sales,\n  sum(jan_sales / w_warehouse_sq_ft) as jan_sales_per_sq_foot,\n  sum(feb_sales / w_warehouse_sq_ft) as feb_sales_per_sq_foot,\n  sum(mar_sales / w_warehouse_sq_ft) as mar_sales_per_sq_foot,\n  sum(apr_sales / w_warehouse_sq_ft) as apr_sales_per_sq_foot,\n  sum(may_sales / w_warehouse_sq_ft) as may_sales_per_sq_foot,\n  sum(jun_sales / w_warehouse_sq_ft) as jun_sales_per_sq_foot,\n  sum(jul_sales / w_warehouse_sq_ft) as jul_sales_per_sq_foot,\n  sum(aug_sales / w_warehouse_sq_ft) as aug_sales_per_sq_foot,\n  sum(sep_sales / w_warehouse_sq_ft) as sep_sales_per_sq_foot,\n  sum(oct_sales / w_warehouse_sq_ft) as oct_sales_per_sq_foot,\n  sum(nov_sales / w_warehouse_sq_ft) as nov_sales_per_sq_foot,\n  sum(dec_sales / w_warehouse_sq_ft) as dec_sales_per_sq_foot,\n  sum(jan_net) as jan_net,\n  sum(feb_net) as feb_net,\n  sum(mar_net) as mar_net,\n  sum(apr_net) as apr_net,\n  sum(may_net) as may_net,\n  sum(jun_net) as jun_net,\n  sum(jul_net) as jul_net,\n  sum(aug_net) as aug_net,\n  sum(sep_net) as sep_net,\n  sum(oct_net) as oct_net,\n  sum(nov_net) as nov_net,\n  sum(dec_net) as dec_net\nfrom\n  (\n    select\n      w_warehouse_name,\n      w_warehouse_sq_ft,\n      w_city,\n      w_county,\n      w_state,\n      w_country,\n      'FEDEX' || ',' || 'GERMA' as ship_carriers,\n      d_year as year,\n      sum(\n        case\n          when d_moy = 1 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as jan_sales,\n      sum(\n        case\n          when d_moy = 2 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as feb_sales,\n      sum(\n        case\n          when d_moy = 3 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as mar_sales,\n      sum(\n        case\n          when d_moy = 4 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as apr_sales,\n      sum(\n        case\n          when d_moy = 5 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as may_sales,\n      sum(\n        case\n          when d_moy = 6 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as jun_sales,\n      sum(\n        case\n          when d_moy = 7 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as jul_sales,\n      sum(\n        case\n          when d_moy = 8 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as aug_sales,\n      sum(\n        case\n          when d_moy = 9 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as sep_sales,\n      sum(\n        case\n          when d_moy = 10 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as oct_sales,\n      sum(\n        case\n          when d_moy = 11 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as nov_sales,\n      sum(\n        case\n          when d_moy = 12 then ws_ext_list_price * ws_quantity\n          else 0\n        end\n      ) as dec_sales,\n      sum(\n        case\n          when d_moy = 1 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as jan_net,\n      sum(\n        case\n          when d_moy = 2 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as feb_net,\n      sum(\n        case\n          when d_moy = 3 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as mar_net,\n      sum(\n        case\n          when d_moy = 4 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as apr_net,\n      sum(\n        case\n          when d_moy = 5 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as may_net,\n      sum(\n        case\n          when d_moy = 6 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as jun_net,\n      sum(\n        case\n          when d_moy = 7 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as jul_net,\n      sum(\n        case\n          when d_moy = 8 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as aug_net,\n      sum(\n        case\n          when d_moy = 9 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as sep_net,\n      sum(\n        case\n          when d_moy = 10 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as oct_net,\n      sum(\n        case\n          when d_moy = 11 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as nov_net,\n      sum(\n        case\n          when d_moy = 12 then ws_net_profit * ws_quantity\n          else 0\n        end\n      ) as dec_net\n    from\n      web_sales,\n      warehouse,\n      date_dim,\n      time_dim,\n      ship_mode\n    where\n      ws_warehouse_sk = w_warehouse_sk\n      and ws_sold_date_sk = d_date_sk\n      and ws_sold_time_sk = t_time_sk\n      and ws_ship_mode_sk = sm_ship_mode_sk\n      and d_year = 2001\n      and t_time between 19072 and 19072  + 28800\n      and sm_carrier in ('FEDEX', 'GERMA')\n    group by\n      w_warehouse_name,\n      w_warehouse_sq_ft,\n      w_city,\n      w_county,\n      w_state,\n      w_country,\n      d_year\n    union all\n    select\n      w_warehouse_name,\n      w_warehouse_sq_ft,\n      w_city,\n      w_county,\n      w_state,\n      w_country,\n      'FEDEX' || ',' || 'GERMA' as ship_carriers,\n      d_year as year,\n      sum(\n        case\n          when d_moy = 1 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as jan_sales,\n      sum(\n        case\n          when d_moy = 2 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as feb_sales,\n      sum(\n        case\n          when d_moy = 3 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as mar_sales,\n      sum(\n        case\n          when d_moy = 4 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as apr_sales,\n      sum(\n        case\n          when d_moy = 5 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as may_sales,\n      sum(\n        case\n          when d_moy = 6 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as jun_sales,\n      sum(\n        case\n          when d_moy = 7 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as jul_sales,\n      sum(\n        case\n          when d_moy = 8 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as aug_sales,\n      sum(\n        case\n          when d_moy = 9 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as sep_sales,\n      sum(\n        case\n          when d_moy = 10 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as oct_sales,\n      sum(\n        case\n          when d_moy = 11 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as nov_sales,\n      sum(\n        case\n          when d_moy = 12 then cs_sales_price * cs_quantity\n          else 0\n        end\n      ) as dec_sales,\n      sum(\n        case\n          when d_moy = 1 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as jan_net,\n      sum(\n        case\n          when d_moy = 2 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as feb_net,\n      sum(\n        case\n          when d_moy = 3 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as mar_net,\n      sum(\n        case\n          when d_moy = 4 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as apr_net,\n      sum(\n        case\n          when d_moy = 5 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as may_net,\n      sum(\n        case\n          when d_moy = 6 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as jun_net,\n      sum(\n        case\n          when d_moy = 7 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as jul_net,\n      sum(\n        case\n          when d_moy = 8 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as aug_net,\n      sum(\n        case\n          when d_moy = 9 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as sep_net,\n      sum(\n        case\n          when d_moy = 10 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as oct_net,\n      sum(\n        case\n          when d_moy = 11 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as nov_net,\n      sum(\n        case\n          when d_moy = 12 then cs_net_paid * cs_quantity\n          else 0\n        end\n      ) as dec_net\n    from\n      catalog_sales,\n      warehouse,\n      date_dim,\n      time_dim,\n      ship_mode\n    where\n      cs_warehouse_sk = w_warehouse_sk\n      and cs_sold_date_sk = d_date_sk\n      and cs_sold_time_sk = t_time_sk\n      and cs_ship_mode_sk = sm_ship_mode_sk\n      and d_year = 2001\n      and t_time between 19072 AND 19072  + 28800\n      and sm_carrier in ('FEDEX', 'GERMA')\n    group by\n      w_warehouse_name,\n      w_warehouse_sq_ft,\n      w_city,\n      w_county,\n      w_state,\n      w_country,\n      d_year\n  ) x\ngroup by\n  w_warehouse_name,\n  w_warehouse_sq_ft,\n  w_city,\n  w_county,\n  w_state,\n  w_country,\n  ship_carriers,\n  year\norder by\n  w_warehouse_name\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x / y) FROM VALUES (CAST(5 AS DECIMAL(38,2)), CAST(7 AS INT)) AS t(x,y)"
       ],
-      "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_category": "rounding mode",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -65284,15 +65184,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "0.714286"
                   }
                 ]
               ],
               "names": [
-                "(sum(x) / sum(y))"
+                "sum((x / y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(38,6)"
               ]
             }
           ]
@@ -65973,15 +65873,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.333333"
+                    "decimal": "0.714285"
                   }
                 ]
               ],
               "names": [
-                "(sum(x) / sum(y))"
+                "sum((x / y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(38,6)"
               ]
             }
           ]
@@ -66587,12 +66487,12 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(38,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(38,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
               1,
@@ -66605,16 +66505,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(sum(x) / sum(y))",
-                "sail_column": "(sum(x) / sum(y))",
+                "spark_column": "sum((x / y))",
+                "sail_column": "sum((x / y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "0.714286"
                 },
                 "sail": {
-                  "decimal": "3.333333"
+                  "decimal": "0.714285"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "0.000001",
+                "relative_error": "0.0000013999994400002239999104000358399856640057343977062409175036329985468005812797675"
               }
             ]
           }
@@ -66626,10 +66526,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 77 derived from TPC-DS query 77 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nwith\n  ss as (\n    select\n      s_store_sk,\n      sum(ss_ext_sales_price) as sales,\n      sum(ss_net_profit) as profit\n    from\n      store_sales,\n      date_dim,\n      store\n    where\n      ss_sold_date_sk = d_date_sk\n      and d_date between cast('2001-08-11' as date) and (cast('2001-08-11' as date) + INTERVAL '30 DAYS')\n      and ss_store_sk = s_store_sk\n    group by\n      s_store_sk\n  ),\n  sr as (\n    select\n      s_store_sk,\n      sum(sr_return_amt) as returns,\n      sum(sr_net_loss) as profit_loss\n    from\n      store_returns,\n      date_dim,\n      store\n    where\n      sr_returned_date_sk = d_date_sk\n      and d_date between cast('2001-08-11' as date) and (cast('2001-08-11' as date) + INTERVAL '30 DAYS')\n      and sr_store_sk = s_store_sk\n    group by\n      s_store_sk\n  ),\n  cs as (\n    select\n      cs_call_center_sk,\n      sum(cs_ext_sales_price) as sales,\n      sum(cs_net_profit) as profit\n    from\n      catalog_sales,\n      date_dim\n    where\n      cs_sold_date_sk = d_date_sk\n      and d_date between cast('2001-08-11' as date) and (cast('2001-08-11' as date) + INTERVAL '30 DAYS')\n    group by\n      cs_call_center_sk\n  ),\n  cr as (\n    select\n      cr_call_center_sk,\n      sum(cr_return_amount) as returns,\n      sum(cr_net_loss) as profit_loss\n    from\n      catalog_returns,\n      date_dim\n    where\n      cr_returned_date_sk = d_date_sk\n      and d_date between cast('2001-08-11' as date) and (cast('2001-08-11' as date) + INTERVAL '30 DAYS')\n    group by\n      cr_call_center_sk\n  ),\n  ws as (\n    select\n      wp_web_page_sk,\n      sum(ws_ext_sales_price) as sales,\n      sum(ws_net_profit) as profit\n    from\n      web_sales,\n      date_dim,\n      web_page\n    where\n      ws_sold_date_sk = d_date_sk\n      and d_date between cast('2001-08-11' as date) and (cast('2001-08-11' as date) + INTERVAL '30 DAYS')\n      and ws_web_page_sk = wp_web_page_sk\n    group by\n      wp_web_page_sk\n  ),\n  wr as (\n    select\n      wp_web_page_sk,\n      sum(wr_return_amt) as returns,\n      sum(wr_net_loss) as profit_loss\n    from\n      web_returns,\n      date_dim,\n      web_page\n    where\n      wr_returned_date_sk = d_date_sk\n      and d_date between cast('2001-08-11' as date) and (cast('2001-08-11' as date) + INTERVAL '30 DAYS')\n      and wr_web_page_sk = wp_web_page_sk\n    group by\n      wp_web_page_sk\n  )\nselect\n  channel,\n  id,\n  sum(sales) as sales,\n  sum(returns) as returns,\n  sum(profit) as profit\nfrom\n  (\n    select\n      'store channel' as channel,\n      ss.s_store_sk as id,\n      sales,\n      coalesce(returns, 0) as returns,\n      (profit - coalesce(profit_loss, 0)) as profit\n    from\n      ss\n      left join sr on ss.s_store_sk = sr.s_store_sk\n    union all\n    select\n      'catalog channel' as channel,\n      cs_call_center_sk as id,\n      sales,\n      returns,\n      (profit - profit_loss) as profit\n    from\n      cs,\n      cr\n    union all\n    select\n      'web channel' as channel,\n      ws.wp_web_page_sk as id,\n      sales,\n      coalesce(returns, 0) returns,\n      (profit - coalesce(profit_loss, 0)) as profit\n    from\n      ws\n      left join wr on ws.wp_web_page_sk = wr.wp_web_page_sk\n  ) x\ngroup by\n  rollup (channel, id)\norder by\n  channel,\n  id\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT id, x FROM VALUES (1, 0), (2, 0) AS t(id,x) ORDER BY x"
+        "SELECT id, x FROM VALUES (1, CAST(NULL AS INT)), (2, NULL) AS t(id,x) ORDER BY x"
       ],
       "candidate_category": "tie ordering",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/query/sort.rs#L23",
       "upstream_search": "sort tie",
       "spark": {
         "original": {
@@ -67234,11 +67134,36 @@
               "rows": [
                 [
                   1,
-                  0
+                  null
                 ],
                 [
                   2,
-                  0
+                  null
+                ]
+              ],
+              "names": [
+                "id",
+                "x"
+              ],
+              "types": [
+                "int",
+                "int"
+              ]
+            }
+          ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  1,
+                  null
+                ],
+                [
+                  2,
+                  null
                 ]
               ],
               "names": [
@@ -67253,6 +67178,9 @@
           ]
         }
       },
+      "control_sql": [
+        "SELECT id, x FROM VALUES (1, CAST(NULL AS INT)), (2, NULL) AS t(id,x) ORDER BY x, id"
+      ],
       "sail": {
         "original": {
           "status": "ok",
@@ -67856,11 +67784,36 @@
               "rows": [
                 [
                   1,
-                  0
+                  null
                 ],
                 [
                   2,
-                  0
+                  null
+                ]
+              ],
+              "names": [
+                "id",
+                "x"
+              ],
+              "types": [
+                "int",
+                "int"
+              ]
+            }
+          ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  1,
+                  null
+                ],
+                [
+                  2,
+                  null
                 ]
               ],
               "names": [
@@ -67874,6 +67827,52 @@
             }
           ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "int",
+              "int"
+            ],
+            "reference_schema": [
+              "int",
+              "int"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              2,
+              2
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
+      },
+      "ordering_ties": {
+        "sql_sort_columns": [
+          "channel",
+          "id"
+        ],
+        "different_positions": [
+          1,
+          2
+        ],
+        "same_declared_keys_by_position": true,
+        "spark_keys_at_changed_positions": [
+          [
+            "catalog channel",
+            null
+          ],
+          [
+            "catalog channel",
+            null
+          ]
+        ]
       },
       "original_diff": {
         "verdict": "order differs",
@@ -67941,10 +67940,10 @@
         "-- SPDX-FileComment: SQLBench-DS query 83 derived from TPC-DS query 83 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nwith\n  sr_items as (\n    select\n      i_item_id item_id,\n      sum(sr_return_quantity) sr_item_qty\n    from\n      store_returns,\n      item,\n      date_dim\n    where\n      sr_item_sk = i_item_sk\n      and d_date in (\n        select\n          d_date\n        from\n          date_dim\n        where\n          d_week_seq in (\n            select\n              d_week_seq\n            from\n              date_dim\n            where\n              d_date in ('2000-04-29', '2000-09-09', '2000-11-02')\n          )\n      )\n      and sr_returned_date_sk = d_date_sk\n    group by\n      i_item_id\n  ),\n  cr_items as (\n    select\n      i_item_id item_id,\n      sum(cr_return_quantity) cr_item_qty\n    from\n      catalog_returns,\n      item,\n      date_dim\n    where\n      cr_item_sk = i_item_sk\n      and d_date in (\n        select\n          d_date\n        from\n          date_dim\n        where\n          d_week_seq in (\n            select\n              d_week_seq\n            from\n              date_dim\n            where\n              d_date in ('2000-04-29', '2000-09-09', '2000-11-02')\n          )\n      )\n      and cr_returned_date_sk = d_date_sk\n    group by\n      i_item_id\n  ),\n  wr_items as (\n    select\n      i_item_id item_id,\n      sum(wr_return_quantity) wr_item_qty\n    from\n      web_returns,\n      item,\n      date_dim\n    where\n      wr_item_sk = i_item_sk\n      and d_date in (\n        select\n          d_date\n        from\n          date_dim\n        where\n          d_week_seq in (\n            select\n              d_week_seq\n            from\n              date_dim\n            where\n              d_date in ('2000-04-29', '2000-09-09', '2000-11-02')\n          )\n      )\n      and wr_returned_date_sk = d_date_sk\n    group by\n      i_item_id\n  )\nselect\n  sr_items.item_id,\n  sr_item_qty,\n  sr_item_qty / (sr_item_qty + cr_item_qty + wr_item_qty) / 3.0 * 100 sr_dev,\n  cr_item_qty,\n  cr_item_qty / (sr_item_qty + cr_item_qty + wr_item_qty) / 3.0 * 100 cr_dev,\n  wr_item_qty,\n  wr_item_qty / (sr_item_qty + cr_item_qty + wr_item_qty) / 3.0 * 100 wr_dev,\n  (sr_item_qty + cr_item_qty + wr_item_qty) / 3.0 average\nfrom\n  sr_items,\n  cr_items,\n  wr_items\nwhere\n  sr_items.item_id = cr_items.item_id\n  and sr_items.item_id = wr_items.item_id\norder by\n  sr_items.item_id,\n  sr_item_qty\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT CAST(1 AS BIGINT) / 3.0"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -68541,15 +68540,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "0.333333"
                   }
                 ]
               ],
               "names": [
-                "(sum(x) / sum(y))"
+                "(CAST(1 AS BIGINT) / 3.0)"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(27,6)"
               ]
             }
           ]
@@ -69150,15 +69149,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.333333"
+                    "decimal": "0.3333"
                   }
                 ]
               ],
               "names": [
-                "(sum(x) / sum(y))"
+                "(CAST(1 AS BIGINT) / 3.0)"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(25,4)"
               ]
             }
           ]
@@ -69542,10 +69541,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(25,4)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(27,6)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -69560,16 +69559,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(sum(x) / sum(y))",
-                "sail_column": "(sum(x) / sum(y))",
+                "spark_column": "(CAST(1 AS BIGINT) / 3.0)",
+                "sail_column": "(CAST(1 AS BIGINT) / 3.0)",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "0.333333"
                 },
                 "sail": {
-                  "decimal": "3.333333"
+                  "decimal": "0.3333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "0.000033",
+                "relative_error": "0.000099000099000099000099000099000099000099000099000099000099000099000099000099000099"
               }
             ]
           }
@@ -69581,11 +69580,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 89 derived from TPC-DS query 89 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  *\nfrom\n  (\n    select\n      i_category,\n      i_class,\n      i_brand,\n      s_store_name,\n      s_company_name,\n      d_moy,\n      sum(ss_sales_price) sum_sales,\n      avg(sum(ss_sales_price)) over (\n        partition by\n          i_category,\n          i_brand,\n          s_store_name,\n          s_company_name\n      ) avg_monthly_sales\n    from\n      item,\n      store_sales,\n      date_dim,\n      store\n    where\n      ss_item_sk = i_item_sk\n      and ss_sold_date_sk = d_date_sk\n      and ss_store_sk = s_store_sk\n      and d_year in (2001)\n      and (\n        (\n          i_category in ('Children', 'Jewelry', 'Home')\n          and i_class in ('infants', 'birdal', 'flatware')\n        )\n        or (\n          i_category in ('Electronics', 'Music', 'Books')\n          and i_class in ('audio', 'classical', 'science')\n        )\n      )\n    group by\n      i_category,\n      i_class,\n      i_brand,\n      s_store_name,\n      s_company_name,\n      d_moy\n  ) tmp1\nwhere\n  case\n    when (avg_monthly_sales <> 0) then (\n      abs(sum_sales - avg_monthly_sales) / avg_monthly_sales\n    )\n    else null\n  end > 0.1\norder by\n  sum_sales - avg_monthly_sales,\n  s_store_name\nLIMIT\n  100"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT DISTINCT avg(x) OVER () FROM VALUES (CAST(0.01 AS DECIMAL(17,2))), (0.01), (0.00) AS t(x)"
       ],
-      "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_category": "rounding mode",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102-L130",
+      "upstream_search": "decimal avg",
       "spark": {
         "original": {
           "status": "ok",
@@ -71023,20 +71022,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.006667"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
+                "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -72479,20 +72473,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.333333"
-                  }
-                ],
-                [
-                  {
-                    "decimal": "0.666666"
+                    "decimal": "0.006666"
                   }
                 ]
               ],
               "names": [
-                "(x / sum(x))"
+                "avg(x)"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(21,6)"
               ]
             }
           ]
@@ -73191,16 +73180,16 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(21,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(21,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
-              2,
-              2
+              1,
+              1
             ],
             "positionally_equal": false,
             "unmatched_rows": [],
@@ -73209,31 +73198,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
+                "spark_column": "avg(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+                "sail_column": "avg(x)",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.006667"
                 },
                 "sail": {
-                  "decimal": "0.333333"
+                  "decimal": "0.006666"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
-              },
-              {
-                "spark_row": 1,
-                "sail_row": 1,
-                "column_index": 0,
-                "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
-                "sail_column": "(x / sum(x))",
-                "spark": {
-                  "decimal": "0.6666666666666666666666667"
-                },
-                "sail": {
-                  "decimal": "0.666666"
-                },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "0.000001",
+                "relative_error": "0.00014999250037498125093745312734363281835908204589770511474426278686065696715164242"
               }
             ]
           }
@@ -73245,11 +73219,11 @@
         "-- SPDX-FileComment: SQLBench-DS query 98 derived from TPC-DS query 98 under the terms of the TPC Fair Use Policy.\n-- SPDX-FileCopyrightText: Copyright 2021 Transaction Processing Performance Council\n\n-- This query was generated at scale factor 1.\nselect\n  i_item_id,\n  i_item_desc,\n  i_category,\n  i_class,\n  i_current_price,\n  sum(ss_ext_sales_price) as itemrevenue,\n  sum(ss_ext_sales_price) * 100 / sum(sum(ss_ext_sales_price)) over (\n    partition by\n      i_class\n  ) as revenueratio\nfrom\n  store_sales,\n  item,\n  date_dim\nwhere\n  ss_item_sk = i_item_sk\n  and i_category in ('Shoes', 'Music', 'Men')\n  and ss_sold_date_sk = d_date_sk\n  and d_date between cast('2000-01-05' as date) and (cast('2000-01-05' as date) + INTERVAL '30 DAYS')\ngroup by\n  i_item_id,\n  i_item_desc,\n  i_category,\n  i_class,\n  i_current_price\norder by\n  i_category,\n  i_class,\n  i_item_id,\n  i_item_desc,\n  revenueratio"
       ],
       "repro_sql": [
-        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(12,2))), (2.00) AS t(x) ORDER BY x"
+        "SELECT x / sum(x) OVER () FROM VALUES (CAST(1 AS DECIMAL(7,2))), (2.00) AS t(x) ORDER BY x"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/window.rs#L102",
-      "upstream_search": "window decimal",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
+      "upstream_search": "decimal division",
       "spark": {
         "original": {
           "status": "ok",
@@ -112333,12 +112307,12 @@
               "rows": [
                 [
                   {
-                    "decimal": "0.3333333333333333333333333"
+                    "decimal": "0.33333333333333333333"
                   }
                 ],
                 [
                   {
-                    "decimal": "0.6666666666666666666666667"
+                    "decimal": "0.66666666666666666667"
                   }
                 ]
               ],
@@ -112346,7 +112320,7 @@
                 "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))"
               ],
               "types": [
-                "decimal(37,25)"
+                "decimal(27,20)"
               ]
             }
           ]
@@ -151448,7 +151422,7 @@
                 "(x / sum(x))"
               ],
               "types": [
-                "decimal(18,6)"
+                "decimal(13,6)"
               ]
             }
           ]
@@ -190395,10 +190369,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(18,6)"
+              "decimal(13,6)"
             ],
             "reference_schema": [
-              "decimal(37,25)"
+              "decimal(27,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -190416,13 +190390,13 @@
                 "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
                 "sail_column": "(x / sum(x))",
                 "spark": {
-                  "decimal": "0.3333333333333333333333333"
+                  "decimal": "0.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "0.333333"
                 },
-                "absolute_error": "3.333333333333333333E-7",
-                "relative_error": "9.9999999999999999990000009999999999999999999000000999999999999999999900000100000E-7"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000999999999999990000009999999999999900000099999999999999000001E-7"
               },
               {
                 "spark_row": 1,
@@ -190431,13 +190405,13 @@
                 "spark_column": "(x / sum(x) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))",
                 "sail_column": "(x / sum(x))",
                 "spark": {
-                  "decimal": "0.6666666666666666666666667"
+                  "decimal": "0.66666666666666666667"
                 },
                 "sail": {
                   "decimal": "0.666666"
                 },
-                "absolute_error": "6.666666666666666667E-7",
-                "relative_error": "0.0000010000000000000000000499999499999999999999999975000025000000000000000001249998750"
+                "absolute_error": "6.6666666666667E-7",
+                "relative_error": "0.0000010000000000000049999949999999999999750000250000000000001249998749999999999993750"
               }
             ]
           }
@@ -190449,10 +190423,10 @@
         "select\n  l_returnflag,\n  l_linestatus,\n  sum(l_quantity) as sum_qty,\n  sum(l_extendedprice) as sum_base_price,\n  sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,\n  sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,\n  avg(l_quantity) as avg_qty,\n  avg(l_extendedprice) as avg_price,\n  avg(l_discount) as avg_disc,\n  count(*) as count_order\nfrom\n  lineitem\nwhere\n  l_shipdate <= date '1998-12-01' - interval '68 days'\ngroup by\n  l_returnflag,\n  l_linestatus\norder by\n  l_returnflag,\n  l_linestatus"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -190607,7 +190581,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -190766,7 +190740,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -190929,10 +190903,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -190968,10 +190942,10 @@
         "select\n  o_year,\n  sum(\n    case\n      when nation = 'IRAQ' then volume\n      else 0\n    end\n  ) / sum(volume) as mkt_share\nfrom\n  (\n    select\n      extract(\n        year\n        from\n          o_orderdate\n      ) as o_year,\n      l_extendedprice * (1 - l_discount) as volume,\n      n2.n_name as nation\n    from\n      part,\n      supplier,\n      lineitem,\n      orders,\n      customer,\n      nation n1,\n      nation n2,\n      region\n    where\n      p_partkey = l_partkey\n      and s_suppkey = l_suppkey\n      and l_orderkey = o_orderkey\n      and o_custkey = c_custkey\n      and c_nationkey = n1.n_nationkey\n      and n1.n_regionkey = r_regionkey\n      and r_name = 'MIDDLE EAST'\n      and s_nationkey = n2.n_nationkey\n      and o_orderdate between date '1995-01-01' and date  '1996-12-31'\n      and p_type = 'LARGE PLATED STEEL'\n  ) as all_nations\ngroup by\n  o_year\norder by\n  o_year"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -191010,7 +190984,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "3.33333333333333333333"
                   }
                 ]
               ],
@@ -191018,7 +190992,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(37,20)"
               ]
             }
           ]
@@ -191069,7 +191043,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(23,6)"
               ]
             }
           ]
@@ -191141,10 +191115,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(23,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(37,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -191162,13 +191136,13 @@
                 "spark_column": "(sum(x) / sum(y))",
                 "sail_column": "(sum(x) / sum(y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "3.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000099999999999999000000099999999999999000000099999999999999000E-8"
               }
             ]
           }
@@ -191180,10 +191154,10 @@
         "select\n  100.00 * sum(\n    case\n      when p_type like 'PROMO%' then l_extendedprice * (1 - l_discount)\n      else 0\n    end\n  ) / sum(l_extendedprice * (1 - l_discount)) as promo_revenue\nfrom\n  lineitem,\n  part\nwhere\n  l_partkey = p_partkey\n  and l_shipdate >= date '1995-02-01'\n  and l_shipdate < date '1995-02-01' + interval '1' month"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(7,2)), CAST(3 AS DECIMAL(7,2))) AS t(x,y)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -191213,7 +191187,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "3.33333333333333333333"
                   }
                 ]
               ],
@@ -191221,7 +191195,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(37,20)"
               ]
             }
           ]
@@ -191263,7 +191237,7 @@
                 "(sum(x) / sum(y))"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(23,6)"
               ]
             }
           ]
@@ -191314,10 +191288,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(23,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(37,20)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -191335,13 +191309,13 @@
                 "spark_column": "(sum(x) / sum(y))",
                 "sail_column": "(sum(x) / sum(y))",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "3.33333333333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "3.3333333333333E-7",
+                "relative_error": "9.9999999999999000000099999999999999000000099999999999999000000099999999999999000E-8"
               }
             ]
           }
@@ -191353,10 +191327,10 @@
         "select\n  sum(l_extendedprice) / 7.0 as avg_yearly\nfrom\n  lineitem,\n  part\nwhere\n  p_partkey = l_partkey\n  and p_brand = 'Brand#42'\n  and p_container = 'LG BAG'\n  and l_quantity < (\n    select\n      0.2 * avg(l_quantity)\n    from\n      lineitem\n    where\n      l_partkey = p_partkey\n  )"
       ],
       "repro_sql": [
-        "SELECT sum(x) / sum(y) FROM VALUES (CAST(10 AS DECIMAL(12,2)), CAST(3 AS DECIMAL(12,2))) AS t(x,y)"
+        "SELECT sum(x) / 7.0 FROM VALUES (CAST(5 AS DECIMAL(15,2))) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -191386,15 +191360,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.3333333333333333"
+                    "decimal": "0.714286"
                   }
                 ]
               ],
               "names": [
-                "(sum(x) / sum(y))"
+                "(sum(x) / 7.0)"
               ],
               "types": [
-                "decimal(38,16)"
+                "decimal(30,6)"
               ]
             }
           ]
@@ -191428,15 +191402,15 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.333333"
+                    "decimal": "0.714285"
                   }
                 ]
               ],
               "names": [
-                "(sum(x) / sum(y))"
+                "(sum(x) / 7.0)"
               ],
               "types": [
-                "decimal(28,6)"
+                "decimal(30,6)"
               ]
             }
           ]
@@ -191487,12 +191461,12 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(28,6)"
+              "decimal(30,6)"
             ],
             "reference_schema": [
-              "decimal(38,16)"
+              "decimal(30,6)"
             ],
-            "schema_differs": true,
+            "schema_differs": false,
             "alignment": "row ordinal",
             "row_counts": [
               1,
@@ -191505,16 +191479,16 @@
                 "spark_row": 0,
                 "sail_row": 0,
                 "column_index": 0,
-                "spark_column": "(sum(x) / sum(y))",
-                "sail_column": "(sum(x) / sum(y))",
+                "spark_column": "(sum(x) / 7.0)",
+                "sail_column": "(sum(x) / 7.0)",
                 "spark": {
-                  "decimal": "3.3333333333333333"
+                  "decimal": "0.714286"
                 },
                 "sail": {
-                  "decimal": "3.333333"
+                  "decimal": "0.714285"
                 },
-                "absolute_error": "3.333333333E-7",
-                "relative_error": "9.9999999990000000999999999900000009999999999000000099999999990000000999999999900E-8"
+                "absolute_error": "0.000001",
+                "relative_error": "0.0000013999994400002239999104000358399856640057343977062409175036329985468005812797675"
               }
             ]
           }
@@ -191526,10 +191500,10 @@
         "SELECT CAST(10 AS DECIMAL(10,2)) / CAST(3 AS DECIMAL(10,2)) AS r"
       ],
       "repro_sql": [
-        "SELECT CAST(10 AS DECIMAL(20,2)) / CAST(3 AS DECIMAL(20,2)) AS v"
+        "SELECT CAST(10 AS DECIMAL(10,2)) / CAST(3 AS DECIMAL(10,2)) AS v"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L437-L447",
       "upstream_search": "decimal division",
       "spark": {
         "original": {
@@ -191559,7 +191533,7 @@
               "rows": [
                 [
                   {
-                    "decimal": "3.333333333333333333"
+                    "decimal": "3.3333333333333"
                   }
                 ]
               ],
@@ -191567,7 +191541,7 @@
                 "v"
               ],
               "types": [
-                "decimal(38,18)"
+                "decimal(23,13)"
               ]
             }
           ]
@@ -191609,7 +191583,7 @@
                 "v"
               ],
               "types": [
-                "decimal(26,6)"
+                "decimal(16,6)"
               ]
             }
           ]
@@ -191660,10 +191634,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(26,6)"
+              "decimal(16,6)"
             ],
             "reference_schema": [
-              "decimal(38,18)"
+              "decimal(23,13)"
             ],
             "schema_differs": true,
             "alignment": "row ordinal",
@@ -191681,13 +191655,13 @@
                 "spark_column": "v",
                 "sail_column": "v",
                 "spark": {
-                  "decimal": "3.333333333333333333"
+                  "decimal": "3.3333333333333"
                 },
                 "sail": {
                   "decimal": "3.333333"
                 },
-                "absolute_error": "3.33333333333E-7",
-                "relative_error": "9.9999999999900000009999999999990000000999999999999000000099999999999900000010000E-8"
+                "absolute_error": "3.333333E-7",
+                "relative_error": "9.9999990000000999999900000009999999000000099999990000000999999900000009999999000E-8"
               }
             ]
           }
@@ -191699,10 +191673,10 @@
         "SELECT sum(l_extendedprice), avg(l_discount), sum(l_extendedprice * (1 - l_discount)) FROM polaris.tpch_sf1.lineitem WHERE l_orderkey < 1000"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -191750,7 +191724,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -191802,7 +191776,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -191857,10 +191831,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -191899,7 +191873,7 @@
         "SELECT CAST(9999999999999999999999999999.99 AS DECIMAL(30,2)) * CAST(99999999.99 AS DECIMAL(10,2))"
       ],
       "candidate_category": "ANSI behaviour",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L280-L311",
       "upstream_search": "decimal overflow",
       "spark": {
         "original": {
@@ -191964,7 +191938,7 @@
         "SELECT bround(2.5), bround(-2.5)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-function/src/scalar/math/bround.rs#L138",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-function/src/scalar/math/bround.rs#L111-L120",
       "upstream_search": "bround",
       "spark": {
         "original": {
@@ -192230,7 +192204,7 @@
         "SELECT round(CAST(1.005 AS DOUBLE), 2)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L750",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L747-L750",
       "upstream_search": "round double",
       "spark": {
         "original": {
@@ -192427,7 +192401,7 @@
         "SELECT log(0)"
       ],
       "candidate_category": "a function semantic",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L879",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L867-L871",
       "upstream_search": "log function",
       "spark": {
         "original": {
@@ -192476,8 +192450,31 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  {
+                    "float": "2.0"
+                  }
+                ]
+              ],
+              "names": [
+                "LOG(10, 100)"
+              ],
+              "types": [
+                "double"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT log(10, 100)"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -192486,7 +192483,50 @@
         "repro": {
           "status": "error",
           "error": "AnalysisException: two values expected: [Literal(Int32(0), None)]"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  {
+                    "float": "2.0"
+                  }
+                ]
+              ],
+              "names": [
+                "LOG(10, 100)"
+              ],
+              "types": [
+                "double"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "double"
+            ],
+            "reference_schema": [
+              "double"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -192503,7 +192543,7 @@
         "SELECT CAST('1e3' AS DECIMAL(10,2))"
       ],
       "candidate_category": "a type coercion",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L399",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L348-L364",
       "upstream_search": "decimal cast",
       "spark": {
         "original": {
@@ -192688,7 +192728,7 @@
         "SELECT CAST(1.0E10 AS STRING)"
       ],
       "candidate_category": "a type coercion",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L399",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L330-L341",
       "upstream_search": "float cast string",
       "spark": {
         "original": {
@@ -192880,7 +192920,7 @@
         "SELECT CAST(CAST(1e20 AS FLOAT) AS STRING)"
       ],
       "candidate_category": "a type coercion",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L399",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L330-L341",
       "upstream_search": "float cast string",
       "spark": {
         "original": {
@@ -193045,7 +193085,7 @@
         "SELECT CAST(CAST(3e9 AS DOUBLE) AS INT)"
       ],
       "candidate_category": "ANSI behaviour",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L399",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/cast.rs#L348-L364",
       "upstream_search": "cast overflow",
       "spark": {
         "original": {
@@ -193089,8 +193129,29 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  null
+                ]
+              ],
+              "names": [
+                "TRY_CAST(CAST(3.0E9 AS DOUBLE) AS INT)"
+              ],
+              "types": [
+                "int"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT try_cast(CAST(3e9 AS DOUBLE) AS INT)"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -193099,7 +193160,48 @@
         "repro": {
           "status": "error",
           "error": "NumberFormatException: Can't cast value 3000000000.0 to type Int32"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  null
+                ]
+              ],
+              "names": [
+                "TRY_CAST(CAST(3.0E9 AS DOUBLE) AS INT)"
+              ],
+              "types": [
+                "int"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "int"
+            ],
+            "reference_schema": [
+              "int"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -193116,7 +193218,7 @@
         "SELECT 1 + '2'"
       ],
       "candidate_category": "a type coercion",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L126-L177",
       "upstream_search": "type coercion",
       "spark": {
         "original": {
@@ -193172,8 +193274,31 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  {
+                    "float": "3.0"
+                  }
+                ]
+              ],
+              "names": [
+                "(1 + CAST(2 AS DOUBLE))"
+              ],
+              "types": [
+                "double"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT 1 + CAST('2' AS DOUBLE)"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -193182,7 +193307,50 @@
         "repro": {
           "status": "error",
           "error": "AnalysisException: Cannot coerce arithmetic expression Int32 + Utf8 to valid types"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  {
+                    "float": "3.0"
+                  }
+                ]
+              ],
+              "names": [
+                "(1 + CAST(2 AS DOUBLE))"
+              ],
+              "types": [
+                "double"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "double"
+            ],
+            "reference_schema": [
+              "double"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -193199,7 +193367,7 @@
         "SELECT typeof(CAST(1 AS DECIMAL(5,2)) + 1)"
       ],
       "candidate_category": "decimal precision or scale",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/expression/predicate.rs#L832",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/math.rs#L126-L177",
       "upstream_search": "decimal precision",
       "spark": {
         "original": {
@@ -193249,8 +193417,29 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  "decimal(6,2)"
+                ]
+              ],
+              "names": [
+                "typeof((CAST(1 AS DECIMAL(5,2)) + CAST(1 AS DECIMAL(1,0))))"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT typeof(CAST(1 AS DECIMAL(5,2)) + CAST(1 AS DECIMAL(1,0)))"
+      ],
       "sail": {
         "original": {
           "status": "ok",
@@ -193299,7 +193488,48 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  "decimal(6,2)"
+                ]
+              ],
+              "names": [
+                "typeof((CAST(1 AS DECIMAL(5,2)) + CAST(1 AS DECIMAL(1,0))))"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "string"
+            ],
+            "reference_schema": [
+              "string"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "values differ",
@@ -193585,7 +193815,7 @@
         "SELECT regexp_replace('price100usd', '[0-9]+(?=usd)', 'N')"
       ],
       "candidate_category": "a function semantic",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/string.rs#L79",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/string.rs#L79-L84",
       "upstream_search": "regexp lookahead",
       "spark": {
         "original": {
@@ -193623,8 +193853,29 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  "priceNusd"
+                ]
+              ],
+              "names": [
+                "regexp_replace(price100usd, [0-9]+, N, 1)"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT regexp_replace('price100usd', '[0-9]+', 'N')"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -193633,7 +193884,48 @@
         "repro": {
           "status": "error",
           "error": "SparkRuntimeException: regex parse error:\n    [0-9]+(?=usd)\n          ^^^\nerror: look-around, including look-ahead and look-behind, is not supported"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  "priceNusd"
+                ]
+              ],
+              "names": [
+                "regexp_replace(price100usd, [0-9]+, N, 1)"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "string"
+            ],
+            "reference_schema": [
+              "string"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -193650,7 +193942,7 @@
         "SELECT trunc(DATE'2024-05-17', 'Q')"
       ],
       "candidate_category": "a function semantic",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/datetime.rs#L156",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/scalar/datetime.rs#L156-L211",
       "upstream_search": "trunc date",
       "spark": {
         "original": {
@@ -193708,8 +194000,31 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  {
+                    "datetime": "2024-05-01"
+                  }
+                ]
+              ],
+              "names": [
+                "trunc(DATE '2024-05-17', MM)"
+              ],
+              "types": [
+                "date"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT trunc(DATE'2024-05-17', 'MM')"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -193718,7 +194033,50 @@
         "repro": {
           "status": "error",
           "error": "AnalysisException: Unsupported date_trunc granularity: 'q'. Supported values are: microsecond, millisecond, second, minute, hour, day, week, month, quarter, year"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  {
+                    "datetime": "2024-05-01"
+                  }
+                ]
+              ],
+              "names": [
+                "trunc(DATE '2024-05-17', MM)"
+              ],
+              "types": [
+                "date"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "date"
+            ],
+            "reference_schema": [
+              "date"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -193812,10 +194170,10 @@
         "SELECT count(*), count(s), count(DISTINCT s), sum(x), avg(x), min(s), max(d) FROM VALUES (1, 'a', 10.5, DATE'2024-01-31'), (2, NULL, -3.25, DATE'2024-02-29'), (3, 'c', NULL, NULL), (4, 'a', 0.0, DATE'2023-12-31') AS v(id, s, x, d)"
       ],
       "repro_sql": [
-        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(12,2))), (0.01), (0.00) AS t(x)"
+        "SELECT avg(x) FROM VALUES (CAST(0.01 AS DECIMAL(7,2))), (0.01), (0.00), (NULL) AS t(x)"
       ],
       "candidate_category": "rounding mode",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/function/aggregate.rs#L67-L85",
       "upstream_search": "decimal avg",
       "spark": {
         "original": {
@@ -193875,7 +194233,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -193939,7 +194297,7 @@
                 "avg(x)"
               ],
               "types": [
-                "decimal(16,6)"
+                "decimal(11,6)"
               ]
             }
           ]
@@ -194002,10 +194360,10 @@
           {
             "verdict": "values differ",
             "sail_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "reference_schema": [
-              "decimal(16,6)"
+              "decimal(11,6)"
             ],
             "schema_differs": false,
             "alignment": "row ordinal",
@@ -194044,7 +194402,7 @@
         "SELECT * FROM (SELECT 1 AS id) PIVOT (count(*) FOR id IN (1, 2))"
       ],
       "candidate_category": "a function semantic",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-plan/src/resolver/query/pivoting.rs#L259",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-sql-parser/src/ast/query.rs#L414-L425",
       "upstream_search": "pivot",
       "spark": {
         "original": {
@@ -194172,8 +194530,32 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  1,
+                  null
+                ]
+              ],
+              "names": [
+                "1",
+                "2"
+              ],
+              "types": [
+                "bigint",
+                "bigint"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT * FROM (SELECT 1 AS id) PIVOT (count(*) FOR (id) IN (1, 2))"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -194182,7 +194564,53 @@
         "repro": {
           "status": "error",
           "error": "IllegalArgumentException: invalid argument: found id at 51:53 expected '('"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  1,
+                  null
+                ]
+              ],
+              "names": [
+                "1",
+                "2"
+              ],
+              "types": [
+                "bigint",
+                "bigint"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "bigint",
+              "bigint"
+            ],
+            "reference_schema": [
+              "bigint",
+              "bigint"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -194199,7 +194627,7 @@
         "SELECT decode(2, 1, 'one', 2, 'two', 'other')"
       ],
       "candidate_category": "a function semantic",
-      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-function/src/scalar/string/encode_decode.rs#L290",
+      "candidate_source": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-function/src/scalar/string/encode_decode.rs#L307-L314",
       "upstream_search": "decode",
       "spark": {
         "original": {
@@ -194243,8 +194671,29 @@
               ]
             }
           ]
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  "two"
+                ]
+              ],
+              "names": [
+                "CASE WHEN (2 = 1) THEN one WHEN (2 = 2) THEN two ELSE other END"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
       },
+      "control_sql": [
+        "SELECT CASE 2 WHEN 1 THEN 'one' WHEN 2 THEN 'two' ELSE 'other' END"
+      ],
       "sail": {
         "original": {
           "status": "error",
@@ -194253,7 +194702,48 @@
         "repro": {
           "status": "error",
           "error": "AnalysisException: Execution error: Function 'spark_decode' user-defined coercion failed with: Execution error: Spark `decode` function requires 2 arguments, got 6. No function matches the given name and argument types 'spark_decode(Int32, Int32, Utf8, Int32, Utf8, Utf8)'. You might need to add explicit type casts.\n\tCandidate functions:\n\tspark_decode(UserDefined)"
+        },
+        "control": {
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  "two"
+                ]
+              ],
+              "names": [
+                "CASE WHEN (2 = 1) THEN one WHEN (2 = 2) THEN two ELSE other END"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
+      },
+      "control_diff": {
+        "verdict": "match",
+        "statements": [
+          {
+            "verdict": "match",
+            "sail_schema": [
+              "string"
+            ],
+            "reference_schema": [
+              "string"
+            ],
+            "schema_differs": false,
+            "alignment": null,
+            "row_counts": [
+              1,
+              1
+            ],
+            "positionally_equal": true,
+            "unmatched_rows": [],
+            "cells": []
+          }
+        ]
       },
       "original_diff": {
         "verdict": "sail_error"
@@ -194458,35 +194948,35 @@
     "tpch": {
       "nation": {
         "rows": 25,
-        "seconds": 3.45
+        "seconds": 3.18
       },
       "region": {
         "rows": 5,
-        "seconds": 0.58
+        "seconds": 0.54
       },
       "part": {
         "rows": 200000,
-        "seconds": 1.29
+        "seconds": 1.1
       },
       "supplier": {
         "rows": 10000,
-        "seconds": 0.59
+        "seconds": 0.57
       },
       "partsupp": {
         "rows": 800000,
-        "seconds": 1.39
+        "seconds": 1.45
       },
       "customer": {
         "rows": 150000,
-        "seconds": 0.82
+        "seconds": 0.79
       },
       "orders": {
         "rows": 1500000,
-        "seconds": 1.88
+        "seconds": 1.82
       },
       "lineitem": {
         "rows": 6001215,
-        "seconds": 5.97
+        "seconds": 5.81
       }
     },
     "tpcds": {

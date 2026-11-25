@@ -1,14 +1,14 @@
 | Task | Key measured result | Status | Run link |
 | --- | --- | --- | --- |
-| [rootcause](rootcause.md) | 44 correctness failures and one equal-key ordering difference | Measured | [Raw JSON](https://github.com/unikdahal/poc/blob/04520e9d67c74b8cf43ee6d5dcfa6fa3f9f3f565/pinned/result.json) · [Run 45555635573](https://github.com/unikdahal/poc/actions/runs/45555635573) · [Raw JSON](https://github.com/unikdahal/poc/blob/04520e9d67c74b8cf43ee6d5dcfa6fa3f9f3f565/newer/result.json) · [Run 45555635573](https://github.com/unikdahal/poc/actions/runs/45555635573) |
+| [rootcause](rootcause.md) | 44 correctness failures and one equal-key ordering difference | Measured | [Raw JSON](https://github.com/unikdahal/poc/blob/10f1c46405e46b4aea792ed502aa872f5c89ac02/pinned/result.json) · [Run 45555635573](https://github.com/unikdahal/poc/actions/runs/45555635573) · [Raw JSON](https://github.com/unikdahal/poc/blob/10f1c46405e46b4aea792ed502aa872f5c89ac02/newer/result.json) · [Run 45558417190](https://github.com/unikdahal/poc/actions/runs/45558417190) |
 | [tenancy](tenancy.md) | Both protocols accepted cross-tenant changes under the configured identity. Vended storage access was table-scoped. | Measured | [Raw JSON](https://github.com/unikdahal/poc/blob/c3b649375515aa3cd5c4539ddaad182f0ef0c201/isolation/result.json) · [Run 45555042191](https://github.com/unikdahal/poc/actions/runs/45555042191) |
 | [k8s-scale](k8s-scale.md) | 6/6 scaling cells ran queries. A Flight worker exited OOMKilled in the initial sweep. | Partial | [Run](https://github.com/unikdahal/poc/actions/runs/45556141965) |
 | [soak](soak.md) | First attempts published short active windows only | Partial | [Run](https://github.com/unikdahal/poc/actions/runs/45555344538) |
-| [iceberg-deep](iceberg-deep.md) | 500 commits measured. Mixed-engine format and delete results are in the task report. | Partial | [Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/maintenance/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787) |
+| [iceberg-deep](iceberg-deep.md) | 500 commits measured. Mixed-engine format and delete results are in the task report. | Partial | [Raw JSON](https://github.com/unikdahal/poc/blob/d1f2cb84f431540ae439cc851671e48a2d61f09b/maintenance/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787) |
 | [cpu-scaling](cpu-scaling.md) | 0/2 runners published scaling curves | Partial | [Run](https://github.com/unikdahal/poc/actions/runs/45553585916) |
 | [faults-storage](faults-storage.md) | S3 scan reset recovered. Warm medians 0.351 s baseline and 1.939 s with reset. | Partial | [Raw JSON](https://github.com/unikdahal/poc/blob/30107d1357a0811a76944c776e96953c38c979ca/storage/result.json) · [Run 45556883387](https://github.com/unikdahal/poc/actions/runs/45556883387) · [Raw JSON](https://github.com/unikdahal/poc/blob/30107d1357a0811a76944c776e96953c38c979ca/catalog/result.json) · [Run 45556883387](https://github.com/unikdahal/poc/actions/runs/45556883387) |
 | [api-coverage](api-coverage.md) | Python 3.5.10 matched 35 cases. Both Java versions matched 9 when the 4.0.1 runner completed. | Measured | [Raw JSON](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/python35/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) · [Raw JSON](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/jvm35/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
-| [ops](ops.md) | Operator probes are running | Partial | [Run](https://github.com/unikdahal/poc/actions/runs/45554682627) |
+| [ops](ops.md) | Fresh start through first correct query 1.301 s | Measured | [Raw JSON](https://github.com/unikdahal/poc/blob/f8ad1209e0432cda6dc48b313a8bdde16676b805/operator/result.json) · [Run 45554682627](https://github.com/unikdahal/poc/actions/runs/45554682627) |
 | [scale-up](scale-up.md) | TPC-DS SF10 warm results matched Spark for 1 Sail queries and 12 Comet queries in the initial subset | Partial | [Raw JSON](https://github.com/unikdahal/poc/blob/504ebf41b652d65f00ab67a01f99a833c9e12767/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
 
 ## New bugs found
@@ -17,7 +17,7 @@ The reduced cases with no exact public Sail issue or PR match include decimal AV
 
 ## Bugs fixed on newer main
 
-The alternate SHA `da1e7351d28046452f0ec3e8232aee28458f3852` resolved none of the 0 reduced failures that reproduced on the pinned build. The equal-key ordering difference is permitted.
+The alternate SHA `da1e7351d28046452f0ec3e8232aee28458f3852` resolved none of the 44 reduced failures that reproduced on the pinned build. The equal-key ordering difference is permitted.
 
 ## Blockers for a multi-tenant replacement of Spark, Kyuubi and Celeborn
 

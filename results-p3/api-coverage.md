@@ -1,6 +1,6 @@
 # Spark Connect client coverage
 
-Reproduce with `p3.yml`, `tasks=api-coverage`. The suite command is `python -u -m harness.p3.api_coverage` with Python and Java clients at 3.5.10 and 4.0.1.
+Reproduce with `p3.yml`, `tasks=api-coverage`. The suite command is `python -m harness.p3.api_coverage` with Python and Java clients at 3.5.10 and 4.0.1.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
 Each treatment uses a fresh Spark reference and a fresh Sail server. The Python suites compare unordered, typed row fingerprints and include sample rows in the raw evidence. The Java probes compare sorted row representations. Python 4.0.1 uses the Spark 3.5.10 Python reference client for shared operations.

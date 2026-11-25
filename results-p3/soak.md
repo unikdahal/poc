@@ -1,6 +1,6 @@
 # Long-running workload and session churn
 
-Reproduce with `p3.yml`, `tasks=soak`. The suite command is `python -u -m harness.p3.soak` with `P3_VARIANT=local` or `local-cluster`.
+Reproduce with `p3.yml`, `tasks=soak`. The suite command is `python -m harness.p3.soak` with `P3_VARIANT=local` or `local-cluster`.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
 The target schedule is 5 h 05 min of active workload and 25 min idle. Sampling is every 30 s. The mix uses six SF1 TPC-H queries, point lookups, small MERGEs and newly created sessions. The revised churn client sends ReleaseSession independently of the workload client. [Pinned release handler](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-spark-connect/src/server.rs#L505)

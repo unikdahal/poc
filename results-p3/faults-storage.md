@@ -1,6 +1,6 @@
 # Storage and catalog faults
 
-Reproduce with `p3.yml`, `tasks=faults-storage`. The suite command is `python -u -m harness.p3.faults_storage` with `P3_VARIANT=storage` or `catalog`.
+Reproduce with `p3.yml`, `tasks=faults-storage`. The suite command is `python -m harness.p3.faults_storage` with `P3_VARIANT=storage` or `catalog`.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
 The workload scans 1.8 million synthetic rows from an Iceberg table. The commit treatment adds a second disjoint block of 10,000 rows per fixture. Toxiproxy 2.12.0 applies downstream delay and TCP resets. The HTTP relay counts calls and returns an S3 503 on each 100th matching request. A separate Spark process reads the table after each commit treatment.
@@ -29,6 +29,8 @@ The workload scans 1.8 million synthetic rows from an Iceberg table. The commit 
 **FACT.** The token service reported a 120 s TTL. The direct REST control returned 200 before expiry and 401 after expiry. An active long-query client at expiry was observed as `False`. Rotated-token readback matched Spark as `True`. The long-query result was `error`. [Raw JSON](https://github.com/unikdahal/poc/blob/30107d1357a0811a76944c776e96953c38c979ca/catalog/result.json) · [Run 45556883387](https://github.com/unikdahal/poc/actions/runs/45556883387)
 
 The pinned REST provider constructs each request from current credentials and retries once on HTTP 401. [REST retry code](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L258-L281)
+
+The commit tests compare clean failure and object cleanup separately. The public Iceberg epic tracks integration coverage. Searches for an exact orphan-on-failed-commit report yielded no match beyond the broader integration issue. [#172](https://github.com/lakehq/sail/issues/172)
 
 ### Coverage limits
 

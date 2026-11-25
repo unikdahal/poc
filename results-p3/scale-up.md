@@ -1,6 +1,6 @@
 # Larger public data sets
 
-Reproduce with `p3.yml`, `tasks=scale-up`. The suite command is `python -u -m harness.p3.scale_up` with TPC-H SF50 and TPC-DS SF10 on hosted runners.
+Reproduce with `p3.yml`, `tasks=scale-up`. The suite command is `python -m harness.p3.scale_up` with TPC-H SF50 and TPC-DS SF10 on hosted runners.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
 Sail runs under an 8 GiB container cap with a 4 GiB fair pool and a mounted spill directory. Comet is assigned a 6 GiB heap plus 2 GiB off-heap. A planned JVM allocation is distinct from a process-level memory cap. Peak spill is the largest sampled total of files visible in the mounted directory. Spill can be created and removed between samples.

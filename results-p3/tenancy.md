@@ -1,6 +1,6 @@
 # Tenant identities and session isolation
 
-Reproduce with `p3.yml`, `tasks=tenancy`. The suite command is `python -u -m harness.p3.tenancy` with `P3_VARIANT=isolation`.
+Reproduce with `p3.yml`, `tasks=tenancy`. The suite command is `python -m harness.p3.tenancy` with `P3_VARIANT=isolation`.
 The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correctness reference is Spark 3.5.10 with Iceberg 1.12.0. Each raw file records the job revision, image digests, configuration and engine exit state where available.
 
 **FACT.** The two Polaris principals each had a role and a separate catalog, namespace and bucket. The Sail tests exercised one configured identity and a second configuration with two preconfigured catalog aliases. Each action used its own synthetic fixture. [Raw JSON](https://github.com/unikdahal/poc/blob/c3b649375515aa3cd5c4539ddaad182f0ef0c201/isolation/result.json) · [Run 45555042191](https://github.com/unikdahal/poc/actions/runs/45555042191)

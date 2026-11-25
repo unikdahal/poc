@@ -8,17 +8,17 @@ submit() {
   "$SPARK_HOME/bin/spark-submit" --master "$1" --jars "$JARS" \
     --conf spark.ui.enabled=false --conf spark.lcpy.sandbox.mode=bwrap \
     --class org.apache.spark.sql.lcpy.LcTestMain /opt/lcpy/jars/lc-python-runner-tests.jar \
-    --registry /opt/lcpy/registry --sandbox bwrap --only "$2"
+    --registry /opt/lcpy/registry --python /usr/bin/python3 --sandbox bwrap --only "$2"
 }
 fail=0
 LCPY_KILL9=1 submit 'local[2]' '\[kill9\].*' >/tmp/kill9-run.log 2>&1 &
 pid=$!
 for _ in $(seq 240); do
-  [[ $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') -ge 1 ]] && break; sleep 0.5
+  [[ $(pgrep -fc 'python3 -I -B -u /lcpy/worker.py') -ge 1 ]] && break; sleep 0.5
 done
 sleep 1
-echo "before SIGKILL: $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') python worker(s), $(pgrep -fc '^/usr/bin/bwrap') bwrap, cgroups: $(ls -d /sys/fs/cgroup/lcpy/sandbox/w-* 2>/dev/null | wc -l)"
-if [[ $(pgrep -fc '^/usr/bin/python3 .*lcpy/worker.py') -lt 1 ]]; then
+echo "before SIGKILL: $(pgrep -fc 'python3 -I -B -u /lcpy/worker.py') python worker(s), $(pgrep -fc '^/usr/bin/bwrap') bwrap, cgroups: $(ls -d /sys/fs/cgroup/lcpy/sandbox/w-* 2>/dev/null | wc -l)"
+if [[ $(pgrep -fc 'python3 -I -B -u /lcpy/worker.py') -lt 1 ]]; then
   echo "FAIL: no worker was running"; ps -eo pid,ppid,user,etimes,args | cut -c1-200
   grep -v '^\s*at ' /tmp/kill9-run.log | tail -60; exit 1
 fi

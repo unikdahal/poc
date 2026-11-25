@@ -102,6 +102,20 @@ Attempt counts by status. `sail-1` {'mismatch': 9, 'ok': 57} · `sail-2` {'misma
 
 **FACT.** runner-2 sail cut paired wall time by 34.4%, 16.3%, 8.2% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.984×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
 
+
+### Comparisons on the common Spark-matching query set
+
+| Runner | Cores | Common queries | Sail wall s | Comet wall s | Comet wall / Sail wall | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| runner-1 | 1 | 19 | 54.045 | 197.686 | 3.658 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | 2 | 19 | 35.271 | 112.079 | 3.178 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | 3 | 19 | 29.606 | 95.681 | 3.232 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-1 | 4 | 19 | 27.529 | 86.400 | 3.138 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | 1 | 19 | 76.033 | 262.052 | 3.447 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | 2 | 19 | 49.893 | 146.292 | 2.932 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | 3 | 19 | 41.754 | 126.851 | 3.038 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+| runner-2 | 4 | 19 | 38.331 | 114.848 | 2.996 | [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275) |
+
 The run JSON contains the validated per-query medians. The report reconstructs the Sail aggregate from those medians because an intermediate report write in the harness omitted that aggregate.
 
 ### Coverage limits

@@ -19,3 +19,5 @@ The target schedule is 5 h 05 min of active workload and 25 min idle. Sampling i
 RSS, cgroup memory, open file descriptors, thread count, local disk usage, S3 object counts and correctness-gated latency windows are in the raw JSON. The fit uses adjacent 30-minute block medians and a block bootstrap. This estimates trend over the actual observed window. The first two short windows cannot support a leak rate or a post-idle conclusion.
 
 Tokio task counts were unavailable from the container process telemetry. Repeated sessions were used only for the churn test and each independently checked the known Spark literal result.
+
+The full-duration repeat is scheduled separately for both execution modes. [Hosted run](https://github.com/unikdahal/poc/actions/runs/45557039053)

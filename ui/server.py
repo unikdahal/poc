@@ -33,9 +33,9 @@ DISPLAY_ROWS = 500
 COMPARE_ROWS = 200_000
 SAMPLE_DIFF = 25
 
-ENGINES = {
-    "comet": {"label": "Spark 3.5 + Comet", "kind": "connect", "port": 15002, "pidfile": "/tmp/poc-pids/spark-15002"},
+ENGINES = {  # the first selected engine is the reference for result comparison
     "spark": {"label": "Spark 3.5", "kind": "connect", "port": 15003, "pidfile": "/tmp/poc-pids/spark-15003"},
+    "comet": {"label": "Spark 3.5 + Comet", "kind": "connect", "port": 15002, "pidfile": "/tmp/poc-pids/spark-15002"},
     "sail": {"label": "Sail (Spark Connect)", "kind": "connect", "port": 50051, "container": "sail"},
     "sail-flight": {"label": "Sail (Flight SQL)", "kind": "flight", "port": 32010, "container": "sail-flight"},
 }
@@ -73,12 +73,24 @@ def split_statements(sql: str) -> list[str]:
     return [s.strip() for s in out if s.strip()]
 
 
+QUERY_START = re.compile(r"^\s*(\(|select|with|values|table|from|show|describe|desc|explain)\b", re.I)
+
+
+def result_index(stmts: list[str]) -> int:
+    """The statement whose rows are shown and compared: the last query-like one (q15 ends with DROP VIEW)."""
+    for i in range(len(stmts) - 1, -1, -1):
+        if QUERY_START.match(stmts[i]):
+            return i
+    return len(stmts) - 1
+
+
 class Engine:
     def __init__(self, eid: str, spec: dict):
         self.id, self.spec = eid, spec
         self.lock = threading.Lock()
         self.session = None
         self.namespace = None
+        self.use_failed = False
 
     def up(self) -> bool:
         return port_open(self.spec["port"])
@@ -111,9 +123,11 @@ class Engine:
             return
         if self.spec["kind"] == "flight":
             # The Flight server has one shared session; USE may or may not be accepted.
+            self.use_failed = True
             for stmt in (f"USE {ns}", f"USE polaris.{ns}"):
                 try:
                     self._flight_exec(stmt)
+                    self.use_failed = False
                     break
                 except Exception:  # noqa: BLE001
                     pass
@@ -137,8 +151,9 @@ class Engine:
         self.use(ns)
         stmts = split_statements(sql)
         cols, types, rows = [], [], []
+        target = result_index(stmts)
         for i, stmt in enumerate(stmts):
-            last = i == len(stmts) - 1
+            last = i == target
             if self.spec["kind"] == "flight":
                 tbl = self._flight_exec(stmt)
                 if last:
@@ -156,7 +171,8 @@ class Engine:
         return cols, types, [tuple(r) for r in rows]
 
     def explain(self, sql: str, ns: str | None) -> str:
-        stmt = split_statements(sql)[-1]
+        stmts = split_statements(sql)
+        stmt = stmts[result_index(stmts)]
         try:
             _, _, rows = self.execute(f"EXPLAIN FORMATTED {stmt}", ns)
         except Exception:  # noqa: BLE001
@@ -244,6 +260,10 @@ def run_on(engine: Engine, sql: str, ns: str | None, reps: int, warmup: bool, ex
                     res["plan"] = f"EXPLAIN failed: {e}"
         except Exception as e:  # noqa: BLE001
             msg = str(e)
+            if engine.use_failed and "not found" in msg.lower():
+                msg = ("Sail's Flight SQL server can't switch namespace per query; its default database is set at "
+                       "start (SAIL_CATALOG__DEFAULT_DATABASE, tpch_sf<SF> from local-up.sh). Use fully qualified "
+                       "names such as polaris.tpch_sf1.orders.\n\n" + msg)
             res.update(ok=False, error=msg[:4000], error_head=msg.strip().splitlines()[0][:300] if msg.strip() else type(e).__name__)
             if "UNAVAILABLE" in msg or "Connection refused" in msg or "closed" in msg.lower():
                 engine.reset()
@@ -301,6 +321,9 @@ def compare(ref: dict, other: dict, ordered: bool, rel_tol: float) -> dict:
             return out
         out["cell_diffs"] = bad[:SAMPLE_DIFF]
         out["cell_diff_count"] = len(bad)
+    if out.get("cell_diffs"):
+        out["verdict"] = "different"
+        return out
     ca, cb = collections.Counter(map(key, a)), collections.Counter(map(key, b))
     out["only_in_reference"] = [json.loads(k) for k in list((ca - cb).elements())[:SAMPLE_DIFF]]
     out["only_in_other"] = [json.loads(k) for k in list((cb - ca).elements())[:SAMPLE_DIFF]]
@@ -311,7 +334,8 @@ def compare(ref: dict, other: dict, ordered: bool, rel_tol: float) -> dict:
 
 def run(body: dict) -> dict:
     sql = body["sql"]
-    engines = [POOL[e] for e in body.get("engines", []) if e in POOL]
+    wanted = set(body.get("engines", []))
+    engines = [e for eid, e in POOL.items() if eid in wanted]
     ns = body.get("namespace") or None
     reps = int(body.get("reps", 1))
     warmup = bool(body.get("warmup", False))
@@ -330,7 +354,8 @@ def run(body: dict) -> dict:
         [t.join() for t in ts]
     else:
         results = [run_on(e, sql, ns, reps, warmup, explain, timeout) for e in engines]
-    ordered = bool(re.search(r"\border\s+by\b", split_statements(sql)[-1], re.I)) if sql.strip() else False
+    stmts = split_statements(sql)
+    ordered = bool(re.search(r"\border\s+by\b", stmts[result_index(stmts)], re.I)) if stmts else False
     ok = [r for r in results if r.get("ok")]
     comparisons = [compare(ok[0], r, ordered, rel_tol) for r in ok[1:]] if len(ok) > 1 else []
     if ok:

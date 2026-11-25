@@ -50,7 +50,7 @@ jobs:
               b = p.chromium.launch()
               pg = b.new_page(viewport={"width": 1440, "height": 1100})
               pg.goto("http://localhost:8088"); pg.wait_for_timeout(2500)
-              for e in ["spark", "comet", "sail"]:
+              for e in ["spark", "comet", "sail", "sail-flight"]:
                   pg.check(f"#engines input[value={e}]")
               pg.select_option("#ns", "tpch_sf${{ inputs.sf }}")
               pg.select_option("#preset", label="TPC-H q1")

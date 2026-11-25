@@ -92,7 +92,9 @@ if [[ ",$ENGINES," == *,sail,* ]]; then
   mem_arg=()
   [[ -n "$SAIL_MEMORY" ]] && mem_arg=(--memory "$SAIL_MEMORY")
   python -m harness.services sail --name sail --server spark --port 50051 "${mem_arg[@]}"
-  python -m harness.services sail --name sail-flight --server flight --port 32010 "${mem_arg[@]}"
+  # One shared session on the Flight server, so its default database is fixed here.
+  python -m harness.services sail --name sail-flight --server flight --port 32010 "${mem_arg[@]}" \
+    --env "SAIL_CATALOG__DEFAULT_DATABASE=[\"tpch_sf${SF//./_}\"]"
 fi
 
 say "query workbench UI on :${UI_PORT:-8088}"

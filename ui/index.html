@@ -282,24 +282,25 @@ function renderSuite() {
     engines.forEach(e => { const x = by[e]; if (x?.ok) { totals[e].wall += x.wall_median_s; totals[e].cpu += x.cpu_median_s || 0; totals[e].ok++; totals[e].peak = Math.max(totals[e].peak, x.peak_mb || 0); } });
     const cells = engines.map(e => { const x = by[e]; if (!x) return '<td class="num">—</td>';
       if (!x.ok) return `<td><span class="badge bad" title="${esc(x.error_head)}">error</span></td>`;
-      return `<td class="num"${x.wall_median_s === best ? ' style="font-weight:650"' : ''}>${fmt(x.wall_median_s)}</td>`; }).join('');
-    const v = r.comparisons.map(c => verdictBadge(c.verdict)).join(' ');
-    const sp = engines.length > 1 && by[engines[0]]?.ok && by[engines[1]]?.ok ? fmt(by[engines[0]].wall_median_s / by[engines[1]].wall_median_s, 2) + '×' : '—';
-    return `<tr><td>${esc(q)}</td>${cells}<td class="num">${sp}</td><td>${v}</td></tr>`;
+      const ref = by[engines[0]];
+      const ratio = e !== engines[0] && ref?.ok ? ` <span class="muted">${fmt(ref.wall_median_s / x.wall_median_s, 1)}×</span>` : '';
+      return `<td class="num"${x.wall_median_s === best ? ' style="font-weight:650"' : ''}>${fmt(x.wall_median_s)}${ratio}</td>`; }).join('');
+    const v = r.comparisons.map(c => `<span class="muted">${esc(label(c.engine))}</span> ${verdictBadge(c.verdict)}`).join(' &nbsp; ');
+    return `<tr><td>${esc(q)}</td>${cells}<td>${v}</td></tr>`;
   }).join('');
-  const tot = engines.map(e => `<td class="num"><b>${fmt(totals[e].wall, 2)}</b></td>`).join('');
+  const tot = engines.map(e => `<td class="num"><b>${fmt(totals[e].wall, 2)}</b>${e !== engines[0] && totals[e].wall ? ` <span class="muted">${fmt(totals[engines[0]].wall / totals[e].wall, 1)}×</span>` : ''}</td>`).join('');
   const cpu = engines.map(e => `<td class="num">${fmt(totals[e].cpu, 1)}</td>`).join('');
   const peak = engines.map(e => `<td class="num">${fmt(totals[e].peak, 0)}</td>`).join('');
   const matches = rows.filter(({r}) => r.comparisons.length && r.comparisons.every(c => c.verdict === 'identical')).length;
   $('#suiteCard').innerHTML = `<h4 style="margin:0 0 8px">TPC-H on ${esc(namespace)} · ${rows.length}/22 queries · ${$('#reps').value} runs each, median seconds</h4>
     <div class="tablewrap" style="max-height:none"><table>
-      <tr><th>query</th>${engines.map(e => `<th class="num">${esc(label(e))}</th>`).join('')}<th class="num" title="first engine ÷ second engine">speedup</th><th>result vs ${esc(label(engines[0]))}</th></tr>
+      <tr><th>query</th>${engines.map(e => `<th class="num">${esc(label(e))}</th>`).join('')}<th>result vs ${esc(label(engines[0]))}</th></tr>
       ${body}
-      <tr><td><b>total wall s</b></td>${tot}<td class="num"><b>${engines.length > 1 && totals[engines[1]].wall ? fmt(totals[engines[0]].wall / totals[engines[1]].wall, 2) + '×' : ''}</b></td><td>${matches} identical</td></tr>
-      <tr><td class="muted">total CPU-s</td>${cpu}<td></td><td></td></tr>
-      <tr><td class="muted">peak MB</td>${peak}<td></td><td></td></tr>
+      <tr><td><b>total wall s</b></td>${tot}<td>${matches} of ${rows.length} queries identical on every engine</td></tr>
+      <tr><td class="muted">total CPU-s</td>${cpu}<td></td></tr>
+      <tr><td class="muted">peak MB</td>${peak}<td></td></tr>
     </table></div>
-    <p class="muted">Speedup = ${esc(label(engines[0]))} time ÷ ${esc(label(engines[1] || ''))} time. Totals include only queries that succeeded. ${$('#mode').value === 'parallel' ? 'Parallel mode: engines competed for the same CPUs, so times are not comparable to sequential runs.' : ''}</p>
+    <p class="muted">N× = ${esc(label(engines[0]))} time ÷ that engine's time (above 1 means faster than ${esc(label(engines[0]))}). Bold = fastest. Totals include only queries that succeeded. ${$('#mode').value === 'parallel' ? 'Parallel mode: engines competed for the same CPUs, so times are not comparable to sequential runs.' : ''}</p>
     <button id="suiteCsv">Export CSV</button>`;
   $('#suiteCsv').onclick = () => download('tpch-suite.csv', ['query,' + engines.map(e => e + '_s').join(',') + ',verdicts',
     ...rows.map(({q, r}) => [q, ...engines.map(e => r.results.find(x => x.engine === e)?.wall_median_s ?? ''), r.comparisons.map(c => c.engine + ':' + c.verdict).join(' ')].join(','))].join('\n'), 'text/csv');
@@ -307,7 +308,7 @@ function renderSuite() {
 
 async function loadHistory() {
   const h = await api('/api/history');
-  $('#history').innerHTML = h.length ? h.slice(0, 30).map((x, i) => `<div class="hist" data-i="${i}"><code>${esc(x.sql.replace(/\s+/g, ' '))}</code>
+  $('#history').innerHTML = h.length ? h.slice(0, 30).map((x, i) => `<div class="hist" data-i="${i}"><code>${esc(x.sql.split('\n').filter(l => !l.trim().startsWith('--')).join(' ').replace(/\s+/g, ' ').trim())}</code>
     <span class="muted">${esc(x.started.slice(11))} · ${x.summary.map(s => `${esc(s.engine)} ${s.ok ? fmt(s.wall_median_s, 2) + 's' : 'err'}`).join(' · ')}</span></div>`).join('') : 'No runs yet.';
   $('#history').onclick = ev => { const el = ev.target.closest('.hist'); if (el) { $('#sql').value = h[+el.dataset.i].sql; if (h[+el.dataset.i].namespace) $('#ns').value = h[+el.dataset.i].namespace; } };
 }

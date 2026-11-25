@@ -38,9 +38,22 @@ if [[ ",$ENGINES," == *,comet,* || ",$ENGINES," == *,spark,* ]]; then
 fi
 echo "cpus=$(nproc) mem=$(free -g | awk '/Mem/{print $2}')G disk_free=$(df -h . | awk 'NR==2{print $4}')"
 
+# Corporate networks often re-sign TLS with their own root CA. Use the OS trust store everywhere,
+# so installing that CA once (see LOCAL.md) fixes uv, pip, requests and the JVM alike.
+export UV_NATIVE_TLS=1
+if [[ -f /etc/ssl/certs/ca-certificates.crt ]]; then
+  export SSL_CERT_FILE=${SSL_CERT_FILE:-/etc/ssl/certs/ca-certificates.crt}
+  export REQUESTS_CA_BUNDLE=${REQUESTS_CA_BUNDLE:-/etc/ssl/certs/ca-certificates.crt}
+fi
+
 say "python 3.11 environment"
 if ! command -v uv >/dev/null; then curl -LsSf https://astral.sh/uv/install.sh | sh; export PATH=$HOME/.local/bin:$PATH; fi
-[[ -x $VENV/bin/python ]] || uv venv -q -p 3.11 "$VENV"
+if [[ ! -x $VENV/bin/python ]]; then
+  # A system python3.11 is used as is; otherwise uv downloads one from GitHub.
+  uv venv -q -p "$(command -v python3.11 || echo 3.11)" "$VENV" || {
+    echo "Could not get Python 3.11. Behind a TLS-inspecting proxy, install its root CA first (LOCAL.md, 'Corporate network')."
+    exit 1; }
+fi
 # shellcheck disable=SC1091
 source "$VENV/bin/activate"
 cat > versions.json <<EOF

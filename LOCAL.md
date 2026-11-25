@@ -130,6 +130,20 @@ scripts/local-down.sh --wipe   # also delete S3 contents, the catalog and the ge
 
 Polaris keeps its catalog in memory, so a restart forgets the tables. `local-up.sh` detects this, re-creates the catalog and reloads the tables from the Parquet files in `data/tpch` without generating them again.
 
+## Corporate network (TLS inspection)
+
+An error like `invalid peer certificate: UnknownIssuer`, `PKIX path building failed` or `x509: certificate signed by unknown authority` means a proxy is re-signing HTTPS with its own root CA. Install that CA in WSL/Ubuntu once:
+
+1. On Windows, open `certmgr.msc` → Trusted Root Certification Authorities → Certificates, and find your organisation's root CA. Ask IT which one if you're unsure. Export it as **Base-64 encoded X.509 (.cer)**.
+2. In Ubuntu:
+   ```bash
+   sudo cp /mnt/c/Users/<you>/Downloads/<ca>.cer /usr/local/share/ca-certificates/corp-root.crt
+   sudo update-ca-certificates        # with apt's openjdk this also updates Java's cacerts
+   ```
+3. Restart Docker so it picks up the CA: `sudo service docker restart`. With Docker Desktop, it uses the Windows store already.
+
+Then run `scripts/local-up.sh` again. It sets `UV_NATIVE_TLS`, `SSL_CERT_FILE` and `REQUESTS_CA_BUNDLE` so uv, pip and Python all use that store. If Java was not installed with apt, import the CA yourself with `sudo keytool -importcert -cacerts -alias corp-root -file corp-root.crt`.
+
 ## If something fails
 
 - **Spark doesn't start:** look in `out/spark-connect-15002.log`. The first start downloads jars from Maven Central, which needs internet access. Spark 3.5 needs Java 17; Java 21 may work but is untested.

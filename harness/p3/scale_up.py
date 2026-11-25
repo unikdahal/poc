@@ -15,7 +15,10 @@ from harness.p3.common import (VARIANT, begin, bounded, cmd, collect, fingerprin
 
 TASK = "scale-up"
 SCALE = 50 if VARIANT == "tpch50" else 10
-TAILS = {"tpcds10-tail1": range(16, 34), "tpcds10-tail2": range(65, 67), "tpcds10-tail3": range(74, 100)}
+TAILS = {
+    "tpcds10-tail1": range(16, 34), "tpcds10-tail2": range(65, 67), "tpcds10-tail3": range(74, 100),
+    "tpcds10-tail-recheck": (14, 15, 64, 72, 73, 82),
+}
 if VARIANT in TAILS:
     QUERIES = TAILS[VARIANT]
 elif VARIANT == "tpch50":
@@ -121,11 +124,16 @@ def run_engine(result, name, attempt):
                     record["peak_sampled_spill_files"] = max((r[1] for r in disk_samples), default=0)
                     record["minimum_free_disk_bytes"] = min((r[2] for r in disk_samples), default=None)
                     samples.append(record)
-                    if record["status"] == "timeout":
-                        break
+                    if record["status"] != "ok":
+                        if name == "comet":
+                            record["jvm_running_after_sample"] = stats.proc.is_running()
+                        if record["status"] == "timeout" or record.get("jvm_running_after_sample") is False:
+                            break
                 cases[str(q)] = {"samples": samples, "warm_median": median_if_valid(samples)}
                 save(result)
-                if samples[-1]["status"] == "timeout" and "active=True" in samples[-1]["error"]:
+                failed = samples[-1]
+                if failed.get("jvm_running_after_sample") is False or (
+                   failed["status"] == "timeout" and "active=True" in failed["error"]):
                     break
         def run(spark, stats, container):
             with memory_cap(result, name, label, stats):

@@ -1,8 +1,8 @@
 {
   "task": "api-coverage",
   "variant": "jvm4",
-  "revision": "c2491b5858d15e158fd9148f218d0ea5e55a053b",
-  "run_id": "45555832626",
+  "revision": "6aa4a537fc28b5d5ab901e32e66eb0334437b502",
+  "run_id": "45556517946",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -68,10 +68,179 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16759308288,
-    "disk": "/dev/root      154894188544 47527190528 107350220800  31% /"
+    "total_memory_bytes": 16760344576,
+    "disk": "/dev/root      154894188544 47527182336 107350228992  31% /"
   },
-  "engines": {},
-  "cases": {},
-  "error": "RuntimeError: javac exit 1: /home/runner/work/poc/poc/harness/p3/tools/ConnectProbe.java:23: error: unreported exception IOException; must be caught or declared to be thrown\n        try (SparkSession session = SparkSession.builder().remote(args[0]).create()) {\n                          ^\n  exception thrown from implicit call to close() on resource variable 'session'\n1 error\n"
+  "engines": {
+    "reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15002
+      },
+      "listen_s": 6.510303020477295,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8470743190000007
+      }
+    },
+    "jvm4": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__CHECKPOINT__PATH": "s3://warehouse/p3-checkpoint"
+        }
+      },
+      "listen_s": 1.8564024309999922,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00538332100001071
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4368,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:59:59.532241935Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:59:59.532241935Z",
+        "FinishedAt": "2026-11-25T06:00:10.757467122Z"
+      }
+    }
+  },
+  "cases": {
+    "approx": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[8,3]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[8,3]]"
+      }
+    },
+    "explode": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[0,0,0], [0,1,1], [1,0,1], [1,1,2], [2,0,2], [2,1,3], [3,0,3], [3,1,4], [4,0,4], [4,1,5], [5,0,5], [5,1,6], [6,0,6], [6,1,7], [7,0,7], [7,1,8]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[0,0,0], [0,1,1], [1,0,1], [1,1,2], [2,0,2], [2,1,3], [3,0,3], [3,1,4], [4,0,4], [4,1,5], [5,0,5], [5,1,6], [6,0,6], [6,1,7], [7,0,7], [7,1,8]]"
+      }
+    },
+    "groupby_sum": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[0,12], [1,16]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[0,12], [1,16]]"
+      }
+    },
+    "higher_order": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[0,ArraySeq(0, 2)], [1,ArraySeq(2, 4)], [2,ArraySeq(4, 6)], [3,ArraySeq(6, 8)], [4,ArraySeq(8, 10)], [5,ArraySeq(10, 12)], [6,ArraySeq(12, 14)], [7,ArraySeq(14, 16)]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[0,ArraySeq(0, 2)], [1,ArraySeq(2, 4)], [2,ArraySeq(4, 6)], [3,ArraySeq(6, 8)], [4,ArraySeq(8, 10)], [5,ArraySeq(10, 12)], [6,ArraySeq(12, 14)], [7,ArraySeq(14, 16)]]"
+      }
+    },
+    "json_regex": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[0,x_], [1,x_], [2,x_]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[0,x_], [1,x_], [2,x_]]"
+      }
+    },
+    "range_filter": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[0], [2], [4], [6]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[0], [2], [4], [6]]"
+      }
+    },
+    "select_literal": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[1]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[1]]"
+      }
+    },
+    "timestamp_ntz": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[2024-03-10T03:10]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[2024-03-10T03:10]]"
+      }
+    },
+    "window": {
+      "verdict": "match",
+      "spark": {
+        "status": "ok",
+        "fingerprint": "[[0,1], [1,1], [2,2], [3,2], [4,3], [5,3], [6,4], [7,4]]"
+      },
+      "sail": {
+        "status": "ok",
+        "fingerprint": "[[0,1], [1,1], [2,2], [3,2], [4,3], [5,3], [6,4], [7,4]]"
+      }
+    }
+  },
+  "reference_client": "4.0.1"
 }

@@ -145,7 +145,11 @@ def stage_rows(client, internal, started):
         WHERE session_id='{internal}' AND created_at >= TIMESTAMP '{started.isoformat(sep=" ")}'
         ORDER BY job, stage
         """, 12)
-    return [row.asDict(recursive=True) for row in rows]
+    records = [row.asDict(recursive=True) for row in rows]
+    for r in records:
+        if r["stopped_at"] is not None:
+            r["lifecycle_s"] = (r["stopped_at"] - r["created_at"]).total_seconds()
+    return records
 
 
 def running_stage(client, internal, started, label):
@@ -357,6 +361,39 @@ def burst(result, reference):
     result["cases"]["burst"]["remaining"] = pods
 
 
+def startup_cells(result, image, reference, processes):
+    for backend in ("flight", "storage"):
+        for count in (1, 2, 4):
+            key = f"startup-{backend}-{count}"
+            samples = result["cases"][key] = []
+            for rep in range(3):
+                print(f"{key} trial {rep+1}", flush=True)
+                if processes:
+                    processes.pop().terminate()
+                processes.append(deploy(image, backend, count))
+                spark = base.connect(PORT)
+                tpch.use(spark, "tpch_sf10")
+                started = dt.datetime.now(dt.timezone.utc)
+                rec, rows = timed(lambda: tpch_rows(spark, "tpch_sf10", 6, 120))
+                rec["matches_spark"] = rows is not None and fingerprint(rows, tpch.ordered(6)) == reference.get(6)
+                pods = workers([pod_record(p) for p in get_pods()])
+                durations = []
+                for pod in pods:
+                    stamps = [c.get("state", {}).get("running", {}).get("startedAt") for c in pod["containers"]]
+                    for stamp in filter(None, stamps):
+                        created = dt.datetime.fromisoformat(pod["created"])
+                        ready = dt.datetime.fromisoformat(stamp)
+                        durations.append({"pod": pod["name"], "created_at": pod["created"], "started_at": stamp,
+                                          "create_to_start_s": (ready - created).total_seconds(),
+                                          "query_to_start_s": (ready - started).total_seconds()})
+                rec["worker_pod_times"] = durations
+                if rec["matches_spark"] and durations:
+                    latest = max(x["query_to_start_s"] for x in durations)
+                    rec["query_to_last_pod_share"] = max(0, latest) / rec["elapsed_s"]
+                samples.append(rec)
+                save(result)
+
+
 def main():
     result = begin(TASK)
     reference = {}
@@ -375,10 +412,12 @@ def main():
     processes = []
     try:
         failure = VARIANT in FAULTS or VARIANT == "burst"
-        backend, count = ("flight", 1 if VARIANT == "burst" else 2) if failure else VARIANT.split("-")
+        backend, count = ("flight", 1 if VARIANT in ("startup","burst") else 2) if failure or VARIANT == "startup" else VARIANT.split("-")
         result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}}
         with Watcher() as watcher:
-            if VARIANT == "burst":
+            if VARIANT == "startup":
+                startup_cells(result, image, reference, processes)
+            elif VARIANT == "burst":
                 processes.append(deploy(image, backend, int(count), memory="512Mi", cpu="250m", session_idle=120))
                 burst(result, reference)
             elif failure:

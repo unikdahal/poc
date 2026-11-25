@@ -424,7 +424,8 @@ def shuffle_traffic(result, image, reference, processes):
                 cmd("docker", "exec", pod["node"], "tc", "qdisc", "del", "dev", "eth0", "root", check=False)
 
 
-def startup_cells(result, image, reference, processes):
+def startup_cells(result, image, reference, processes, watcher):
+    q6 = re.sub(r"\blineitem\b", "polaris.tpch_sf10.lineitem", tpch.statements(6)[0], flags=re.IGNORECASE)
     for backend in ("flight", "storage"):
         for count in (1, 2, 4):
             key = f"startup-{backend}-{count}"
@@ -434,11 +435,15 @@ def startup_cells(result, image, reference, processes):
                 if processes:
                     processes.pop().terminate()
                 processes.append(deploy(image, backend, count))
+                already = {pod["name"] for pod in workers([pod_record(p) for p in get_pods()])}
+                start = time.monotonic()
+                start_at = dt.datetime.now(dt.timezone.utc)
                 spark = base.connect(PORT)
-                tpch.use(spark, "tpch_sf10")
-                started = dt.datetime.now(dt.timezone.utc)
-                rec, rows = timed(lambda: tpch_rows(spark, "tpch_sf10", 6, 120))
+                rec, rows = timed(lambda: collect(spark, q6, 120))
+                stopped = time.monotonic()
+                rec["cold_path_elapsed_s"] = stopped - start
                 rec["matches_spark"] = rows is not None and fingerprint(rows, tpch.ordered(6)) == reference.get(6)
+                rec["preexisting_worker_pods"] = sorted(already)
                 pods = workers([pod_record(p) for p in get_pods()])
                 durations = []
                 for pod in pods:
@@ -446,13 +451,18 @@ def startup_cells(result, image, reference, processes):
                     for stamp in filter(None, stamps):
                         created = dt.datetime.fromisoformat(pod["created"])
                         ready = dt.datetime.fromisoformat(stamp)
+                        observed = next((event["elapsed_s"] + watcher.start - start for event in watcher.events
+                            if any(p["name"] == pod["name"] and p["phase"] == "Running" for p in event.get("pods", []))), None)
                         durations.append({"pod": pod["name"], "created_at": pod["created"], "started_at": stamp,
                                           "create_to_start_s": (ready - created).total_seconds(),
-                                          "query_to_start_s": (ready - started).total_seconds()})
+                                          "query_to_start_s_rounded_timestamp": (ready - start_at).total_seconds(),
+                                          "observed_start_s_since_client": observed})
                 rec["worker_pod_times"] = durations
-                if rec["matches_spark"] and durations:
-                    latest = max(x["query_to_start_s"] for x in durations)
-                    rec["query_to_last_pod_share"] = max(0, latest) / rec["elapsed_s"]
+                observed = [d["observed_start_s_since_client"] for d in durations if d["pod"] not in already and
+                            isinstance(d["observed_start_s_since_client"], (int, float)) and
+                            0 <= d["observed_start_s_since_client"] <= rec["cold_path_elapsed_s"]]
+                if rec["matches_spark"] and observed:
+                    rec["query_to_last_pod_share"] = max(observed) / rec["cold_path_elapsed_s"]
                 samples.append(rec)
                 save(result)
 
@@ -479,7 +489,7 @@ def main():
         result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}}
         with Watcher() as watcher:
             if VARIANT == "startup":
-                startup_cells(result, image, reference, processes)
+                startup_cells(result, image, reference, processes, watcher)
             elif VARIANT == "shuffle-traffic":
                 shuffle_traffic(result, image, reference, processes)
             elif VARIANT == "burst":

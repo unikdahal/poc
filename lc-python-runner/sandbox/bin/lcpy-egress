@@ -1,0 +1,64 @@
+#!/bin/bash
+# Egress policy for sandboxed workers, installed by the root entrypoint into the pod's network
+# namespace. Matches sockets by the cgroup they were created in (xt_cgroup, cgroup v2 path,
+# resolved inside our cgroup namespace and matching all descendants), so it applies to every
+# worker cgroup lcpy/sandbox/w-* and never to the JVM in lcpy/jvm.
+#
+#   LCPY_EGRESS_ALLOW   comma-separated: CIDR | CIDR:PORT | CIDR:PORT/udp   (IPv4 or [IPv6])
+#   LCPY_EGRESS_DNS     1 = also allow port 53 to the nameservers in /etc/resolv.conf
+#
+# Everything else from the sandbox is rejected: pod-local loopback services, the cloud metadata
+# endpoint, cluster IPs, the internet. Replies on accepted connections are allowed implicitly.
+# The JVM user has no CAP_NET_ADMIN, so neither it nor a worker can change these rules.
+set -euo pipefail
+CHAIN=LCPY_SANDBOX
+PATH_MATCH=${LCPY_CGROUP_PATH:-lcpy/sandbox}
+log() { echo "[lcpy-egress] $*" >&2; }
+
+apply() {  # $1 = iptables | ip6tables, $2 = 4 | 6
+  local ipt=$1 fam=$2
+  $ipt -N $CHAIN 2>/dev/null || $ipt -F $CHAIN
+  $ipt -C OUTPUT -m cgroup --path "$PATH_MATCH" -j $CHAIN 2>/dev/null || \
+    $ipt -I OUTPUT 1 -m cgroup --path "$PATH_MATCH" -j $CHAIN
+  IFS=',' read -ra entries <<< "${LCPY_EGRESS_ALLOW:-}"
+  for e in "${entries[@]}"; do
+    e=$(echo "$e" | tr -d ' ')
+    [[ -z $e ]] && continue
+    local proto=tcp addr port=""
+    if [[ $e == */udp ]]; then proto=udp; e=${e%/udp}; fi
+    if [[ $e == \[*\]* ]]; then               # [v6/len]:port
+      addr=${e#\[}; addr=${addr%%\]*}; port=${e##*\]}; port=${port#:}
+    elif [[ $e == *:*:* ]]; then addr=$e      # bare v6
+    elif [[ $e == *:* ]]; then addr=${e%%:*}; port=${e##*:}
+    else addr=$e; fi
+    if [[ $addr == *:* ]]; then [[ $fam == 6 ]] || continue; else [[ $fam == 4 ]] || continue; fi
+    if [[ -n $port ]]; then
+      $ipt -A $CHAIN -d "$addr" -p "$proto" --dport "$port" -j ACCEPT
+    else
+      $ipt -A $CHAIN -d "$addr" -j ACCEPT
+    fi
+    log "IPv$fam allow $addr${port:+ port $port/$proto}"
+  done
+  if [[ ${LCPY_EGRESS_DNS:-0} == 1 ]]; then
+    for ns in $(awk '/^nameserver/ {print $2}' /etc/resolv.conf); do
+      if [[ $ns == *:* ]]; then [[ $fam == 6 ]] || continue; else [[ $fam == 4 ]] || continue; fi
+      $ipt -A $CHAIN -d "$ns" -p udp --dport 53 -j ACCEPT
+      $ipt -A $CHAIN -d "$ns" -p tcp --dport 53 -j ACCEPT
+      log "IPv$fam allow DNS to $ns"
+    done
+  fi
+  $ipt -A $CHAIN -p tcp -j REJECT --reject-with tcp-reset
+  if [[ $fam == 4 ]]; then
+    $ipt -A $CHAIN -j REJECT --reject-with icmp-admin-prohibited
+  else
+    $ipt -A $CHAIN -j REJECT --reject-with icmp6-adm-prohibited
+  fi
+}
+
+apply iptables 4
+if [[ -e /proc/net/if_inet6 ]]; then
+  # Fail closed: if IPv6 exists but cannot be filtered, refuse to start.
+  apply ip6tables 6 || { log "FATAL: IPv6 is enabled but ip6tables rules could not be installed"; exit 1; }
+fi
+log "sandbox egress policy installed for cgroup '$PATH_MATCH':"
+iptables -S $CHAIN >&2

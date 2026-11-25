@@ -1,0 +1,109 @@
+name: lc-python-runner
+
+# Sandboxed Python execution in Spark 3.5 + Comet 1.2 (see lc-python-runner/README.md).
+# build:        compile, SQL-semantics + execution-path suites on plain Spark and on Comet
+# sandbox-e2e:  the same suites plus sandbox enforcement inside a privileged container that
+#               mimics the executor pod (root entrypoint, cgroup v2 without systemd, PID 1)
+
+on:
+  push:
+    branches: [lc-python-runner]
+    paths: ["lc-python-runner/**", ".github/workflows/lc-python-runner.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+    working-directory: lc-python-runner
+
+env:
+  JAVA_OPTS: >-
+    -Xmx4g --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+    --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED
+    --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED
+    -Dio.netty.tryReflectionSetAccessible=true -Dlog4j2.level=WARN
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: "17", cache: maven}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Python deps for unsandboxed workers
+        run: pip install pyarrow==21.0.0 numpy
+      - name: Build
+        run: |
+          mvn -B -ntp package
+          mvn -B -ntp dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=cp.txt
+          mvn -B -ntp -Pcomet dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=cp-comet.txt
+          mkdir -p build/jars out
+          cp target/lc-python-runner-*-SNAPSHOT.jar build/jars/lc-python-runner.jar
+          cp target/lc-python-runner-*-tests.jar build/jars/lc-python-runner-tests.jar
+          cp "$(tr ':' '\n' < cp-comet.txt | grep comet-spark)" build/jars/comet.jar
+          ls -la build/jars
+      - name: Suites on Spark 3.5 (unsandboxed worker)
+        id: spark
+        continue-on-error: true
+        run: |
+          java $JAVA_OPTS -cp "target/classes:target/test-classes:$(cat cp.txt)" \
+            org.apache.spark.sql.lcpy.LcTestMain --registry registry --python "$(which python)" \
+            --report out/report-spark.json 2>&1 | tee out/spark.log | grep -v "^\s*at "
+          exit ${PIPESTATUS[0]}
+      - name: Suites on Spark 3.5 + Comet 1.2 (unsandboxed worker)
+        id: comet
+        continue-on-error: true
+        run: |
+          java $JAVA_OPTS -cp "target/classes:target/test-classes:$(cat cp-comet.txt)" \
+            org.apache.spark.sql.lcpy.LcTestMain --registry registry --python "$(which python)" \
+            --comet --report out/report-comet.json 2>&1 | tee out/comet.log | grep -v "^\s*at "
+          exit ${PIPESTATUS[0]}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jars
+          path: lc-python-runner/build/jars/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-build
+          path: lc-python-runner/out/
+      - name: Verdict
+        run: |
+          [[ "${{ steps.spark.outcome }}" == success && "${{ steps.comet.outcome }}" == success ]]
+
+  sandbox-e2e:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: {name: jars, path: lc-python-runner/build/jars}
+      - name: Host facts
+        run: |
+          uname -a; stat -fc %T /sys/fs/cgroup; cat /sys/fs/cgroup/cgroup.controllers
+          sysctl kernel.apparmor_restrict_unprivileged_userns || true
+          # Ubuntu 24.04 restricts unprivileged user namespaces via AppArmor; bwrap needs them.
+          # Production nodes need the same (or an AppArmor profile allowing userns for bwrap).
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Build runtime image
+        run: docker build -f sandbox/Dockerfile -t lcpy-runtime:ci . 2>&1 | tail -n 30
+      - name: Run e2e in a privileged container (pod-equivalent)
+        run: |
+          mkdir -p out && chmod 777 out
+          docker run --rm --privileged --cgroupns=private \
+            -e LCPY_EGRESS_ALLOW=127.0.0.2/32 \
+            -v "$PWD/out:/out" lcpy-runtime:ci /opt/lcpy/e2e/ci.sh 2>&1 | tee out/e2e.log | grep -v "^\s*at "
+          exit ${PIPESTATUS[0]}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-e2e
+          path: lc-python-runner/out/

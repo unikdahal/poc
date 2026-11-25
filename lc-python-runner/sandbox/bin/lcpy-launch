@@ -1,0 +1,80 @@
+#!/bin/bash
+# Per-worker launcher, exec'd by the executor JVM (unprivileged) for every task-level worker.
+#
+#   1. create the worker's cgroup under the delegated subtree and set hard limits:
+#        memory.max (+ memory.swap.max=0: no swapping around the cap), memory.oom.group=1 (an OOM
+#        kills the whole worker tree at once), cpu.max quota, pids.max (fork bombs)
+#   2. move ourselves into it -- everything exec'd/forked from here on is accounted and limited
+#   3. exec bubblewrap: fresh user/pid/ipc/uts/cgroup namespaces, read-only /usr, private /tmp
+#      (tmpfs, charged to the cgroup), no host /etc beyond a few public files, cleared environment,
+#      no capabilities, nested user namespaces disabled, seccomp filter, die-with-parent.
+#
+# The network namespace is deliberately SHARED with the pod: the egress allowlist is enforced by
+# iptables on the worker's cgroup (see lcpy-egress), and the JVM<->worker channel is the inherited
+# stdin/stdout pipes, which need no network at all.
+set -euo pipefail
+
+CGROUP="" MEM="" CPUS="1" PIDS="64" TMPFS=$((256 * 1024 * 1024)) REGISTRY="" WORKER="" PY=/usr/bin/python3
+SECCOMP=${LCPY_SECCOMP:-/opt/lcpy/seccomp.bpf}
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --cgroup) CGROUP=$2; shift 2 ;;
+    --memory) MEM=$2; shift 2 ;;
+    --cpus) CPUS=$2; shift 2 ;;
+    --pids) PIDS=$2; shift 2 ;;
+    --tmpfs-size) TMPFS=$2; shift 2 ;;
+    --registry) REGISTRY=$2; shift 2 ;;
+    --worker) WORKER=$2; shift 2 ;;
+    --python) PY=$2; shift 2 ;;
+    *) echo "lcpy-launch: unknown argument $1" >&2; exit 64 ;;
+  esac
+done
+die() { echo "lcpy-launch: $*" >&2; exit 70; }
+[[ -n $CGROUP && -n $MEM && -n $REGISTRY && -n $WORKER ]] || die "missing arguments"
+[[ -d $(dirname "$CGROUP") ]] || die "cgroup root $(dirname "$CGROUP") does not exist (entrypoint not run?)"
+
+mkdir "$CGROUP" || die "cannot create $CGROUP"
+echo "$MEM" > "$CGROUP/memory.max"
+if [[ -f $CGROUP/memory.swap.max ]]; then echo 0 > "$CGROUP/memory.swap.max"; fi
+echo 1 > "$CGROUP/memory.oom.group"
+QUOTA=$(awk -v c="$CPUS" 'BEGIN { q = int(c * 100000); if (q < 1000) q = 1000; print q }')
+echo "$QUOTA 100000" > "$CGROUP/cpu.max"
+echo "$PIDS" > "$CGROUP/pids.max"
+echo $$ > "$CGROUP/cgroup.procs" || die "cannot join $CGROUP (delegation missing?)"
+
+args=(
+  --die-with-parent --new-session
+  --unshare-user --unshare-pid --unshare-ipc --unshare-uts --unshare-cgroup-try
+  --disable-userns
+  --uid 65534 --gid 65534 --hostname lcpy-sandbox
+  --clearenv
+  --setenv PATH /usr/local/bin:/usr/bin:/bin
+  --setenv HOME /tmp --setenv TMPDIR /tmp --setenv LANG C.UTF-8
+  --setenv PYTHONUNBUFFERED 1 --setenv PYTHONDONTWRITEBYTECODE 1
+  --setenv LCPY_REGISTRY /lcpy/registry
+  --ro-bind /usr /usr
+  --symlink usr/bin /bin --symlink usr/sbin /sbin --symlink usr/lib /lib
+  --dir /etc
+  --ro-bind /opt/lcpy/etc/passwd /etc/passwd --ro-bind /opt/lcpy/etc/group /etc/group
+)
+[[ -e /lib64 ]] && args+=(--symlink usr/lib64 /lib64)
+for f in /etc/ld.so.cache /etc/ld.so.conf /etc/ld.so.conf.d /etc/localtime /etc/hosts \
+         /etc/resolv.conf /etc/nsswitch.conf /etc/ssl /etc/ca-certificates /etc/alternatives \
+         /etc/python3 /etc/python3.12; do
+  [[ -e $f ]] && args+=(--ro-bind "$f" "$f")
+done
+args+=(
+  --proc /proc --dev /dev
+  --size "$TMPFS" --tmpfs /tmp
+  --dir /lcpy --ro-bind "$REGISTRY" /lcpy/registry --ro-bind "$WORKER" /lcpy/worker.py
+  --chdir /tmp
+  --cap-drop ALL
+)
+if [[ -r $SECCOMP ]]; then
+  exec 9< "$SECCOMP"
+  args+=(--seccomp 9)
+else
+  die "seccomp filter $SECCOMP missing"
+fi
+
+exec /usr/bin/bwrap "${args[@]}" -- "$PY" -I -B -u /lcpy/worker.py

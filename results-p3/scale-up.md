@@ -9,19 +9,20 @@ Sail runs under an 8 GiB container cap with a 4 GiB fair pool and a mounted spil
 
 | Variant | Loaded tables | Engine | Queries attempted | Matched warm query medians | Peak sampled spill bytes | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| tpch50 | 8 | sail | 22 | 15 | 1820514192 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpch50/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| tpch50 | 8 | comet | 22 | 22 | 12845001007 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpch50/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| tpcds10 | 24 | sail | 12 | 1 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| tpcds10 | 24 | comet | 12 | 12 | 1231287600 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| tpcds10-1 | 24 | sail | 33 | 23 | 830326224 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-1 | 24 | comet | 15 | 13 | 2463775510 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-2 | 24 | sail | 33 | 22 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-2 | 24 | comet | 31 | 30 | 2516394628 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-3 | 24 | sail | 33 | 29 | 814317088 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-3 | 24 | comet | 7 | 5 | 1845450276 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-tail1 | 24 | comet | 18 | 18 | 1328388317 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail1/result.json) · [Run 45568255310](https://github.com/unikdahal/poc/actions/runs/45568255310) |
-| tpcds10-tail2 | 24 | comet | 2 | 2 | 553879647 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail2/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
-| tpcds10-tail3 | 24 | comet | 26 | 25 | 1959191042 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpch50 | 8 | sail | 22 | 15 | 1820514208 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpch50/result.json) · [Run 45561382565](https://github.com/unikdahal/poc/actions/runs/45561382565) |
+| tpch50 | 8 | comet | 18 | 17 | 10061851431 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpch50/result.json) · [Run 45561382565](https://github.com/unikdahal/poc/actions/runs/45561382565) |
+| tpcds10 | 24 | sail | 12 | 1 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
+| tpcds10 | 24 | comet | 12 | 12 | 1231287600 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
+| tpcds10-1 | 24 | sail | 33 | 23 | 830326224 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-1 | 24 | comet | 15 | 13 | 2463775510 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-2 | 24 | sail | 33 | 22 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-2 | 24 | comet | 31 | 30 | 2516394628 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-3 | 24 | sail | 33 | 29 | 814317088 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-3 | 24 | comet | 7 | 5 | 1845450276 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-tail1 | 24 | comet | 18 | 18 | 1328388317 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail1/result.json) · [Run 45568255310](https://github.com/unikdahal/poc/actions/runs/45568255310) |
+| tpcds10-tail2 | 24 | comet | 2 | 2 | 553879647 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail2/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail3 | 24 | comet | 26 | 25 | 1959191042 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail-recheck | 24 | comet | 6 | 5 | 4684592053 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail-recheck/result.json) · [Run 45570638184](https://github.com/unikdahal/poc/actions/runs/45570638184) |
 
 ### First capped TPC-DS SF10 pass
 
@@ -32,46 +33,51 @@ Sail runs under an 8 GiB container cap with a 4 GiB fair pool and a mounted spil
 
 All attempted queries, including timeouts after an earlier driver stopped, remain in the table. The targeted recheck uses a fresh JVM after a terminated process and preserves the first-pass outcomes. Each relevant raw run is linked in the table above.
 
+**FACT.** The fresh-driver recheck matched Spark for queries [14, 15, 64, 73, 82]. The remaining failed query IDs were [72]. The targeted run's first Comet cgroup recorded 1 OOM kill. [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail-recheck/result.json) · [Run 45570638184](https://github.com/unikdahal/poc/actions/runs/45570638184)
+
+**FACT.** The initial SF50 run validated 15 Sail queries and 22 Comet queries under the heap/off-heap configuration. The capped repeat recorded a total process memory limit of 8589934592 bytes. [Raw JSON](https://github.com/unikdahal/poc/blob/596866003464267f0cf8be3d0a1c744e9acf5689/tpch50/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) · [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpch50/result.json) · [Run 45561382565](https://github.com/unikdahal/poc/actions/runs/45561382565)
+
 
 ### Disk and memory envelope
 
 | Variant | Free bytes before generation | Lowest sampled free bytes loading | Free bytes after run | Sail OOMKilled | Sail exit code | Comet process memory cap in bytes | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| tpch50 | 110796386304 | 77908295680 | 98311729152 | False | 137 | JVM budget only | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpch50/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| tpcds10 | 107345383424 | 99646783488 | 103998939136 | False | 137 | JVM budget only | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
-| tpcds10-1 | 107349692416 | 99616784384 | 103825539072 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-2 | 110795759616 | 103108694016 | 107281281024 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-3 | 107349655552 | 99709095936 | 103857729536 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-tail1 | 110795743232 | 103103447040 | 107294515200 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail1/result.json) · [Run 45568255310](https://github.com/unikdahal/poc/actions/runs/45568255310) |
-| tpcds10-tail2 | 110795710464 | 103103025152 | 107463352320 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail2/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
-| tpcds10-tail3 | 110795718656 | 103195107328 | 107292848128 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpch50 | 110795714560 | 77957029888 | 98169409536 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpch50/result.json) · [Run 45561382565](https://github.com/unikdahal/poc/actions/runs/45561382565) |
+| tpcds10 | 107345383424 | 99646783488 | 103998939136 | False | 137 | JVM budget only | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10/result.json) · [Run 45553585916](https://github.com/unikdahal/poc/actions/runs/45553585916) |
+| tpcds10-1 | 107349692416 | 99616784384 | 103825539072 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-2 | 110795759616 | 103108694016 | 107281281024 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-3 | 107349655552 | 99709095936 | 103857729536 | False | 137 | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-tail1 | 110795743232 | 103103447040 | 107294515200 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail1/result.json) · [Run 45568255310](https://github.com/unikdahal/poc/actions/runs/45568255310) |
+| tpcds10-tail2 | 110795710464 | 103103025152 | 107463352320 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail2/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail3 | 110795718656 | 103195107328 | 107292848128 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail-recheck | 110795706368 | 103136878592 | 107307282432 | None | None | 8589934592 | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail-recheck/result.json) · [Run 45570638184](https://github.com/unikdahal/poc/actions/runs/45570638184) |
 
 ### tpch50 by query
 
 | Query | Reference | Sail | Comet |
 | --- | --- | --- | --- |
-| 1 | ok | {'mismatch': 3} | match, 18.310 s |
-| 2 | ok | match, 1.514 s | match, 5.108 s |
-| 3 | ok | match, 5.900 s | match, 24.430 s |
-| 4 | ok | match, 3.336 s | match, 11.984 s |
-| 5 | ok | match, 7.998 s | match, 45.700 s |
-| 6 | ok | match, 3.584 s | match, 3.482 s |
-| 7 | ok | match, 6.769 s | match, 14.228 s |
-| 8 | ok | {'mismatch': 3} | match, 37.297 s |
-| 9 | ok | {'error': 3} AnalysisException: Failed to allocate additional 459.0 KB for HashJoinInput[0] with 258.8 MB already | match, 59.366 s |
-| 10 | ok | match, 6.688 s | match, 19.148 s |
-| 11 | ok | match, 1.237 s | match, 2.178 s |
-| 12 | ok | match, 6.719 s | match, 13.058 s |
-| 13 | ok | match, 5.923 s | match, 13.641 s |
-| 14 | ok | {'mismatch': 3} | match, 5.699 s |
-| 15 | ok | match, 8.173 s | match, 12.123 s |
-| 16 | ok | match, 1.782 s | match, 3.911 s |
-| 17 | ok | {'mismatch': 3} | match, 47.103 s |
-| 18 | ok | {'error': 3} AnalysisException: Failed to allocate additional 678.8 KB for HashJoinInput[1] with 933.9 MB already | match, 47.778 s |
-| 19 | ok | match, 7.698 s | match, 9.341 s |
-| 20 | ok | match, 9.519 s | match, 8.784 s |
-| 21 | ok | {'error': 3} AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[2] with 723.4 MB alread | match, 112.861 s |
-| 22 | ok | match, 1.429 s | match, 5.563 s |
+| 1 | ok | {'mismatch': 3} | match, 18.236 s |
+| 2 | ok | match, 1.532 s | match, 5.045 s |
+| 3 | ok | match, 5.822 s | match, 24.345 s |
+| 4 | ok | match, 3.309 s | match, 12.064 s |
+| 5 | ok | match, 8.162 s | match, 52.482 s |
+| 6 | ok | match, 3.637 s | match, 3.721 s |
+| 7 | ok | match, 6.864 s | match, 14.559 s |
+| 8 | ok | {'mismatch': 3} | match, 48.391 s |
+| 9 | ok | {'error': 3} AnalysisException: Failed to allocate additional 491.4 KB for HashJoinInput[2] with 258.2 MB already | match, 70.060 s |
+| 10 | ok | match, 6.810 s | match, 21.775 s |
+| 11 | ok | match, 1.209 s | match, 2.357 s |
+| 12 | ok | match, 7.089 s | match, 15.210 s |
+| 13 | ok | match, 6.002 s | match, 13.983 s |
+| 14 | ok | {'mismatch': 3} | match, 6.025 s |
+| 15 | ok | match, 8.248 s | match, 13.038 s |
+| 16 | ok | match, 1.812 s | match, 4.075 s |
+| 17 | ok | {'mismatch': 3} | match, 58.180 s |
+| 18 | ok | {'error': 3} AnalysisException: Failed to allocate additional 849.2 KB for HashJoinInput[2] with 934.6 MB already | {'error': 1, 'timeout': 1} SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with: 	status = StatusCo |
+| 19 | ok | match, 7.737 s | — |
+| 20 | ok | match, 9.492 s | — |
+| 21 | ok | {'error': 3} AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[1] with 723.6 MB alread | — |
+| 22 | ok | match, 1.449 s | — |
 
 ### tpcds10 by query
 
@@ -265,17 +271,31 @@ All attempted queries, including timeouts after an earlier driver stopped, remai
 | 98 | ok | — | match, 1.345 s |
 | 99 | ok | — | match, 1.076 s |
 
+### tpcds10-tail-recheck by query
+
+| Query | Reference | Sail | Comet |
+| --- | --- | --- | --- |
+| 14 | ok | — | match, 24.253 s |
+| 15 | ok | — | match, 1.245 s |
+| 64 | ok | — | match, 20.002 s |
+| 72 | ok | — | {'error': 1, 'timeout': 1} SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with: 	status = StatusCo |
+| 73 | ok | — | match, 1.912 s |
+| 82 | ok | — | match, 4.193 s |
+
 ### Comet memory-controller outcomes
 
 | Variant | Driver attempt | Cgroup max bytes | Cgroup OOM kills | Setup error | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| tpcds10-1 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-2 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-3 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
-| tpcds10-tail1 | comet | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail1/result.json) · [Run 45568255310](https://github.com/unikdahal/poc/actions/runs/45568255310) |
-| tpcds10-tail2 | comet | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail2/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
-| tpcds10-tail3 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
-| tpcds10-tail3 | comet-restart-1 | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/ab2da4831f938319e5edeffab34b76a8b73c9a46/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpch50 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpch50/result.json) · [Run 45561382565](https://github.com/unikdahal/poc/actions/runs/45561382565) |
+| tpcds10-1 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-1/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-2 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-2/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-3 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-3/result.json) · [Run 45557918310](https://github.com/unikdahal/poc/actions/runs/45557918310) |
+| tpcds10-tail1 | comet | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail1/result.json) · [Run 45568255310](https://github.com/unikdahal/poc/actions/runs/45568255310) |
+| tpcds10-tail2 | comet | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail2/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail3 | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail3 | comet-restart-1 | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail3/result.json) · [Run 45562958964](https://github.com/unikdahal/poc/actions/runs/45562958964) |
+| tpcds10-tail-recheck | comet | 8589934592 | 1 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail-recheck/result.json) · [Run 45570638184](https://github.com/unikdahal/poc/actions/runs/45570638184) |
+| tpcds10-tail-recheck | comet-restart-1 | 8589934592 | 0 | — | [Raw JSON](https://github.com/unikdahal/poc/blob/d9ba17fbba909e6827733b39d8bcdaa7a39d4893/tpcds10-tail-recheck/result.json) · [Run 45570638184](https://github.com/unikdahal/poc/actions/runs/45570638184) |
 
 ### Coverage limits
 

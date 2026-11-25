@@ -98,10 +98,11 @@ class Forward(BaseHTTPRequestHandler):
             if gate and gate["matches"](self.command, path):
                 relay.gate = None
                 entry["gate_hit"] = True
-                gate["entered"].set()
+                if not gate["after_response"]:
+                    gate["entered"].set()
             else:
                 gate = None
-        if gate:
+        if gate and not gate["after_response"]:
             gate["release"].wait(25)
             if gate["suppress"]:
                 self.close_connection = True
@@ -123,6 +124,13 @@ class Forward(BaseHTTPRequestHandler):
             connection.request(self.command, self.path, body=body, headers=headers)
             response = connection.getresponse()
             entry["status"] = response.status
+            if gate and gate["after_response"]:
+                entry["backend_reply_before_reset"] = response.status
+                gate["entered"].set()
+                gate["release"].wait(25)
+                if gate["suppress"]:
+                    self.close_connection = True
+                    return
             if response.status == 401:
                 with relay.lock:
                     rotate = relay.on_unauthorized
@@ -253,7 +261,7 @@ def setup(session, *_):
     collect(session, f"CREATE TABLE {NS}.scan USING iceberg AS SELECT /*+ REPARTITION(112) */ id, sha2(CAST(id AS STRING), 512) AS payload "
                      "FROM range(1800000)", 450)
     reference = {"scan": fingerprint(collect(session, READ, 240))}
-    for fault in ("commit_reset", "catalog_down"):
+    for fault in ("commit_reset", "catalog_down", "after_commit_reset"):
         for rep in range(3):
             name = f"{NS}.{fault}_{rep}"
             collect(session, f"CREATE TABLE {name} USING iceberg TBLPROPERTIES ('format-version'='2') "
@@ -309,9 +317,10 @@ def probe_read(result, label, relays, expected, session, engine_stats, _):
         result.setdefault("median_valid_s", {})[label] = statistics.median(r["elapsed_s"] for r in runs[1:])
 
 
-def arm(relay, proxy, predicate, kind):
+def arm(relay, proxy, predicate, kind, *, after_response=False):
     outcome = {}
-    gate = {"matches": predicate, "entered": threading.Event(), "release": threading.Event(), "suppress": False}
+    gate = {"matches": predicate, "entered": threading.Event(), "release": threading.Event(), "suppress": False,
+            "after_response": after_response}
     relay.gate = gate
 
     def acting():
@@ -349,7 +358,7 @@ def probe_commits(result, label, relays, session, stats_, _):
         name = f"{NS}.{label}_{rep}"
         marker = relays["catalog"].mark()
         fault = arm(relays["catalog"], "catalog", lambda method, path: method == "POST" and path.endswith(f"/tables/{label}_{rep}"),
-                    "reset" if label == "commit_reset" else "down")
+                    "down" if label == "catalog_down" else "reset", after_response=label == "after_commit_reset")
         sql = f"INSERT INTO {name} SELECT id + 10000, 1 FROM {name}"
         rec, _ = timed(lambda: collect(session, sql, 180), stats_)
         fault["thread"].join(40)
@@ -455,6 +464,8 @@ def main():
                     write_token()
                     group(result, case, lambda *args: probe_read(result, case, relays, reference["scan"], *args), "sail", **options)
                 commit = ("commit_reset",)
+            elif VARIANT == "commit-ack":
+                commit = ("after_commit_reset",)
             else:
                 commit = ("catalog_down",)
             for case in commit:

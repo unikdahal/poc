@@ -1,6 +1,9 @@
 """Attempt the largest scale factors on the hosted disk and memory budget."""
 
+import json
 import os
+import subprocess
+import sys
 import threading
 from pathlib import Path
 from contextlib import contextmanager
@@ -12,7 +15,10 @@ from harness.p3.common import (VARIANT, begin, bounded, cmd, collect, fingerprin
 
 TASK = "scale-up"
 SCALE = 50 if VARIANT == "tpch50" else 10
-if VARIANT == "tpch50":
+TAILS = {"tpcds10-tail2": range(65,67), "tpcds10-tail3": range(74,100)}
+if VARIANT in TAILS:
+    QUERIES = TAILS[VARIANT]
+elif VARIANT == "tpch50":
     QUERIES = range(1, 23)
 elif VARIANT.startswith("tpcds10-"):
     shard = int(VARIANT.rsplit("-", 1)[-1])
@@ -57,12 +63,12 @@ def spill_stats(path):
 
 
 @contextmanager
-def memory_cap(result, name, stats):
+def memory_cap(result, name, label, stats):
     if name != "comet":
         yield
         return
     limit = 8 * 2**30
-    cfg = result["engines"][name]
+    cfg = result["engines"][label]
     cgroup = Path(f"/sys/fs/cgroup/p3-comet-{os.getpid()}")
     try:
         cmd("sudo", "mkdir", str(cgroup), timeout=8)
@@ -81,6 +87,55 @@ def memory_cap(result, name, stats):
     finally:
         if (cgroup / "memory.events").exists():
             cfg["host_cgroup"]["memory_events"] = dict(line.split() for line in (cgroup / "memory.events").read_text().splitlines())
+
+
+def run_engine(result, name, attempt):
+    label = name if attempt == 0 else f"{name}-restart-{attempt}"
+    reference = result["cases"]["reference"]
+    with TemporaryDirectory(prefix="p3-spill-") as tmp:
+        path = Path(tmp)
+        path.chmod(0o777)
+        def execute(spark, stats, _):
+            cases = result["cases"].setdefault(name, {})
+            for q in QUERIES:
+                if str(q) in cases:
+                    continue
+                print(f"{name} {VARIANT} Q{q}", flush=True)
+                samples = []
+                for _ in range(3):
+                    done = threading.Event()
+                    disk_samples = []
+                    def monitor():
+                        while not done.is_set():
+                            disk_samples.append((*spill_stats(path), free_bytes()))
+                            done.wait(.25)
+                    thread = threading.Thread(target=monitor, daemon=True)
+                    thread.start()
+                    try:
+                        record, rows = timed(lambda: run_query(spark, q), stats)
+                    finally:
+                        done.set()
+                        thread.join(5)
+                    record["matches_spark"] = rows is not None and signature(rows, q) == reference.get(str(q), {}).get("result")
+                    record["peak_sampled_spill_bytes"] = max((r[0] for r in disk_samples), default=0)
+                    record["peak_sampled_spill_files"] = max((r[1] for r in disk_samples), default=0)
+                    record["minimum_free_disk_bytes"] = min((r[2] for r in disk_samples), default=None)
+                    samples.append(record)
+                    if record["status"] == "timeout":
+                        break
+                cases[str(q)] = {"samples": samples, "warm_median": median_if_valid(samples)}
+                save(result)
+                if samples[-1]["status"] == "timeout" and "active=True" in samples[-1]["error"]:
+                    break
+        def run(spark, stats, container):
+            with memory_cap(result, name, label, stats):
+                execute(spark, stats, container)
+        group(result, label, run, name, memory="8g" if name == "sail" else "6g",
+              extra={"SAIL_RUNTIME__MEMORY_POOL__TYPE": "fair",
+                     "SAIL_RUNTIME__MEMORY_POOL__FAIR__MAX_SIZE": str(4 * 2**30),
+                     "SAIL_RUNTIME__TEMPORARY_FILES__PATHS": '["/spill"]'},
+              options=("-v", f"{path}:/spill"), spark_conf={"spark.memory.offHeap.size": "2g",
+               "spark.local.dir": str(path)})
 
 
 def main():
@@ -119,53 +174,25 @@ def main():
         save(result)
         return
     base.start_token_refresher()
-    for name in ("sail", "comet"):
-        with TemporaryDirectory(prefix="p3-spill-") as tmp:
-            path = Path(tmp)
-            path.chmod(0o777)
-            def execute(spark, stats, _):
-                cases = result["cases"][name] = {}
-                for q in QUERIES:
-                    print(f"{name} {VARIANT} Q{q}", flush=True)
-                    samples = []
-                    for _ in range(3):
-                        done = threading.Event()
-                        disk_samples = []
-                        def monitor():
-                            while not done.is_set():
-                                disk_samples.append((*spill_stats(path), free_bytes()))
-                                done.wait(.25)
-                        thread = threading.Thread(target=monitor, daemon=True)
-                        thread.start()
-                        try:
-                            record, rows = timed(lambda: run_query(spark, q), stats)
-                        finally:
-                            done.set()
-                            thread.join(5)
-                        record["matches_spark"] = rows is not None and signature(rows, q) == reference.get(q)
-                        record["peak_sampled_spill_bytes"] = max((r[0] for r in disk_samples), default=0)
-                        record["peak_sampled_spill_files"] = max((r[1] for r in disk_samples), default=0)
-                        record["minimum_free_disk_bytes"] = min((r[2] for r in disk_samples), default=None)
-                        samples.append(record)
-                        if record["status"] == "timeout":
-                            break
-                    cases[str(q)] = {"samples": samples, "warm_median": median_if_valid(samples)}
-                    save(result)
-                    if samples[-1]["status"] == "timeout" and "active=True" in samples[-1]["error"]:
-                        break
-            def run(spark, stats, container):
-                with memory_cap(result, name, stats):
-                    execute(spark, stats, container)
-            group(result, name, run, name, memory="8g" if name == "sail" else "6g",
-                  extra={"SAIL_RUNTIME__MEMORY_POOL__TYPE": "fair",
-                         "SAIL_RUNTIME__MEMORY_POOL__FAIR__MAX_SIZE": str(4 * 2**30),
-                         "SAIL_RUNTIME__TEMPORARY_FILES__PATHS": '["/spill"]'},
-                  options=("-v", f"{path}:/spill"), spark_conf={"spark.memory.offHeap.size": "2g",
-                   "spark.local.dir": str(path)})
+    names = ("comet",) if VARIANT in TAILS else ("sail", "comet")
+    for name in names:
+        for attempt in range(len(QUERIES)):
+            prev = len(result["cases"].get(name, {}))
+            run = subprocess.run([sys.executable, "-u", "-m", "harness.p3.scale_up", "--engine", name, str(attempt)],
+                                 check=False)
+            result = json.loads((base.OUT / "result.json").read_text())
+            results = len(result["cases"].get(name, {}))
+            result.setdefault("harness_exit_codes", {}).setdefault(name, []).append(run.returncode)
+            if results == len(QUERIES) or results <= prev:
+                break
+            print(f"Restarting {name} after leaving {len(QUERIES) - results} unattempted queries", flush=True)
     result["disk_after_run_bytes"] = free_bytes()
     result["storage_limit"] = "Sail has an 8 GiB container cap. Comet has 6 GiB heap and 2 GiB off-heap. The raw host cgroup record shows whether its post-startup total cap was applied."
     save(result)
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 4 and sys.argv[1] == "--engine":
+        run_engine(json.loads((base.OUT / "result.json").read_text()), sys.argv[2], int(sys.argv[3]))
+    else:
+        main()

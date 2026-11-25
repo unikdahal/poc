@@ -1,0 +1,892 @@
+{
+  "task": "ops",
+  "variant": "surface",
+  "revision": "4dcaf2e6f3e68dd51253d9c84453e390048890ec",
+  "run_id": "45559297688",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.ops"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "opentelemetry-proto==1.43.0",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16760348672,
+    "disk": "/dev/root      154894188544 47528681472 107348729856  31% /"
+  },
+  "engines": {
+    "spark-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15002
+      },
+      "listen_s": 8.514976263046265,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.0652207750000002
+      }
+    },
+    "telemetry": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info",
+          "SAIL_TELEMETRY__EXPORT_TRACES": "true",
+          "SAIL_TELEMETRY__EXPORT_METRICS": "true",
+          "SAIL_TELEMETRY__EXPORT_LOGS": "true",
+          "SAIL_TELEMETRY__EXPORTER__SYSTEM__ENABLED": "true",
+          "SAIL_TELEMETRY__EXPORTER__OTLP__ENDPOINT": "http://host.docker.internal:14318",
+          "SAIL_TELEMETRY__EXPORTER__OTLP__PROTOCOL": "grpc"
+        }
+      },
+      "listen_s": 1.331298191000002,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.005979992999982642
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4149,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:21:38.176972708Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:21:38.176972708Z",
+        "FinishedAt": "2026-11-25T06:21:59.647082743Z"
+      }
+    },
+    "flight": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 32010,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.13969228999999928,
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4770,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:21:59.821979018Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:21:59.821979018Z",
+        "FinishedAt": "2026-11-25T06:22:08.46631269Z"
+      }
+    },
+    "cold-0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.13811555899999917,
+      "error": "TimeoutError: 60s deadline, client active=True",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5148,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:22:08.632565982Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:22:08.632565982Z",
+        "FinishedAt": "2026-11-25T06:23:24.613178105Z"
+      }
+    },
+    "cold-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.15525653399998873,
+      "error": "TimeoutError: 60s deadline, client active=True",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6620,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:23:24.790593591Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:23:24.790593591Z",
+        "FinishedAt": "2026-11-25T06:24:40.708184488Z"
+      }
+    },
+    "cold-2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.14414716199996747,
+      "error": "TimeoutError: 60s deadline, client active=True",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8069,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:24:40.893921377Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:24:40.893921377Z",
+        "FinishedAt": "2026-11-25T06:25:56.929444422Z"
+      }
+    }
+  },
+  "cases": {
+    "spark EXPLAIN": {
+      "sql": "EXPLAIN SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1",
+      "status": "ok",
+      "elapsed_s": 0.32367757899999106,
+      "result": [
+        [
+          "== Physical Plan ==\nAdaptiveSparkPlan isFinalPlan=false\n+- HashAggregate(keys=[_groupingexpression#16L], functions=[sum(id#13L)])\n   +- Exchange hashpartitioning(_groupingexpression#16L, 8), ENSURE_REQUIREMENTS, [plan_id=34]\n      +- HashAggregate(keys=[_groupingexpression#16L], functions=[partial_sum(id#13L)])\n         +- Project [id#13L, (id#13L % 2) AS _groupingexpression#16L]\n            +- Range (0, 1000, step=1, splits=4)\n\n"
+        ]
+      ]
+    },
+    "spark EXPLAIN FORMATTED": {
+      "sql": "EXPLAIN FORMATTED SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1",
+      "status": "ok",
+      "elapsed_s": 0.11444503300000974,
+      "result": [
+        [
+          "== Physical Plan ==\nAdaptiveSparkPlan (6)\n+- HashAggregate (5)\n   +- Exchange (4)\n      +- HashAggregate (3)\n         +- Project (2)\n            +- Range (1)\n\n\n(1) Range\nOutput [1]: [id#29L]\nArguments: Range (0, 1000, step=1, splits=None)\n\n(2) Project\nOutput [2]: [id#29L, (id#29L % 2) AS _groupingexpression#32L]\nInput [1]: [id#29L]\n\n(3) HashAggregate\nInput [2]: [id#29L, _groupingexpression#32L]\nKeys [1]: [_groupingexpression#32L]\nFunctions [1]: [partial_sum(id#29L)]\nAggregate Attributes [1]: [sum#33L]\nResults [2]: [_groupingexpression#32L, sum#34L]\n\n(4) Exchange\nInput [2]: [_groupingexpression#32L, sum#34L]\nArguments: hashpartitioning(_groupingexpression#32L, 8), ENSURE_REQUIREMENTS, [plan_id=60]\n\n(5) HashAggregate\nInput [2]: [_groupingexpression#32L, sum#34L]\nKeys [1]: [_groupingexpression#32L]\nFunctions [1]: [sum(id#29L)]\nAggregate Attributes [1]: [sum(id#29L)#30L]\nResults [2]: [_groupingexpression#32L AS g#23L, sum(id#29L)#30L AS sum(id)#31L]\n\n(6) AdaptiveSparkPlan\nOutput [2]: [g#23L, sum(id)#31L]\nArguments: isFinalPlan=false\n\n"
+        ]
+      ]
+    },
+    "spark EXPLAIN ANALYZE": {
+      "sql": "EXPLAIN ANALYZE SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1",
+      "status": "error",
+      "error": "ParseException: \n[PARSE_SYNTAX_ERROR] Syntax error at or near 'SELECT'.(line 1, pos 16)\n\n== SQL ==\nEXPLAIN ANALYZE SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1\n----------------^^^\n",
+      "elapsed_s": 0.11338517599997999
+    },
+    "connect-cleartext": {
+      "sql": "SELECT 1",
+      "status": "ok",
+      "elapsed_s": 0.0031396519999873362,
+      "result": [
+        [
+          1
+        ]
+      ]
+    },
+    "connect-invalid-bearer": {
+      "sql": "SELECT 1",
+      "status": "ok",
+      "elapsed_s": 0.012789534000006597,
+      "result": [
+        [
+          1
+        ]
+      ]
+    },
+    "connect-tls": {
+      "status": "error",
+      "error": "SSLError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1018)",
+      "elapsed_s": 0.014848911000001408,
+      "negotiated": null
+    },
+    "sail EXPLAIN": {
+      "sql": "EXPLAIN SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1",
+      "status": "ok",
+      "elapsed_s": 0.005965411000005361,
+      "result": [
+        [
+          "== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)]\n  ProjectionExec: expr=[g@0 as #1, sum(range.#0)@1 as #2]\n    AggregateExec: mode=FinalPartitioned, gby=[g@0 as g], aggr=[sum(range.#0)]\n      RepartitionExec: partitioning=Hash([g@0], 4), input_partitions=1\n        AggregateExec: mode=Partial, gby=[#0@0 % 2 as g], aggr=[sum(range.#0)]\n          ProjectionExec: expr=[id@0 as #0]\n            RangeExec: start=0, end=1000, step=1, num_partitions=1, projection=[0]\n"
+        ]
+      ]
+    },
+    "sail EXPLAIN FORMATTED": {
+      "sql": "EXPLAIN FORMATTED SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1",
+      "status": "ok",
+      "elapsed_s": 0.0050979470000243055,
+      "result": [
+        [
+          "== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)], statistics=[Rows=Inexact(1000), Bytes=Inexact(16000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(id):Int64;N]\n  ProjectionExec: expr=[g@0 as #1, sum(range.#0)@1 as #2], statistics=[Rows=Inexact(1000), Bytes=Inexact(16000), [(Col[0]:),(Col[1]:)]], schema=[#1:Int64, #2:Int64;N]\n    AggregateExec: mode=FinalPartitioned, gby=[g@0 as g], aggr=[sum(range.#0)], statistics=[Rows=Inexact(1000), Bytes=Inexact(8000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(range.#0):Int64;N]\n      RepartitionExec: partitioning=Hash([g@0], 4), input_partitions=1, statistics=[Rows=Inexact(1000), Bytes=Inexact(8000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(range.#0)[sum]:Int64;N]\n        AggregateExec: mode=Partial, gby=[#0@0 % 2 as g], aggr=[sum(range.#0)], statistics=[Rows=Inexact(1000), Bytes=Inexact(8000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(range.#0)[sum]:Int64;N]\n          ProjectionExec: expr=[id@0 as #0], statistics=[Rows=Exact(1000), Bytes=Exact(8000), [(Col[0]: Null=Exact(0))]], schema=[#0:Int64]\n            RangeExec: start=0, end=1000, step=1, num_partitions=1, projection=[0], statistics=[Rows=Exact(1000), Bytes=Absent, [(Col[0]: Null=Exact(0))]], schema=[id:Int64]\n"
+        ]
+      ]
+    },
+    "sail EXPLAIN ANALYZE": {
+      "sql": "EXPLAIN ANALYZE SELECT id % 2 AS g, sum(id) FROM range(1000) GROUP BY 1",
+      "status": "ok",
+      "elapsed_s": 0.004960869999990791,
+      "result": [
+        [
+          "== Physical Plan ==\nProjectionExec: expr=[#1@0 as g, #2@1 as sum(id)], metrics=[output_rows=2, elapsed_compute=784ns, output_bytes=2.1 KB, output_batches=2, expr_0_eval_time=123ns, expr_1_eval_time=102ns], statistics=[Rows=Inexact(1000), Bytes=Inexact(16000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(id):Int64;N]\n  ProjectionExec: expr=[g@0 as #1, sum(range.#0)@1 as #2], metrics=[output_rows=2, elapsed_compute=1.46\u00b5s, output_bytes=2.1 KB, output_batches=2, expr_0_eval_time=272ns, expr_1_eval_time=152ns], statistics=[Rows=Inexact(1000), Bytes=Inexact(16000), [(Col[0]:),(Col[1]:)]], schema=[#1:Int64, #2:Int64;N]\n    AggregateExec: mode=FinalPartitioned, gby=[g@0 as g], aggr=[sum(range.#0)], metrics=[output_rows=2, elapsed_compute=15.32\u00b5s, output_bytes=2.1 KB, output_batches=2, spill_count=0, spilled_bytes=0.0 B, spilled_rows=0, aggregate_arguments_time=1.13\u00b5s, aggregation_time=2.02\u00b5s, emitting_time=2.65\u00b5s, time_calculating_group_ids=3.35\u00b5s], statistics=[Rows=Inexact(1000), Bytes=Inexact(8000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(range.#0):Int64;N]\n      RepartitionExec: partitioning=Hash([g@0], 4), input_partitions=1, metrics=[output_rows=2, elapsed_compute=2.90\u00b5s, output_bytes=256.0 KB, output_batches=2, spill_count=0, spilled_bytes=0.0 B, spilled_rows=0, fetch_time=130.09\u00b5s, repartition_time=46.34\u00b5s, send_time=70.99\u00b5s], statistics=[Rows=Inexact(1000), Bytes=Inexact(8000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(range.#0)[sum]:Int64;N]\n        AggregateExec: mode=Partial, gby=[#0@0 % 2 as g], aggr=[sum(range.#0)], metrics=[output_rows=2, elapsed_compute=57.73\u00b5s, output_bytes=1056.0 B, output_batches=1, spill_count=0, spilled_bytes=0.0 B, spilled_rows=0, skipped_aggregation_rows=0, aggregate_arguments_time=771ns, aggregation_time=20.16\u00b5s, emitting_time=17.96\u00b5s, time_calculating_group_ids=9.40\u00b5s, reduction_factor=0.2% (2/1.00 K)], statistics=[Rows=Inexact(1000), Bytes=Inexact(8000), [(Col[0]:),(Col[1]:)]], schema=[g:Int64, sum(range.#0)[sum]:Int64;N]\n          ProjectionExec: expr=[id@0 as #0], metrics=[output_rows=1.00 K, elapsed_compute=611ns, output_bytes=8.0 KB, output_batches=1, expr_0_eval_time=240ns], statistics=[Rows=Exact(1000), Bytes=Exact(8000), [(Col[0]: Null=Exact(0))]], schema=[#0:Int64]\n            RangeExec: start=0, end=1000, step=1, num_partitions=1, projection=[0], metrics=[], statistics=[Rows=Exact(1000), Bytes=Absent, [(Col[0]: Null=Exact(0))]], schema=[id:Int64]\n"
+        ]
+      ]
+    },
+    "sail SHOW TABLES IN system.runtime": {
+      "sql": "SHOW TABLES IN system.runtime",
+      "status": "error",
+      "error": "AnalysisException: Database not found: runtime",
+      "elapsed_s": 0.002049732000017457
+    },
+    "sail SHOW TABLES IN system": {
+      "sql": "SHOW TABLES IN system",
+      "status": "error",
+      "error": "AnalysisException: invalid argument: empty namespace",
+      "elapsed_s": 0.0011477060000117945
+    },
+    "sail SHOW NAMESPACES IN system": {
+      "sql": "SHOW NAMESPACES IN system",
+      "status": "ok",
+      "elapsed_s": 0.003393082999991748,
+      "result": [
+        [
+          "cluster",
+          "system",
+          "The database containing cluster information.",
+          null
+        ],
+        [
+          "execution",
+          "system",
+          "The database containing execution data.",
+          null
+        ],
+        [
+          "session",
+          "system",
+          "The database containing user session data.",
+          null
+        ],
+        [
+          "telemetry",
+          "system",
+          "The database containing application telemetry data.",
+          null
+        ]
+      ]
+    },
+    "connect-http/metrics": {
+      "status": "error",
+      "error": "ConnectionError: ('Connection aborted.', BadStatusLine('\\x00\\x00\\x12\\x04\\x00\\x00\\x00\\x00\\x00\\x00\\x04\\x00\\x00\u00ff\u00ff\\x00\\x05\\x00\\x00@\\x00\\x00\\x06\\x00\\x00@\\x00'))",
+      "elapsed_s": 0.003475406000006842
+    },
+    "connect-http/health": {
+      "status": "error",
+      "error": "ConnectionError: ('Connection aborted.', BadStatusLine('\\x00\\x00\\x12\\x04\\x00\\x00\\x00\\x00\\x00\\x00\\x04\\x00\\x00\u00ff\u00ff\\x00\\x05\\x00\\x00@\\x00\\x00\\x06\\x00\\x00@\\x00'))",
+      "elapsed_s": 0.0010967789999938304
+    },
+    "connect-http/healthz": {
+      "status": "error",
+      "error": "ConnectionError: ('Connection aborted.', BadStatusLine('\\x00\\x00\\x12\\x04\\x00\\x00\\x00\\x00\\x00\\x00\\x04\\x00\\x00\u00ff\u00ff\\x00\\x05\\x00\\x00@\\x00\\x00\\x06\\x00\\x00@\\x00'))",
+      "elapsed_s": 0.0010901290000049357
+    },
+    "flight-cleartext": {
+      "status": "ok",
+      "elapsed_s": 0.0522725600000058,
+      "rows": [
+        [
+          1
+        ]
+      ]
+    },
+    "flight-invalid-bearer": {
+      "status": "ok",
+      "elapsed_s": 0.0024313960000199586,
+      "rows": [
+        [
+          1
+        ]
+      ]
+    },
+    "flight-tls": {
+      "status": "error",
+      "error": "SSLError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1018)",
+      "elapsed_s": 0.013924601000013581,
+      "negotiated": null
+    }
+  },
+  "image": {
+    "Id": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+    "Size": 776702024,
+    "RepoDigests": [
+      "ghcr.io/unikdahal/poc/sail@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767"
+    ]
+  },
+  "cli": {
+    "spark": "Start the Spark Connect server\n\nUsage: sail spark server [OPTIONS]\n\nOptions:\n      --ip <IP>                The IP address that the server binds to [default: 127.0.0.1]\n      --port <PORT>            The port number that the server listens on [default: 50051]\n  -C, --directory <DIRECTORY>  The directory to change to before starting the server\n  -h, --help                   Print help",
+    "flight": "Start the Arrow Flight SQL server\n\nUsage: sail flight server [OPTIONS]\n\nOptions:\n      --ip <IP>                The IP address that the server binds to [default: 127.0.0.1]\n      --port <PORT>            The port number that the server listens on [default: 32010]\n  -C, --directory <DIRECTORY>  The directory to change to before starting the server\n  -h, --help                   Print help"
+  },
+  "telemetry": {
+    "logs": {
+      "requests": 2,
+      "wire_bytes": 18012,
+      "events": 152,
+      "examples": [
+        {
+          "level": "INFO",
+          "body": "Starting the Spark Connect server on 0.0.0.0:50051..."
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"catalog.default_catalog\",\"value\":\"polaris\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"catalog.default_database\",\"value\":\"[\\\"default\\\"]\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"catalog.global_temporary_database\",\"value\":\"[\\\"global_temp\\\"]\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"catalog.list\",\"value\":\"[{ bearer_access_token_file = \\\"/tokens/polaris\\\", database_cache_size = 0, database_cache_ttl_secs = 0, database_cache_type = \\\"none\\\", name = \\\"polaris\\\", table_ca"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"catalog.system.disk.path\",\"value\":\"\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"catalog.system.store\",\"value\":\"memory\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.driver_external_host\",\"value\":\"127.0.0.1\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.driver_external_port\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.driver_listen_host\",\"value\":\"127.0.0.1\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.driver_listen_port\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.enable_tls\",\"value\":\"false\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.exponential_backoff.factor\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.exponential_backoff.initial_delay_secs\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.exponential_backoff.max_count\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.exponential_backoff.max_delay_secs\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.fixed.delay_secs\",\"value\":\"5\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.fixed.max_count\",\"value\":\"3\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.rpc_retry_strategy.type\",\"value\":\"fixed\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.celeborn.compression\",\"value\":\"lz4\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.celeborn.endpoint_overrides\",\"value\":\"[]\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.celeborn.heartbeat_interval_secs\",\"value\":\"10\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.celeborn.master_endpoints\",\"value\":\"[]\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.celeborn.partition_split_mode\",\"value\":\"soft\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.celeborn.partition_split_threshold\",\"value\":\"1073741824\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.flight.compression\",\"value\":\"zstd\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.flight.connection_count\",\"value\":\"1\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.flight.initial_connection_window_size\",\"value\":\"2147483647\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.flight.initial_stream_window_size\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.storage.compression\",\"value\":\"none\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.storage.max_file_size\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.storage.path\",\"value\":\"\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_backend.type\",\"value\":\"flight\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.shuffle_write_buffer_size\",\"value\":\"33554432\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.task_launch_timeout_secs\",\"value\":\"120\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.task_max_attempts\",\"value\":\"3\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.task_stream_buffer\",\"value\":\"16\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.task_stream_creation_timeout_secs\",\"value\":\"60\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.task_stream_memory_limit\",\"value\":\"0\"}"
+        },
+        {
+          "level": "",
+          "body": "{\"type\":\"option_created\",\"key\":\"cluster.task_stream_stall_timeout_secs\",\"value\":\"300\"}"
+        }
+      ]
+    },
+    "traces": {
+      "requests": 1,
+      "wire_bytes": 13938,
+      "events": 121,
+      "examples": [
+        {
+          "name": "SessionManagerActor::create_session_context",
+          "duration_ns": 123397765
+        },
+        {
+          "name": "Send SessionManagerActor.CompleteSessionCreation",
+          "duration_ns": 12008
+        },
+        {
+          "name": "ActorContext::spawn",
+          "duration_ns": 34562
+        },
+        {
+          "name": "Send SystemStoreActor.WriteEvent",
+          "duration_ns": 1522
+        },
+        {
+          "name": "Receive SessionManagerActor.CompleteSessionCreation",
+          "duration_ns": 40571
+        },
+        {
+          "name": "JobRunner::execute",
+          "duration_ns": 12970
+        },
+        {
+          "name": "handle_execute_plan",
+          "duration_ns": 320773
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 63515
+        },
+        {
+          "name": "DataSourceExec",
+          "duration_ns": 114502
+        },
+        {
+          "name": "ProjectionExec",
+          "duration_ns": 121482
+        },
+        {
+          "name": "ProjectionExec",
+          "duration_ns": 128503
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 14622
+        },
+        {
+          "name": "Executor::run",
+          "duration_ns": 219940
+        },
+        {
+          "name": "Executor::new",
+          "duration_ns": 1530812
+        },
+        {
+          "name": "JobRunner::execute",
+          "duration_ns": 12910
+        },
+        {
+          "name": "handle_execute_plan",
+          "duration_ns": 438480
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 103526
+        },
+        {
+          "name": "DataSourceExec",
+          "duration_ns": 201393
+        },
+        {
+          "name": "ProjectionExec",
+          "duration_ns": 227812
+        },
+        {
+          "name": "ProjectionExec",
+          "duration_ns": 245599
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 47391
+        },
+        {
+          "name": "Executor::run",
+          "duration_ns": 241534
+        },
+        {
+          "name": "Executor::new",
+          "duration_ns": 1755950
+        },
+        {
+          "name": "Receive SystemStoreActor.WriteEvent",
+          "duration_ns": 135794
+        },
+        {
+          "name": "Receive SystemStoreActor.WriteEvent",
+          "duration_ns": 11668
+        },
+        {
+          "name": "JobRunner::execute",
+          "duration_ns": 14101
+        },
+        {
+          "name": "handle_execute_plan",
+          "duration_ns": 541044
+        },
+        {
+          "name": "PlaceholderRowExec",
+          "duration_ns": 252890
+        },
+        {
+          "name": "ProjectionExec",
+          "duration_ns": 268614
+        },
+        {
+          "name": "ProjectionExec",
+          "duration_ns": 279591
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 27572
+        },
+        {
+          "name": "Executor::run",
+          "duration_ns": 201553
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 81993
+        },
+        {
+          "name": "Executor::new",
+          "duration_ns": 1458403
+        },
+        {
+          "name": "JobRunner::execute",
+          "duration_ns": 20601
+        },
+        {
+          "name": "handle_execute_plan",
+          "duration_ns": 2462393
+        },
+        {
+          "name": "Executor::run",
+          "duration_ns": 203516
+        },
+        {
+          "name": "Executor::new",
+          "duration_ns": 1394157
+        },
+        {
+          "name": "ExecutorTaskContext::next",
+          "duration_ns": 50756
+        },
+        {
+          "name": "DataSourceExec",
+          "duration_ns": 95213
+        }
+      ]
+    },
+    "metrics": {
+      "requests": 1,
+      "wire_bytes": 21606,
+      "events": 5,
+      "examples": [
+        {
+          "name": "execution.output_size",
+          "unit": "byte",
+          "data_type": "gauge"
+        },
+        {
+          "name": "execution.output_batch_count",
+          "unit": "",
+          "data_type": "gauge"
+        },
+        {
+          "name": "execution.output_row_count",
+          "unit": "",
+          "data_type": "gauge"
+        },
+        {
+          "name": "execution.elapsed_compute_time",
+          "unit": "s",
+          "data_type": "gauge"
+        },
+        {
+          "name": "execution.expression_evaluation_time",
+          "unit": "s",
+          "data_type": "gauge"
+        }
+      ]
+    }
+  },
+  "listeners": "sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode                                                     \n   0: 00000000:C383 00000000:0000 0A 00000000:00000000 00:00000000 00000000     0        0 29794 1 0000000000000000 100 0 0 10 0                     \n   1: 0B00007F:8DF9 00000000:0000 0A 00000000:00000000 00:00000000 00000000     0        0 29058 1 0000000000000000 100 0 0 10 0                     \n   2: 040012AC:C383 010012AC:ECA8 01 00000011:00000000 01:00000013 00000000     0        0 27299 4 0000000000000000 20 4 1 10 -1                     \n   3: 040012AC:D21A 010011AC:37EE 01 00000000:00000000 00:00000000 00000000     0        0 27301 1 0000000000000000 20 4 26 23 23                    \n  sl  local_address                         remote_address                        st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode",
+  "startup": [],
+  "source": {
+    "config_at_startup": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-common/src/config/application.rs#L76-L84",
+    "connect_signal": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-cli/src/spark/server.rs#L13-L29",
+    "flight_signal": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-cli/src/flight/server.rs#L13-L19",
+    "connect_listener": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-cli/src/spark/server.rs#L85-L100",
+    "flight_listener": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/entrypoint.rs#L25-L41",
+    "telemetry": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-common/src/config/application.yaml#L1125-L1187"
+  }
+}

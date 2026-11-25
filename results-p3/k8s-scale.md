@@ -97,6 +97,51 @@ Correctness-gated warm medians per query in seconds. Each populated cell is wall
 
 **HYPOTHESIS.** The worker loss may have left the old worker address eligible for query dispatch until heartbeat expiry. The fault trials test client outcomes explicitly. The worker pool schedules expiry checks from the last heartbeat. [Pinned heartbeat code](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-execution/src/driver/worker_pool/core.rs#L567-L583) · [Related normal worker cleanup report #2391](https://github.com/lakehq/sail/issues/2391)
 
+### Stage lifecycle medians for Q6 and Q9
+
+This follow-up ran each query on a fresh server for each shuffle and worker-count treatment. An entry requires two warm executions that matched Spark and a finished stage present in both snapshots. Stage numbers describe the plan within each treatment. Lifecycle includes time waiting to run and can overlap with other stages. [Raw JSON](https://github.com/unikdahal/poc/blob/414f82f3344749422aa4aa425f8bbeb23d4930f8/stage-profile/result.json) · [Run 45580577605](https://github.com/unikdahal/poc/actions/runs/45580577605)
+
+**Q6** · Seconds
+
+| Stage | Mode | flight-1 | flight-2 | flight-4 | storage-1 | storage-2 | storage-4 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | Pipelined | 1.734 | 1.016 | 0.831 | 1.722 | 1.017 | 0.939 |
+| 1 | Blocking | — | — | — | 1.726 | 1.020 | 0.950 |
+| 1 | Pipelined | 1.734 | 1.017 | 0.831 | — | — | — |
+| 2 | Pipelined | — | — | — | 1.727 | 1.021 | 0.950 |
+
+**Q9** · Seconds
+
+| Stage | Mode | flight-1 | flight-2 | flight-4 | storage-1 | storage-2 | storage-4 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | Pipelined | — | 0.962 | 0.530 | — | 0.101 | 0.335 |
+| 1 | Blocking | — | — | — | — | 5.630 | 3.379 |
+| 1 | Pipelined | — | 8.738 | 8.919 | — | — | — |
+| 2 | Pipelined | — | 8.738 | 8.919 | — | 5.647 | 3.437 |
+| 3 | Blocking | — | — | — | — | 16.872 | 14.736 |
+| 3 | Pipelined | — | 7.673 | 7.875 | — | — | — |
+| 4 | Pipelined | — | 7.673 | 7.875 | — | 4.340 | 5.126 |
+| 5 | Blocking | — | — | — | — | 16.872 | 14.736 |
+| 5 | Pipelined | — | 8.702 | 8.915 | — | — | — |
+| 6 | Pipelined | — | 8.702 | 8.915 | — | 0.435 | 2.602 |
+| 7 | Blocking | — | — | — | — | 14.838 | 13.051 |
+| 7 | Pipelined | — | 8.738 | 8.919 | — | — | — |
+| 8 | Pipelined | — | 8.739 | 8.919 | — | 12.072 | 10.613 |
+| 9 | Blocking | — | — | — | — | 14.838 | 13.051 |
+| 9 | Pipelined | — | 8.740 | 8.921 | — | — | — |
+| 10 | Pipelined | — | 8.740 | 8.921 | — | 15.137 | 13.242 |
+| 11 | Blocking | — | — | — | — | 15.870 | 13.903 |
+| 12 | Pipelined | — | — | — | — | 5.828 | 4.989 |
+| 13 | Blocking | — | — | — | — | 15.870 | 13.903 |
+| 14 | Pipelined | — | — | — | — | 16.177 | 14.132 |
+| 15 | Blocking | — | — | — | — | 16.872 | 14.736 |
+| 16 | Pipelined | — | — | — | — | 16.876 | 14.741 |
+| 17 | Blocking | — | — | — | — | 16.885 | 14.753 |
+| 18 | Pipelined | — | — | — | — | 16.886 | 14.754 |
+| 19 | Pipelined | — | — | — | — | 16.887 | 14.754 |
+
+**FACT.** Both one-worker Q9 runs recorded `OOMKilled` with exit code 137. Flight returned an HTTP/2 stream error followed by two connection-refused errors. Storage timed out at the 180 s deadline. Q6 matched Spark in all six treatments. [Q6 and Q9 raw results](https://github.com/unikdahal/poc/blob/414f82f3344749422aa4aa425f8bbeb23d4930f8/stage-profile/result.json)
+
 ### Coverage limits
 
 Stage creation and stop timestamps are lifecycle intervals. They can overlap and include scheduling time. The raw JSON retains stage inputs and placement when those columns were available. Kubernetes container states expose OOMKilled and exit status through the runtime's pod status. Docker inspect records the kind nodes. Storage samples count retained shuffle objects at the end of a query. The network counters cover cross-node worker paths, and the stage tables expose lifecycle intervals and stage edges. Exact shuffle payload bytes for each stage were unavailable.

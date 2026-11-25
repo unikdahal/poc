@@ -5,9 +5,11 @@ from contextlib import contextmanager
 from pathlib import Path
 import re
 import subprocess
+import sys
 import tempfile
 from importlib.metadata import version
 from io import BytesIO
+import json
 import threading
 import time
 
@@ -373,53 +375,68 @@ def layout(result):
     group(result, "spark-layout-read", verify, "spark")
 
 
-def conflict(result):
+def conflict_trial(result, isolation, peer, trial):
     table = f"{NS}.conflict"
-    isolation_levels = ("snapshot",) if VARIANT == "conflict-snapshot" else ("serializable", "snapshot")
-    for isolation in isolation_levels:
-        for peer in ("spark", "sail"):
-            for trial in range(3):
-                suffix = f"{isolation}_{peer}_{trial}"
-                target = f"{table}_{suffix}"
-                result["cases"][suffix] = case = {}
+    suffix = f"{isolation}_{peer}_{trial}"
+    target = f"{table}_{suffix}"
+    result["cases"][suffix] = case = {}
 
-                def prepare(spark, *_):
-                    collect(spark, f"CREATE NAMESPACE IF NOT EXISTS {NS}")
-                    collect(spark, f"CREATE TABLE {target} USING iceberg TBLPROPERTIES "
-                        f"('write.merge.mode'='merge-on-read','write.merge.isolation-level'='{isolation}') "
-                        f"AS SELECT id, CAST(0 AS BIGINT) AS v FROM range({N})")
-                    return True
-                if not group(result, f"prepare-{suffix}", prepare, "spark"):
-                    continue
+    def prepare(spark, *_):
+        collect(spark, f"CREATE NAMESPACE IF NOT EXISTS {NS}")
+        collect(spark, f"CREATE TABLE {target} USING iceberg TBLPROPERTIES "
+            f"('write.merge.mode'='merge-on-read','write.merge.isolation-level'='{isolation}') "
+            f"AS SELECT id, CAST(0 AS BIGINT) AS v FROM range({N})")
+        return True
+    if not group(result, f"prepare-{suffix}", prepare, "spark"):
+        return
 
-                def first(sail, *rest):
-                    def second(other, *_):
-                        barrier = threading.Barrier(2)
-                        def execute(session):
-                            barrier.wait(10)
-                            started = time.monotonic()
-                            rec, _ = timed(lambda: collect(session, merge_sql(target, 1), 90))
-                            return rec | {"started": started}
-                        with ThreadPoolExecutor(max_workers=2) as pool:
-                            future = pool.submit(execute, sail)
-                            case["peer"] = execute(other)
-                            case["sail"] = future.result()
-                    if peer == "spark":
-                        group(result, f"peer-{suffix}", second, "spark", port=15191)
-                    else:
-                        second(base.connect(50051))
-                group(result, f"writer-{suffix}", first, "sail")
-                def verify(spark, *_):
-                    rows = collect(spark, f"SELECT v,count(*) AS n FROM {target} WHERE id<100 GROUP BY v ORDER BY v")
-                    case["distribution"] = [row.asDict() for row in rows]
-                    successful = sum(case.get(label, {}).get("status") == "ok" for label in ("sail", "peer"))
-                    case["matches_committed_increments"] = len(rows) == 1 and rows[0].v == successful and rows[0].n == 100
-                    failures = [label for label in ("sail", "peer") if case.get(label, {}).get("status") != "ok"]
-                    if failures and case["matches_committed_increments"]:
-                        case["retry"] = statements(result, f"retry-{suffix}", spark, [merge_sql(target, 1),
-                            f"SELECT v,count(*) AS n FROM {target} WHERE id<100 GROUP BY v"])
-                group(result, f"verify-{suffix}", verify, "spark", port=15211 + trial)
-                save(result)
+    def first(sail, *rest):
+        def second(other, *_):
+            barrier = threading.Barrier(2)
+            def execute(session):
+                barrier.wait(10)
+                started = time.monotonic()
+                rec, _ = timed(lambda: collect(session, merge_sql(target, 1), 90))
+                return rec | {"started": started}
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                future = pool.submit(execute, sail)
+                case["peer"] = execute(other)
+                case["sail"] = future.result()
+        if peer == "spark":
+            group(result, f"peer-{suffix}", second, "spark", port=15191)
+        else:
+            second(base.connect(50051))
+    group(result, f"writer-{suffix}", first, "sail")
+    def verify(spark, *_):
+        rows = collect(spark, f"SELECT v,count(*) AS n FROM {target} WHERE id<100 GROUP BY v ORDER BY v")
+        case["distribution"] = [row.asDict() for row in rows]
+        successful = sum(case.get(label, {}).get("status") == "ok" for label in ("sail", "peer"))
+        case["matches_committed_increments"] = len(rows) == 1 and rows[0].v == successful and rows[0].n == 100
+        failures = [label for label in ("sail", "peer") if case.get(label, {}).get("status") != "ok"]
+        if failures and case["matches_committed_increments"]:
+            case["retry"] = statements(result, f"retry-{suffix}", spark, [merge_sql(target, 1),
+                f"SELECT v,count(*) AS n FROM {target} WHERE id<100 GROUP BY v"])
+    group(result, f"verify-{suffix}", verify, "spark", port=15211 + trial)
+    save(result)
+
+
+
+def conflict(result):
+    modes = ("snapshot",) if VARIANT == "conflict-snapshot" else ("serializable", "snapshot")
+    if VARIANT != "conflict-snapshot":
+        for isolation in modes:
+            for peer in ("spark", "sail"):
+                for trial in range(3):
+                    conflict_trial(result, isolation, peer, trial)
+        return
+
+    for peer in ("spark", "sail"):
+        for trial in range(3):
+            print(f"snapshot contention with {peer}: trial {trial + 1}", flush=True)
+            subprocess.run([sys.executable, "-u", "-m", "harness.p3.iceberg_deep", "--snapshot-cell", peer, str(trial)],
+                           timeout=720, check=False)
+    updated = json.loads((base.OUT / "result.json").read_text())
+    result.update(updated)
 
 
 def main():
@@ -430,4 +447,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 4 and sys.argv[1] == "--snapshot-cell":
+        recorded = json.loads((base.OUT / "result.json").read_text())
+        conflict_trial(recorded, "snapshot", sys.argv[2], int(sys.argv[3]))
+    else:
+        main()

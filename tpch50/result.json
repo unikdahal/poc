@@ -1,8 +1,8 @@
 {
   "task": "scale-up",
   "variant": "tpch50",
-  "revision": "6f2307406bfa8515f076c31b01c3c964cecc42d9",
-  "run_id": "45553585916",
+  "revision": "7f98293937efce9a1689e17294f495b800b3257c",
+  "run_id": "45561382565",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,7 +19,7 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
       "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
@@ -66,8 +66,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464302080,
-    "disk": "/dev/mapper/cow-root 154894188544 44081020928 110796390400  29% /"
+    "total_memory_bytes": 16464297984,
+    "disk": "/dev/mapper/cow-root 154894188544 44081692672 110795718656  29% /"
   },
   "engines": {
     "spark-reference": {
@@ -76,13 +76,15 @@
         "cores": 4,
         "driver_memory": "9g",
         "catalog_cache": false,
-        "overrides": {},
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
         "port": 15002
       },
-      "listen_s": 6.007461786270142,
+      "listen_s": 7.262940406799316,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.9289882500000317
+        "elapsed_s": 2.085902711000017
       }
     },
     "sail": {
@@ -94,7 +96,7 @@
         "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
         "docker_options": [
           "-v",
-          "/tmp/p3-spill-ow0_x1cv:/spill"
+          "/tmp/p3-spill-et6ybh0l:/spill"
         ],
         "env": {
           "SAIL_MODE": "local",
@@ -109,10 +111,10 @@
           "SAIL_RUNTIME__TEMPORARY_FILES__PATHS": "[\"/spill\"]"
         }
       },
-      "listen_s": 0.6320544630000313,
+      "listen_s": 0.6583485559999644,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.06483718999993471
+        "elapsed_s": 0.06986181799993574
       },
       "before_shutdown": {
         "Status": "running",
@@ -121,10 +123,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 31726,
+        "Pid": 32513,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:56:40.513982911Z",
+        "StartedAt": "2026-11-25T07:03:27.403857417Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -137,8 +139,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:56:40.513982911Z",
-        "FinishedAt": "2026-11-25T06:03:47.299971765Z"
+        "StartedAt": "2026-11-25T07:03:27.403857417Z",
+        "FinishedAt": "2026-11-25T07:10:44.393814164Z"
       }
     },
     "comet": {
@@ -148,15 +150,30 @@
         "driver_memory": "6g",
         "catalog_cache": false,
         "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
           "spark.memory.offHeap.size": "2g",
-          "spark.local.dir": "/tmp/p3-spill-8ma64r23"
+          "spark.local.dir": "/tmp/p3-spill-l9t3ltg2"
         },
         "port": 15012
       },
-      "listen_s": 5.0097434520721436,
+      "listen_s": 5.511807203292847,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.956661861000157
+        "elapsed_s": 2.9765492440001253
+      },
+      "host_cgroup": {
+        "memory_max": 8589934592,
+        "memory_swap_max": 0,
+        "startup_outside_cgroup": true,
+        "memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "68098",
+          "oom": "3",
+          "oom_kill": "1",
+          "oom_group_kill": "0",
+          "sock_throttled": "8"
+        }
       }
     }
   },
@@ -388,33 +405,33 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 12.993261557999858,
-            "cpu_s": 39.299544,
-            "peak_bytes": 526598144,
+            "elapsed_s": 12.128401276999966,
+            "cpu_s": 39.119741,
+            "peak_bytes": 520159232,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526912512
+            "minimum_free_disk_bytes": 98526244864
           },
           {
             "status": "ok",
-            "elapsed_s": 10.637461169000062,
-            "cpu_s": 38.876157,
-            "peak_bytes": 518115328,
+            "elapsed_s": 11.68637587100011,
+            "cpu_s": 38.866476999999996,
+            "peak_bytes": 520728576,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526908416
+            "minimum_free_disk_bytes": 98526236672
           },
           {
             "status": "ok",
-            "elapsed_s": 10.648887939999895,
-            "cpu_s": 39.254734,
-            "peak_bytes": 526016512,
+            "elapsed_s": 10.572436277999941,
+            "cpu_s": 38.92300800000001,
+            "peak_bytes": 526196736,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526900224
+            "minimum_free_disk_bytes": 98526224384
           }
         ],
         "warm_median": null
@@ -423,267 +440,267 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 1.6008996990001378,
-            "cpu_s": 4.690199000000007,
-            "peak_bytes": 1245696000,
+            "elapsed_s": 1.6013216809999449,
+            "cpu_s": 4.692004999999995,
+            "peak_bytes": 1291595776,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526883840
+            "minimum_free_disk_bytes": 98526212096
           },
           {
             "status": "ok",
-            "elapsed_s": 1.520954759999995,
-            "cpu_s": 4.576574999999991,
-            "peak_bytes": 1271627776,
+            "elapsed_s": 1.5572850900000503,
+            "cpu_s": 4.627669999999995,
+            "peak_bytes": 1343848448,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526846976
+            "minimum_free_disk_bytes": 98526179328
           },
           {
             "status": "ok",
-            "elapsed_s": 1.507748451999987,
-            "cpu_s": 4.577521000000004,
-            "peak_bytes": 1385930752,
+            "elapsed_s": 1.505934783999919,
+            "cpu_s": 4.591304000000008,
+            "peak_bytes": 1395810304,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526810112
+            "minimum_free_disk_bytes": 98526138368
           }
         ],
         "warm_median": {
-          "elapsed_s": 1.514351605999991,
-          "cpu_s": 4.577047999999998,
-          "peak_bytes": 1328779264.0
+          "elapsed_s": 1.5316099369999847,
+          "cpu_s": 4.6094870000000014,
+          "peak_bytes": 1369829376.0
         }
       },
       "3": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 6.009692923000102,
-            "cpu_s": 19.521333,
-            "peak_bytes": 1385930752,
+            "elapsed_s": 5.923290037000015,
+            "cpu_s": 19.223345999999992,
+            "peak_bytes": 1397338112,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526785536
+            "minimum_free_disk_bytes": 98526121984
           },
           {
             "status": "ok",
-            "elapsed_s": 5.896782214000041,
-            "cpu_s": 19.49344099999999,
-            "peak_bytes": 1102938112,
+            "elapsed_s": 5.810732213000165,
+            "cpu_s": 19.145080000000007,
+            "peak_bytes": 1116078080,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526777344
+            "minimum_free_disk_bytes": 98526101504
           },
           {
             "status": "ok",
-            "elapsed_s": 5.9035643059999074,
-            "cpu_s": 19.573525000000018,
-            "peak_bytes": 1100464128,
+            "elapsed_s": 5.8335887670000375,
+            "cpu_s": 19.186702999999994,
+            "peak_bytes": 1167101952,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526756864
+            "minimum_free_disk_bytes": 98526085120
           }
         ],
         "warm_median": {
-          "elapsed_s": 5.900173259999974,
-          "cpu_s": 19.533483000000004,
-          "peak_bytes": 1101701120.0
+          "elapsed_s": 5.822160490000101,
+          "cpu_s": 19.1658915,
+          "peak_bytes": 1141590016.0
         }
       },
       "4": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 3.4278635900000154,
-            "cpu_s": 10.80280399999998,
-            "peak_bytes": 1038196736,
+            "elapsed_s": 3.4114654099998916,
+            "cpu_s": 10.696985000000012,
+            "peak_bytes": 1067790336,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526736384
+            "minimum_free_disk_bytes": 98526060544
           },
           {
             "status": "ok",
-            "elapsed_s": 3.361272973000041,
-            "cpu_s": 10.687055000000015,
-            "peak_bytes": 916258816,
+            "elapsed_s": 3.2860265120002623,
+            "cpu_s": 10.596204999999998,
+            "peak_bytes": 901230592,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526728192
+            "minimum_free_disk_bytes": 98526056448
           },
           {
             "status": "ok",
-            "elapsed_s": 3.3105549669999164,
-            "cpu_s": 10.743903999999986,
-            "peak_bytes": 828227584,
+            "elapsed_s": 3.3317937339998025,
+            "cpu_s": 10.645981000000006,
+            "peak_bytes": 867844096,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526715904
+            "minimum_free_disk_bytes": 98526035968
           }
         ],
         "warm_median": {
-          "elapsed_s": 3.3359139699999787,
-          "cpu_s": 10.7154795,
-          "peak_bytes": 872243200.0
+          "elapsed_s": 3.3089101230000324,
+          "cpu_s": 10.621093000000002,
+          "peak_bytes": 884537344.0
         }
       },
       "5": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 8.129242140000088,
-            "cpu_s": 26.945740999999998,
-            "peak_bytes": 2606346240,
+            "elapsed_s": 8.211776830999952,
+            "cpu_s": 27.16943999999998,
+            "peak_bytes": 2628661248,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526691328
+            "minimum_free_disk_bytes": 98526015488
           },
           {
             "status": "ok",
-            "elapsed_s": 8.043280455000058,
-            "cpu_s": 26.874603000000036,
-            "peak_bytes": 2611994624,
+            "elapsed_s": 8.221890987999814,
+            "cpu_s": 27.315786000000003,
+            "peak_bytes": 2689900544,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526650368
+            "minimum_free_disk_bytes": 98525982720
           },
           {
             "status": "ok",
-            "elapsed_s": 7.951746910000111,
-            "cpu_s": 26.668972999999994,
-            "peak_bytes": 2663682048,
+            "elapsed_s": 8.102602082999965,
+            "cpu_s": 27.090899999999976,
+            "peak_bytes": 2709446656,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526597120
+            "minimum_free_disk_bytes": 98525941760
           }
         ],
         "warm_median": {
-          "elapsed_s": 7.9975136825000845,
-          "cpu_s": 26.771788000000015,
-          "peak_bytes": 2637838336.0
+          "elapsed_s": 8.16224653549989,
+          "cpu_s": 27.20334299999999,
+          "peak_bytes": 2699673600.0
         }
       },
       "6": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 3.561509471000136,
-            "cpu_s": 11.700024999999982,
-            "peak_bytes": 2674819072,
+            "elapsed_s": 3.664031455999975,
+            "cpu_s": 11.821135000000027,
+            "peak_bytes": 2715365376,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526588928
+            "minimum_free_disk_bytes": 98525913088
           },
           {
             "status": "ok",
-            "elapsed_s": 3.592442140000003,
-            "cpu_s": 11.582629999999995,
-            "peak_bytes": 1254375424,
+            "elapsed_s": 3.6198179220000384,
+            "cpu_s": 11.743525999999974,
+            "peak_bytes": 1281179648,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526580736
+            "minimum_free_disk_bytes": 98525913088
           },
           {
             "status": "ok",
-            "elapsed_s": 3.5756016000000272,
-            "cpu_s": 11.64612900000003,
-            "peak_bytes": 800268288,
+            "elapsed_s": 3.653205796000293,
+            "cpu_s": 11.72981900000002,
+            "peak_bytes": 814059520,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526572544
+            "minimum_free_disk_bytes": 98525904896
           }
         ],
         "warm_median": {
-          "elapsed_s": 3.584021870000015,
-          "cpu_s": 11.614379500000013,
-          "peak_bytes": 1027321856.0
+          "elapsed_s": 3.6365118590001657,
+          "cpu_s": 11.736672499999997,
+          "peak_bytes": 1047619584.0
         }
       },
       "7": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 6.747295595999731,
-            "cpu_s": 22.14193499999999,
-            "peak_bytes": 1760112640,
+            "elapsed_s": 6.888022094999997,
+            "cpu_s": 22.337828000000002,
+            "peak_bytes": 1733394432,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526539776
+            "minimum_free_disk_bytes": 98525880320
           },
           {
             "status": "ok",
-            "elapsed_s": 6.749184799999966,
-            "cpu_s": 22.09355199999999,
-            "peak_bytes": 1762639872,
+            "elapsed_s": 6.860846273999869,
+            "cpu_s": 22.31474700000001,
+            "peak_bytes": 1760579584,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526511104
+            "minimum_free_disk_bytes": 98525851648
           },
           {
             "status": "ok",
-            "elapsed_s": 6.789267078000194,
-            "cpu_s": 22.07295499999998,
-            "peak_bytes": 1762111488,
+            "elapsed_s": 6.8662066489996505,
+            "cpu_s": 22.287290999999982,
+            "peak_bytes": 1766379520,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526490624
+            "minimum_free_disk_bytes": 98525822976
           }
         ],
         "warm_median": {
-          "elapsed_s": 6.76922593900008,
-          "cpu_s": 22.083253499999984,
-          "peak_bytes": 1762375680.0
+          "elapsed_s": 6.8635264614997595,
+          "cpu_s": 22.301018999999997,
+          "peak_bytes": 1763479552.0
         }
       },
       "8": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 8.974810237999918,
-            "cpu_s": 29.383655000000033,
-            "peak_bytes": 1794928640,
+            "elapsed_s": 9.096813096999995,
+            "cpu_s": 29.463146999999992,
+            "peak_bytes": 1675407360,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526437376
+            "minimum_free_disk_bytes": 98525782016
           },
           {
             "status": "ok",
-            "elapsed_s": 8.866328577999866,
-            "cpu_s": 29.46479999999997,
-            "peak_bytes": 1446461440,
+            "elapsed_s": 9.02796436799963,
+            "cpu_s": 29.579015000000027,
+            "peak_bytes": 1447948288,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526412800
+            "minimum_free_disk_bytes": 98525728768
           },
           {
             "status": "ok",
-            "elapsed_s": 8.955622373000097,
-            "cpu_s": 29.392423000000008,
-            "peak_bytes": 1434341376,
+            "elapsed_s": 9.061302267999963,
+            "cpu_s": 29.734786999999983,
+            "peak_bytes": 1468514304,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526351360
+            "minimum_free_disk_bytes": 98525691904
           }
         ],
         "warm_median": null
@@ -692,36 +709,36 @@
         "samples": [
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 459.0 KB for HashJoinInput[0] with 258.8 MB already allocated for this reservation - 365.6 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 2.9022237750000386,
-            "cpu_s": 10.080916000000002,
-            "peak_bytes": 5882642432,
+            "error": "AnalysisException: Failed to allocate additional 491.4 KB for HashJoinInput[2] with 258.2 MB already allocated for this reservation - 437.9 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 3.241749149000043,
+            "cpu_s": 11.557448000000022,
+            "peak_bytes": 5891657728,
             "matches_spark": false,
-            "peak_sampled_spill_bytes": 0,
-            "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526334976
-          },
-          {
-            "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 478.4 KB for HashJoinInput[2] with 258.2 MB already allocated for this reservation - 330.4 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 2.9091371360000267,
-            "cpu_s": 10.121256000000017,
-            "peak_bytes": 6156648448,
-            "matches_spark": false,
-            "peak_sampled_spill_bytes": 0,
-            "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526314496
-          },
-          {
-            "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 478.4 KB for HashJoinInput[2] with 258.4 MB already allocated for this reservation - 157.2 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 2.881902168999659,
-            "cpu_s": 10.061388999999963,
-            "peak_bytes": 6144544768,
-            "matches_spark": false,
-            "peak_sampled_spill_bytes": 10885424,
+            "peak_sampled_spill_bytes": 8496320,
             "peak_sampled_spill_files": 4,
-            "minimum_free_disk_bytes": 98515419136
+            "minimum_free_disk_bytes": 98517147648
+          },
+          {
+            "status": "error",
+            "error": "AnalysisException: Failed to allocate additional 484.9 KB for HashJoinInput[3] with 258.5 MB already allocated for this reservation - 162.4 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 3.261674202999984,
+            "cpu_s": 11.236194000000012,
+            "peak_bytes": 6117371904,
+            "matches_spark": false,
+            "peak_sampled_spill_bytes": 8496320,
+            "peak_sampled_spill_files": 4,
+            "minimum_free_disk_bytes": 98517147648
+          },
+          {
+            "status": "error",
+            "error": "AnalysisException: Failed to allocate additional 484.9 KB for HashJoinInput[3] with 258.2 MB already allocated for this reservation - 404.2 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 3.1967942030000813,
+            "cpu_s": 11.255494999999996,
+            "peak_bytes": 5869973504,
+            "matches_spark": false,
+            "peak_sampled_spill_bytes": 8230864,
+            "peak_sampled_spill_files": 4,
+            "minimum_free_disk_bytes": 98517385216
           }
         ],
         "warm_median": null
@@ -730,189 +747,189 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 6.832332996000332,
-            "cpu_s": 22.221350999999913,
-            "peak_bytes": 5467463680,
+            "elapsed_s": 6.974074169000232,
+            "cpu_s": 22.565521999999987,
+            "peak_bytes": 5795422208,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 8230864,
+            "peak_sampled_spill_bytes": 7699952,
             "peak_sampled_spill_files": 4,
-            "minimum_free_disk_bytes": 98518056960
+            "minimum_free_disk_bytes": 98517901312
           },
           {
             "status": "ok",
-            "elapsed_s": 6.676862264999727,
-            "cpu_s": 22.006901000000084,
-            "peak_bytes": 2456436736,
+            "elapsed_s": 6.801455272000112,
+            "cpu_s": 22.218522000000007,
+            "peak_bytes": 2479489024,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526253056
+            "minimum_free_disk_bytes": 98525569024
           },
           {
             "status": "ok",
-            "elapsed_s": 6.698411068000041,
-            "cpu_s": 21.99473999999998,
-            "peak_bytes": 2382852096,
+            "elapsed_s": 6.819231030000083,
+            "cpu_s": 22.17842100000007,
+            "peak_bytes": 2349637632,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526224384
+            "minimum_free_disk_bytes": 98525544448
           }
         ],
         "warm_median": {
-          "elapsed_s": 6.687636666499884,
-          "cpu_s": 22.00082050000003,
-          "peak_bytes": 2419644416.0
+          "elapsed_s": 6.810343151000097,
+          "cpu_s": 22.19847150000004,
+          "peak_bytes": 2414563328.0
         }
       },
       "11": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 1.1954008889997567,
-            "cpu_s": 3.479926999999975,
-            "peak_bytes": 2289496064,
+            "elapsed_s": 1.238191712999651,
+            "cpu_s": 3.526359999999954,
+            "peak_bytes": 2363166720,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526208000
+            "minimum_free_disk_bytes": 98525515776
           },
           {
             "status": "ok",
-            "elapsed_s": 1.2746009029997367,
-            "cpu_s": 3.4554150000000163,
-            "peak_bytes": 2285600768,
+            "elapsed_s": 1.2026702240000304,
+            "cpu_s": 3.47148100000004,
+            "peak_bytes": 1325477888,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526191616
+            "minimum_free_disk_bytes": 98525507584
           },
           {
             "status": "ok",
-            "elapsed_s": 1.199690480999834,
-            "cpu_s": 3.4941139999999677,
-            "peak_bytes": 1759772672,
+            "elapsed_s": 1.2153844370000115,
+            "cpu_s": 3.4936099999999897,
+            "peak_bytes": 1325236224,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526171136
+            "minimum_free_disk_bytes": 98525478912
           }
         ],
         "warm_median": {
-          "elapsed_s": 1.2371456919997854,
-          "cpu_s": 3.474764499999992,
-          "peak_bytes": 2022686720.0
+          "elapsed_s": 1.209027330500021,
+          "cpu_s": 3.4825455000000147,
+          "peak_bytes": 1325357056.0
         }
       },
       "12": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 6.866675234000013,
-            "cpu_s": 23.004751000000056,
-            "peak_bytes": 6770716672,
+            "elapsed_s": 7.085479312000189,
+            "cpu_s": 23.704801999999972,
+            "peak_bytes": 6898130944,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526146560
+            "minimum_free_disk_bytes": 98525462528
           },
           {
             "status": "ok",
-            "elapsed_s": 6.731518857000083,
-            "cpu_s": 22.763829999999984,
-            "peak_bytes": 6992449536,
+            "elapsed_s": 7.096975861000374,
+            "cpu_s": 24.02074300000004,
+            "peak_bytes": 6857371648,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526134272
+            "minimum_free_disk_bytes": 98525450240
           },
           {
             "status": "ok",
-            "elapsed_s": 6.707480074000159,
-            "cpu_s": 22.568306000000007,
-            "peak_bytes": 6921072640,
+            "elapsed_s": 7.081886008999845,
+            "cpu_s": 23.808768999999984,
+            "peak_bytes": 7135481856,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526121984
+            "minimum_free_disk_bytes": 98525442048
           }
         ],
         "warm_median": {
-          "elapsed_s": 6.719499465500121,
-          "cpu_s": 22.666067999999996,
-          "peak_bytes": 6956761088.0
+          "elapsed_s": 7.0894309350001095,
+          "cpu_s": 23.91475600000001,
+          "peak_bytes": 6996426752.0
         }
       },
       "13": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 6.119449477000217,
-            "cpu_s": 21.42831000000001,
-            "peak_bytes": 4303462400,
+            "elapsed_s": 6.055937368999821,
+            "cpu_s": 21.42262900000003,
+            "peak_bytes": 3365089280,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526105600
+            "minimum_free_disk_bytes": 98525425664
           },
           {
             "status": "ok",
-            "elapsed_s": 5.92566441200006,
-            "cpu_s": 21.21758299999999,
-            "peak_bytes": 2868961280,
+            "elapsed_s": 6.012702178999916,
+            "cpu_s": 21.59554899999989,
+            "peak_bytes": 1926795264,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526089216
+            "minimum_free_disk_bytes": 98525409280
           },
           {
             "status": "ok",
-            "elapsed_s": 5.921289592999983,
-            "cpu_s": 21.150701000000026,
-            "peak_bytes": 2673991680,
+            "elapsed_s": 5.9916105030001745,
+            "cpu_s": 21.571403000000032,
+            "peak_bytes": 2095353856,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526076928
+            "minimum_free_disk_bytes": 98525396992
           }
         ],
         "warm_median": {
-          "elapsed_s": 5.923477002500022,
-          "cpu_s": 21.18414200000001,
-          "peak_bytes": 2771476480.0
+          "elapsed_s": 6.002156341000045,
+          "cpu_s": 21.583475999999962,
+          "peak_bytes": 2011074560.0
         }
       },
       "14": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 4.058288566000101,
-            "cpu_s": 12.500382999999943,
-            "peak_bytes": 2664722432,
+            "elapsed_s": 3.9943602449998252,
+            "cpu_s": 12.420348999999987,
+            "peak_bytes": 2220560384,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526064640
+            "minimum_free_disk_bytes": 98525384704
           },
           {
             "status": "ok",
-            "elapsed_s": 4.0251879800002826,
-            "cpu_s": 12.44850800000006,
-            "peak_bytes": 2407587840,
+            "elapsed_s": 4.091550008000013,
+            "cpu_s": 12.545746000000008,
+            "peak_bytes": 1888538624,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526052352
+            "minimum_free_disk_bytes": 98525380608
           },
           {
             "status": "ok",
-            "elapsed_s": 4.021094263000123,
-            "cpu_s": 12.442506999999978,
-            "peak_bytes": 2261131264,
+            "elapsed_s": 4.101161742000386,
+            "cpu_s": 12.531116999999995,
+            "peak_bytes": 1899409408,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526035968
+            "minimum_free_disk_bytes": 98525360128
           }
         ],
         "warm_median": null
@@ -921,111 +938,111 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 8.137094047000119,
-            "cpu_s": 25.570073999999977,
-            "peak_bytes": 1885777920,
+            "elapsed_s": 8.252905585999997,
+            "cpu_s": 25.585413000000017,
+            "peak_bytes": 1621618688,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526027776
+            "minimum_free_disk_bytes": 98525347840
           },
           {
             "status": "ok",
-            "elapsed_s": 8.178175184000338,
-            "cpu_s": 25.428269,
-            "peak_bytes": 1423093760,
+            "elapsed_s": 8.166433834000145,
+            "cpu_s": 25.610451000000012,
+            "peak_bytes": 1164328960,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526015488
+            "minimum_free_disk_bytes": 98525335552
           },
           {
             "status": "ok",
-            "elapsed_s": 8.167835406999984,
-            "cpu_s": 25.63282700000002,
-            "peak_bytes": 1452023808,
+            "elapsed_s": 8.329990104999979,
+            "cpu_s": 25.793649999999957,
+            "peak_bytes": 1146454016,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98526007296
+            "minimum_free_disk_bytes": 98525323264
           }
         ],
         "warm_median": {
-          "elapsed_s": 8.173005295500161,
-          "cpu_s": 25.53054800000001,
-          "peak_bytes": 1437558784.0
+          "elapsed_s": 8.248211969500062,
+          "cpu_s": 25.702050499999984,
+          "peak_bytes": 1155391488.0
         }
       },
       "16": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 1.9181447390001267,
-            "cpu_s": 4.063119000000029,
-            "peak_bytes": 2938437632,
+            "elapsed_s": 1.9301853629999641,
+            "cpu_s": 4.050707000000102,
+            "peak_bytes": 2738032640,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525990912
+            "minimum_free_disk_bytes": 98525310976
           },
           {
             "status": "ok",
-            "elapsed_s": 1.8218999939999776,
-            "cpu_s": 3.987756000000104,
-            "peak_bytes": 2964713472,
+            "elapsed_s": 1.7829249159999563,
+            "cpu_s": 3.9958339999999453,
+            "peak_bytes": 3162193920,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525970432
+            "minimum_free_disk_bytes": 98525294592
           },
           {
             "status": "ok",
-            "elapsed_s": 1.7417601459997059,
-            "cpu_s": 3.858686999999918,
-            "peak_bytes": 2799054848,
+            "elapsed_s": 1.8405579529999159,
+            "cpu_s": 4.03314499999999,
+            "peak_bytes": 3170463744,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525945856
+            "minimum_free_disk_bytes": 98525270016
           }
         ],
         "warm_median": {
-          "elapsed_s": 1.7818300699998417,
-          "cpu_s": 3.923221500000011,
-          "peak_bytes": 2881884160.0
+          "elapsed_s": 1.811741434499936,
+          "cpu_s": 4.014489499999968,
+          "peak_bytes": 3166328832.0
         }
       },
       "17": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 14.895131901999775,
-            "cpu_s": 53.24411800000007,
-            "peak_bytes": 2898137088,
+            "elapsed_s": 15.554823178000333,
+            "cpu_s": 55.467543999999975,
+            "peak_bytes": 2472685568,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525937664
+            "minimum_free_disk_bytes": 98525257728
           },
           {
             "status": "ok",
-            "elapsed_s": 14.853066168999703,
-            "cpu_s": 53.044848,
-            "peak_bytes": 1982476288,
+            "elapsed_s": 15.598160556000039,
+            "cpu_s": 55.68653200000006,
+            "peak_bytes": 1926615040,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525921280
+            "minimum_free_disk_bytes": 98525241344
           },
           {
             "status": "ok",
-            "elapsed_s": 14.786352598000121,
-            "cpu_s": 52.7818289999999,
-            "peak_bytes": 1971630080,
+            "elapsed_s": 15.547050121999746,
+            "cpu_s": 55.47430300000008,
+            "peak_bytes": 1779306496,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525913088
+            "minimum_free_disk_bytes": 98525233152
           }
         ],
         "warm_median": null
@@ -1034,36 +1051,36 @@
         "samples": [
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 678.8 KB for HashJoinInput[1] with 933.9 MB already allocated for this reservation - 237.1 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 12.17834442000003,
-            "cpu_s": 40.997337000000016,
-            "peak_bytes": 6151782400,
+            "error": "AnalysisException: Failed to allocate additional 849.2 KB for HashJoinInput[2] with 934.6 MB already allocated for this reservation - 813.8 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 12.64402994699958,
+            "cpu_s": 40.428600999999844,
+            "peak_bytes": 6095953920,
             "matches_spark": false,
-            "peak_sampled_spill_bytes": 1820514144,
+            "peak_sampled_spill_bytes": 1820514176,
             "peak_sampled_spill_files": 20,
-            "minimum_free_disk_bytes": 96705302528
+            "minimum_free_disk_bytes": 96704667648
           },
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 678.8 KB for HashJoinInput[0] with 933.5 MB already allocated for this reservation - 150.9 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 12.348563425000066,
-            "cpu_s": 41.0074790000001,
-            "peak_bytes": 6859767808,
+            "error": "AnalysisException: Failed to allocate additional 678.8 KB for HashJoinInput[2] with 933.5 MB already allocated for this reservation - 202.7 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 12.323134078000294,
+            "cpu_s": 40.934844999999996,
+            "peak_bytes": 6472957952,
             "matches_spark": false,
-            "peak_sampled_spill_bytes": 1820514096,
+            "peak_sampled_spill_bytes": 1820514208,
             "peak_sampled_spill_files": 20,
-            "minimum_free_disk_bytes": 96705343488
+            "minimum_free_disk_bytes": 96704614400
           },
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 849.2 KB for HashJoinInput[2] with 933.2 MB already allocated for this reservation - 399.7 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 11.658949842000311,
-            "cpu_s": 39.97659099999987,
-            "peak_bytes": 6471798784,
+            "error": "AnalysisException: Failed to allocate additional 849.2 KB for HashJoinInput[0] with 934.6 MB already allocated for this reservation - 106.7 KB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 11.995546504000231,
+            "cpu_s": 40.399863000000096,
+            "peak_bytes": 6618198016,
             "matches_spark": false,
-            "peak_sampled_spill_bytes": 1820514192,
+            "peak_sampled_spill_bytes": 1820514080,
             "peak_sampled_spill_files": 20,
-            "minimum_free_disk_bytes": 96705331200
+            "minimum_free_disk_bytes": 96704606208
           }
         ],
         "warm_median": null
@@ -1072,114 +1089,114 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 7.851588681999601,
-            "cpu_s": 26.995165000000043,
-            "peak_bytes": 6172475392,
+            "elapsed_s": 7.827229516999978,
+            "cpu_s": 26.964729999999918,
+            "peak_bytes": 6093594624,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525859840
+            "minimum_free_disk_bytes": 98525179904
           },
           {
             "status": "ok",
-            "elapsed_s": 7.703047005999906,
-            "cpu_s": 26.90330599999993,
-            "peak_bytes": 962961408,
+            "elapsed_s": 7.7393490290000955,
+            "cpu_s": 26.910110999999915,
+            "peak_bytes": 909815808,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525847552
+            "minimum_free_disk_bytes": 98525163520
           },
           {
             "status": "ok",
-            "elapsed_s": 7.693164169999818,
-            "cpu_s": 26.847772000000077,
-            "peak_bytes": 926183424,
+            "elapsed_s": 7.735508486000072,
+            "cpu_s": 26.89278400000012,
+            "peak_bytes": 866209792,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525831168
+            "minimum_free_disk_bytes": 98525155328
           }
         ],
         "warm_median": {
-          "elapsed_s": 7.698105587999862,
-          "cpu_s": 26.875539000000003,
-          "peak_bytes": 944572416.0
+          "elapsed_s": 7.7374287575000835,
+          "cpu_s": 26.901447500000017,
+          "peak_bytes": 888012800.0
         }
       },
       "20": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 9.700973617999807,
-            "cpu_s": 31.755263000000014,
-            "peak_bytes": 3922108416,
+            "elapsed_s": 9.752337177999834,
+            "cpu_s": 32.62250300000005,
+            "peak_bytes": 3887828992,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1198620080,
+            "peak_sampled_spill_bytes": 1198637312,
             "peak_sampled_spill_files": 12,
-            "minimum_free_disk_bytes": 97327161344
+            "minimum_free_disk_bytes": 97326428160
           },
           {
             "status": "ok",
-            "elapsed_s": 9.781890534000013,
-            "cpu_s": 31.830351999999948,
-            "peak_bytes": 3931889664,
+            "elapsed_s": 9.670293614999991,
+            "cpu_s": 32.54085199999986,
+            "peak_bytes": 3516125184,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1198504992,
+            "peak_sampled_spill_bytes": 1198552528,
             "peak_sampled_spill_files": 12,
-            "minimum_free_disk_bytes": 97327235072
+            "minimum_free_disk_bytes": 97326477312
           },
           {
             "status": "ok",
-            "elapsed_s": 9.256089845000133,
-            "cpu_s": 31.76943600000004,
-            "peak_bytes": 3869360128,
+            "elapsed_s": 9.314507483999932,
+            "cpu_s": 31.78800799999999,
+            "peak_bytes": 3715297280,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1198561008,
+            "peak_sampled_spill_bytes": 1198485216,
             "peak_sampled_spill_files": 12,
-            "minimum_free_disk_bytes": 97327173632
+            "minimum_free_disk_bytes": 97326559232
           }
         ],
         "warm_median": {
-          "elapsed_s": 9.518990189500073,
-          "cpu_s": 31.799893999999995,
-          "peak_bytes": 3900624896.0
+          "elapsed_s": 9.492400549499962,
+          "cpu_s": 32.164429999999925,
+          "peak_bytes": 3615711232.0
         }
       },
       "21": {
         "samples": [
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[2] with 723.4 MB already allocated for this reservation - 1201.7 MB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 3.942452364000019,
-            "cpu_s": 12.410875999999917,
-            "peak_bytes": 4974002176,
+            "error": "AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[1] with 723.6 MB already allocated for this reservation - 1201.6 MB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 3.903101782000249,
+            "cpu_s": 12.349116000000095,
+            "peak_bytes": 4843220992,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525728768
+            "minimum_free_disk_bytes": 98525044736
           },
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[3] with 723.8 MB already allocated for this reservation - 1201.6 MB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 4.666776945000038,
-            "cpu_s": 15.567023000000063,
-            "peak_bytes": 6920744960,
+            "error": "AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[3] with 723.8 MB already allocated for this reservation - 599.9 MB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 4.8560719219999555,
+            "cpu_s": 15.52707600000008,
+            "peak_bytes": 6993326080,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525712384
+            "minimum_free_disk_bytes": 98525028352
           },
           {
             "status": "error",
-            "error": "AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[3] with 723.8 MB already allocated for this reservation - 1201.6 MB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
-            "elapsed_s": 4.645569334999891,
-            "cpu_s": 15.458225000000084,
-            "peak_bytes": 7285481472,
+            "error": "AnalysisException: Failed to allocate additional 1325.3 MB for HashJoinInput[2] with 723.4 MB already allocated for this reservation - 1323.5 MB remain available for the total memory pool: fair(pool_size: 4.0 GB)",
+            "elapsed_s": 4.6795502330001,
+            "cpu_s": 15.299434999999903,
+            "peak_bytes": 7106699264,
             "matches_spark": false,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525700096
+            "minimum_free_disk_bytes": 98525016064
           }
         ],
         "warm_median": null
@@ -1188,39 +1205,39 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 2.098158429999785,
-            "cpu_s": 7.074982999999975,
-            "peak_bytes": 7302127616,
+            "elapsed_s": 2.219072085999869,
+            "cpu_s": 7.565185999999812,
+            "peak_bytes": 7286353920,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525691904
+            "minimum_free_disk_bytes": 98525003776
           },
           {
             "status": "ok",
-            "elapsed_s": 1.4780729669996617,
-            "cpu_s": 4.406480000000101,
-            "peak_bytes": 7389478912,
+            "elapsed_s": 1.4664252990000932,
+            "cpu_s": 4.182677000000012,
+            "peak_bytes": 5365702656,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525671424
+            "minimum_free_disk_bytes": 98524987392
           },
           {
             "status": "ok",
-            "elapsed_s": 1.3791567190000933,
-            "cpu_s": 4.048608000000058,
-            "peak_bytes": 3066310656,
+            "elapsed_s": 1.4324825280000368,
+            "cpu_s": 4.195260000000189,
+            "peak_bytes": 3965935616,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 0,
             "peak_sampled_spill_files": 0,
-            "minimum_free_disk_bytes": 98525671424
+            "minimum_free_disk_bytes": 98524979200
           }
         ],
         "warm_median": {
-          "elapsed_s": 1.4286148429998775,
-          "cpu_s": 4.22754400000008,
-          "peak_bytes": 5227894784.0
+          "elapsed_s": 1.449453913500065,
+          "cpu_s": 4.188968500000101,
+          "peak_bytes": 4665819136.0
         }
       }
     },
@@ -1229,1354 +1246,1200 @@
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 20.54361413300012,
-            "cpu_s": 73.00999999999999,
-            "peak_bytes": 1247387648,
+            "elapsed_s": 20.661377515999902,
+            "cpu_s": 73.36,
+            "peak_bytes": 1239740416,
             "matches_spark": true,
             "peak_sampled_spill_bytes": 230917565,
             "peak_sampled_spill_files": 208,
-            "minimum_free_disk_bytes": 97950441472
+            "minimum_free_disk_bytes": 97949757440
           },
           {
             "status": "ok",
-            "elapsed_s": 18.53675562999979,
-            "cpu_s": 67.79,
-            "peak_bytes": 1513000960,
+            "elapsed_s": 18.47527183300008,
+            "cpu_s": 67.09,
+            "peak_bytes": 1495982080,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 231322377,
-            "peak_sampled_spill_files": 408,
-            "minimum_free_disk_bytes": 97949474816
+            "peak_sampled_spill_bytes": 230917565,
+            "peak_sampled_spill_files": 208,
+            "minimum_free_disk_bytes": 97949609984
           },
           {
             "status": "ok",
-            "elapsed_s": 18.082929141000022,
-            "cpu_s": 65.65,
-            "peak_bytes": 1638498304,
+            "elapsed_s": 17.997001842999907,
+            "cpu_s": 65.38999999999999,
+            "peak_bytes": 1642127360,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 231325107,
-            "peak_sampled_spill_files": 412,
-            "minimum_free_disk_bytes": 97949351936
+            "peak_sampled_spill_bytes": 230949964,
+            "peak_sampled_spill_files": 228,
+            "minimum_free_disk_bytes": 97949499392
           }
         ],
         "warm_median": {
-          "elapsed_s": 18.309842385499906,
-          "cpu_s": 66.72,
-          "peak_bytes": 1575749632.0
+          "elapsed_s": 18.236136837999993,
+          "cpu_s": 66.24,
+          "peak_bytes": 1569054720.0
         }
       },
       "2": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 5.856783429000188,
-            "cpu_s": 20.060000000000002,
-            "peak_bytes": 2518986752,
+            "elapsed_s": 5.925315630000114,
+            "cpu_s": 20.5,
+            "peak_bytes": 2665537536,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 804409951,
-            "peak_sampled_spill_files": 410,
-            "minimum_free_disk_bytes": 97375920128
+            "peak_sampled_spill_bytes": 804041005,
+            "peak_sampled_spill_files": 208,
+            "minimum_free_disk_bytes": 97376030720
           },
           {
             "status": "ok",
-            "elapsed_s": 5.104416837999906,
-            "cpu_s": 17.409999999999968,
-            "peak_bytes": 3164835840,
+            "elapsed_s": 5.061525701999926,
+            "cpu_s": 17.100000000000023,
+            "peak_bytes": 3346890752,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 804409951,
-            "peak_sampled_spill_files": 338,
-            "minimum_free_disk_bytes": 97375625216
+            "peak_sampled_spill_bytes": 804052591,
+            "peak_sampled_spill_files": 136,
+            "minimum_free_disk_bytes": 97375645696
           },
           {
             "status": "ok",
-            "elapsed_s": 5.112114598000062,
-            "cpu_s": 17.049999999999955,
-            "peak_bytes": 3627249664,
+            "elapsed_s": 5.027605091000169,
+            "cpu_s": 16.94999999999999,
+            "peak_bytes": 3446775808,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 804490300,
-            "peak_sampled_spill_files": 338,
-            "minimum_free_disk_bytes": 97375076352
+            "peak_sampled_spill_bytes": 804044973,
+            "peak_sampled_spill_files": 136,
+            "minimum_free_disk_bytes": 97375272960
           }
         ],
         "warm_median": {
-          "elapsed_s": 5.108265717999984,
-          "cpu_s": 17.22999999999996,
-          "peak_bytes": 3396042752.0
+          "elapsed_s": 5.044565396500047,
+          "cpu_s": 17.025000000000006,
+          "peak_bytes": 3396833280.0
         }
       },
       "3": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 24.421584623999934,
-            "cpu_s": 84.07000000000005,
-            "peak_bytes": 4592857088,
+            "elapsed_s": 24.958178421999946,
+            "cpu_s": 84.37,
+            "peak_bytes": 4136202240,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 3115875632,
-            "peak_sampled_spill_files": 520,
-            "minimum_free_disk_bytes": 95062933504
+            "peak_sampled_spill_bytes": 3688989158,
+            "peak_sampled_spill_files": 447,
+            "minimum_free_disk_bytes": 94489202688
           },
           {
             "status": "ok",
-            "elapsed_s": 24.404672527999992,
-            "cpu_s": 83.69,
-            "peak_bytes": 4589916160,
+            "elapsed_s": 24.32931349899991,
+            "cpu_s": 84.39000000000004,
+            "peak_bytes": 4329811968,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 3115876575,
-            "peak_sampled_spill_files": 520,
-            "minimum_free_disk_bytes": 95062720512
+            "peak_sampled_spill_bytes": 3115472313,
+            "peak_sampled_spill_files": 432,
+            "minimum_free_disk_bytes": 95062884352
           },
           {
             "status": "ok",
-            "elapsed_s": 24.454434615000082,
-            "cpu_s": 83.11000000000001,
-            "peak_bytes": 4655915008,
+            "elapsed_s": 24.361668364000252,
+            "cpu_s": 82.47000000000003,
+            "peak_bytes": 4788535296,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 5192527018,
-            "peak_sampled_spill_files": 813,
-            "minimum_free_disk_bytes": 92984635392
+            "peak_sampled_spill_bytes": 3115466722,
+            "peak_sampled_spill_files": 314,
+            "minimum_free_disk_bytes": 95062675456
           }
         ],
         "warm_median": {
-          "elapsed_s": 24.429553571500037,
-          "cpu_s": 83.4,
-          "peak_bytes": 4622915584.0
+          "elapsed_s": 24.34549093150008,
+          "cpu_s": 83.43000000000004,
+          "peak_bytes": 4559173632.0
         }
       },
       "4": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 12.14808575799998,
-            "cpu_s": 41.49000000000001,
-            "peak_bytes": 4508508160,
+            "elapsed_s": 12.140593251000155,
+            "cpu_s": 41.739999999999895,
+            "peak_bytes": 4779233280,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 3015950297,
-            "peak_sampled_spill_files": 776,
-            "minimum_free_disk_bytes": 95161507840
+            "peak_sampled_spill_bytes": 2327978304,
+            "peak_sampled_spill_files": 302,
+            "minimum_free_disk_bytes": 95850160128
           },
           {
             "status": "ok",
-            "elapsed_s": 11.967955204999726,
-            "cpu_s": 41.52999999999997,
-            "peak_bytes": 4768157696,
+            "elapsed_s": 12.220028451999951,
+            "cpu_s": 42.16000000000008,
+            "peak_bytes": 4758089728,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2797864657,
-            "peak_sampled_spill_files": 778,
-            "minimum_free_disk_bytes": 95379480576
+            "peak_sampled_spill_bytes": 918072167,
+            "peak_sampled_spill_files": 280,
+            "minimum_free_disk_bytes": 97259884544
           },
           {
             "status": "ok",
-            "elapsed_s": 11.999618855000335,
-            "cpu_s": 41.34000000000003,
-            "peak_bytes": 4792614912,
+            "elapsed_s": 11.907095088999995,
+            "cpu_s": 41.0,
+            "peak_bytes": 4797333504,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1387958628,
-            "peak_sampled_spill_files": 750,
-            "minimum_free_disk_bytes": 96789270528
+            "peak_sampled_spill_bytes": 1294194027,
+            "peak_sampled_spill_files": 536,
+            "minimum_free_disk_bytes": 96883425280
           }
         ],
         "warm_median": {
-          "elapsed_s": 11.98378703000003,
-          "cpu_s": 41.435,
-          "peak_bytes": 4780386304.0
+          "elapsed_s": 12.063561770499973,
+          "cpu_s": 41.58000000000004,
+          "peak_bytes": 4777711616.0
         }
       },
       "5": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 46.014539088999754,
-            "cpu_s": 141.62999999999988,
-            "peak_bytes": 5961850880,
+            "elapsed_s": 49.83115008300001,
+            "cpu_s": 140.00999999999988,
+            "peak_bytes": 5551087616,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6971004474,
-            "peak_sampled_spill_files": 748,
-            "minimum_free_disk_bytes": 91206479872
+            "peak_sampled_spill_bytes": 6971737827,
+            "peak_sampled_spill_files": 364,
+            "minimum_free_disk_bytes": 91205464064
           },
           {
             "status": "ok",
-            "elapsed_s": 45.42269155699978,
-            "cpu_s": 141.84000000000003,
-            "peak_bytes": 6327001088,
+            "elapsed_s": 53.00529692800001,
+            "cpu_s": 142.69000000000017,
+            "peak_bytes": 7030509568,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6971003999,
-            "peak_sampled_spill_files": 566,
-            "minimum_free_disk_bytes": 91206164480
+            "peak_sampled_spill_bytes": 6971737827,
+            "peak_sampled_spill_files": 364,
+            "minimum_free_disk_bytes": 91205201920
           },
           {
             "status": "ok",
-            "elapsed_s": 45.976583395000034,
-            "cpu_s": 141.83000000000015,
-            "peak_bytes": 6180376576,
+            "elapsed_s": 51.95964594800034,
+            "cpu_s": 143.9599999999998,
+            "peak_bytes": 7231414272,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6971004647,
-            "peak_sampled_spill_files": 566,
-            "minimum_free_disk_bytes": 91205767168
+            "peak_sampled_spill_bytes": 6943569083,
+            "peak_sampled_spill_files": 363,
+            "minimum_free_disk_bytes": 91233005568
           }
         ],
         "warm_median": {
-          "elapsed_s": 45.69963747599991,
-          "cpu_s": 141.8350000000001,
-          "peak_bytes": 6253688832.0
+          "elapsed_s": 52.482471438000175,
+          "cpu_s": 143.325,
+          "peak_bytes": 7130961920.0
         }
       },
       "6": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 3.6987387899998794,
-            "cpu_s": 9.599999999999909,
-            "peak_bytes": 6067302400,
+            "elapsed_s": 3.937130578000051,
+            "cpu_s": 10.27000000000021,
+            "peak_bytes": 6210269184,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 4830540226,
-            "peak_sampled_spill_files": 704,
-            "minimum_free_disk_bytes": 93345464320
+            "peak_sampled_spill_bytes": 4830131725,
+            "peak_sampled_spill_files": 501,
+            "minimum_free_disk_bytes": 93345660928
           },
           {
             "status": "ok",
-            "elapsed_s": 3.476815378000083,
-            "cpu_s": 9.049999999999955,
-            "peak_bytes": 6069284864,
+            "elapsed_s": 3.722080354999889,
+            "cpu_s": 9.549999999999955,
+            "peak_bytes": 6209974272,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 4830540226,
-            "peak_sampled_spill_files": 704,
-            "minimum_free_disk_bytes": 93345460224
+            "peak_sampled_spill_bytes": 4830162825,
+            "peak_sampled_spill_files": 701,
+            "minimum_free_disk_bytes": 93344739328
           },
           {
             "status": "ok",
-            "elapsed_s": 3.487563105999925,
-            "cpu_s": 9.2800000000002,
-            "peak_bytes": 6069952512,
+            "elapsed_s": 3.720195375000003,
+            "cpu_s": 9.980000000000018,
+            "peak_bytes": 6210596864,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 230979143,
-            "peak_sampled_spill_files": 606,
-            "minimum_free_disk_bytes": 97945022464
+            "peak_sampled_spill_bytes": 4830179619,
+            "peak_sampled_spill_files": 811,
+            "minimum_free_disk_bytes": 93344223232
           }
         ],
         "warm_median": {
-          "elapsed_s": 3.482189242000004,
-          "cpu_s": 9.165000000000077,
-          "peak_bytes": 6069618688.0
+          "elapsed_s": 3.721137864999946,
+          "cpu_s": 9.764999999999986,
+          "peak_bytes": 6210285568.0
         }
       },
       "7": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 14.041879590000008,
-            "cpu_s": 46.460000000000036,
-            "peak_bytes": 5678927872,
+            "elapsed_s": 14.566148298999906,
+            "cpu_s": 47.38999999999987,
+            "peak_bytes": 5242605568,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1392951238,
-            "peak_sampled_spill_files": 608,
-            "minimum_free_disk_bytes": 96783454208
+            "peak_sampled_spill_bytes": 1392543012,
+            "peak_sampled_spill_files": 294,
+            "minimum_free_disk_bytes": 96783613952
           },
           {
             "status": "ok",
-            "elapsed_s": 14.268777172000227,
-            "cpu_s": 47.12999999999988,
-            "peak_bytes": 6090657792,
+            "elapsed_s": 14.584138191999955,
+            "cpu_s": 47.38000000000011,
+            "peak_bytes": 5458829312,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1392948937,
-            "peak_sampled_spill_files": 496,
-            "minimum_free_disk_bytes": 96783114240
+            "peak_sampled_spill_bytes": 1392539098,
+            "peak_sampled_spill_files": 294,
+            "minimum_free_disk_bytes": 96783261696
           },
           {
             "status": "ok",
-            "elapsed_s": 14.186833276000016,
-            "cpu_s": 46.66000000000008,
-            "peak_bytes": 6042058752,
+            "elapsed_s": 14.534566648999771,
+            "cpu_s": 47.0,
+            "peak_bytes": 5466411008,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1392949487,
-            "peak_sampled_spill_files": 494,
-            "minimum_free_disk_bytes": 96782766080
+            "peak_sampled_spill_bytes": 1392542966,
+            "peak_sampled_spill_files": 294,
+            "minimum_free_disk_bytes": 96782921728
           }
         ],
         "warm_median": {
-          "elapsed_s": 14.227805224000122,
-          "cpu_s": 46.89499999999998,
-          "peak_bytes": 6066358272.0
+          "elapsed_s": 14.559352420499863,
+          "cpu_s": 47.190000000000055,
+          "peak_bytes": 5462620160.0
         }
       },
       "8": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 38.10091292600009,
-            "cpu_s": 100.2199999999998,
-            "peak_bytes": 6800875520,
+            "elapsed_s": 41.479874796999866,
+            "cpu_s": 102.75,
+            "peak_bytes": 6458466304,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6949044803,
-            "peak_sampled_spill_files": 524,
-            "minimum_free_disk_bytes": 91226112000
+            "peak_sampled_spill_bytes": 6948638543,
+            "peak_sampled_spill_files": 322,
+            "minimum_free_disk_bytes": 91226288128
           },
           {
             "status": "ok",
-            "elapsed_s": 37.186855760999606,
-            "cpu_s": 98.17000000000007,
-            "peak_bytes": 6648221696,
+            "elapsed_s": 47.04174790399975,
+            "cpu_s": 100.30999999999995,
+            "peak_bytes": 6513745920,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6949045214,
-            "peak_sampled_spill_files": 526,
-            "minimum_free_disk_bytes": 91225698304
+            "peak_sampled_spill_bytes": 6948638954,
+            "peak_sampled_spill_files": 324,
+            "minimum_free_disk_bytes": 91225845760
           },
           {
             "status": "ok",
-            "elapsed_s": 37.406621761000224,
-            "cpu_s": 97.83999999999992,
-            "peak_bytes": 7307952128,
+            "elapsed_s": 49.74060899599999,
+            "cpu_s": 100.12000000000012,
+            "peak_bytes": 6945619968,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6949045585,
-            "peak_sampled_spill_files": 526,
-            "minimum_free_disk_bytes": 91225186304
+            "peak_sampled_spill_bytes": 6948637227,
+            "peak_sampled_spill_files": 324,
+            "minimum_free_disk_bytes": 91225354240
           }
         ],
         "warm_median": {
-          "elapsed_s": 37.296738760999915,
-          "cpu_s": 98.005,
-          "peak_bytes": 6978086912.0
+          "elapsed_s": 48.39117844999987,
+          "cpu_s": 100.21500000000003,
+          "peak_bytes": 6729682944.0
         }
       },
       "9": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 59.08656277499995,
-            "cpu_s": 173.77999999999997,
-            "peak_bytes": 7771090944,
+            "elapsed_s": 66.95330583999976,
+            "cpu_s": 168.74,
+            "peak_bytes": 6946287616,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 9479684522,
-            "peak_sampled_spill_files": 556,
-            "minimum_free_disk_bytes": 88694136832
+            "peak_sampled_spill_bytes": 9479272872,
+            "peak_sampled_spill_files": 354,
+            "minimum_free_disk_bytes": 88694214656
           },
           {
             "status": "ok",
-            "elapsed_s": 59.19517829200004,
-            "cpu_s": 162.57999999999993,
-            "peak_bytes": 8098455552,
+            "elapsed_s": 72.69610908300001,
+            "cpu_s": 169.6099999999999,
+            "peak_bytes": 7421259776,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 9479673034,
-            "peak_sampled_spill_files": 556,
-            "minimum_free_disk_bytes": 88693809152
+            "peak_sampled_spill_bytes": 9479268948,
+            "peak_sampled_spill_files": 354,
+            "minimum_free_disk_bytes": 88693854208
           },
           {
             "status": "ok",
-            "elapsed_s": 59.536638875000335,
-            "cpu_s": 161.81999999999994,
-            "peak_bytes": 8357236736,
+            "elapsed_s": 67.4236182149998,
+            "cpu_s": 170.92999999999984,
+            "peak_bytes": 7672492032,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 9479688846,
-            "peak_sampled_spill_files": 556,
-            "minimum_free_disk_bytes": 88693444608
+            "peak_sampled_spill_bytes": 9479276871,
+            "peak_sampled_spill_files": 354,
+            "minimum_free_disk_bytes": 88693600256
           }
         ],
         "warm_median": {
-          "elapsed_s": 59.365908583500186,
-          "cpu_s": 162.19999999999993,
-          "peak_bytes": 8227846144.0
+          "elapsed_s": 70.05986364899991,
+          "cpu_s": 170.26999999999987,
+          "peak_bytes": 7546875904.0
         }
       },
       "10": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 19.007255635000092,
-            "cpu_s": 62.65000000000009,
-            "peak_bytes": 7312433152,
+            "elapsed_s": 21.690874502999577,
+            "cpu_s": 64.59999999999991,
+            "peak_bytes": 6880157696,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 9297095488,
-            "peak_sampled_spill_files": 554,
-            "minimum_free_disk_bytes": 88875859968
+            "peak_sampled_spill_bytes": 10061851431,
+            "peak_sampled_spill_files": 420,
+            "minimum_free_disk_bytes": 88110637056
           },
           {
             "status": "ok",
-            "elapsed_s": 19.028887133999888,
-            "cpu_s": 61.960000000000036,
-            "peak_bytes": 7796969472,
+            "elapsed_s": 20.553220824000164,
+            "cpu_s": 63.7800000000002,
+            "peak_bytes": 7300718592,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2608132883,
-            "peak_sampled_spill_files": 520,
-            "minimum_free_disk_bytes": 95564664832
+            "peak_sampled_spill_bytes": 3115279242,
+            "peak_sampled_spill_files": 384,
+            "minimum_free_disk_bytes": 95057149952
           },
           {
             "status": "ok",
-            "elapsed_s": 19.266261820999716,
-            "cpu_s": 62.04999999999973,
-            "peak_bytes": 7933628416,
+            "elapsed_s": 22.997317572000156,
+            "cpu_s": 64.68000000000029,
+            "peak_bytes": 7677505536,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2466748011,
-            "peak_sampled_spill_files": 520,
-            "minimum_free_disk_bytes": 95704875008
+            "peak_sampled_spill_bytes": 2607725341,
+            "peak_sampled_spill_files": 318,
+            "minimum_free_disk_bytes": 95564595200
           }
         ],
         "warm_median": {
-          "elapsed_s": 19.147574477499802,
-          "cpu_s": 62.00499999999988,
-          "peak_bytes": 7865298944.0
+          "elapsed_s": 21.77526919800016,
+          "cpu_s": 64.23000000000025,
+          "peak_bytes": 7489112064.0
         }
       },
       "11": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 2.2108432220002214,
-            "cpu_s": 6.130000000000109,
-            "peak_bytes": 7244374016,
+            "elapsed_s": 2.4997858960000485,
+            "cpu_s": 6.75,
+            "peak_bytes": 6909440000,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2351566611,
-            "peak_sampled_spill_files": 520,
-            "minimum_free_disk_bytes": 95820935168
+            "peak_sampled_spill_bytes": 2351159062,
+            "peak_sampled_spill_files": 318,
+            "minimum_free_disk_bytes": 95821025280
           },
           {
             "status": "ok",
-            "elapsed_s": 2.1743721980001283,
-            "cpu_s": 6.3400000000001455,
-            "peak_bytes": 7129124864,
+            "elapsed_s": 2.3844799270000294,
+            "cpu_s": 6.449999999999818,
+            "peak_bytes": 6912278528,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 246534457,
-            "peak_sampled_spill_files": 290,
-            "minimum_free_disk_bytes": 97926230016
+            "peak_sampled_spill_bytes": 246126915,
+            "peak_sampled_spill_files": 88,
+            "minimum_free_disk_bytes": 97926377472
           },
           {
             "status": "ok",
-            "elapsed_s": 2.181855211999846,
-            "cpu_s": 6.179999999999836,
-            "peak_bytes": 7131582464,
+            "elapsed_s": 2.330192493999675,
+            "cpu_s": 6.470000000000255,
+            "peak_bytes": 6914985984,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 246534457,
-            "peak_sampled_spill_files": 290,
-            "minimum_free_disk_bytes": 97926004736
+            "peak_sampled_spill_bytes": 246126915,
+            "peak_sampled_spill_files": 88,
+            "minimum_free_disk_bytes": 97926168576
           }
         ],
         "warm_median": {
-          "elapsed_s": 2.178113704999987,
-          "cpu_s": 6.259999999999991,
-          "peak_bytes": 7130353664.0
+          "elapsed_s": 2.3573362104998523,
+          "cpu_s": 6.460000000000036,
+          "peak_bytes": 6913632256.0
         }
       },
       "12": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 12.968902350999997,
-            "cpu_s": 40.16000000000031,
-            "peak_bytes": 7439261696,
+            "elapsed_s": 13.270517999000276,
+            "cpu_s": 40.33999999999969,
+            "peak_bytes": 7023173632,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1464384298,
-            "peak_sampled_spill_files": 562,
-            "minimum_free_disk_bytes": 96707182592
+            "peak_sampled_spill_bytes": 1463982823,
+            "peak_sampled_spill_files": 360,
+            "minimum_free_disk_bytes": 96707350528
           },
           {
             "status": "ok",
-            "elapsed_s": 12.83798819499998,
-            "cpu_s": 39.01999999999953,
-            "peak_bytes": 7479242752,
+            "elapsed_s": 14.596790832999886,
+            "cpu_s": 40.11999999999989,
+            "peak_bytes": 7205081088,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1448768575,
-            "peak_sampled_spill_files": 560,
-            "minimum_free_disk_bytes": 96722894848
+            "peak_sampled_spill_bytes": 2266887827,
+            "peak_sampled_spill_files": 548,
+            "minimum_free_disk_bytes": 95903694848
           },
           {
             "status": "ok",
-            "elapsed_s": 13.277804541000023,
-            "cpu_s": 39.0,
-            "peak_bytes": 7463849984,
+            "elapsed_s": 15.822836066000036,
+            "cpu_s": 39.51000000000022,
+            "peak_bytes": 6931218432,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2267302915,
-            "peak_sampled_spill_files": 750,
-            "minimum_free_disk_bytes": 95903371264
+            "peak_sampled_spill_bytes": 1867571618,
+            "peak_sampled_spill_files": 550,
+            "minimum_free_disk_bytes": 96302886912
           }
         ],
         "warm_median": {
-          "elapsed_s": 13.057896368000002,
-          "cpu_s": 39.00999999999976,
-          "peak_bytes": 7471546368.0
+          "elapsed_s": 15.209813449499961,
+          "cpu_s": 39.815000000000055,
+          "peak_bytes": 7068149760.0
         }
       },
       "13": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 13.912388444000044,
-            "cpu_s": 46.36000000000058,
-            "peak_bytes": 7417835520,
+            "elapsed_s": 14.52293248299975,
+            "cpu_s": 47.10999999999967,
+            "peak_bytes": 7057723392,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2013612601,
-            "peak_sampled_spill_files": 562,
-            "minimum_free_disk_bytes": 96157511680
+            "peak_sampled_spill_bytes": 2013212673,
+            "peak_sampled_spill_files": 352,
+            "minimum_free_disk_bytes": 96157675520
           },
           {
             "status": "ok",
-            "elapsed_s": 13.78984788300022,
-            "cpu_s": 45.929999999999836,
-            "peak_bytes": 7457259520,
+            "elapsed_s": 14.09915408400002,
+            "cpu_s": 47.130000000000564,
+            "peak_bytes": 7317139456,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 2728523397,
-            "peak_sampled_spill_files": 644,
-            "minimum_free_disk_bytes": 95442251776
+            "peak_sampled_spill_bytes": 2728127616,
+            "peak_sampled_spill_files": 442,
+            "minimum_free_disk_bytes": 95442399232
           },
           {
             "status": "ok",
-            "elapsed_s": 13.492073642999912,
-            "cpu_s": 45.76999999999998,
-            "peak_bytes": 7337897984,
+            "elapsed_s": 13.866829399999915,
+            "cpu_s": 47.06999999999971,
+            "peak_bytes": 7469830144,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1909986961,
-            "peak_sampled_spill_files": 374,
-            "minimum_free_disk_bytes": 96261496832
+            "peak_sampled_spill_bytes": 1909585716,
+            "peak_sampled_spill_files": 172,
+            "minimum_free_disk_bytes": 96261656576
           }
         ],
         "warm_median": {
-          "elapsed_s": 13.640960763000066,
-          "cpu_s": 45.84999999999991,
-          "peak_bytes": 7397578752.0
+          "elapsed_s": 13.982991741999967,
+          "cpu_s": 47.100000000000136,
+          "peak_bytes": 7393484800.0
         }
       },
       "14": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 5.748859773999811,
-            "cpu_s": 15.290000000000418,
-            "peak_bytes": 7332564992,
+            "elapsed_s": 6.36202104899985,
+            "cpu_s": 16.090000000000146,
+            "peak_bytes": 7358930944,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 1660740548,
-            "peak_sampled_spill_files": 427,
-            "minimum_free_disk_bytes": 96510713856
+            "peak_sampled_spill_bytes": 1857647112,
+            "peak_sampled_spill_files": 390,
+            "minimum_free_disk_bytes": 96312721408
           },
           {
             "status": "ok",
-            "elapsed_s": 5.601213178999842,
-            "cpu_s": 15.169999999999618,
-            "peak_bytes": 7261241344,
+            "elapsed_s": 6.134306543000093,
+            "cpu_s": 16.61999999999989,
+            "peak_bytes": 7350501376,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 625533439,
-            "peak_sampled_spill_files": 647,
-            "minimum_free_disk_bytes": 97544769536
+            "peak_sampled_spill_bytes": 1857647112,
+            "peak_sampled_spill_files": 390,
+            "minimum_free_disk_bytes": 96312721408
           },
           {
             "status": "ok",
-            "elapsed_s": 5.796953134999967,
-            "cpu_s": 15.88000000000011,
-            "peak_bytes": 7267807232,
+            "elapsed_s": 5.916125939999802,
+            "cpu_s": 15.909999999999854,
+            "peak_bytes": 7352434688,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 625533871,
-            "peak_sampled_spill_files": 648,
-            "minimum_free_disk_bytes": 97544753152
+            "peak_sampled_spill_bytes": 625126329,
+            "peak_sampled_spill_files": 446,
+            "minimum_free_disk_bytes": 97544781824
           }
         ],
         "warm_median": {
-          "elapsed_s": 5.6990831569999045,
-          "cpu_s": 15.524999999999864,
-          "peak_bytes": 7264524288.0
+          "elapsed_s": 6.0252162414999475,
+          "cpu_s": 16.264999999999873,
+          "peak_bytes": 7351468032.0
         }
       },
       "15": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 12.10009147000028,
-            "cpu_s": 34.179999999999836,
-            "peak_bytes": 7287840768,
+            "elapsed_s": 12.832604998000079,
+            "cpu_s": 37.3100000000004,
+            "peak_bytes": 7375880192,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 679120937,
-            "peak_sampled_spill_files": 848,
-            "minimum_free_disk_bytes": 97490231296
+            "peak_sampled_spill_bytes": 625126329,
+            "peak_sampled_spill_files": 446,
+            "minimum_free_disk_bytes": 97544773632
           },
           {
             "status": "ok",
-            "elapsed_s": 12.133214980000048,
-            "cpu_s": 35.16000000000031,
-            "peak_bytes": 7248166912,
+            "elapsed_s": 13.007154434000313,
+            "cpu_s": 37.13999999999987,
+            "peak_bytes": 7370616832,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 679121650,
-            "peak_sampled_spill_files": 856,
-            "minimum_free_disk_bytes": 97490202624
+            "peak_sampled_spill_bytes": 481464707,
+            "peak_sampled_spill_files": 432,
+            "minimum_free_disk_bytes": 97688158208
           },
           {
             "status": "ok",
-            "elapsed_s": 12.112553535000188,
-            "cpu_s": 35.11999999999989,
-            "peak_bytes": 7245201408,
+            "elapsed_s": 13.06784570200034,
+            "cpu_s": 37.64000000000033,
+            "peak_bytes": 7369211904,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 481842990,
-            "peak_sampled_spill_files": 636,
-            "minimum_free_disk_bytes": 97687740416
+            "peak_sampled_spill_bytes": 628302396,
+            "peak_sampled_spill_files": 651,
+            "minimum_free_disk_bytes": 97540444160
           }
         ],
         "warm_median": {
-          "elapsed_s": 12.122884257500118,
-          "cpu_s": 35.1400000000001,
-          "peak_bytes": 7246684160.0
+          "elapsed_s": 13.037500068000327,
+          "cpu_s": 37.3900000000001,
+          "peak_bytes": 7369914368.0
         }
       },
       "16": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 4.216686415999902,
-            "cpu_s": 13.039999999999509,
-            "peak_bytes": 7280541696,
+            "elapsed_s": 4.385632267999881,
+            "cpu_s": 13.960000000000036,
+            "peak_bytes": 7540023296,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 651148575,
-            "peak_sampled_spill_files": 636,
-            "minimum_free_disk_bytes": 97519218688
+            "peak_sampled_spill_bytes": 901661628,
+            "peak_sampled_spill_files": 506,
+            "minimum_free_disk_bytes": 97267224576
           },
           {
             "status": "ok",
-            "elapsed_s": 3.8836787640002512,
-            "cpu_s": 12.420000000000528,
-            "peak_bytes": 7174201344,
+            "elapsed_s": 4.144526233999841,
+            "cpu_s": 13.1599999999994,
+            "peak_bytes": 7609991168,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 651148975,
-            "peak_sampled_spill_files": 280,
-            "minimum_free_disk_bytes": 97519063040
+            "peak_sampled_spill_bytes": 901661628,
+            "peak_sampled_spill_files": 506,
+            "minimum_free_disk_bytes": 97267224576
           },
           {
             "status": "ok",
-            "elapsed_s": 3.9388968150001347,
-            "cpu_s": 12.139999999999873,
-            "peak_bytes": 7151415296,
+            "elapsed_s": 4.005947440999989,
+            "cpu_s": 12.860000000000582,
+            "peak_bytes": 7530233856,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 651149036,
-            "peak_sampled_spill_files": 280,
-            "minimum_free_disk_bytes": 97518907392
+            "peak_sampled_spill_bytes": 650741494,
+            "peak_sampled_spill_files": 78,
+            "minimum_free_disk_bytes": 97519075328
           }
         ],
         "warm_median": {
-          "elapsed_s": 3.911287789500193,
-          "cpu_s": 12.2800000000002,
-          "peak_bytes": 7162808320.0
+          "elapsed_s": 4.075236837499915,
+          "cpu_s": 13.009999999999991,
+          "peak_bytes": 7570112512.0
         }
       },
       "17": {
         "samples": [
           {
             "status": "ok",
-            "elapsed_s": 49.65605754399985,
-            "cpu_s": 157.84000000000015,
-            "peak_bytes": 7141167104,
+            "elapsed_s": 58.435181763999935,
+            "cpu_s": 172.48000000000002,
+            "peak_bytes": 8347828224,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 6561409550,
-            "peak_sampled_spill_files": 652,
-            "minimum_free_disk_bytes": 91607306240
+            "peak_sampled_spill_bytes": 6571910068,
+            "peak_sampled_spill_files": 458,
+            "minimum_free_disk_bytes": 91596533760
           },
           {
             "status": "ok",
-            "elapsed_s": 46.85200422800017,
-            "cpu_s": 154.0999999999999,
-            "peak_bytes": 7484829696,
+            "elapsed_s": 58.18632552899999,
+            "cpu_s": 173.76999999999953,
+            "peak_bytes": 8408645632,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 10500409210,
-            "peak_sampled_spill_files": 840,
-            "minimum_free_disk_bytes": 87667544064
+            "peak_sampled_spill_bytes": 6544127544,
+            "peak_sampled_spill_files": 430,
+            "minimum_free_disk_bytes": 91623469056
           },
           {
             "status": "ok",
-            "elapsed_s": 47.353505853000115,
-            "cpu_s": 154.45999999999958,
-            "peak_bytes": 7547297792,
+            "elapsed_s": 58.17427098300004,
+            "cpu_s": 171.17000000000053,
+            "peak_bytes": 8275849216,
             "matches_spark": true,
-            "peak_sampled_spill_bytes": 12845001007,
-            "peak_sampled_spill_files": 1057,
-            "minimum_free_disk_bytes": 85320691712
+            "peak_sampled_spill_bytes": 9697841697,
+            "peak_sampled_spill_files": 588,
+            "minimum_free_disk_bytes": 88469729280
           }
         ],
         "warm_median": {
-          "elapsed_s": 47.10275504050014,
-          "cpu_s": 154.27999999999975,
-          "peak_bytes": 7516063744.0
+          "elapsed_s": 58.180298256000015,
+          "cpu_s": 172.47000000000003,
+          "peak_bytes": 8342247424.0
         }
       },
       "18": {
         "samples": [
           {
-            "status": "ok",
-            "elapsed_s": 48.28505576800035,
-            "cpu_s": 166.64000000000078,
-            "peak_bytes": 8138571776,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 12826422191,
-            "peak_sampled_spill_files": 1056,
-            "minimum_free_disk_bytes": 85340512256
+            "status": "error",
+            "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:15012: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:15012: Failed to connect to remote host: Connection refused\"\n>",
+            "elapsed_s": 635.9452064910001,
+            "cpu_s": 71.67999999999938,
+            "peak_bytes": 8855957504,
+            "matches_spark": false,
+            "peak_sampled_spill_bytes": 6528262336,
+            "peak_sampled_spill_files": 487,
+            "minimum_free_disk_bytes": 91639611392
           },
           {
-            "status": "ok",
-            "elapsed_s": 47.887025619999804,
-            "cpu_s": 163.94999999999982,
-            "peak_bytes": 8025292800,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 4596806092,
-            "peak_sampled_spill_files": 748,
-            "minimum_free_disk_bytes": 93569368064
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 47.668476401000135,
-            "cpu_s": 165.59999999999945,
-            "peak_bytes": 8030957568,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 4610642830,
-            "peak_sampled_spill_files": 750,
-            "minimum_free_disk_bytes": 93556404224
+            "status": "timeout",
+            "error": "TimeoutError: 650s deadline, client active=True",
+            "elapsed_s": 653.0017160160005,
+            "cpu_s": 0.0,
+            "peak_bytes": null,
+            "matches_spark": false,
+            "peak_sampled_spill_bytes": 4314311704,
+            "peak_sampled_spill_files": 487,
+            "minimum_free_disk_bytes": 93853220864
           }
         ],
-        "warm_median": {
-          "elapsed_s": 47.77775101049997,
-          "cpu_s": 164.77499999999964,
-          "peak_bytes": 8028125184.0
-        }
-      },
-      "19": {
-        "samples": [
-          {
-            "status": "ok",
-            "elapsed_s": 9.357076043000234,
-            "cpu_s": 30.40000000000009,
-            "peak_bytes": 6978031616,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 3652249883,
-            "peak_sampled_spill_files": 718,
-            "minimum_free_disk_bytes": 94514753536
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 9.328195906999554,
-            "cpu_s": 30.029999999999745,
-            "peak_bytes": 6980354048,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 452727054,
-            "peak_sampled_spill_files": 638,
-            "minimum_free_disk_bytes": 97714290688
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 9.353553549000026,
-            "cpu_s": 30.470000000000255,
-            "peak_bytes": 6986944512,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 452728609,
-            "peak_sampled_spill_files": 644,
-            "minimum_free_disk_bytes": 97714253824
-          }
-        ],
-        "warm_median": {
-          "elapsed_s": 9.34087472799979,
-          "cpu_s": 30.25,
-          "peak_bytes": 6983649280.0
-        }
-      },
-      "20": {
-        "samples": [
-          {
-            "status": "ok",
-            "elapsed_s": 8.97124254299979,
-            "cpu_s": 27.179999999999836,
-            "peak_bytes": 7001276416,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 1242134108,
-            "peak_sampled_spill_files": 500,
-            "minimum_free_disk_bytes": 96924815360
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 8.837816802000361,
-            "cpu_s": 27.200000000000273,
-            "peak_bytes": 7011229696,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 1242134108,
-            "peak_sampled_spill_files": 500,
-            "minimum_free_disk_bytes": 96924516352
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 8.73056041899963,
-            "cpu_s": 26.860000000000127,
-            "peak_bytes": 7030165504,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 1242128164,
-            "peak_sampled_spill_files": 500,
-            "minimum_free_disk_bytes": 96924508160
-          }
-        ],
-        "warm_median": {
-          "elapsed_s": 8.784188610499996,
-          "cpu_s": 27.0300000000002,
-          "peak_bytes": 7020697600.0
-        }
-      },
-      "21": {
-        "samples": [
-          {
-            "status": "ok",
-            "elapsed_s": 114.86325913500013,
-            "cpu_s": 407.9199999999996,
-            "peak_bytes": 7048249344,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 7237970513,
-            "peak_sampled_spill_files": 924,
-            "minimum_free_disk_bytes": 90926673920
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 113.15190183499999,
-            "cpu_s": 406.46000000000004,
-            "peak_bytes": 6469103616,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 7237896593,
-            "peak_sampled_spill_files": 924,
-            "minimum_free_disk_bytes": 90926313472
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 112.57073850000006,
-            "cpu_s": 405.6099999999997,
-            "peak_bytes": 6593490944,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 7237990857,
-            "peak_sampled_spill_files": 924,
-            "minimum_free_disk_bytes": 90925826048
-          }
-        ],
-        "warm_median": {
-          "elapsed_s": 112.86132016750003,
-          "cpu_s": 406.03499999999985,
-          "peak_bytes": 6531297280.0
-        }
-      },
-      "22": {
-        "samples": [
-          {
-            "status": "ok",
-            "elapsed_s": 5.6600044589999925,
-            "cpu_s": 18.8700000000008,
-            "peak_bytes": 6529265664,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 5575076940,
-            "peak_sampled_spill_files": 998,
-            "minimum_free_disk_bytes": 92588290048
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 5.602572214999782,
-            "cpu_s": 18.949999999999818,
-            "peak_bytes": 6561484800,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 5575076940,
-            "peak_sampled_spill_files": 998,
-            "minimum_free_disk_bytes": 92588290048
-          },
-          {
-            "status": "ok",
-            "elapsed_s": 5.524302370000441,
-            "cpu_s": 18.920000000000073,
-            "peak_bytes": 6573109248,
-            "matches_spark": true,
-            "peak_sampled_spill_bytes": 636680853,
-            "peak_sampled_spill_files": 317,
-            "minimum_free_disk_bytes": 97528524800
-          }
-        ],
-        "warm_median": {
-          "elapsed_s": 5.563437292500112,
-          "cpu_s": 18.934999999999945,
-          "peak_bytes": 6567297024.0
-        }
+        "warm_median": null
       }
     }
   },
   "scale": 50,
-  "disk_before_generation_bytes": 110796386304,
+  "disk_before_generation_bytes": 110795714560,
   "load_disk_samples": [
-    110401073152,
-    110401064960,
-    110200451072,
-    110000181248,
-    109800247296,
-    109620920320,
-    109427982336,
-    109233250304,
-    109033721856,
-    108864983040,
-    108667219968,
-    108499914752,
-    108299415552,
-    108099104768,
-    107901255680,
-    107731869696,
-    107531587584,
-    107331555328,
-    107160961024,
-    106963427328,
-    106763075584,
-    106562793472,
-    106362454016,
-    106195951616,
-    105995423744,
-    105795149824,
-    105595076608,
-    105428844544,
-    105229193216,
-    105028685824,
-    104849899520,
-    104661700608,
-    104462090240,
-    104271085568,
-    104063119360,
-    103896887296,
-    103696039936,
-    103503527936,
-    103296036864,
-    103129018368,
-    102928875520,
-    102729269248,
-    102562172928,
-    102362398720,
-    102195204096,
-    101995261952,
-    101794660352,
-    101627670528,
-    101427769344,
-    101251186688,
-    101061038080,
-    100861259776,
-    100694126592,
-    100493840384,
-    100293627904,
-    100127293440,
-    99927777280,
-    99728334848,
-    99561066496,
-    99360743424,
-    99160764416,
-    98994724864,
-    98795184128,
-    98595737600,
-    98429489152,
-    98229919744,
-    98029105152,
-    97862889472,
-    97663459328,
-    97472118784,
-    97296977920,
-    97096384512,
-    96841191424,
-    96506884096,
-    96172240896,
-    95839031296,
-    95537459200,
-    95202721792,
-    94871195648,
-    94600720384,
-    94400438272,
-    94233182208,
-    94033018880,
-    93832593408,
-    93665710080,
-    93465739264,
-    93265563648,
-    93099171840,
-    92899086336,
-    92698705920,
-    92498100224,
-    92312522752,
-    92107001856,
-    91931217920,
-    91730604032,
-    91530240000,
-    91329626112,
-    91162877952,
-    90908782592,
-    90642780160,
-    90348781568,
-    90248437760,
-    90114809856,
-    89959821312,
-    89959804928,
-    89959776256,
-    89958428672,
-    89958346752,
-    89958158336,
-    89958154240,
-    89958158336,
-    89958158336,
-    89958154240,
-    89958158336,
-    89958158336,
-    89913376768,
-    89744867328,
-    89744711680,
-    89718939648,
-    89718951936,
-    89718951936,
-    89718951936,
-    89718951936,
-    89355124736,
-    89393872896,
-    89393872896,
-    89393872896,
-    89393872896,
-    89016373248,
-    89068785664,
-    89068785664,
-    89068785664,
-    89068785664,
-    88756953088,
-    88743718912,
-    88743718912,
-    88743718912,
-    88697147392,
-    88498958336,
-    88431824896,
-    88363683840,
-    88281407488,
-    88281403392,
-    88281407488,
-    88281407488,
-    88281407488,
-    88135155712,
-    87970885632,
-    87959195648,
-    87959195648,
-    87879704576,
-    87879716864,
-    87879716864,
-    87879716864,
-    87879716864,
-    87879716864,
-    87879716864,
-    87774625792,
-    87590817792,
-    87590817792,
-    87590817792,
-    87590817792,
-    87590817792,
-    87590817792,
-    87590817792,
-    87261417472,
-    87304400896,
-    87304400896,
-    87304400896,
-    87304400896,
-    87304396800,
-    87304400896,
-    87252287488,
-    87015460864,
-    87015460864,
-    87015460864,
-    87015460864,
-    87015460864,
-    87015460864,
-    87015460864,
-    86643740672,
-    86726549504,
-    86726549504,
-    86726545408,
-    86726545408,
-    86726545408,
-    86726545408,
-    86726545408,
-    86404042752,
-    86437601280,
-    86437601280,
-    86437601280,
-    86437601280,
-    86437601280,
-    86437601280,
-    86373666816,
-    86260936704,
-    86151176192,
-    86151176192,
-    86151176192,
-    86151176192,
-    86151176192,
-    86025510912,
-    85952532480,
-    85952544768,
-    85952544768,
-    85952544768,
-    85952544768,
-    85952540672,
-    85952544768,
-    85952544768,
-    85952544768,
-    85952544768,
-    85680582656,
-    85631684608,
-    85631684608,
-    85631684608,
-    85631684608,
-    85631684608,
-    85631684608,
-    85631684608,
-    85631684608,
-    85465554944,
-    85390323712,
-    85310799872,
-    85310799872,
-    85310799872,
-    85310799872,
-    85310799872,
-    85310799872,
-    85310799872,
-    85310799872,
-    85138112512,
-    85069283328,
-    84989792256,
-    84989792256,
-    84989792256,
-    84989788160,
-    84989792256,
-    84989792256,
-    84989792256,
-    84915322880,
-    84830937088,
-    84748578816,
-    84669173760,
-    84669173760,
-    84669173760,
-    84669173760,
-    84669173760,
-    84669173760,
-    84669173760,
-    84669173760,
-    84461637632,
-    84507242496,
-    84315832320,
-    84348338176,
-    84348338176,
-    84348338176,
-    84348338176,
-    84348338176,
-    84348338176,
-    84348338176,
-    84348338176,
-    84268826624,
-    84235268096,
-    84062912512,
-    84027453440,
-    84027453440,
-    84027453440,
-    84027453440,
-    84027453440,
-    84027449344,
-    84028706816,
-    83966455808,
-    83949215744,
-    83746316288,
-    83707740160,
-    83707740160,
-    83707740160,
-    83707740160,
-    83707740160,
-    83707740160,
-    83707740160,
-    83628310528,
-    83585306624,
-    83548798976,
-    83386826752,
-    83386826752,
-    83386826752,
-    83386826752,
-    83386826752,
-    83386826752,
-    83386826752,
-    83386826752,
-    83307323392,
-    83227877376,
-    83148337152,
-    83065925632,
-    83065925632,
-    83065925632,
-    83065925632,
-    83065921536,
-    83065925632,
-    83065925632,
-    83032371200,
-    82897395712,
-    82906820608,
-    82744844288,
-    82744844288,
-    82744844288,
-    82744844288,
-    82744844288,
-    82744844288,
-    82744844288,
-    82633814016,
-    82585772032,
-    82585767936,
-    82423844864,
-    82423844864,
-    82423844864,
-    82423844864,
-    82423844864,
-    82423844864,
-    82423844864,
-    82344366080,
-    82264887296,
-    82214543360,
-    82102915072,
-    82102910976,
-    82102910976,
-    82102910976,
-    82102910976,
-    82102910976,
-    82102910976,
-    81937240064,
-    81944043520,
-    81804541952,
-    81782050816,
-    81782050816,
-    81782050816,
-    81782050816,
-    81782050816,
-    81782050816,
-    81782050816,
-    81623134208,
-    81623134208,
-    81410818048,
-    81461141504,
-    81461141504,
-    81461141504,
-    81461141504,
-    81461141504,
-    81461141504,
-    81325473792,
-    81302216704,
-    81302216704,
-    81065779200,
-    81140219904,
-    81140219904,
-    81140219904,
-    81140219904,
-    81140219904,
-    81140219904,
-    80985161728,
-    80981164032,
-    80981164032,
-    80788881408,
-    80819290112,
-    80819290112,
-    80819290112,
-    80819290112,
-    80819290112,
-    80716775424,
-    80660324352,
-    80660324352,
-    80660324352,
-    80498339840,
-    80498339840,
-    80498339840,
-    80498339840,
-    80498339840,
-    80498339840,
-    80389017600,
-    80339243008,
-    80339243008,
-    80339243008,
-    80177254400,
-    80177254400,
-    80177254400,
-    80177254400,
-    80177254400,
-    80177254400,
-    80055787520,
-    80018268160,
-    80018264064,
-    79949041664,
-    79856320512,
-    79856320512,
-    79856320512,
-    79856320512,
-    79856320512,
-    79856320512,
-    79697330176,
-    79697330176,
-    79697330176,
-    79617884160,
-    79535419392,
-    79535419392,
-    79535419392,
-    79535419392,
-    79535419392,
-    79443402752,
-    79376441344,
-    79376441344,
-    79376441344,
-    79297040384,
-    79214592000,
-    79214592000,
-    79214592000,
-    79214592000,
-    79214592000,
-    79135121408,
-    79055605760,
-    79055605760,
-    79055605760,
-    78976061440,
-    78893584384,
-    78893584384,
-    78893584384,
-    78893584384,
-    78864584704,
-    78734635008,
-    78734635008,
-    78734635008,
-    78655209472,
-    78655209472,
-    78572740608,
-    78572740608,
-    78572740608,
-    78572740608,
-    78470127616,
-    78413705216,
-    78413705216,
-    78413705216,
-    78334259200,
-    78246367232,
-    78254751744,
-    78254751744,
-    78254747648,
-    78254747648,
-    78121885696,
-    78092963840,
-    77908295680
+    110400417792,
+    110400405504,
+    110233137152,
+    110032695296,
+    109866631168,
+    109698949120,
+    109498531840,
+    109332250624,
+    109166022656,
+    108999737344,
+    108833591296,
+    108666056704,
+    108465721344,
+    108298756096,
+    108131815424,
+    107931508736,
+    107764224000,
+    107597385728,
+    107397996544,
+    107230646272,
+    107029860352,
+    106862649344,
+    106680053760,
+    106495590400,
+    106328346624,
+    106128871424,
+    105961779200,
+    105782190080,
+    105594417152,
+    105428185088,
+    105233674240,
+    105061576704,
+    104861155328,
+    104694591488,
+    104527925248,
+    104328413184,
+    104128950272,
+    103962632192,
+    103795970048,
+    103595528192,
+    103428481024,
+    103262064640,
+    103094816768,
+    102894915584,
+    102728613888,
+    102561513472,
+    102361739264,
+    102194544640,
+    102027776000,
+    101860671488,
+    101660553216,
+    101493542912,
+    101327245312,
+    101160902656,
+    100960346112,
+    100794077184,
+    100626399232,
+    100436832256,
+    100259635200,
+    100093411328,
+    99923030016,
+    99727675392,
+    99560407040,
+    99360083968,
+    99193417728,
+    99027206144,
+    98827698176,
+    98661609472,
+    98495311872,
+    98297737216,
+    98128703488,
+    97961906176,
+    97795719168,
+    97596223488,
+    97429340160,
+    97235955712,
+    97062187008,
+    96773808128,
+    96472682496,
+    96171585536,
+    95871111168,
+    95570026496,
+    95269142528,
+    94967590912,
+    94633414656,
+    94499667968,
+    94312550400,
+    94132715520,
+    93965807616,
+    93798387712,
+    93630971904,
+    93431922688,
+    93264904192,
+    93085712384,
+    92898426880,
+    92698046464,
+    92530987008,
+    92331065344,
+    92164120576,
+    91963928576,
+    91796967424,
+    91596668928,
+    91429376000,
+    91229732864,
+    91041583104,
+    90807894016,
+    90541498368,
+    90348122112,
+    90214469632,
+    90080591872,
+    89959157760,
+    89959124992,
+    89957826560,
+    89957752832,
+    89957650432,
+    89957490688,
+    89957502976,
+    89957502976,
+    89957502976,
+    89957502976,
+    89957502976,
+    89957502976,
+    89957502976,
+    89713823744,
+    89744056320,
+    89718304768,
+    89718296576,
+    89718296576,
+    89718296576,
+    89718296576,
+    89358680064,
+    89393221632,
+    89393217536,
+    89393213440,
+    89393213440,
+    89056374784,
+    89068126208,
+    89068126208,
+    89068126208,
+    89068126208,
+    88685436928,
+    88743055360,
+    88743055360,
+    88743055360,
+    88743055360,
+    88381612032,
+    88417902592,
+    88417898496,
+    88293793792,
+    88280735744,
+    88280735744,
+    88280735744,
+    88280735744,
+    88280735744,
+    87970213888,
+    87958523904,
+    87958523904,
+    87879045120,
+    87879049216,
+    87879049216,
+    87879049216,
+    87879049216,
+    87879049216,
+    87879049216,
+    87879049216,
+    87879049216,
+    87540867072,
+    87590150144,
+    87590150144,
+    87590150144,
+    87590150144,
+    87590150144,
+    87590150144,
+    87590150144,
+    87501975552,
+    87340511232,
+    87274369024,
+    87303729152,
+    87303729152,
+    87303725056,
+    87303729152,
+    87303729152,
+    87303729152,
+    87170945024,
+    87087640576,
+    86972846080,
+    87014789120,
+    87014789120,
+    87014789120,
+    87014789120,
+    87014789120,
+    87014789120,
+    86877405184,
+    86798729216,
+    86725877760,
+    86725877760,
+    86725877760,
+    86725877760,
+    86725873664,
+    86725873664,
+    86725873664,
+    86593642496,
+    86509785088,
+    86463524864,
+    86436929536,
+    86436929536,
+    86436929536,
+    86436929536,
+    86436925440,
+    86436929536,
+    86265896960,
+    86220857344,
+    86150504448,
+    86150504448,
+    86150504448,
+    86150504448,
+    86097690624,
+    85951926272,
+    85951885312,
+    85951885312,
+    85951885312,
+    85951885312,
+    85951885312,
+    85951885312,
+    85951885312,
+    85951885312,
+    85951885312,
+    85754511360,
+    85631025152,
+    85631025152,
+    85631025152,
+    85631025152,
+    85631025152,
+    85631025152,
+    85631025152,
+    85631025152,
+    85631025152,
+    85327568896,
+    85310136320,
+    85310136320,
+    85310136320,
+    85310136320,
+    85310136320,
+    85310136320,
+    85310136320,
+    85310136320,
+    85310136320,
+    85087506432,
+    84989128704,
+    84989124608,
+    84989124608,
+    84989124608,
+    84989124608,
+    84989124608,
+    84989124608,
+    84989124608,
+    84984827904,
+    84830269440,
+    84725891072,
+    84668506112,
+    84668506112,
+    84668506112,
+    84668538880,
+    84668538880,
+    84668538880,
+    84668538880,
+    84608999424,
+    84589051904,
+    84393697280,
+    84348841984,
+    84348841984,
+    84348841984,
+    84348837888,
+    84348841984,
+    84348841984,
+    84348841984,
+    84348841984,
+    84242063360,
+    84269330432,
+    84085432320,
+    84027957248,
+    84027957248,
+    84027957248,
+    84027957248,
+    84027957248,
+    84027957248,
+    84027957248,
+    84027957248,
+    83948466176,
+    83816665088,
+    83706990592,
+    83706990592,
+    83706990592,
+    83706990592,
+    83706990592,
+    83706990592,
+    83706986496,
+    83706990592,
+    83596103680,
+    83627560960,
+    83349372928,
+    83386077184,
+    83386077184,
+    83386077184,
+    83386077184,
+    83386073088,
+    83386077184,
+    83386077184,
+    83280359424,
+    83306573824,
+    83172331520,
+    83065176064,
+    83065176064,
+    83065176064,
+    83065176064,
+    83065176064,
+    83065176064,
+    83065176064,
+    82988765184,
+    82985615360,
+    82985615360,
+    82744090624,
+    82744090624,
+    82744090624,
+    82744090624,
+    82744090624,
+    82744090624,
+    82744090624,
+    82664521728,
+    82664521728,
+    82571476992,
+    82423091200,
+    82423091200,
+    82423091200,
+    82423091200,
+    82423091200,
+    82423087104,
+    82423091200,
+    82343612416,
+    82343612416,
+    82264133632,
+    82102161408,
+    82102161408,
+    82102161408,
+    82102161408,
+    82102161408,
+    82102161408,
+    82021445632,
+    82022744064,
+    82022744064,
+    81847631872,
+    81781301248,
+    81781301248,
+    81781301248,
+    81781301248,
+    81781301248,
+    81781301248,
+    81701822464,
+    81701822464,
+    81629450240,
+    81383915520,
+    81460391936,
+    81460391936,
+    81460391936,
+    81460391936,
+    81460391936,
+    81460391936,
+    81380913152,
+    81380913152,
+    81301467136,
+    81119551488,
+    81139470336,
+    81139470336,
+    81139470336,
+    81139470336,
+    81139470336,
+    81063952384,
+    81059934208,
+    81059934208,
+    80980414464,
+    80832753664,
+    80818544640,
+    80818544640,
+    80818544640,
+    80818544640,
+    80818544640,
+    80739098624,
+    80739094528,
+    80739094528,
+    80550768640,
+    80580128768,
+    80497594368,
+    80497594368,
+    80497594368,
+    80497590272,
+    80497594368,
+    80418004992,
+    80418004992,
+    80418000896,
+    80228564992,
+    80258973696,
+    80176508928,
+    80176508928,
+    80176508928,
+    80176508928,
+    80176508928,
+    80097017856,
+    80097013760,
+    80063459328,
+    79938072576,
+    79938072576,
+    79855575040,
+    79855575040,
+    79855575040,
+    79855575040,
+    79855575040,
+    79776075776,
+    79776075776,
+    79643103232,
+    79617134592,
+    79617134592,
+    79534669824,
+    79534669824,
+    79534669824,
+    79534669824,
+    79407001600,
+    79455236096,
+    79455236096,
+    79280570368,
+    79296294912,
+    79296294912,
+    79213838336,
+    79213842432,
+    79213842432,
+    79213842432,
+    79134375936,
+    79134375936,
+    79032532992,
+    78975315968,
+    78975311872,
+    78975311872,
+    78892830720,
+    78892830720,
+    78892830720,
+    78759866368,
+    78813343744,
+    78813339648,
+    78733881344,
+    78654455808,
+    78654455808,
+    78640013312,
+    78571986944,
+    78571986944,
+    78571986944,
+    78492442624,
+    78492442624,
+    78431625216,
+    78333501440,
+    78333501440,
+    78333501440,
+    78222536704,
+    78253993984,
+    78253993984,
+    78220439552,
+    78171594752,
+    78171594752,
+    77957029888
   ],
   "data_load": {
     "nation": {
       "rows": 25,
-      "seconds": 3.62
+      "seconds": 3.68
     },
     "region": {
       "rows": 5,
-      "seconds": 0.58
+      "seconds": 0.64
     },
     "part": {
       "rows": 10000000,
-      "seconds": 8.95
+      "seconds": 9.12
     },
     "supplier": {
       "rows": 500000,
-      "seconds": 1.23
+      "seconds": 1.42
     },
     "partsupp": {
       "rows": 40000000,
-      "seconds": 23.23
+      "seconds": 23.57
     },
     "customer": {
       "rows": 7500000,
-      "seconds": 8.85
+      "seconds": 8.44
     },
     "orders": {
       "rows": 75000000,
-      "seconds": 52.95
+      "seconds": 60.27
     },
     "lineitem": {
       "rows": 300005811,
-      "seconds": 249.66
+      "seconds": 249.22
     }
   },
-  "disk_after_reference_bytes": 98527211520,
-  "disk_after_run_bytes": 98311729152,
-  "storage_limit": "Sail container has an 8 GiB cgroup cap. Comet has a 6 GiB JVM heap plus 2 GiB off-heap allocation limit."
+  "disk_after_reference_bytes": 98526543872,
+  "disk_after_run_bytes": 98169409536,
+  "storage_limit": "Sail has an 8 GiB container cap. Comet has 6 GiB heap and 2 GiB off-heap. The raw host cgroup record shows whether its post-startup total cap was applied."
 }

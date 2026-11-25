@@ -1,0 +1,125 @@
+[06:36:08] generating TPC-H sf=50 into /tmp/p3-tpch-50-ryq91nyz/sf50
+[06:38:02] loaded tpch_sf50.nation: 25 rows
+[06:38:03] loaded tpch_sf50.region: 5 rows
+[06:38:12] loaded tpch_sf50.part: 10000000 rows
+[06:38:13] loaded tpch_sf50.supplier: 500000 rows
+[06:38:37] loaded tpch_sf50.partsupp: 40000000 rows
+[06:38:45] loaded tpch_sf50.customer: 7500000 rows
+[06:39:46] loaded tpch_sf50.orders: 75000000 rows
+[06:43:55] loaded tpch_sf50.lineitem: 300005811 rows
+Spark reference tpch50 Q1
+Spark reference tpch50 Q2
+Spark reference tpch50 Q3
+Spark reference tpch50 Q4
+Spark reference tpch50 Q5
+Spark reference tpch50 Q6
+Spark reference tpch50 Q7
+Spark reference tpch50 Q8
+Spark reference tpch50 Q9
+Spark reference tpch50 Q10
+Spark reference tpch50 Q11
+Spark reference tpch50 Q12
+Spark reference tpch50 Q13
+Spark reference tpch50 Q14
+Spark reference tpch50 Q15
+Spark reference tpch50 Q16
+Spark reference tpch50 Q17
+Spark reference tpch50 Q18
+Spark reference tpch50 Q19
+Spark reference tpch50 Q20
+Spark reference tpch50 Q21
+Spark reference tpch50 Q22
+sail tpch50 Q1
+sail tpch50 Q2
+sail tpch50 Q3
+sail tpch50 Q4
+sail tpch50 Q5
+sail tpch50 Q6
+sail tpch50 Q7
+sail tpch50 Q8
+sail tpch50 Q9
+sail tpch50 Q10
+sail tpch50 Q11
+sail tpch50 Q12
+sail tpch50 Q13
+sail tpch50 Q14
+sail tpch50 Q15
+sail tpch50 Q16
+sail tpch50 Q17
+sail tpch50 Q18
+sail tpch50 Q19
+sail tpch50 Q20
+sail tpch50 Q21
+sail tpch50 Q22
+comet tpch50 Q1
+comet tpch50 Q2
+comet tpch50 Q3
+comet tpch50 Q4
+[07:13:27] refreshed Polaris token file
+comet tpch50 Q5
+comet tpch50 Q6
+comet tpch50 Q7
+comet tpch50 Q8
+comet tpch50 Q9
+comet tpch50 Q10
+[07:23:27] refreshed Polaris token file
+comet tpch50 Q11
+comet tpch50 Q12
+comet tpch50 Q13
+Exception in thread Thread-726 (monitor):
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/runner/work/poc/poc/harness/p3/scale_up.py", line 136, in monitor
+    disk_samples.append((*spill_stats(path), free_bytes()))
+                          ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/poc/poc/harness/p3/scale_up.py", line 49, in spill_stats
+    for file in path.rglob("*"):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 968, in rglob
+    for p in selector.select_from(self):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 408, in _select_from
+    for p in successor_select(starting_point, is_dir, exists, scandir):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 355, in _select_from
+    with scandir(parent_path) as scandir_it:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 938, in _scandir
+    return os.scandir(self)
+           ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/p3-spill-l9t3ltg2/blockmgr-0a04ba2c-93f5-4cd5-b3fe-60ae4d730294/datafusion-ceT632'
+comet tpch50 Q14
+comet tpch50 Q15
+comet tpch50 Q16
+comet tpch50 Q17
+Exception in thread Thread-798 (monitor):
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/runner/work/poc/poc/harness/p3/scale_up.py", line 136, in monitor
+    disk_samples.append((*spill_stats(path), free_bytes()))
+                          ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/poc/poc/harness/p3/scale_up.py", line 49, in spill_stats
+    for file in path.rglob("*"):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 968, in rglob
+    for p in selector.select_from(self):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 408, in _select_from
+    for p in successor_select(starting_point, is_dir, exists, scandir):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 355, in _select_from
+    with scandir(parent_path) as scandir_it:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 938, in _scandir
+    return os.scandir(self)
+           ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/p3-spill-l9t3ltg2/blockmgr-0a04ba2c-93f5-4cd5-b3fe-60ae4d730294/datafusion-TO4hM2'
+comet tpch50 Q18
+[07:33:27] refreshed Polaris token file
+[07:43:27] refreshed Polaris token file
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pyspark/sql/connect/client/reattach.py:244: UserWarning: ReleaseExecute failed with exception: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:15012: Failed to connect to remote host: Connection refused"
+	debug_error_string = "UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:15012: Failed to connect to remote host: Connection refused"
+>.
+  warnings.warn(f"ReleaseExecute failed with exception: {e}.")

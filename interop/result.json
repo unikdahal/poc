@@ -1,8 +1,8 @@
 {
   "task": "iceberg-deep",
   "variant": "interop",
-  "revision": "cff21584e18280d962e90440a2bcb81c67899a19",
-  "run_id": "45558181996",
+  "revision": "4dcaf2e6f3e68dd51253d9c84453e390048890ec",
+  "run_id": "45559297688",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -86,13 +86,14 @@
       "version": "1.20.4",
       "image": "flink:1.20.4-scala_2.12-java17@sha256:912157e4e22718a5fa712cd3d3ce90fe0be10679b40fcb56aeaae42aad19f254",
       "iceberg_runtime": "1.12.0",
+      "hadoop_client": "3.3.4",
       "scala": "2.12"
     }
   },
   "runner": {
     "cpu_count": 4,
     "total_memory_bytes": 16464306176,
-    "disk": "/dev/mapper/cow-root 154894188544 44148314112 110729097216  29% /"
+    "disk": "/dev/mapper/cow-root 154894188544 44150398976 110727012352  29% /"
   },
   "engines": {
     "spark-writer": {
@@ -106,10 +107,10 @@
         },
         "port": 15002
       },
-      "listen_s": 6.761176824569702,
+      "listen_s": 6.7631471157073975,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.969162001000086
+        "elapsed_s": 2.0654388670000117
       }
     },
     "sail-writer": {
@@ -130,10 +131,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.2326370579999093,
+      "listen_s": 0.23044276599995328,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.006869635000043672
+        "elapsed_s": 0.006649823000032029
       },
       "before_shutdown": {
         "Status": "running",
@@ -142,10 +143,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 4257,
+        "Pid": 4182,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T06:10:04.54382711Z",
+        "StartedAt": "2026-11-25T06:21:04.885158631Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -158,8 +159,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T06:10:04.54382711Z",
-        "FinishedAt": "2026-11-25T06:10:14.329339627Z"
+        "StartedAt": "2026-11-25T06:21:04.885158631Z",
+        "FinishedAt": "2026-11-25T06:21:14.739737272Z"
       }
     },
     "spark-reader": {
@@ -173,10 +174,10 @@
         },
         "port": 15018
       },
-      "listen_s": 2.757750988006592,
+      "listen_s": 2.5043978691101074,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.199581791000128
+        "elapsed_s": 1.9647496850000152
       }
     },
     "sail-reader": {
@@ -197,13 +198,11 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.10595006999983525,
+      "listen_s": 0.10416376700004548,
       "readiness_select1": {
-        "status": "timeout",
-        "error": "TimeoutError: 90s deadline, client active=True",
-        "elapsed_s": 93.00181024299991
+        "status": "ok",
+        "elapsed_s": 0.007624175000046307
       },
-      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00181024299991}",
       "before_shutdown": {
         "Status": "running",
         "Running": true,
@@ -211,10 +210,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 13672,
+        "Pid": 71371,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T06:11:44.71398976Z",
+        "StartedAt": "2026-11-25T06:42:56.306822361Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -227,8 +226,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T06:11:44.71398976Z",
-        "FinishedAt": "2026-11-25T06:13:27.004451961Z"
+        "StartedAt": "2026-11-25T06:42:56.306822361Z",
+        "FinishedAt": "2026-11-25T06:43:05.859368595Z"
       }
     }
   },
@@ -236,7 +235,7 @@
     "write-spark_v2": [
       {
         "status": "ok",
-        "elapsed_s": 2.116200426999967,
+        "elapsed_s": 2.268949088999989,
         "sql": "CREATE TABLE polaris.p3_iceberg.spark_v2 USING iceberg TBLPROPERTIES ('format-version'='2', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": []
       }
@@ -244,7 +243,7 @@
     "write-spark_v3": [
       {
         "status": "ok",
-        "elapsed_s": 0.27039985299995806,
+        "elapsed_s": 0.2736618309999699,
         "sql": "CREATE TABLE polaris.p3_iceberg.spark_v3 USING iceberg TBLPROPERTIES ('format-version'='3', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": []
       }
@@ -252,13 +251,13 @@
     "write-spark_delete_v2": [
       {
         "status": "ok",
-        "elapsed_s": 0.2791585429999941,
+        "elapsed_s": 0.29431996099998514,
         "sql": "CREATE TABLE polaris.p3_iceberg.spark_delete_v2 USING iceberg TBLPROPERTIES ('format-version'='2', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": []
       },
       {
         "status": "ok",
-        "elapsed_s": 1.2270023629999969,
+        "elapsed_s": 1.1181297009999867,
         "sql": "DELETE FROM polaris.p3_iceberg.spark_delete_v2 WHERE id IN (1, 7)",
         "output": []
       }
@@ -266,13 +265,13 @@
     "write-spark_delete_v3": [
       {
         "status": "ok",
-        "elapsed_s": 0.230942003999985,
+        "elapsed_s": 0.2127975320000246,
         "sql": "CREATE TABLE polaris.p3_iceberg.spark_delete_v3 USING iceberg TBLPROPERTIES ('format-version'='3', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": []
       },
       {
         "status": "ok",
-        "elapsed_s": 0.44244779000007384,
+        "elapsed_s": 0.42116159700003664,
         "sql": "DELETE FROM polaris.p3_iceberg.spark_delete_v3 WHERE id IN (1, 7)",
         "output": []
       }
@@ -280,7 +279,7 @@
     "write-sail_v2": [
       {
         "status": "ok",
-        "elapsed_s": 0.10527302200000577,
+        "elapsed_s": 0.11613679700002422,
         "sql": "CREATE TABLE polaris.p3_iceberg.sail_v2 USING iceberg TBLPROPERTIES ('format-version'='2', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": [
           {
@@ -292,7 +291,7 @@
     "write-sail_v3": [
       {
         "status": "ok",
-        "elapsed_s": 0.07945941100001619,
+        "elapsed_s": 0.09348897600000328,
         "sql": "CREATE TABLE polaris.p3_iceberg.sail_v3 USING iceberg TBLPROPERTIES ('format-version'='3', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": [
           {
@@ -304,7 +303,7 @@
     "write-sail_delete_v2": [
       {
         "status": "ok",
-        "elapsed_s": 0.06816568600004302,
+        "elapsed_s": 0.07297749099996054,
         "sql": "CREATE TABLE polaris.p3_iceberg.sail_delete_v2 USING iceberg TBLPROPERTIES ('format-version'='2', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": [
           {
@@ -314,7 +313,7 @@
       },
       {
         "status": "ok",
-        "elapsed_s": 0.08273738899993077,
+        "elapsed_s": 0.08485342300002685,
         "sql": "DELETE FROM polaris.p3_iceberg.sail_delete_v2 WHERE id IN (1, 7)",
         "output": []
       }
@@ -322,7 +321,7 @@
     "write-sail_delete_v3": [
       {
         "status": "ok",
-        "elapsed_s": 0.07168277499999931,
+        "elapsed_s": 0.08383831599996938,
         "sql": "CREATE TABLE polaris.p3_iceberg.sail_delete_v3 USING iceberg TBLPROPERTIES ('format-version'='3', 'write.delete.mode'='merge-on-read') AS SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)",
         "output": [
           {
@@ -332,39 +331,39 @@
       },
       {
         "status": "ok",
-        "elapsed_s": 0.0730006210000056,
+        "elapsed_s": 0.08487447200002407,
         "sql": "DELETE FROM polaris.p3_iceberg.sail_delete_v3 WHERE id IN (1, 7)",
         "output": []
       }
     ],
     "write-pyiceberg_v2": {
       "status": "ok",
-      "elapsed_s": 0.15577362399994854
+      "elapsed_s": 0.16554842299996153
     },
     "write-pyiceberg_v3": {
       "status": "error",
       "error": "ValueError: Cannot write manifest for table version: 3",
-      "elapsed_s": 0.03215188699994087
+      "elapsed_s": 0.03215334899999789
     },
     "write-flink_v2": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:27 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 5.092831748000094
+      "error": "TimeoutExpired: Command '['docker', 'exec', '-i', 'p3-flink', 'bash', '-c', 'cat > /tmp/p3.sql && bin/sql-client.sh embedded -f /tmp/p3.sql']' timed out after 239.99993452299998 seconds",
+      "elapsed_s": 240.00234084899995
     },
     "write-flink_v3": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:33 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 5.389105104000009
+      "error": "TimeoutExpired: Command '['docker', 'exec', '-i', 'p3-flink', 'bash', '-c', 'cat > /tmp/p3.sql && bin/sql-client.sh embedded -f /tmp/p3.sql']' timed out after 239.99995167600002 seconds",
+      "elapsed_s": 240.002075537
     },
     "write-flink_equality_v2": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:37 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.5740278890000354
+      "error": "TimeoutExpired: Command '['docker', 'exec', '-i', 'p3-flink', 'bash', '-c', 'cat > /tmp/p3.sql && bin/sql-client.sh embedded -f /tmp/p3.sql']' timed out after 239.99995129 seconds",
+      "elapsed_s": 240.0024559620001
     },
     "spark_v2-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:40 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.57401234200006,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:33:27 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.131838463999884,
       "fixture": "base",
       "rows": null,
       "expected": {
@@ -375,8 +374,8 @@
     },
     "spark_v3-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:44 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.5247593450001204,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:33:33 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.886191166000117,
       "fixture": "base",
       "rows": null,
       "expected": {
@@ -387,8 +386,8 @@
     },
     "sail_v2-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:48 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.62431771699994,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:33:40 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.433337778000123,
       "fixture": "base",
       "rows": null,
       "expected": {
@@ -399,8 +398,8 @@
     },
     "sail_v3-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:51 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.624786603999837,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:33:47 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.58206533900011,
       "fixture": "base",
       "rows": null,
       "expected": {
@@ -411,8 +410,8 @@
     },
     "pyiceberg_v2-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:55 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.6219516119999753,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:33:53 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.286409259000038,
       "fixture": "base",
       "rows": null,
       "expected": {
@@ -422,11 +421,10 @@
       "matches_spark": false
     },
     "pyiceberg_v3-to-flink": {
-      "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:10:58 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.623227758999974,
+      "status": "ok",
+      "elapsed_s": 7.387578142999928,
       "fixture": "base",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
@@ -434,11 +432,10 @@
       "matches_spark": false
     },
     "flink_v2-to-flink": {
-      "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:02 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.6227013939999324,
+      "status": "ok",
+      "elapsed_s": 5.078694691999999,
       "fixture": "base",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
@@ -447,8 +444,8 @@
     },
     "flink_v3-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:06 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.673364408999987,
+      "error": "TimeoutExpired: Command '['docker', 'exec', '-i', 'p3-flink', 'bash', '-c', 'cat > /tmp/p3.sql && bin/sql-client.sh embedded -f /tmp/p3.sql']' timed out after 239.99996115699992 seconds",
+      "elapsed_s": 240.00235270300004,
       "fixture": "base",
       "rows": null,
       "expected": {
@@ -459,8 +456,8 @@
     },
     "spark_delete_v2-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:09 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.5746473520000563,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:38:12 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 7.688664232000065,
       "fixture": "delete",
       "rows": null,
       "expected": {
@@ -471,8 +468,8 @@
     },
     "spark_delete_v3-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:13 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.673008277000008,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:38:20 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.134067937000054,
       "fixture": "delete",
       "rows": null,
       "expected": {
@@ -483,8 +480,8 @@
     },
     "sail_delete_v2-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:16 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.5744294959999934,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:38:26 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 7.43472604800013,
       "fixture": "delete",
       "rows": null,
       "expected": {
@@ -495,8 +492,8 @@
     },
     "sail_delete_v3-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:20 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.573604558999932,
+      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:38:33 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [ERROR] Could not execute SQL statement. Reason:\norg.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:9000 failed: Connection refused\n\nShutting down the session...\ndone.\n",
+      "elapsed_s": 6.228793613999869,
       "fixture": "delete",
       "rows": null,
       "expected": {
@@ -507,8 +504,8 @@
     },
     "flink_equality_v2-to-flink": {
       "status": "error",
-      "error": "RuntimeError: WARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nWARNING: Unknown module: jdk.compiler specified to --add-exports\nNov 25, 2026 6:11:24 AM org.jline.utils.Log logr\nWARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)\n[INFO] Executing SQL from file.\n\nCommand history file path: /root/.flink-sql-history\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> [INFO] Execute statement succeeded.\n\nFlink SQL> CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',\n> 'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',\n> 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',\n> 's3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',\n> 's3.secret-access-key'='password','client.region'='us-east-1')[ERROR] Could not execute SQL statement. Reason:\njava.lang.ClassNotFoundException: org.apache.hadoop.conf.Configuration\n\nShutting down the session...\ndone.\n",
-      "elapsed_s": 3.625596817000087,
+      "error": "TimeoutExpired: Command '['docker', 'exec', '-i', 'p3-flink', 'bash', '-c', 'cat > /tmp/p3.sql && bin/sql-client.sh embedded -f /tmp/p3.sql']' timed out after 239.99995383700002 seconds",
+      "elapsed_s": 240.0022078290001,
       "fixture": "equality",
       "rows": null,
       "expected": {
@@ -519,7 +516,7 @@
     },
     "spark_v2-to-spark": {
       "status": "ok",
-      "elapsed_s": 2.2292369110000436,
+      "elapsed_s": 2.116402049000044,
       "fixture": "base",
       "rows": [
         [
@@ -579,7 +576,7 @@
     },
     "spark_v3-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.4274171590000151,
+      "elapsed_s": 0.4153779680000298,
       "fixture": "base",
       "rows": [
         [
@@ -639,7 +636,7 @@
     },
     "sail_v2-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.3153418659999261,
+      "elapsed_s": 0.3979845230001047,
       "fixture": "base",
       "rows": [
         [
@@ -699,7 +696,7 @@
     },
     "sail_v3-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.3040632209999785,
+      "elapsed_s": 0.28749101199991856,
       "fixture": "base",
       "rows": [
         [
@@ -759,7 +756,7 @@
     },
     "pyiceberg_v2-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.36017968500004827,
+      "elapsed_s": 0.2829631669999344,
       "fixture": "base",
       "rows": [
         [
@@ -819,7 +816,7 @@
     },
     "pyiceberg_v3-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.15193509799996718,
+      "elapsed_s": 0.18728665800017552,
       "fixture": "base",
       "rows": [],
       "expected": {
@@ -829,11 +826,10 @@
       "matches_spark": false
     },
     "flink_v2-to-spark": {
-      "status": "error",
-      "error": "AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_v2` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 1 pos 24;\n'Sort ['id ASC NULLS FIRST], true\n+- 'Project ['id, 'payload]\n   +- 'UnresolvedRelation [polaris, p3_iceberg, flink_v2], [], false\n",
-      "elapsed_s": 0.12642776100005904,
+      "status": "ok",
+      "elapsed_s": 0.1109206759999779,
       "fixture": "base",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
@@ -841,11 +837,10 @@
       "matches_spark": false
     },
     "flink_v3-to-spark": {
-      "status": "error",
-      "error": "AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_v3` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 1 pos 24;\n'Sort ['id ASC NULLS FIRST], true\n+- 'Project ['id, 'payload]\n   +- 'UnresolvedRelation [polaris, p3_iceberg, flink_v3], [], false\n",
-      "elapsed_s": 0.026426463999996486,
+      "status": "ok",
+      "elapsed_s": 0.10641535200011276,
       "fixture": "base",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
@@ -854,7 +849,7 @@
     },
     "spark_delete_v2-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.3975140760001068,
+      "elapsed_s": 0.3287275629998021,
       "fixture": "delete",
       "rows": [
         [
@@ -907,12 +902,12 @@
     "files-spark_delete_v2": [
       {
         "status": "ok",
-        "elapsed_s": 0.39006909399995493,
+        "elapsed_s": 0.41983374799997364,
         "sql": "SELECT * FROM polaris.p3_iceberg.spark_delete_v2.files",
         "output": [
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-21-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-21-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -969,7 +964,7 @@
           },
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00001-22-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00001-22-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1026,7 +1021,7 @@
           },
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00002-23-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00002-23-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1083,7 +1078,7 @@
           },
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00003-24-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00003-24-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1140,24 +1135,24 @@
           },
           {
             "content": 1,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-26-bdd042a5-cc33-4350-bef7-7bbf2cf506e4-00001-deletes.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-26-f73f58e4-1a6b-47ee-a418-3c1e44c2f3c4-00001-deletes.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 1,
-            "file_size_in_bytes": 1500,
+            "file_size_in_bytes": 1501,
             "column_sizes": {
-              "2147483546": 137,
+              "2147483546": 138,
               "2147483545": 43
             },
             "value_counts": null,
             "null_value_counts": null,
             "nan_value_counts": null,
             "lower_bounds": {
-              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00002-23-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet')",
+              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00002-23-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet')",
               "2147483545": "bytearray(b'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00')"
             },
             "upper_bounds": {
-              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00002-23-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet')",
+              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00002-23-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet')",
               "2147483545": "bytearray(b'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00')"
             },
             "key_metadata": null,
@@ -1191,7 +1186,7 @@
           },
           {
             "content": 1,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-26-bdd042a5-cc33-4350-bef7-7bbf2cf506e4-00002-deletes.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-26-f73f58e4-1a6b-47ee-a418-3c1e44c2f3c4-00002-deletes.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 1,
@@ -1204,11 +1199,11 @@
             "null_value_counts": null,
             "nan_value_counts": null,
             "lower_bounds": {
-              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-21-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet')",
+              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-21-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet')",
               "2147483545": "bytearray(b'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00')"
             },
             "upper_bounds": {
-              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-21-0f05c746-81fa-47b9-9d7f-4b12b004dfc1-0-00001.parquet')",
+              "2147483546": "bytearray(b's3://warehouse/poc/p3_iceberg/spark_delete_v2/data/00000-21-d89c5985-4ede-48a1-b22c-b652ec597fee-0-00001.parquet')",
               "2147483545": "bytearray(b'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00')"
             },
             "key_metadata": null,
@@ -1245,7 +1240,7 @@
     ],
     "spark_delete_v3-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.2692531540001255,
+      "elapsed_s": 0.2650350660001095,
       "fixture": "delete",
       "rows": [
         [
@@ -1298,12 +1293,12 @@
     "files-spark_delete_v3": [
       {
         "status": "ok",
-        "elapsed_s": 0.25931485399996745,
+        "elapsed_s": 0.19123688099989522,
         "sql": "SELECT * FROM polaris.p3_iceberg.spark_delete_v3.files",
         "output": [
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-27-24becdac-f991-48fb-9619-4ccd620587ef-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-27-90c4941f-1bfd-4354-99a4-d0701bc84b23-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1360,7 +1355,7 @@
           },
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00001-28-24becdac-f991-48fb-9619-4ccd620587ef-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00001-28-90c4941f-1bfd-4354-99a4-d0701bc84b23-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1417,7 +1412,7 @@
           },
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00002-29-24becdac-f991-48fb-9619-4ccd620587ef-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00002-29-90c4941f-1bfd-4354-99a4-d0701bc84b23-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1474,7 +1469,7 @@
           },
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00003-30-24becdac-f991-48fb-9619-4ccd620587ef-0-00001.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00003-30-90c4941f-1bfd-4354-99a4-d0701bc84b23-0-00001.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 3,
@@ -1531,7 +1526,7 @@
           },
           {
             "content": 1,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-32-7b90ec4a-1beb-4eae-988a-dbf8ccba2b4a-00001-deletes.puffin",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-32-1697a4a6-f7a5-4e12-a9b8-f4f5fe666409-00001-deletes.puffin",
             "file_format": "PUFFIN",
             "spec_id": 0,
             "record_count": 1,
@@ -1547,7 +1542,7 @@
             "equality_ids": null,
             "sort_order_id": null,
             "first_row_id": null,
-            "referenced_data_file": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-27-24becdac-f991-48fb-9619-4ccd620587ef-0-00001.parquet",
+            "referenced_data_file": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00002-29-90c4941f-1bfd-4354-99a4-d0701bc84b23-0-00001.parquet",
             "content_offset": 4,
             "content_size_in_bytes": 42,
             "readable_metrics": {
@@ -1571,7 +1566,7 @@
           },
           {
             "content": 1,
-            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-32-7b90ec4a-1beb-4eae-988a-dbf8ccba2b4a-00001-deletes.puffin",
+            "file_path": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-32-1697a4a6-f7a5-4e12-a9b8-f4f5fe666409-00001-deletes.puffin",
             "file_format": "PUFFIN",
             "spec_id": 0,
             "record_count": 1,
@@ -1587,7 +1582,7 @@
             "equality_ids": null,
             "sort_order_id": null,
             "first_row_id": null,
-            "referenced_data_file": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00002-29-24becdac-f991-48fb-9619-4ccd620587ef-0-00001.parquet",
+            "referenced_data_file": "s3://warehouse/poc/p3_iceberg/spark_delete_v3/data/00000-27-90c4941f-1bfd-4354-99a4-d0701bc84b23-0-00001.parquet",
             "content_offset": 46,
             "content_size_in_bytes": 42,
             "readable_metrics": {
@@ -1614,7 +1609,7 @@
     ],
     "sail_delete_v2-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.2744721500000651,
+      "elapsed_s": 0.2621237379999002,
       "fixture": "delete",
       "rows": [
         [
@@ -1667,12 +1662,12 @@
     "files-sail_delete_v2": [
       {
         "status": "ok",
-        "elapsed_s": 0.22191212200004884,
+        "elapsed_s": 0.18299682199995004,
         "sql": "SELECT * FROM polaris.p3_iceberg.sail_delete_v2.files",
         "output": [
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v2/data/part-76e88227-10f2-46cf-b2a5-39c2ba95b1fb-00000000000000000000.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v2/data/part-7198e2e8-b261-4efb-a062-3f495aa5ca73-00000000000000000000.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 12,
@@ -1729,7 +1724,7 @@
           },
           {
             "content": 1,
-            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v2/data/delete-cb21f977-0f25-406c-b156-a445122e0ae5.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v2/data/delete-929f9165-a83b-45e3-813d-f8e124cf85e7.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 2,
@@ -1783,7 +1778,7 @@
     ],
     "sail_delete_v3-to-spark": {
       "status": "ok",
-      "elapsed_s": 0.2090952930000185,
+      "elapsed_s": 0.21096277600008762,
       "fixture": "delete",
       "rows": [
         [
@@ -1836,12 +1831,12 @@
     "files-sail_delete_v3": [
       {
         "status": "ok",
-        "elapsed_s": 0.19790819100012413,
+        "elapsed_s": 0.2021069569998417,
         "sql": "SELECT * FROM polaris.p3_iceberg.sail_delete_v3.files",
         "output": [
           {
             "content": 0,
-            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v3/data/part-8279f808-a6a5-42dd-852a-32ac60795d63-00000000000000000000.parquet",
+            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v3/data/part-85bdf2d5-5083-4906-95fe-2e25af303fde-00000000000000000000.parquet",
             "file_format": "PARQUET",
             "spec_id": 0,
             "record_count": 12,
@@ -1898,7 +1893,7 @@
           },
           {
             "content": 1,
-            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v3/data/deletion-vector-01fb64f3-b9e6-4dd6-a7f5-633726394b2f.puffin",
+            "file_path": "s3://warehouse/poc/p3_iceberg/sail_delete_v3/data/deletion-vector-07c5992e-ef37-413d-a63b-14b62349723e.puffin",
             "file_format": "PUFFIN",
             "spec_id": 0,
             "record_count": 2,
@@ -1914,7 +1909,7 @@
             "equality_ids": null,
             "sort_order_id": null,
             "first_row_id": null,
-            "referenced_data_file": "s3://warehouse/poc/p3_iceberg/sail_delete_v3/data/part-8279f808-a6a5-42dd-852a-32ac60795d63-00000000000000000000.parquet",
+            "referenced_data_file": "s3://warehouse/poc/p3_iceberg/sail_delete_v3/data/part-85bdf2d5-5083-4906-95fe-2e25af303fde-00000000000000000000.parquet",
             "content_offset": 4,
             "content_size_in_bytes": 44,
             "readable_metrics": {
@@ -1940,11 +1935,10 @@
       }
     ],
     "flink_equality_v2-to-spark": {
-      "status": "error",
-      "error": "AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_equality_v2` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 1 pos 24;\n'Sort ['id ASC NULLS FIRST], true\n+- 'Project ['id, 'payload]\n   +- 'UnresolvedRelation [polaris, p3_iceberg, flink_equality_v2], [], false\n",
-      "elapsed_s": 0.031149959000003946,
+      "status": "ok",
+      "elapsed_s": 0.11809305000019776,
       "fixture": "equality",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "0d72c6bc103ad783119b34d756c79c3d87f6adaf35f3166c9173917528dd872c"
@@ -1953,16 +1947,567 @@
     },
     "files-flink_equality_v2": [
       {
-        "status": "error",
-        "error": "AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_equality_v2`.`files` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 1 pos 14;\n'Project [*]\n+- 'UnresolvedRelation [polaris, p3_iceberg, flink_equality_v2, files], [], false\n",
-        "elapsed_s": 0.04058981599996514,
+        "status": "ok",
+        "elapsed_s": 0.14758068100013588,
         "sql": "SELECT * FROM polaris.p3_iceberg.flink_equality_v2.files",
-        "output": null
+        "output": []
       }
     ],
+    "spark_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.03800082499992641,
+      "fixture": "base",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          1,
+          "row-1"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          7,
+          "row-7"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": true
+    },
+    "spark_v3-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.020831334999911633,
+      "fixture": "base",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          1,
+          "row-1"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          7,
+          "row-7"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": true
+    },
+    "sail_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.020623869000019113,
+      "fixture": "base",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          1,
+          "row-1"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          7,
+          "row-7"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": true
+    },
+    "sail_v3-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.01444630099990718,
+      "fixture": "base",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          1,
+          "row-1"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          7,
+          "row-7"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": true
+    },
+    "pyiceberg_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.014934490000086953,
+      "fixture": "base",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          1,
+          "row-1"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          7,
+          "row-7"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": true
+    },
+    "pyiceberg_v3-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.010606632999952126,
+      "fixture": "base",
+      "rows": [],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": false
+    },
+    "flink_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.0105076669999562,
+      "fixture": "base",
+      "rows": [],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": false
+    },
+    "flink_v3-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.009784719000208497,
+      "fixture": "base",
+      "rows": [],
+      "expected": {
+        "rows": 12,
+        "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
+      },
+      "matches_spark": false
+    },
+    "spark_delete_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.018613983999784978,
+      "fixture": "delete",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 10,
+        "sha256": "8a7693c0132095068692eb4a08fedd7e8eaa1412d577ad590b2d5aed8ad441ae"
+      },
+      "matches_spark": true
+    },
+    "spark_delete_v3-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.016336350000074162,
+      "fixture": "delete",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 10,
+        "sha256": "8a7693c0132095068692eb4a08fedd7e8eaa1412d577ad590b2d5aed8ad441ae"
+      },
+      "matches_spark": true
+    },
+    "sail_delete_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.016087157999891133,
+      "fixture": "delete",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 10,
+        "sha256": "8a7693c0132095068692eb4a08fedd7e8eaa1412d577ad590b2d5aed8ad441ae"
+      },
+      "matches_spark": true
+    },
+    "sail_delete_v3-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.015052336000053401,
+      "fixture": "delete",
+      "rows": [
+        [
+          0,
+          "row-0"
+        ],
+        [
+          2,
+          "row-2"
+        ],
+        [
+          3,
+          "row-3"
+        ],
+        [
+          4,
+          "row-4"
+        ],
+        [
+          5,
+          "row-5"
+        ],
+        [
+          6,
+          "row-6"
+        ],
+        [
+          8,
+          "row-8"
+        ],
+        [
+          9,
+          "row-9"
+        ],
+        [
+          10,
+          "row-10"
+        ],
+        [
+          11,
+          "row-11"
+        ]
+      ],
+      "expected": {
+        "rows": 10,
+        "sha256": "8a7693c0132095068692eb4a08fedd7e8eaa1412d577ad590b2d5aed8ad441ae"
+      },
+      "matches_spark": true
+    },
+    "flink_equality_v2-to-sail": {
+      "status": "ok",
+      "elapsed_s": 0.01084650200004944,
+      "fixture": "equality",
+      "rows": [],
+      "expected": {
+        "rows": 12,
+        "sha256": "0d72c6bc103ad783119b34d756c79c3d87f6adaf35f3166c9173917528dd872c"
+      },
+      "matches_spark": false
+    },
     "spark_v2-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.030424177999975655,
+      "elapsed_s": 0.0282002819999434,
       "fixture": "base",
       "rows": [
         [
@@ -2022,7 +2567,7 @@
     },
     "spark_v3-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.023494927999990978,
+      "elapsed_s": 0.022777549000011277,
       "fixture": "base",
       "rows": [
         [
@@ -2082,7 +2627,7 @@
     },
     "sail_v2-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.019022996999865427,
+      "elapsed_s": 0.018270622000045478,
       "fixture": "base",
       "rows": [
         [
@@ -2142,7 +2687,7 @@
     },
     "sail_v3-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.02748248800003239,
+      "elapsed_s": 0.017162875999929383,
       "fixture": "base",
       "rows": [
         [
@@ -2202,7 +2747,7 @@
     },
     "pyiceberg_v2-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.017798172000084378,
+      "elapsed_s": 0.016268646999833436,
       "fixture": "base",
       "rows": [
         [
@@ -2262,7 +2807,7 @@
     },
     "pyiceberg_v3-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.008520421999946848,
+      "elapsed_s": 0.007395873999939795,
       "fixture": "base",
       "rows": [],
       "expected": {
@@ -2272,11 +2817,10 @@
       "matches_spark": false
     },
     "flink_v2-to-pyiceberg": {
-      "status": "error",
-      "error": "NoSuchTableError: NoSuchTableException: Table does not exist: p3_iceberg.flink_v2",
-      "elapsed_s": 0.003122710999832634,
+      "status": "ok",
+      "elapsed_s": 0.006888011000000915,
       "fixture": "base",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
@@ -2284,11 +2828,10 @@
       "matches_spark": false
     },
     "flink_v3-to-pyiceberg": {
-      "status": "error",
-      "error": "NoSuchTableError: NoSuchTableException: Table does not exist: p3_iceberg.flink_v3",
-      "elapsed_s": 0.002938939999921786,
+      "status": "ok",
+      "elapsed_s": 0.00665782200007925,
       "fixture": "base",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "e5b564ada358a20dbe9825a05302454845d7350e379d56dc677bdf26b9e2cd81"
@@ -2297,7 +2840,7 @@
     },
     "spark_delete_v2-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.0252649950000432,
+      "elapsed_s": 0.02317601200002173,
       "fixture": "delete",
       "rows": [
         [
@@ -2349,7 +2892,7 @@
     },
     "spark_delete_v3-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.023994818999881318,
+      "elapsed_s": 0.02710182100008751,
       "fixture": "delete",
       "rows": [
         [
@@ -2401,7 +2944,7 @@
     },
     "sail_delete_v2-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.023164542999893456,
+      "elapsed_s": 0.020004485000072236,
       "fixture": "delete",
       "rows": [
         [
@@ -2453,7 +2996,7 @@
     },
     "sail_delete_v3-to-pyiceberg": {
       "status": "ok",
-      "elapsed_s": 0.02022161300010339,
+      "elapsed_s": 0.01786494499992841,
       "fixture": "delete",
       "rows": [
         [
@@ -2504,11 +3047,10 @@
       "matches_spark": true
     },
     "flink_equality_v2-to-pyiceberg": {
-      "status": "error",
-      "error": "NoSuchTableError: NoSuchTableException: Table does not exist: p3_iceberg.flink_equality_v2",
-      "elapsed_s": 0.003230486000120436,
+      "status": "ok",
+      "elapsed_s": 0.006972168999936912,
       "fixture": "equality",
-      "rows": null,
+      "rows": [],
       "expected": {
         "rows": 12,
         "sha256": "0d72c6bc103ad783119b34d756c79c3d87f6adaf35f3166c9173917528dd872c"
@@ -2526,7 +3068,7 @@
     "Pid": 0,
     "ExitCode": 137,
     "Error": "",
-    "StartedAt": "2026-11-25T06:10:25.226223878Z",
-    "FinishedAt": "2026-11-25T06:11:32.343539952Z"
+    "StartedAt": "2026-11-25T06:21:25.972178622Z",
+    "FinishedAt": "2026-11-25T06:42:44.469538591Z"
   }
 }

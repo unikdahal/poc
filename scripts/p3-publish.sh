@@ -27,8 +27,13 @@ for attempt in 1 2 3 4 5; do
     git -C "$dir" reset -q --hard FETCH_HEAD
   fi
   target="$variant"
-  if [[ ! -f "$source_dir/result.json" && ! -f "$source_dir/build.json" && -d "$dir/$variant" ]]; then
-    target="attempts/$GITHUB_RUN_ID/$variant"
+  if [[ -f "$dir/$variant/run.json" ]]; then
+    previous_run=$(jq -r '.run_id' "$dir/$variant/run.json")
+    previous_attempt=$(jq -r '.attempt' "$dir/$variant/run.json")
+    if (( previous_run > GITHUB_RUN_ID || (previous_run == GITHUB_RUN_ID && previous_attempt > GITHUB_RUN_ATTEMPT) )) ||
+       [[ ! -f "$source_dir/result.json" && ! -f "$source_dir/build.json" ]]; then
+      target="attempts/$GITHUB_RUN_ID/$variant"
+    fi
   fi
   git -C "$dir" rm -q -r --ignore-unmatch "$target"
   mkdir -p "$dir/$target/logs"

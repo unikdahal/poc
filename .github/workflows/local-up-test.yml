@@ -1,5 +1,6 @@
 name: local-up-test
-# Runs scripts/local-up.sh on a stock Ubuntu runner, the same way a developer machine would.
+# Runs scripts/local-up.sh on a stock Ubuntu runner, the way a developer machine would,
+# then drives the query workbench UI in a real browser.
 on:
   workflow_dispatch:
     inputs:
@@ -8,17 +9,19 @@ jobs:
   local-up:
     runs-on: ubuntu-24.04
     timeout-minutes: 90
-    permissions: {contents: read, packages: read}
+    permissions: {contents: write, packages: read}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with: {distribution: temurin, java-version: "17"}
       - run: echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-      - run: SF=${{ inputs.sf }} scripts/local-up.sh
-      - run: |
+      - run: SF=${{ inputs.sf }} ENGINES=comet,sail,spark scripts/local-up.sh
+      - name: CLI comparison
+        run: |
           source .venv/bin/activate
           PYTHONPATH=$PWD python scripts/local-query.py --sf ${{ inputs.sf }} --query all
-      - run: |
+      - name: Flight SQL
+        run: |
           source .venv/bin/activate
           PYTHONPATH=$PWD python - <<'PY'
           import adbc_driver_flightsql.dbapi as f
@@ -26,5 +29,41 @@ jobs:
           c.execute("SELECT count(*) FROM polaris.tpch_sf${{ inputs.sf }}.lineitem")
           print("flight sql:", c.fetchall())
           PY
+      - name: UI API
+        run: |
+          mkdir -p out/ui
+          curl -sf localhost:8088/api/engines | tee out/ui/engines.json; echo
+          curl -sf localhost:8088/api/catalog | tee out/ui/catalog.json; echo
+          Q=$(python3 -c "import json;print(json.dumps({'sql':open('harness/queries/tpch/q1.sql').read(),'engines':['spark','comet','sail','sail-flight'],'namespace':'tpch_sf${{ inputs.sf }}','reps':2,'warmup':True,'explain':True}))")
+          curl -sf -X POST localhost:8088/api/run -H 'Content-Type: application/json' -d "$Q" > out/ui/run-q1.json
+          python3 -c "
+          import json; r=json.load(open('out/ui/run-q1.json'))
+          for x in r['results']: print(x['engine'], x.get('ok'), x.get('wall_median_s'), x.get('cpu_median_s'), x.get('peak_mb'), x.get('row_count'), x.get('error_head'))
+          for c in r['comparisons']: print(c['engine'], 'vs', c['reference'], c['verdict'], c.get('max_rel_diff'))"
+      - name: UI in a browser
+        run: |
+          source .venv/bin/activate
+          uv pip install -q playwright && python -m playwright install --with-deps chromium >/dev/null
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              b = p.chromium.launch()
+              pg = b.new_page(viewport={"width": 1440, "height": 1100})
+              pg.goto("http://localhost:8088"); pg.wait_for_timeout(2500)
+              for e in ["spark", "comet", "sail"]:
+                  pg.check(f"#engines input[value={e}]")
+              pg.select_option("#ns", "tpch_sf${{ inputs.sf }}")
+              pg.select_option("#preset", label="TPC-H q1")
+              pg.click("#run"); pg.wait_for_selector(".eng .big", timeout=300000); pg.wait_for_timeout(500)
+              pg.screenshot(path="out/ui/run.png", full_page=True)
+              pg.fill("#reps", "1"); pg.uncheck("#warmup")
+              pg.click("#suite"); pg.wait_for_function("document.querySelector('#suiteCard h4')?.textContent.includes('22/22')", timeout=1200000)
+              pg.wait_for_timeout(800)
+              pg.screenshot(path="out/ui/suite.png", full_page=True)
+              b.close()
+          PY
+      - if: always()
+        uses: ./.github/actions/publish
+        with: {name: ui}
       - if: always()
         run: scripts/local-down.sh --wipe

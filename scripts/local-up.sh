@@ -95,12 +95,18 @@ if [[ ",$ENGINES," == *,sail,* ]]; then
   python -m harness.services sail --name sail-flight --server flight --port 32010 "${mem_arg[@]}"
 fi
 
+say "query workbench UI on :${UI_PORT:-8088}"
+pkill -f "ui/server.py" 2>/dev/null || true
+nohup python ui/server.py --host "${UI_HOST:-127.0.0.1}" --port "${UI_PORT:-8088}" >"$POC_OUT/ui.log" 2>&1 &
+for _ in $(seq 1 30); do curl -sf "http://localhost:${UI_PORT:-8088}/api/engines" >/dev/null && break; sleep 0.5; done
+
 say "first query on each engine"
 python scripts/local-query.py --sf "$SF" --query 1 --engines "$ENGINES"
 
 cat <<EOF
 
 Ready.
+  Query workbench http://localhost:${UI_PORT:-8088}    <- run any SQL on several engines and compare
   Spark + Comet   sc://localhost:15002      (pyspark: SparkSession.builder.remote("sc://localhost:15002"))
   Plain Spark     sc://localhost:15003      (only with ENGINES containing spark)
   Sail            sc://localhost:50051

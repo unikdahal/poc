@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Query workbench · Sail vs Spark + Comet</title>
+<style>
+  :root {
+    --bg: #f7f7f5; --panel: #fff; --ink: #1d1d1b; --muted: #6b6b66; --line: #e4e3de;
+    --accent: #2f6fd6; --accent-soft: #e8f0fc; --good: #2e7d4f; --good-soft: #e6f3ea;
+    --bad: #b3372b; --bad-soft: #fbe9e7; --warn: #946200; --warn-soft: #fdf3dc; --grey: #b9b8b1;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #17171a; --panel: #202024; --ink: #e9e9e6; --muted: #9a9a95; --line: #34343a;
+      --accent: #7aa7f0; --accent-soft: #23324d; --good: #6cc08e; --good-soft: #1e3427; --bad: #ef8a7f;
+      --bad-soft: #3d2320; --warn: #e2b55a; --warn-soft: #3b3020; --grey: #55555c; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
+  header { display: flex; align-items: center; gap: 16px; padding: 10px 18px; border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; z-index: 5; }
+  header h1 { font-size: 15px; margin: 0; font-weight: 650; }
+  header .engines { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; user-select: none; background: var(--panel); }
+  .chip input { margin: 0; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--grey); }
+  .dot.up { background: var(--good); }
+  .layout { display: grid; grid-template-columns: 250px 1fr; min-height: calc(100vh - 53px); }
+  aside { border-right: 1px solid var(--line); padding: 12px; overflow: auto; max-height: calc(100vh - 53px); position: sticky; top: 53px; background: var(--panel); }
+  aside h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 14px 0 6px; }
+  aside details summary { cursor: pointer; padding: 2px 0; font-weight: 600; }
+  aside .tbl { padding: 2px 0 2px 14px; cursor: pointer; color: var(--accent); font-family: var(--mono); font-size: 12.5px; }
+  aside .cols { padding-left: 26px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  aside .hist { font-size: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  aside .hist code { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+  main { padding: 14px 18px 60px; min-width: 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+  textarea { width: 100%; min-height: 190px; font: 13px/1.5 var(--mono); padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); resize: vertical; }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 10px; }
+  .controls label { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); }
+  select, input[type=number], input[type=text] { padding: 5px 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); font: inherit; }
+  input[type=number] { width: 64px; }
+  button { padding: 7px 14px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font: inherit; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .spacer { flex: 1; }
+  .muted { color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .eng h4 { margin: 0 0 6px; font-size: 13.5px; display: flex; justify-content: space-between; gap: 8px; }
+  .big { font-size: 24px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .kv span:nth-child(odd) { color: var(--muted); }
+  .bar { height: 8px; border-radius: 4px; background: var(--grey); margin: 6px 0 8px; }
+  .bar.fast { background: var(--accent); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge.good { background: var(--good-soft); color: var(--good); }
+  .badge.bad { background: var(--bad-soft); color: var(--bad); }
+  .badge.warn { background: var(--warn-soft); color: var(--warn); }
+  .err { color: var(--bad); font-family: var(--mono); font-size: 12px; white-space: pre-wrap; max-height: 220px; overflow: auto; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 8px; flex-wrap: wrap; }
+  .tabs button { border: none; border-bottom: 2px solid transparent; border-radius: 0; background: none; padding: 6px 10px; color: var(--muted); }
+  .tabs button.on { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+  .tablewrap { overflow: auto; max-height: 420px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 5px 9px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
+  th small { display: block; color: var(--muted); font-weight: 400; }
+  td.num, th.num { text-align: right; }
+  tr.diff td { background: var(--bad-soft); }
+  pre.plan { font: 12px/1.45 var(--mono); white-space: pre; overflow: auto; max-height: 480px; background: var(--bg); padding: 10px; border-radius: 8px; margin: 0; }
+  .cmp { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .cmp:last-child { border-bottom: none; }
+  .progress { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+  .progress div { height: 100%; background: var(--accent); width: 0; transition: width .2s; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } aside { position: static; max-height: none; border-right: none; border-bottom: 1px solid var(--line); } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Query workbench</h1>
+  <div class="engines" id="engines"></div>
+  <div class="spacer"></div>
+  <button id="refresh" title="Re-check which engines are running">Refresh engines</button>
+</header>
+<div class="layout">
+  <aside>
+    <h3>Catalog <span class="muted" id="catmsg"></span></h3>
+    <div id="catalog"></div>
+    <h3>History</h3>
+    <div id="history" class="muted">No runs yet.</div>
+  </aside>
+  <main>
+    <div class="card">
+      <div class="controls" style="margin-top:0">
+        <label>Preset <select id="preset"><option value="">—</option></select></label>
+        <label>Namespace <select id="ns"><option value="">(none)</option></select></label>
+        <span class="spacer"></span>
+        <span class="muted">Ctrl/⌘ + Enter runs</span>
+      </div>
+      <textarea id="sql" spellcheck="false" style="margin-top:10px">SELECT l_returnflag, l_linestatus, count(*) AS n, sum(l_quantity) AS qty
+FROM lineitem
+GROUP BY 1, 2
+ORDER BY 1, 2</textarea>
+      <div class="controls">
+        <label title="Timed runs per engine; the median is reported">Runs <input type="number" id="reps" value="3" min="1" max="50"></label>
+        <label title="One untimed run first, so caches and JIT are warm"><input type="checkbox" id="warmup" checked> Warm-up run</label>
+        <label title="Sequential gives clean timings; parallel shows behaviour under contention">Mode
+          <select id="mode"><option value="sequential">sequential</option><option value="parallel">parallel</option></select></label>
+        <label title="Numeric cells closer than this relative difference count as equal">Tolerance <input type="text" id="tol" value="1e-9" size="6"></label>
+        <label><input type="checkbox" id="explain"> Plans</label>
+        <span class="spacer"></span>
+        <button id="suite" title="Run all 22 TPC-H presets with these settings">Run TPC-H suite</button>
+        <button id="run" class="primary">Run on selected engines</button>
+      </div>
+      <div class="progress" id="prog" hidden><div></div></div>
+    </div>
+    <div id="out"></div>
+  </main>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = (x, d = 3) => x == null ? '—' : Number(x).toLocaleString('en-US', {maximumFractionDigits: d});
+const store = {get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+               set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }};
+let ENGINES = [], PRESETS = [], LAST = null, SUITE = null;
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)} : {});
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
+
+async function loadEngines() {
+  ENGINES = await api('/api/engines');
+  const chosen = store.get('engines', ['comet', 'sail']);
+  $('#engines').innerHTML = ENGINES.map(e => `
+    <label class="chip" title="${esc(e.kind)} on :${e.port}">
+      <input type="checkbox" value="${e.id}" ${chosen.includes(e.id) && e.up ? 'checked' : ''} ${e.up ? '' : 'disabled'}>
+      <span class="dot ${e.up ? 'up' : ''}"></span>${esc(e.label)}</label>`).join('');
+  $('#engines').onchange = () => store.set('engines', selected());
+}
+const selected = () => [...document.querySelectorAll('#engines input:checked')].map(i => i.value);
+
+async function loadCatalog() {
+  try {
+    const tree = await api('/api/catalog');
+    const nss = Object.keys(tree).sort();
+    const keep = store.get('ns', nss.find(n => n.startsWith('tpch')) || '');
+    $('#ns').innerHTML = '<option value="">(none)</option>' + nss.map(n => `<option ${n === keep ? 'selected' : ''}>${esc(n)}</option>`).join('');
+    $('#catalog').innerHTML = nss.map(n => `<details ${n === keep ? 'open' : ''}><summary>${esc(n)} <span class="muted">${tree[n].length}</span></summary>` +
+      tree[n].map(t => `<div class="tbl" data-ns="${esc(n)}" data-t="${esc(t)}">${esc(t)}</div><div class="cols" hidden></div>`).join('') + '</details>').join('') || '<span class="muted">empty</span>';
+    $('#catmsg').textContent = '';
+  } catch (e) { $('#catmsg').textContent = '(unavailable)'; }
+}
+$('#catalog').onclick = async ev => {
+  const el = ev.target.closest('.tbl'); if (!el) return;
+  const box = el.nextElementSibling;
+  if (box.hidden && !box.dataset.loaded) {
+    try { box.innerHTML = (await api(`/api/columns/${el.dataset.ns}/${el.dataset.t}`)).map(c => `${esc(c.name)} <i>${esc(c.type)}</i>`).join('<br>'); }
+    catch (e) { box.textContent = e.message; }
+    box.dataset.loaded = 1;
+  }
+  box.hidden = !box.hidden;
+  if (ev.detail === 2) insertAtCursor(`${el.dataset.ns}.${el.dataset.t}`);
+};
+$('#ns').onchange = () => store.set('ns', $('#ns').value);
+function insertAtCursor(text) { const t = $('#sql'); const p = t.selectionStart; t.value = t.value.slice(0, p) + text + t.value.slice(t.selectionEnd); t.focus(); }
+
+async function loadPresets() {
+  PRESETS = await api('/api/presets');
+  $('#preset').innerHTML = '<option value="">—</option>' + PRESETS.map((p, i) => `<option value="${i}">${esc(p.name)}</option>`).join('');
+}
+$('#preset').onchange = () => { const p = PRESETS[$('#preset').value]; if (p) $('#sql').value = p.sql; };
+
+function settings(sql) {
+  return {sql, engines: selected(), namespace: $('#ns').value, reps: +$('#reps').value || 1,
+          warmup: $('#warmup').checked, mode: $('#mode').value, explain: $('#explain').checked, rel_tol: $('#tol').value};
+}
+function busy(on) { ['#run', '#suite'].forEach(s => $(s).disabled = on); }
+
+async function runOne() {
+  const body = settings($('#sql').value);
+  if (!body.engines.length) return alert('Pick at least one running engine.');
+  store.set('sql', body.sql);
+  busy(true); $('#out').innerHTML = '<div class="card muted">Running…</div>';
+  try { LAST = await api('/api/run', body); render(LAST); loadHistory(); }
+  catch (e) { $('#out').innerHTML = `<div class="card err">${esc(e.message)}</div>`; }
+  busy(false);
+}
+
+function verdictBadge(v) {
+  const cls = v === 'identical' ? 'good' : v.startsWith('equal within') ? 'warn' : 'bad';
+  return `<span class="badge ${cls}">${esc(v)}</span>`;
+}
+
+function render(r) {
+  const ok = r.results.filter(x => x.ok);
+  const maxWall = Math.max(...ok.map(x => x.wall_median_s), 1e-9);
+  const cards = r.results.map(x => x.ok ? `
+    <div class="card eng"><h4>${esc(x.label)} ${x.vs_fastest === 1 ? '<span class="badge good">fastest</span>' : `<span class="muted">${fmt(x.vs_fastest, 2)}×</span>`}</h4>
+      <div class="big">${fmt(x.wall_median_s)} s</div>
+      <div class="bar ${x.vs_fastest === 1 ? 'fast' : ''}" style="width:${100 * x.wall_median_s / maxWall}%"></div>
+      <div class="kv"><span>min / runs</span><span>${fmt(x.wall_min_s)} s · ${x.runs.map(y => fmt(y.wall_s, 2)).join(', ')}</span>
+        <span>CPU</span><span>${x.cpu_median_s == null ? '—' : fmt(x.cpu_median_s, 2) + ' CPU-s'}</span>
+        <span>peak memory</span><span>${x.peak_mb == null ? '—' : fmt(x.peak_mb, 0) + ' MB'}</span>
+        <span>warm-up</span><span>${x.warmup_s == null ? '—' : fmt(x.warmup_s) + ' s'}</span>
+        <span>rows</span><span>${fmt(x.row_count, 0)}</span></div></div>` : `
+    <div class="card eng"><h4>${esc(x.label)} <span class="badge bad">error</span></h4><div class="err">${esc(x.error_head)}</div></div>`).join('');
+
+  const cmps = r.comparisons.map(c => {
+    const ref = r.results.find(x => x.engine === c.reference), oth = r.results.find(x => x.engine === c.engine);
+    let body = `<div class="cmp"><b>${esc(oth.label)}</b> vs <b>${esc(ref.label)}</b> ${verdictBadge(c.verdict)}
+      <span class="muted"> · rows ${fmt(c.row_count[0], 0)} / ${fmt(c.row_count[1], 0)} · ${c.ordered ? 'ordered (ORDER BY)' : 'compared as a multiset'}
+      ${c.same_column_names ? '' : ' · column names differ'}</span>`;
+    if (c.type_diffs.length) body += `<div class="muted" style="margin-top:4px">Types: ${c.type_diffs.map(t => `${esc(t.column)} ${esc(t.reference)} → ${esc(t.other)}`).join('; ')}</div>`;
+    if (c.max_rel_diff != null && c.numeric_cells_differing) body += `<div class="muted">${fmt(c.numeric_cells_differing, 0)} numeric cells differ · max abs ${c.max_abs_diff.toExponential(3)} · max rel ${c.max_rel_diff.toExponential(3)}</div>`;
+    if (c.cell_diffs?.length) body += `<div class="tablewrap" style="max-height:220px;margin-top:6px"><table><tr><th>row</th><th>column</th><th>${esc(ref.label)}</th><th>${esc(oth.label)}</th><th class="num">rel diff</th></tr>` +
+      c.cell_diffs.map(d => `<tr><td>${d.row}</td><td>${esc(d.column)}</td><td>${esc(d.reference)}</td><td>${esc(d.other)}</td><td class="num">${d.rel_diff == null ? '' : d.rel_diff.toExponential(2)}</td></tr>`).join('') +
+      `</table></div><div class="muted">${fmt(c.cell_diff_count, 0)} cells over tolerance</div>`;
+    if (c.only_in_reference?.length || c.only_in_other?.length) body += `<div class="muted" style="margin-top:6px">${fmt(c.only_counts[0], 0)} rows only in ${esc(ref.label)}, ${fmt(c.only_counts[1], 0)} only in ${esc(oth.label)} (first ${c.only_in_reference.length + c.only_in_other.length} shown)</div>` +
+      `<div class="tablewrap" style="max-height:220px"><table>${c.only_in_reference.map(row => `<tr class="diff"><td>${esc(ref.label)}</td>${row.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}${c.only_in_other.map(row => `<tr><td>${esc(oth.label)}</td>${row.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</table></div>`;
+    return body + '</div>';
+  }).join('');
+
+  const tabs = r.results.map((x, i) => `<button data-i="${i}" class="${i ? '' : 'on'}">${esc(x.label)}</button>`).join('');
+  $('#out').innerHTML = `<div class="grid">${cards}</div>
+    ${r.comparisons.length ? `<div class="card"><h4 style="margin:0 0 4px">Result comparison <span class="muted">(reference: first engine)</span></h4>${cmps}</div>` : ''}
+    <div class="card"><div class="tabs" id="tabs">${tabs}<span class="spacer"></span>
+      <button id="exp-json">Export JSON</button><button id="exp-csv">Export CSV</button></div><div id="tab"></div></div>`;
+  $('#tabs').onclick = ev => { const b = ev.target.closest('button[data-i]'); if (!b) return;
+    document.querySelectorAll('#tabs button[data-i]').forEach(x => x.classList.toggle('on', x === b)); renderTab(r.results[+b.dataset.i]); };
+  $('#exp-json').onclick = () => download('run.json', JSON.stringify(r, null, 2), 'application/json');
+  $('#exp-csv').onclick = () => download('run-summary.csv', [['engine', 'ok', 'wall_median_s', 'wall_min_s', 'cpu_median_s', 'peak_mb', 'rows', 'vs_fastest']
+    .join(','), ...r.results.map(x => [x.engine, x.ok, x.wall_median_s, x.wall_min_s, x.cpu_median_s, x.peak_mb, x.row_count, x.vs_fastest].join(','))].join('\n'), 'text/csv');
+  renderTab(r.results[0]);
+}
+
+function renderTab(x) {
+  if (!x) return;
+  if (!x.ok) { $('#tab').innerHTML = `<div class="err">${esc(x.error)}</div>`; return; }
+  const head = x.columns.map((c, i) => `<th>${esc(c)}<small>${esc(x.types[i])}</small></th>`).join('');
+  const rows = x.rows.map(r => '<tr>' + r.map(v => `<td class="${typeof v === 'number' ? 'num' : ''}">${v == null ? '<span class="muted">NULL</span>' : esc(v)}</td>`).join('') + '</tr>').join('');
+  $('#tab').innerHTML = `<div class="tablewrap"><table><tr>${head}</tr>${rows}</table></div>
+    <div class="muted" style="margin-top:6px">${x.row_count > x.rows.length ? `showing ${x.rows.length} of ${fmt(x.row_count, 0)} rows` : `${fmt(x.row_count, 0)} rows`}${x.truncated_compare ? ' · comparison used the first 200,000 rows' : ''}</div>
+    ${x.plan ? `<h4>Plan</h4><pre class="plan">${esc(x.plan)}</pre>` : ''}`;
+}
+
+function download(name, text, type) {
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click();
+}
+
+async function runSuite() {
+  const engines = selected();
+  if (engines.length < 1) return alert('Pick at least one running engine.');
+  const ns = $('#ns').value;
+  if (!ns.startsWith('tpch')) return alert('Choose a tpch_sf* namespace first.');
+  const qs = PRESETS.filter(p => p.name.startsWith('TPC-H'));
+  busy(true); $('#prog').hidden = false;
+  SUITE = {namespace: ns, engines, rows: []};
+  $('#out').innerHTML = '<div class="card" id="suiteCard"></div>';
+  for (let i = 0; i < qs.length; i++) {
+    $('#prog div').style.width = `${100 * i / qs.length}%`;
+    const r = await api('/api/run', {...settings(qs[i].sql), explain: false}).catch(e => ({results: [], comparisons: [], error: e.message}));
+    SUITE.rows.push({q: qs[i].name.replace('TPC-H ', ''), r});
+    renderSuite();
+  }
+  $('#prog div').style.width = '100%'; setTimeout(() => $('#prog').hidden = true, 600);
+  busy(false); loadHistory();
+}
+
+function renderSuite() {
+  const {engines, rows, namespace} = SUITE;
+  const label = id => ENGINES.find(e => e.id === id)?.label || id;
+  const totals = Object.fromEntries(engines.map(e => [e, {wall: 0, cpu: 0, ok: 0, peak: 0}]));
+  const body = rows.map(({q, r}) => {
+    const by = Object.fromEntries(r.results.map(x => [x.engine, x]));
+    const ok = engines.map(e => by[e]).filter(x => x?.ok);
+    const best = Math.min(...ok.map(x => x.wall_median_s));
+    engines.forEach(e => { const x = by[e]; if (x?.ok) { totals[e].wall += x.wall_median_s; totals[e].cpu += x.cpu_median_s || 0; totals[e].ok++; totals[e].peak = Math.max(totals[e].peak, x.peak_mb || 0); } });
+    const cells = engines.map(e => { const x = by[e]; if (!x) return '<td class="num">—</td>';
+      if (!x.ok) return `<td><span class="badge bad" title="${esc(x.error_head)}">error</span></td>`;
+      return `<td class="num"${x.wall_median_s === best ? ' style="font-weight:650"' : ''}>${fmt(x.wall_median_s)}</td>`; }).join('');
+    const v = r.comparisons.map(c => verdictBadge(c.verdict)).join(' ');
+    const sp = engines.length > 1 && by[engines[0]]?.ok && by[engines[1]]?.ok ? fmt(by[engines[0]].wall_median_s / by[engines[1]].wall_median_s, 2) + '×' : '—';
+    return `<tr><td>${esc(q)}</td>${cells}<td class="num">${sp}</td><td>${v}</td></tr>`;
+  }).join('');
+  const tot = engines.map(e => `<td class="num"><b>${fmt(totals[e].wall, 2)}</b></td>`).join('');
+  const cpu = engines.map(e => `<td class="num">${fmt(totals[e].cpu, 1)}</td>`).join('');
+  const peak = engines.map(e => `<td class="num">${fmt(totals[e].peak, 0)}</td>`).join('');
+  const matches = rows.filter(({r}) => r.comparisons.length && r.comparisons.every(c => c.verdict === 'identical')).length;
+  $('#suiteCard').innerHTML = `<h4 style="margin:0 0 8px">TPC-H on ${esc(namespace)} · ${rows.length}/22 queries · ${$('#reps').value} runs each, median seconds</h4>
+    <div class="tablewrap" style="max-height:none"><table>
+      <tr><th>query</th>${engines.map(e => `<th class="num">${esc(label(e))}</th>`).join('')}<th class="num" title="first engine ÷ second engine">speedup</th><th>result vs ${esc(label(engines[0]))}</th></tr>
+      ${body}
+      <tr><td><b>total wall s</b></td>${tot}<td class="num"><b>${engines.length > 1 && totals[engines[1]].wall ? fmt(totals[engines[0]].wall / totals[engines[1]].wall, 2) + '×' : ''}</b></td><td>${matches} identical</td></tr>
+      <tr><td class="muted">total CPU-s</td>${cpu}<td></td><td></td></tr>
+      <tr><td class="muted">peak MB</td>${peak}<td></td><td></td></tr>
+    </table></div>
+    <p class="muted">Speedup = ${esc(label(engines[0]))} time ÷ ${esc(label(engines[1] || ''))} time. Totals include only queries that succeeded. ${$('#mode').value === 'parallel' ? 'Parallel mode: engines competed for the same CPUs, so times are not comparable to sequential runs.' : ''}</p>
+    <button id="suiteCsv">Export CSV</button>`;
+  $('#suiteCsv').onclick = () => download('tpch-suite.csv', ['query,' + engines.map(e => e + '_s').join(',') + ',verdicts',
+    ...rows.map(({q, r}) => [q, ...engines.map(e => r.results.find(x => x.engine === e)?.wall_median_s ?? ''), r.comparisons.map(c => c.engine + ':' + c.verdict).join(' ')].join(','))].join('\n'), 'text/csv');
+}
+
+async function loadHistory() {
+  const h = await api('/api/history');
+  $('#history').innerHTML = h.length ? h.slice(0, 30).map((x, i) => `<div class="hist" data-i="${i}"><code>${esc(x.sql.replace(/\s+/g, ' '))}</code>
+    <span class="muted">${esc(x.started.slice(11))} · ${x.summary.map(s => `${esc(s.engine)} ${s.ok ? fmt(s.wall_median_s, 2) + 's' : 'err'}`).join(' · ')}</span></div>`).join('') : 'No runs yet.';
+  $('#history').onclick = ev => { const el = ev.target.closest('.hist'); if (el) { $('#sql').value = h[+el.dataset.i].sql; if (h[+el.dataset.i].namespace) $('#ns').value = h[+el.dataset.i].namespace; } };
+}
+
+$('#run').onclick = runOne;
+$('#suite').onclick = runSuite;
+$('#refresh').onclick = () => { api('/api/reset', {}); loadEngines(); loadCatalog(); };
+$('#sql').addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runOne(); } });
+const saved = store.get('sql', null); if (saved) $('#sql').value = saved;
+loadEngines(); loadCatalog(); loadPresets(); loadHistory();
+</script>
+</body>
+</html>

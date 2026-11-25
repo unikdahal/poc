@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 export PYTHONPATH=$PWD
 [[ -x .venv/bin/python ]] && .venv/bin/python -m harness.services stop-spark
 pkill -f poc-token-refresher 2>/dev/null
+pkill -f ui/server.py 2>/dev/null
 docker rm -f sail sail-flight sail-bench 2>/dev/null
 if [[ "${1:-}" == "--wipe" ]]; then
   docker compose -f compose/docker-compose.yml --profile celeborn down -v

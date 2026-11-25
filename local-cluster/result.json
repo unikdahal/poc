@@ -1,0 +1,3563 @@
+{
+  "task": "soak",
+  "variant": "local-cluster",
+  "revision": "3ca30530b3edc6a0d60d3be6066142aab010db9b",
+  "run_id": "45553300746",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.soak"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464306176,
+    "disk": "/dev/mapper/cow-root 154894188544 44081033216 110796378112  29% /"
+  },
+  "engines": {
+    "spark-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 4.258293151855469,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9618208920000484
+      }
+    },
+    "mixed-soak": {
+      "settings": {
+        "mode": "local-cluster",
+        "cores": 4,
+        "memory": "11g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local-cluster",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_CLUSTER__WORKER_INITIAL_COUNT": "1",
+          "SAIL_CLUSTER__WORKER_MAX_COUNT": "1",
+          "SAIL_SPARK__SESSION_TIMEOUT_SECS": "120"
+        }
+      },
+      "listen_s": 0.10206039799999189,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007301858999994693
+      }
+    }
+  },
+  "cases": {
+    "samples": [
+      {
+        "elapsed_s": 0.05286901099998431,
+        "phase": "active",
+        "cgroup_bytes": 97955840,
+        "rss_bytes": 202301440,
+        "threads": 12,
+        "fd_count": 33,
+        "local_disk_used_bytes": 44578271232,
+        "workload_s3_objects": 13
+      },
+      {
+        "elapsed_s": 30.000110859000017,
+        "phase": "active",
+        "cgroup_bytes": 1169039360,
+        "rss_bytes": 1204764672,
+        "threads": 40,
+        "fd_count": 223,
+        "local_disk_used_bytes": 44580249600,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 60.00012091799999,
+        "phase": "active",
+        "cgroup_bytes": 1302179840,
+        "rss_bytes": 1294491648,
+        "threads": 40,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44581830656,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 90.00009096000002,
+        "phase": "active",
+        "cgroup_bytes": 1299255296,
+        "rss_bytes": 1250861056,
+        "threads": 40,
+        "fd_count": 393,
+        "local_disk_used_bytes": 44583432192,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 120.00009932400002,
+        "phase": "active",
+        "cgroup_bytes": 1312313344,
+        "rss_bytes": 1254395904,
+        "threads": 42,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44585058304,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 150.000090162,
+        "phase": "active",
+        "cgroup_bytes": 1426178048,
+        "rss_bytes": 1396793344,
+        "threads": 42,
+        "fd_count": 392,
+        "local_disk_used_bytes": 44586684416,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 180.00011389200006,
+        "phase": "active",
+        "cgroup_bytes": 1467260928,
+        "rss_bytes": 1391759360,
+        "threads": 42,
+        "fd_count": 392,
+        "local_disk_used_bytes": 44588298240,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 210.00008828299997,
+        "phase": "active",
+        "cgroup_bytes": 1343668224,
+        "rss_bytes": 1317363712,
+        "threads": 45,
+        "fd_count": 392,
+        "local_disk_used_bytes": 44589965312,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 240.001069648,
+        "phase": "active",
+        "cgroup_bytes": 1518563328,
+        "rss_bytes": 1458561024,
+        "threads": 45,
+        "fd_count": 390,
+        "local_disk_used_bytes": 44591587328,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 270.000113663,
+        "phase": "active",
+        "cgroup_bytes": 1523118080,
+        "rss_bytes": 1458282496,
+        "threads": 45,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44593246208,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 300.00010624900005,
+        "phase": "active",
+        "cgroup_bytes": 1329012736,
+        "rss_bytes": 1288200192,
+        "threads": 45,
+        "fd_count": 394,
+        "local_disk_used_bytes": 44594892800,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 330.00008927600004,
+        "phase": "active",
+        "cgroup_bytes": 1570271232,
+        "rss_bytes": 1512411136,
+        "threads": 45,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44596531200,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 360.000109062,
+        "phase": "active",
+        "cgroup_bytes": 1585872896,
+        "rss_bytes": 1540395008,
+        "threads": 45,
+        "fd_count": 392,
+        "local_disk_used_bytes": 44598194176,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 390.000124979,
+        "phase": "active",
+        "cgroup_bytes": 1609068544,
+        "rss_bytes": 1549643776,
+        "threads": 45,
+        "fd_count": 393,
+        "local_disk_used_bytes": 44599861248,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 420.00009528199996,
+        "phase": "active",
+        "cgroup_bytes": 1666777088,
+        "rss_bytes": 1601540096,
+        "threads": 45,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44601561088,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 450.00010242999997,
+        "phase": "active",
+        "cgroup_bytes": 1591623680,
+        "rss_bytes": 1560006656,
+        "threads": 45,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44593180672,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 480.00010473500004,
+        "phase": "active",
+        "cgroup_bytes": 1326751744,
+        "rss_bytes": 1289060352,
+        "threads": 45,
+        "fd_count": 393,
+        "local_disk_used_bytes": 44594860032,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 510.00013022100006,
+        "phase": "active",
+        "cgroup_bytes": 1503952896,
+        "rss_bytes": 1434357760,
+        "threads": 45,
+        "fd_count": 391,
+        "local_disk_used_bytes": 44596568064,
+        "workload_s3_objects": 61
+      },
+      {
+        "elapsed_s": 540.000122129,
+        "phase": "active",
+        "cgroup_bytes": 1568288768,
+        "rss_bytes": 1483689984,
+        "threads": 45,
+        "fd_count": 392,
+        "local_disk_used_bytes": 44596219904,
+        "workload_s3_objects": 61
+      }
+    ],
+    "counts": {
+      "session_churn": {
+        "attempts": 433,
+        "matched_spark": 433,
+        "failed": 0
+      },
+      "tpch": {
+        "attempts": 830,
+        "matched_spark": 815,
+        "failed": 15
+      },
+      "point": {
+        "attempts": 3320,
+        "matched_spark": 3315,
+        "failed": 5
+      },
+      "merge": {
+        "attempts": 277,
+        "matched_spark": 8,
+        "failed": 269
+      }
+    },
+    "errors": [
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.18339612400001215,
+        "query": 3
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.043564731000003576,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0570137699999691
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03858315899998388,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05214216300004182
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03715179799996804,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05163380100003678
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03856454700002132,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05271410699998569
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03761005699999487,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049671203000002606
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.04220227700000123,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06101891700001261
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03669141599999648,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05124532400003545
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.036447850000001836,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05005663399998639
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03488188399995806,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05100646800002551
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03623965999997836,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05096878900002366
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.035271587000011095,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05028259599998819
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0356228200000146,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05051679899997907
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03413570399999344,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05823298800004295
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.037440002999971966,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.053347955000049296
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03692082800000662,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05288616699999693
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03625528899999608,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.052697228999988965
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03401483699997243,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05075210299997934
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03782368200000974,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05073227999997698
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.019450227999982417,
+        "query": 21
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.039451640999971005,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05138481300002695
+        }
+      },
+      {
+        "class": "point",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.002040238999995836
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03554354400000648,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05104468500002213
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03380815700000994,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04873536600001671
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03337602700003117,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05025979900000266
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.034163282999998046,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.054570109999986016
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033606706000000486,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050631197000029715
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033182182000018656,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05015038599998434
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.037756828999988556,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.056600816000013765
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032454674000007344,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04871800099999746
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.035911819000034484,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05879946700002847
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03432804699997405,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04934574500003919
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.034876768999993146,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.051168411999981345
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03279396800002132,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0501654950000443
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03315300700000989,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048850404999996044
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03272331799996664,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.055732270000021344
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03319214800001191,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05102181500001279
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.1668129039999826,
+        "query": 3
+      },
+      {
+        "class": "point",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.0026065309999694364
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03877445899996701,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050071151999986796
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032737558000007994,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04877525199998445
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03271869100001368,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04951560300003166
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033209113999987494,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04898750399996743
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033134771999982604,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04878031600003396
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032189930000015465,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04985829900005001
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03804516199994623,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0649927390000471
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.12094638199999963,
+        "query": 6
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.13480130699997517,
+        "query": 13
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032878288999995675,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049900173000025916
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03203868900004636,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05151709199998322
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031695528000000195,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04972477399996933
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03898517499999343,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05524376599998959
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03296056300001737,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049980236000010336
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03254967499998429,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04902030199997398
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.26668123700000024,
+        "query": 9
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03210475700001325,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04872440999997707
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03172772300001725,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0506105009999942
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032106666000004225,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0508511429999885
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03208223900003304,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049413775999994414
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03486527300003672,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.07349209300002713
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032643345999986195,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05050862400003098
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.13921510300002637,
+        "query": 13
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03439706300002854,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04930975600001375
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0344364110000015,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.061602949000018725
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033118007999974,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05312235200000259
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03341198800001166,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06561618299997463
+        }
+      },
+      {
+        "class": "point",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.004473682000025292
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032464119999985996,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04840043399997285
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032495587000084925,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048995742999977665
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03588483599992287,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049654124999960914
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03231229400000757,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049461010999948485
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03785055899993495,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05845125999996981
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031405322000068736,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05296644899999592
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031098252999981923,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0523929109999699
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03288771999996243,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04848540299997239
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03343422900002224,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04876467300005061
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03497898599994187,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06310442400001648
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03220821200000046,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04890753199993014
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03273992599997655,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05048313400004645
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03163154699996085,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.051161136000018814
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03214668500004336,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048650894999923366
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030957897000007506,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05079255500004365
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033494657000005645,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04805463000002419
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0319264080000039,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048055614000077185
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03115487000002304,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04930520699997487
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03309062699997867,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.059356476000061775
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03622670599997946,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.052522113000009085
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.035603397000045334,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04882049200000438
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.013924752999969314,
+        "query": 21
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03434373000004598,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06107252599997537
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033681997000030606,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04907892200003516
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031256287000019256,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049413149999963935
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03160396800001308,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04838375700001052
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032371409999996104,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04858742900000834
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03078337499994177,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04861032200005866
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031289262999962375,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04758818599998449
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030698951000090346,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05061577700007547
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030228897000029065,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048060744000054
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03068502200005696,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048582272999965426
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03161994099991716,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04892383599997174
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030621230000065225,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04764043299996956
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030480678000003536,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050298548000000665
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03455445099996268,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049259600000027604
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03210664000005181,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06126971499998035
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030570123000075,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04901532799999586
+        }
+      },
+      {
+        "class": "point",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.0023432250000041677
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03156204900005832,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048646183999949244
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03475113600006807,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.054771211999991465
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030652112999973724,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04953010700000959
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031329431000017394,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04792826400000649
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0312877709999384,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048005051000018284
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0312779060000139,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05031126500000482
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0311043870000276,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047807150000039655
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031192550000014307,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050214836999998624
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031034942000019328,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04932563099998788
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0301785279999649,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05177901700005805
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03171651599996039,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050351350000028106
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030057980000037787,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04966182300006494
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03075419200001761,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05887818899998365
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03021052100007182,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050205286000050364
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031232731000045533,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04877976000000217
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03227474200002689,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04760822699995515
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03050092199998744,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05878679700003886
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02999743899999885,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047970064999958595
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030447291000086807,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04844503300000724
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031237804000056713,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04766268200000923
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030291744999999537,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04837409699996442
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029883177999977306,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04861661500001446
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031176583000046776,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04851323900004445
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03141068399997948,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048865586000033545
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03096037799991791,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048591333999979724
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032872555999915676,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05090031999998246
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03149520900001335,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05493077300002369
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030579643999999462,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05028854900001534
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03338356799997655,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05019786499997281
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031421082000065326,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048356787999978224
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03103268899997147,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04898247700009506
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030578914999978224,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04730887200003053
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029775403000030565,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04893742199999451
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.038189044999967336,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05643389799990928
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03101129399999536,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04958346000000802
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03156507000005604,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05234959599999911
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031226085999946918,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049055618000011236
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030484387000001334,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05098810300000878
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030100436999987323,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05120798200005083
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.033470545999989554,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049075690999984545
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030565319999936946,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047923013000058745
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031733622000047035,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04922204599995439
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030604783999933716,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04831837999995514
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0302609160000884,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048353479000070365
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03360855099992932,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050158772000031604
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03199745699998857,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05088119899994581
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.019680096000001868,
+        "query": 18
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.1632712169999877,
+        "query": 3
+      },
+      {
+        "class": "point",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.0035600669999666934
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03078664299994216,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04962527800000771
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03251296899998124,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.058342176999985895
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0327458529999376,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0716843790000894
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03140590800001064,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05282796100004816
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.037618727999984,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04942045399991457
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030027239999981248,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048813504000008834
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0300763680000955,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05358445199999551
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030736733000026106,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04872464200002469
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030503062999969188,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04865496399997937
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030341017999944597,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049678318999895055
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03035648700006277,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04774192699994728
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03258835199994792,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04909622100001343
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030516108000028908,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04815271399991161
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02991845999997622,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05001295099998515
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03074228299999504,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05424341900004492
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03147885900000347,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04905758600000354
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030131831999938186,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.058760872999982894
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0346534679999877,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05147273399995811
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.052706412000020464,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.088017294999986
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029611866999971426,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048072914000044875
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03220380200002637,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04994902099997489
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030457783999963794,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04837327699999605
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029805339000063213,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048585720000005495
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030385886999965805,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048617024000009224
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030386058999965826,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048031431000026714
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.034107674999972915,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04890468299993245
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029569913999921482,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04803939499993248
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030219202000012046,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05064234299993586
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.26045127899999443,
+        "query": 21
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029808521000063593,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05199100900006215
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030656013999987408,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04966850699997849
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03159417099993789,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04902522800000497
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029864718999988327,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04840924499990251
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030105372999969404,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049073114999941936
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.042390389000047435,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048006850999968265
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02947857300000578,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049368587999993
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029872483999952237,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048185293000074125
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029689579999967464,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04841326600001139
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03148440099994332,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06339205300002959
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02910128300004544,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048422429999959604
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029868882999949165,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.051181213999939246
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.018341510000027483,
+        "query": 18
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030140664999976252,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04923189800001637
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031175657999938267,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0517457009999589
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03877165500000501,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048598183999956746
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03528396100000464,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04822083700003077
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.034080351999932645,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05201259699992988
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030005643000095006,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04804755500003921
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.032183928999984346,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0491965749999963
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029714036000086708,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04727484599993659
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029868114000009882,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0564639190000662
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029858661000048414,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04882688700001836
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03262350800002878,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04812748399990596
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030203554999957305,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048945297000045684
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029511262000028182,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0491747610000175
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03145889699999316,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050670717000002696
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030505730999948355,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04850862600005712
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02993093299994598,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04876915199997711
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030626503000007688,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04976122900006885
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.013437140999940311,
+        "query": 13
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030511407000062718,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05014401899995846
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.028928819000043404,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04810826599998563
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030211330000042835,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048779388999946605
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030029804000037075,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04927944399992157
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029775334999953884,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0487810490000129
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029420159999972384,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04858439800000269
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031629118999944694,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048971542000003865
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02959208699996907,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04780119300005481
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02926355700003569,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04892871399999876
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03173535099995206,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050720651000006
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029754856000067775,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04866686100001516
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02982685900008164,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04844617999992806
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029569590000050994,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04847234399994704
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03351487800000541,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0477017570000271
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029920282000034604,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049831587000085165
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.00945269700002882,
+        "query": 18
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02958713999998963,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0502034180000237
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029884597000091162,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048345768999979555
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02968970500000978,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04807648999997127
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030534407999994073,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048989336999966326
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029798657000014828,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04777323999996952
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029900418000011086,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048446212999920135
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031965729000035026,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05829569000002266
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03033805199993367,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04849321899996539
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02912553900000603,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04838463800001591
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03097171599995363,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.046421227999985604
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029451901000015823,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047633937000000515
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0315494660000013,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050249310000026526
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02935398600004646,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0485847659999763
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029662183000027653,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048594342000001234
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0319645430000719,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049026934000039546
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029347694000080082,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048985069999957886
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030504364999956124,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.049843111999962275
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0343025839999882,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05146394799999143
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.036592398000038884,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06099656599997161
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0292070179999655,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04894460299999537
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029457026000045516,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05032129000005625
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02894561599998724,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048475245999952676
+        }
+      },
+      {
+        "class": "tpch",
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.011155991000009635,
+        "query": 21
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02892552599996634,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04694056199991792
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030174964000025284,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048867103000020506
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02889399000002868,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04910254000003533
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03223194500003501,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06450206899990008
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029137912000010147,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047686479000049076
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.030215794000014284,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048522437999963586
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03247876900002211,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.050448966999965705
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02898182599994925,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04911971299998186
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.028784591999965414,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04790777599998819
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029850325999973393,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04744464700002027
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029496868000023824,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04907031699997333
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0360202690000051,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04863090399999237
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029418857999985448,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04901577000009638
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02989197099998364,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04871414599995205
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.028959059000044363,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04800827799999752
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029777007999996385,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04821008900000834
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029219590000025164,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04769099399993593
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02956999600007748,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04639008599997396
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029325227000072118,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.05032232100006695
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029093870999986393,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.06341253699997651
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02845062799997322,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04733153900008347
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.028665650000107235,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04831246900005226
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02830757399999584,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047799733000033484
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.028852464000010514,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048880315000019436
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02937114600001678,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047251841000047534
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.028617439999948147,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04823900200005937
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02902553799992802,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0566041199999745
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.0319580830000632,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.0475543379999408
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029186492999997427,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04999058700002479
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.031445652000002156,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04840653100006875
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029782920000002377,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04982165699993857
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029388632999939546,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04792801500002497
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.03100463199996284,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.048707922000062354
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.02923963899991122,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.04836179299991272
+        }
+      },
+      {
+        "class": "merge",
+        "status": "error",
+        "error": "SparkRuntimeException: invalid argument: task region requires 9 worker task slots, but the configured maximum is 8 given a maximum of 1 workers with 8 task slots per worker",
+        "elapsed_s": 0.029240352999977404,
+        "readback": {
+          "status": "ok",
+          "elapsed_s": 0.047265283000001546
+        }
+      }
+    ],
+    "latency_windows": [
+      {
+        "elapsed_s": 0.05286901099998431,
+        "session_churn": {
+          "count": 1,
+          "p50_s": 0.022093313000027592,
+          "p99_s": 0.022093313000027592
+        }
+      },
+      {
+        "elapsed_s": 30.000110859000017,
+        "tpch": {
+          "count": 41,
+          "p50_s": 0.3139184730000011,
+          "p99_s": 0.4171373689999882
+        },
+        "point": {
+          "count": 168,
+          "p50_s": 0.015410182000039185,
+          "p99_s": 0.02700984599999856
+        },
+        "merge": {
+          "count": 8,
+          "p50_s": 0.08872148699998661,
+          "p99_s": 0.11587788199994975
+        },
+        "session_churn": {
+          "count": 23,
+          "p50_s": 0.015019219000009798,
+          "p99_s": 0.21504817900000717
+        }
+      },
+      {
+        "elapsed_s": 60.00012091799999,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.015879405499987342,
+          "p99_s": 0.15565281099998174
+        },
+        "tpch": {
+          "count": 44,
+          "p50_s": 0.2088122524999676,
+          "p99_s": 0.4071045530000106
+        },
+        "point": {
+          "count": 179,
+          "p50_s": 0.013492390000010346,
+          "p99_s": 0.021297237000055702
+        }
+      },
+      {
+        "elapsed_s": 90.00009096000002,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.014291331500032811,
+          "p99_s": 0.11613643800001228
+        },
+        "tpch": {
+          "count": 44,
+          "p50_s": 0.28287730200000283,
+          "p99_s": 0.3328187530000264
+        },
+        "point": {
+          "count": 179,
+          "p50_s": 0.01287612200002286,
+          "p99_s": 0.019771977999994306
+        }
+      },
+      {
+        "elapsed_s": 120.00009932400002,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.013374102500023355,
+          "p99_s": 0.09901105799997367
+        },
+        "tpch": {
+          "count": 43,
+          "p50_s": 0.20323359400003937,
+          "p99_s": 0.3282930139999962
+        },
+        "point": {
+          "count": 184,
+          "p50_s": 0.012817097500004593,
+          "p99_s": 0.019145826999988458
+        }
+      },
+      {
+        "elapsed_s": 150.000090162,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.014147549999989906,
+          "p99_s": 0.12140302299997074
+        },
+        "tpch": {
+          "count": 44,
+          "p50_s": 0.2913051145000054,
+          "p99_s": 0.35540996700001415
+        },
+        "point": {
+          "count": 179,
+          "p50_s": 0.012977705000025708,
+          "p99_s": 0.02133090400002402
+        }
+      },
+      {
+        "elapsed_s": 180.00011389200006,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.01578969400003416,
+          "p99_s": 0.15947204999997666
+        },
+        "tpch": {
+          "count": 45,
+          "p50_s": 0.1955375229999845,
+          "p99_s": 0.3438314850000097
+        },
+        "point": {
+          "count": 184,
+          "p50_s": 0.012264954999977817,
+          "p99_s": 0.018722352000054343
+        }
+      },
+      {
+        "elapsed_s": 210.00008828299997,
+        "session_churn": {
+          "count": 25,
+          "p50_s": 0.014594325999951252,
+          "p99_s": 0.08923790299991197
+        },
+        "tpch": {
+          "count": 47,
+          "p50_s": 0.2025032359999841,
+          "p99_s": 0.3110343280000052
+        },
+        "point": {
+          "count": 183,
+          "p50_s": 0.011845167999922523,
+          "p99_s": 0.01863061699998525
+        }
+      },
+      {
+        "elapsed_s": 240.001069648,
+        "point": {
+          "count": 184,
+          "p50_s": 0.011814783000033913,
+          "p99_s": 0.017816854999978204
+        },
+        "tpch": {
+          "count": 46,
+          "p50_s": 0.23206622499998275,
+          "p99_s": 0.3145953539999482
+        },
+        "session_churn": {
+          "count": 23,
+          "p50_s": 0.014200748999996904,
+          "p99_s": 0.1705201690000422
+        }
+      },
+      {
+        "elapsed_s": 270.000113663,
+        "point": {
+          "count": 184,
+          "p50_s": 0.011742390999984309,
+          "p99_s": 0.018825523000032263
+        },
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.014079683000034038,
+          "p99_s": 0.17141094999999495
+        },
+        "tpch": {
+          "count": 46,
+          "p50_s": 0.26918271400001004,
+          "p99_s": 0.348267336000049
+        }
+      },
+      {
+        "elapsed_s": 300.00010624900005,
+        "point": {
+          "count": 187,
+          "p50_s": 0.0120362570000907,
+          "p99_s": 0.020571054000015465
+        },
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.015667125999982545,
+          "p99_s": 0.10527236400002948
+        },
+        "tpch": {
+          "count": 44,
+          "p50_s": 0.19428366950000964,
+          "p99_s": 0.33227191999992556
+        }
+      },
+      {
+        "elapsed_s": 330.00008927600004,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.01396690500001796,
+          "p99_s": 0.1140413109999372
+        },
+        "tpch": {
+          "count": 46,
+          "p50_s": 0.22964191299996628,
+          "p99_s": 0.3601637420000543
+        },
+        "point": {
+          "count": 184,
+          "p50_s": 0.011935254499974235,
+          "p99_s": 0.024788570000055188
+        }
+      },
+      {
+        "elapsed_s": 360.000109062,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.013893872499977533,
+          "p99_s": 0.18586606899998515
+        },
+        "tpch": {
+          "count": 46,
+          "p50_s": 0.2340322160000028,
+          "p99_s": 0.31547046799994405
+        },
+        "point": {
+          "count": 184,
+          "p50_s": 0.011620225000001483,
+          "p99_s": 0.020222615000079713
+        }
+      },
+      {
+        "elapsed_s": 390.000124979,
+        "point": {
+          "count": 188,
+          "p50_s": 0.011450293999985206,
+          "p99_s": 0.01662334800005283
+        },
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.015262596500008385,
+          "p99_s": 0.17464261600002828
+        },
+        "tpch": {
+          "count": 45,
+          "p50_s": 0.1893858429999682,
+          "p99_s": 0.3133185430000367
+        }
+      },
+      {
+        "elapsed_s": 420.00009528199996,
+        "tpch": {
+          "count": 47,
+          "p50_s": 0.2583544569999958,
+          "p99_s": 0.3081975779999766
+        },
+        "point": {
+          "count": 192,
+          "p50_s": 0.011358995500017954,
+          "p99_s": 0.018305768999994143
+        },
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.013719518000016251,
+          "p99_s": 0.16291869600001974
+        }
+      },
+      {
+        "elapsed_s": 450.00010242999997,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.01475775500000509,
+          "p99_s": 0.18279387400002634
+        },
+        "tpch": {
+          "count": 46,
+          "p50_s": 0.19382636599999614,
+          "p99_s": 0.3800447250000616
+        },
+        "point": {
+          "count": 188,
+          "p50_s": 0.011402497999995376,
+          "p99_s": 0.021190328999978192
+        }
+      },
+      {
+        "elapsed_s": 480.00010473500004,
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.012365787500016268,
+          "p99_s": 0.19522473399990758
+        },
+        "tpch": {
+          "count": 47,
+          "p50_s": 0.18134478899992246,
+          "p99_s": 0.3019875669999692
+        },
+        "point": {
+          "count": 189,
+          "p50_s": 0.011220958000080827,
+          "p99_s": 0.01668735300006574
+        }
+      },
+      {
+        "elapsed_s": 510.00013022100006,
+        "point": {
+          "count": 191,
+          "p50_s": 0.011184055000057924,
+          "p99_s": 0.020837353999922925
+        },
+        "session_churn": {
+          "count": 24,
+          "p50_s": 0.01211180149999791,
+          "p99_s": 0.16818187299998044
+        },
+        "tpch": {
+          "count": 47,
+          "p50_s": 0.251658558000031,
+          "p99_s": 0.2960043789998963
+        }
+      },
+      {
+        "elapsed_s": 540.000122129,
+        "session_churn": {
+          "count": 25,
+          "p50_s": 0.012027720999981284,
+          "p99_s": 0.018680550999988554
+        },
+        "tpch": {
+          "count": 47,
+          "p50_s": 0.17640836800001125,
+          "p99_s": 0.30151808000005076
+        },
+        "point": {
+          "count": 188,
+          "p50_s": 0.01102944399997341,
+          "p99_s": 0.01804343699996025
+        }
+      }
+    ]
+  },
+  "data_load": {
+    "nation": {
+      "rows": 25,
+      "seconds": 3.5
+    },
+    "region": {
+      "rows": 5,
+      "seconds": 0.59
+    },
+    "part": {
+      "rows": 200000,
+      "seconds": 1.17
+    },
+    "supplier": {
+      "rows": 10000,
+      "seconds": 0.57
+    },
+    "partsupp": {
+      "rows": 800000,
+      "seconds": 1.27
+    },
+    "customer": {
+      "rows": 150000,
+      "seconds": 0.79
+    },
+    "orders": {
+      "rows": 1500000,
+      "seconds": 1.78
+    },
+    "lineitem": {
+      "rows": 6001215,
+      "seconds": 6.02
+    }
+  },
+  "reference": {
+    "merge_delta": 1,
+    "point": {
+      "rows": 1,
+      "sha256": "9730aa10dd121df71d3eeea2b55eae2d10f732a8827248218b3144bc7b45133a"
+    },
+    "3": {
+      "rows": 10,
+      "sha256": "170e4a128d9176d693d0a63809a175bda0db3f7136c72346b4d64d961b679515"
+    },
+    "6": {
+      "rows": 1,
+      "sha256": "eaab6e93d6488d744072f858f5bc401970192ac8a06f1bf4e5d224a1704c639f"
+    },
+    "9": {
+      "rows": 175,
+      "sha256": "cf43566622c60d7cc1a49c0676de80499ff09b2361e15cef4f30939be9726462"
+    },
+    "13": {
+      "rows": 42,
+      "sha256": "d4ec38c21228c5e87cd0a0013ec850b34baaa3cf87ae06b27a4a419c84b9fe37"
+    },
+    "18": {
+      "rows": 9,
+      "sha256": "78a9a157151dd318c8cdb5beef0580e84140af8230ce53ead646a8ab7b2d6458"
+    },
+    "21": {
+      "rows": 100,
+      "sha256": "38427d942068d13ef6ffff46bddb98f4f2b7606889cd8b2e753b526cd5e75d02"
+    }
+  }
+}

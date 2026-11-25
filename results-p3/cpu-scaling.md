@@ -94,13 +94,13 @@ Attempt counts by status. `sail-1` {'mismatch': 9, 'ok': 57} · `sail-2` {'misma
 
 ### Scaling across runners
 
-**FACT.** runner-1 comet cut paired wall time by 75.6%, 16.7%, 10.7% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 2.268×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+**FACT.** runner-1 comet cut paired wall time by 43.0%, 14.3%, 9.7% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 2.268×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
 
-**FACT.** runner-1 sail cut paired wall time by 53.2%, 19.1%, 7.5% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.963×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+**FACT.** runner-1 sail cut paired wall time by 34.7%, 16.1%, 7.0% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.963×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-1/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
 
-**FACT.** runner-2 comet cut paired wall time by 78.7%, 14.8%, 10.1% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 2.257×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+**FACT.** runner-2 comet cut paired wall time by 44.0%, 12.9%, 9.1% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 2.257×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
 
-**FACT.** runner-2 sail cut paired wall time by 52.4%, 19.5%, 8.9% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.984×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
+**FACT.** runner-2 sail cut paired wall time by 34.4%, 16.3%, 8.2% for the successive 1→2, 2→3 and 3→4 core steps. Four-core speedup was 1.984×. [Raw JSON](https://github.com/unikdahal/poc/blob/45eb83798dc29c38ae823e4fd5cfcbb5ac9c4566/runner-2/result.json) · [Run 45557839275](https://github.com/unikdahal/poc/actions/runs/45557839275)
 
 The run JSON contains the validated per-query medians. The report reconstructs the Sail aggregate from those medians because an intermediate report write in the harness omitted that aggregate.
 

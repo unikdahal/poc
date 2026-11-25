@@ -12,7 +12,7 @@ variants = {
     "faults-storage": ("storage", "catalog", "token", "commit-ack"),
     "api-coverage": ("python35", "python4", "jvm35", "jvm4"),
     "ops": ("surface", "term", "int", "hup"),
-    "scale-up": ("tpch50", "tpcds10-1", "tpcds10-2", "tpcds10-3", "tpcds10-tail1", "tpcds10-tail2", "tpcds10-tail3", "tpcds10-tail-recheck"),
+    "scale-up": ("tpch50", "tpch50-tail", "tpcds10-1", "tpcds10-2", "tpcds10-3", "tpcds10-tail1", "tpcds10-tail2", "tpcds10-tail3", "tpcds10-tail-recheck"),
 }
 
 if __name__ == "__main__":

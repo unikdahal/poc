@@ -14,14 +14,14 @@ from harness.p3.common import (VARIANT, begin, bounded, cmd, collect, fingerprin
                                error, load_tpch, median_if_valid, query_file, save, timed, tpch_rows)
 
 TASK = "scale-up"
-SCALE = 50 if VARIANT == "tpch50" else 10
+SCALE = 50 if VARIANT.startswith("tpch50") else 10
 TAILS = {
     "tpcds10-tail1": range(16, 34), "tpcds10-tail2": range(65, 67), "tpcds10-tail3": range(74, 100),
-    "tpcds10-tail-recheck": (14, 15, 64, 72, 73, 82),
+    "tpcds10-tail-recheck": (14, 15, 64, 72, 73, 82), "tpch50-tail": range(18, 23),
 }
 if VARIANT in TAILS:
     QUERIES = TAILS[VARIANT]
-elif VARIANT == "tpch50":
+elif SCALE == 50:
     QUERIES = range(1, 23)
 elif VARIANT.startswith("tpcds10-"):
     shard = int(VARIANT.rsplit("-", 1)[-1])
@@ -37,14 +37,14 @@ def free_bytes():
 
 
 def run_query(spark, q):
-    if VARIANT == "tpch50":
+    if SCALE == 50:
         return [tpch_rows(spark, "tpch_sf50", q, 650)]
     bounded(lambda: tpch.use(spark, "p3_tpcds_sf10"), 30, spark.interruptAll)
     return [collect(spark, sql, 650) for sql in query_file(PATHS / f"q{q}.sql")]
 
 
 def signature(rows, q):
-    return [fingerprint(batch, tpch.ordered(q) if VARIANT == "tpch50" else False) for batch in rows]
+    return [fingerprint(batch, tpch.ordered(q) if SCALE == 50 else False) for batch in rows]
 
 
 def watch_disk(stop, observations):
@@ -158,7 +158,7 @@ def main():
         thread = threading.Thread(target=watch_disk, args=(done, disk), daemon=True)
         thread.start()
         try:
-            if VARIANT == "tpch50":
+            if SCALE == 50:
                 result["data_load"] = load_tpch(spark, SCALE)
             else:
                 result["data_load"] = load_tpcds(spark, SCALE)

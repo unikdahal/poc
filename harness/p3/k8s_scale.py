@@ -162,13 +162,12 @@ def running_stage(client, internal, started, label):
         GROUP BY job_id, stage
         """, 12)
     underway = {(row[0], row[1]): row[2] for row in rows}
-    stage_modes = {(node["job"], node["stage"]): node["mode"].lower() for node in nodes}
     for node in nodes:
         key = (node["job"], node["stage"])
         if label == "map-kill":
             want = not node["inputs"]
         else:
-            want = any(stage_modes.get((node["job"], edge["stage"])) == "blocking" for edge in node["inputs"])
+            want = any(edge["mode"].lower() == "shuffle" for edge in node["inputs"])
         if key in underway and want and "worker" in node["placement"].lower():
             return node | {"running_tasks": underway[key], "worker_assignment_exposed": False}
     return None

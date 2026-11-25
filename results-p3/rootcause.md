@@ -73,4 +73,4 @@ The raw files contain every original row and result schema. A row diff records b
 
 ### Coverage limits
 
-Public issue and PR searches ran separately against the upstream repository. Search terms included decimal division, decimal, average, bround, rounding, cast, initcap, regexp, trunc, make_date, pivot, decode, timezone, Etc/UTC, log, coercion and overflow. Public search can miss an open report. The alternate build freezes the then-current main SHA. The result applies to that SHA. SQL with explicit collation, nondefault Spark decimal precision policy, and other Spark releases had no separate treatment.
+Public issue and PR searches ran separately against the upstream repository. Search terms included decimal division, decimal, AVG, bround, rounding, cast, initcap, regexp, trunc, make_date, pivot, decode, timezone, Etc/UTC, log, coercion and overflow. Public search can miss an open report. The alternate build freezes the then-current main SHA. The result applies to that SHA. SQL with explicit collation, nondefault Spark decimal precision policy, and other Spark releases had no separate treatment.

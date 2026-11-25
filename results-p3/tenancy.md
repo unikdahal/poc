@@ -47,6 +47,8 @@ The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correc
 
 **FACT from code.** Flight SQL resolves requests to a fixed session and user ID. Spark Connect resolves a session from the request. The REST client builds the outgoing Authorization header from configured catalog credentials. [Flight](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/service.rs#L58-L69) · [Connect session actor](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/session_manager/actor/handler.rs#L45) · [REST provider](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L179-L193)
 
+Upstream session-defined catalogs were proposed in [#2929](https://github.com/lakehq/sail/pull/2929) and use of vended S3 keys in execution was proposed in [#2932](https://github.com/lakehq/sail/pull/2932). Both proposals were closed without merge. The pinned provider disables default credential delegation because it does not use vended credentials. [Catalog initialization](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/catalog.rs#L28-L98) · [Delegation default](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-catalog-iceberg/src/provider.rs#L106-L119)
+
 **HYPOTHESIS.** A gateway for the target stack would need an authenticated tenant-to-catalog binding and a resource admission policy. Separate Sail instances would allow independent credentials and resource limits. The latency experiment measures interference under one query shape and leaves per-tenant CPU-share attribution open.
 
 ### Coverage limits

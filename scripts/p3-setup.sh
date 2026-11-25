@@ -36,7 +36,7 @@ python -c 'from harness.common import polaris_bootstrap, write_json; write_json(
 printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
 repo="ghcr.io/${GITHUB_REPOSITORY,,}/sail"
 if [[ "${P3_VARIANT:-}" == newer ]]; then
-  image="$repo:$P3_NEW_SHA"
+  image="$repo:$P3_NEW_SHA@sha256:ceec56baad4fddc7cab653301863f0bcc783002eeec40f73ef7bea3cf0f167f4"
   expected="$P3_NEW_SHA"
 else
   image="$repo:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767"

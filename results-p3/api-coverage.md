@@ -9,10 +9,10 @@ Each treatment uses a fresh Spark reference and a fresh Sail server. The Python 
 
 | Client | Match | Differs | Unsupported | Reference error | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| python35 | 35 | 0 | 2 | 2 | [Raw JSON](https://github.com/unikdahal/poc/blob/89a64e2d3843e28e1dcd603d08237d670b181e56/python35/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
-| python4 | 35 | 0 | 2 | 2 | [Raw JSON](https://github.com/unikdahal/poc/blob/89a64e2d3843e28e1dcd603d08237d670b181e56/python4/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
-| jvm35 | 9 | 0 | 0 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/89a64e2d3843e28e1dcd603d08237d670b181e56/jvm35/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
-| jvm4 | 0 | 0 | 0 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/89a64e2d3843e28e1dcd603d08237d670b181e56/jvm4/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
+| python35 | 35 | 0 | 2 | 2 | [Raw JSON](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/python35/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
+| python4 | 35 | 0 | 2 | 2 | [Raw JSON](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/python4/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
+| jvm35 | 9 | 0 | 0 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/jvm35/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626) |
+| jvm4 | 9 | 0 | 0 | 0 | [Raw JSON](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/jvm4/result.json) · [Run 45556517946](https://github.com/unikdahal/poc/actions/runs/45556517946) |
 
 ### Python APIs
 
@@ -62,19 +62,17 @@ Each treatment uses a fresh Spark reference and a fresh Sail server. The Python 
 
 | API | jvm35 | jvm4 | Error excerpt |
 | --- | --- | --- | --- |
-| approx | match | — | — |
-| explode | match | — | — |
-| groupby_sum | match | — | — |
-| higher_order | match | — | — |
-| json_regex | match | — | — |
-| range_filter | match | — | — |
-| select_literal | match | — | — |
-| timestamp_ntz | match | — | — |
-| window | match | — | — |
+| approx | match | match | — |
+| explode | match | match | — |
+| groupby_sum | match | match | — |
+| higher_order | match | match | — |
+| json_regex | match | match | — |
+| range_filter | match | match | — |
+| select_literal | match | match | — |
+| timestamp_ntz | match | match | — |
+| window | match | match | — |
 
-**FACT.** jvm4 stopped during setup with `RuntimeError: javac exit 1: /home/runner/work/poc/poc/harness/p3/tools/ConnectProbe.java:23: error: unreported exception IOException; must be caught or declared to be thrown         try (SparkSession session = SparkSessi`. [Raw JSON](https://github.com/unikdahal/poc/blob/89a64e2d3843e28e1dcd603d08237d670b181e56/jvm4/result.json) · [Run 45555832626](https://github.com/unikdahal/poc/actions/runs/45555832626)
-
-**FACT.** The two pandas operations from the pinned Python 3.11 clients fail the Sail server's version guard because the image embeds Python 3.14.10. [Version guard](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-python-udf/src/cereal/mod.rs#L49-L57) · [Python 3.5 run](https://github.com/unikdahal/poc/blob/89a64e2d3843e28e1dcd603d08237d670b181e56/python35/result.json)
+**FACT.** The two pandas operations from the pinned Python 3.11 clients fail the Sail server's version guard because the image embeds Python 3.14.10. [Version guard](https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-python-udf/src/cereal/mod.rs#L49-L57) · [Python 3.5 run](https://github.com/unikdahal/poc/blob/733189a51af9914996b03e2b108176d981753cac/python35/result.json)
 
 ### Coverage limits
 

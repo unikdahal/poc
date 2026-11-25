@@ -5,26 +5,44 @@ The pinned Sail commit is `790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f`. The correc
 
 ### Format and delete interoperability
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/interop/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+[Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/interop/result.json) · [Run 45556400465](https://github.com/unikdahal/poc/actions/runs/45556400465)
 
 | Writer and fixture | Spark 3.5.10 | Sail | PyIceberg 0.10.0 | Flink 1.20.4 |
 | --- | --- | --- | --- | --- |
-| pyiceberg-v2 | differs | differs | BadRequestError: IllegalArgumentException: Credential vending was requested for table p3_iceberg.pyice | — |
-| pyiceberg-v3 | differs | differs | BadRequestError: IllegalArgumentException: Credential vending was requested for table p3_iceberg.pyice | — |
-| sail-v2 | match | match | BadRequestError: IllegalArgumentException: Credential vending was requested for table p3_iceberg.sail_ | — |
-| sail-v3 | match | match | BadRequestError: IllegalArgumentException: Credential vending was requested for table p3_iceberg.sail_ | — |
-| spark-v2 | match | match | BadRequestError: IllegalArgumentException: Credential vending was requested for table p3_iceberg.spark | — |
-| spark-v3 | match | match | BadRequestError: IllegalArgumentException: Credential vending was requested for table p3_iceberg.spark | — |
+| flink_equality_v2 | AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_equality_ | AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: p3_iceberg.flin | NoSuchTableError: NoSuchTableException: Table does not exist: p3_iceberg.flink_equality_v2 | — |
+| flink_v2 | AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_v2` canno | AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: p3_iceberg.flin | NoSuchTableError: NoSuchTableException: Table does not exist: p3_iceberg.flink_v2 | — |
+| flink_v3 | AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `polaris`.`p3_iceberg`.`flink_v3` canno | AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: p3_iceberg.flin | NoSuchTableError: NoSuchTableException: Table does not exist: p3_iceberg.flink_v3 | — |
+| pyiceberg_v2 | match | match | match | — |
+| pyiceberg_v3 | differs | differs | differs | — |
+| sail_delete_v2 | match | match | match | — |
+| sail_delete_v3 | match | match | match | — |
+| sail_v2 | match | match | match | — |
+| sail_v3 | match | match | match | — |
+| spark_delete_v2 | match | match | match | — |
+| spark_delete_v3 | match | match | match | — |
+| spark_v2 | match | match | match | — |
+| spark_v3 | match | match | match | — |
 
-Position deletes and deletion vectors are distinguished using the content type, file format and offsets in Spark's metadata table. An equality-delete claim requires file content value 2 and readback of the upsert fixture. The raw file records writer failures independently from reader results.
+Position deletes and deletion vectors are distinguished using the content type, file format and offsets in Spark's metadata table. The raw file records writer failures independently from reader results.
+
+| Fixture | Delete records in .files | Formats | Content codes |
+| --- | --- | --- | --- |
+| spark_delete_v2 | 2 | ['PARQUET'] | [1] |
+| spark_delete_v3 | 2 | ['PUFFIN'] | [1] |
+| sail_delete_v2 | 1 | ['PARQUET'] | [1] |
+| sail_delete_v3 | 1 | ['PUFFIN'] | [1] |
+| flink_equality_v2 | 0 | [] | [] |
+
+
+**FACT.** Flink setup returned `TimeoutExpired: Command '('curl', '-fsSL', '--retry', '3', 'https://archive.apache.org/dist/flink/flink-1.20.4/flink-1.20.4-bin-scala_2.12.tgz', '-o', '/tmp/p3-flink-dxvqg3wi/flink.tgz')' timed out after 300 seconds`. [Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/interop/result.json) · [Run 45556400465](https://github.com/unikdahal/poc/actions/runs/45556400465)
 
 ### Schema and partition evolution
 
-**FACT.** Nested changes applied 9/9 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+**FACT.** Nested changes applied 9/9 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
-**FACT.** Partition evolution applied 6/6 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+**FACT.** Partition evolution applied 6/6 statements. Readback matched Spark for True. [Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/evolution/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
-The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files': 1}]. The Sail analyzed plan enumerated three Parquet file ranges across the old and evolved specs for `id=42 AND v='abcdef'`. [Spec IDs and analyzed plan](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/evolution/result.json)
+The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files': 1}]. The Sail analyzed plan enumerated three Parquet file ranges across the old and evolved specs for `id=42 AND v='abcdef'`. [Spec IDs and analyzed plan](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/evolution/result.json)
 
 ### Write amplification and maintenance
 
@@ -35,7 +53,7 @@ The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files
 | 20 | 24 | 20 | 0.165 | 0.713 |
 | 50 | 54 | 50 | 0.746 | 1.051 |
 
-**FACT.** The metadata growth fixture completed 500 commits. The checkpoint records current metadata bytes and current manifest count. The MERGE fixture uses hash distribution and a 1 MiB target size. [Raw JSON](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/maintenance/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+**FACT.** The metadata growth fixture completed 500 commits. The checkpoint records current metadata bytes and current manifest count. The MERGE fixture uses hash distribution and a 1 MiB target size. [Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/maintenance/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
 | Commit | metadata.json bytes | Manifest count |
 | --- | --- | --- |
@@ -45,7 +63,7 @@ The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files
 | 250 | 262663 | 52 |
 | 500 | 509033 | 5 |
 
-**FACT.** The compaction treatments called `rewrite_data_files` and `rewrite_position_delete_files`. The after-compaction metadata and the final read are in the raw evidence. [Maintenance raw JSON](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/maintenance/result.json)
+**FACT.** The compaction treatments called `rewrite_data_files` and `rewrite_position_delete_files`. The after-compaction metadata and the final read are in the raw evidence. [Maintenance raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/maintenance/result.json)
 
 ### Overlapping MERGEs
 
@@ -58,8 +76,13 @@ The partition metadata lists [{'spec_id': 0, 'files': 16}, {'spec_id': 2, 'files
 | serializable_sail_1 | error | ok | True | [{'v': 1, 'n': 100}] | ok |
 | serializable_sail_2 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
 | snapshot_spark_0 | ok | error | True | [{'v': 1, 'n': 100}] | ok |
+| snapshot_spark_1 | None | None | None | None | — |
+| snapshot_spark_2 | None | None | None | None | — |
+| snapshot_sail_0 | None | None | None | None | — |
+| snapshot_sail_1 | None | None | None | None | — |
+| snapshot_sail_2 | None | None | None | None | — |
 
-[Raw JSON](https://github.com/unikdahal/poc/blob/c2594a7c9bc38ad4c75843f84bc7afc59851b604/conflict/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
+[Raw JSON](https://github.com/unikdahal/poc/blob/e83bf9e764a79f3fafdbf5f8d1bcfa84d63a1376/conflict/result.json) · [Run 45553493787](https://github.com/unikdahal/poc/actions/runs/45553493787)
 
 ### Coverage limits
 

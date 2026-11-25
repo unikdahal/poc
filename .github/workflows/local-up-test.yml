@@ -1,0 +1,30 @@
+name: local-up-test
+# Runs scripts/local-up.sh on a stock Ubuntu runner, the same way a developer machine would.
+on:
+  workflow_dispatch:
+    inputs:
+      sf: {default: "1"}
+jobs:
+  local-up:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions: {contents: read, packages: read}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: "17"}
+      - run: echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - run: SF=${{ inputs.sf }} scripts/local-up.sh
+      - run: |
+          source .venv/bin/activate
+          PYTHONPATH=$PWD python scripts/local-query.py --sf ${{ inputs.sf }} --query all
+      - run: |
+          source .venv/bin/activate
+          PYTHONPATH=$PWD python - <<'PY'
+          import adbc_driver_flightsql.dbapi as f
+          c = f.connect("grpc://localhost:32010").cursor()
+          c.execute("SELECT count(*) FROM polaris.tpch_sf${{ inputs.sf }}.lineitem")
+          print("flight sql:", c.fetchall())
+          PY
+      - if: always()
+        run: scripts/local-down.sh --wipe

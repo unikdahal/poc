@@ -29,7 +29,7 @@ def main():
     ap.add_argument("--server", default="spark", choices=["spark", "flight"])
     ap.add_argument("--mode", default="local")
     ap.add_argument("--env", nargs="*", default=[])
-    ap.add_argument("--memory", default="6g")
+    ap.add_argument("--memory", default=None, help="Spark driver heap (default 6g) or Sail container memory cap")
     a = ap.parse_args()
     if a.what == "token":
         write_token()
@@ -38,7 +38,7 @@ def main():
         port = a.port or 15002
         # detach: the server must outlive this step
         code = ("from harness.common import start_spark_connect;import time,sys;"
-                f"p,_=start_spark_connect(port={port}, comet={a.comet}, memory='{a.memory}');"
+                f"p,_=start_spark_connect(port={port}, comet={a.comet}, memory='{a.memory or '6g'}');"
                 "open('/tmp/poc-pids/spark-%d'%" + str(port) + ",'w').write(str(p.pid));p.wait()")
         t0 = time.time()
         subprocess.Popen([sys.executable, "-c", code], start_new_session=True,
@@ -62,7 +62,7 @@ def main():
         return
     env = dict(kv.split("=", 1) for kv in a.env)
     port = a.port or (50051 if a.server == "spark" else 32010)
-    t = start_sail(a.name, a.server, port, a.mode, env)
+    t = start_sail(a.name, a.server, port, a.mode, env, memory=a.memory)
     if a.server == "spark":
         s = connect(port)
         w = warm(s)

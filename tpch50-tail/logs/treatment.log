@@ -1,0 +1,41 @@
+[07:56:03] generating TPC-H sf=50 into /tmp/p3-tpch-50-xzeewt86/sf50
+[07:57:48] loaded tpch_sf50.nation: 25 rows
+[07:57:49] loaded tpch_sf50.region: 5 rows
+[07:57:57] loaded tpch_sf50.part: 10000000 rows
+[07:57:58] loaded tpch_sf50.supplier: 500000 rows
+[07:58:21] loaded tpch_sf50.partsupp: 40000000 rows
+[07:58:29] loaded tpch_sf50.customer: 7500000 rows
+[07:59:22] loaded tpch_sf50.orders: 75000000 rows
+[08:03:09] loaded tpch_sf50.lineitem: 300005811 rows
+Spark reference tpch50-tail Q18
+Spark reference tpch50-tail Q19
+Spark reference tpch50-tail Q20
+Spark reference tpch50-tail Q21
+Spark reference tpch50-tail Q22
+comet tpch50-tail Q18
+Exception in thread Thread-21 (monitor):
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/runner/work/poc/poc/harness/p3/scale_up.py", line 113, in monitor
+    disk_samples.append((*spill_stats(path), free_bytes()))
+                          ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/poc/poc/harness/p3/scale_up.py", line 58, in spill_stats
+    for file in path.rglob("*"):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 968, in rglob
+    for p in selector.select_from(self):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 408, in _select_from
+    for p in successor_select(starting_point, is_dir, exists, scandir):
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 355, in _select_from
+    with scandir(parent_path) as scandir_it:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/pathlib.py", line 938, in _scandir
+    return os.scandir(self)
+           ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/p3-spill-opr7xz5s/blockmgr-eb6709b8-9afc-4eb7-87f8-f8b4a366fc5d/datafusion-0wthxD'
+comet tpch50-tail Q19
+comet tpch50-tail Q20
+comet tpch50-tail Q21
+comet tpch50-tail Q22

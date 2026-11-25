@@ -73,7 +73,7 @@ fi
 if [[ ",$ENGINES," == *,comet,* || ",$ENGINES," == *,spark,* ]]; then
   LOADER=15002; [[ ",$ENGINES," == *,comet,* ]] || LOADER=15003
   ns=tpch_sf${SF//./_}
-  if python - "$LOADER" "$ns" <<'PY'
+  if python - "$LOADER" "$ns" 2>/dev/null <<'PY'
 import sys
 from harness.common import connect
 s = connect(int(sys.argv[1]))
@@ -108,7 +108,7 @@ Ready.
   S3 (RustFS)     http://localhost:9000     admin / password
   Polaris         http://localhost:8181     root / s3cr3t, catalog "poc", SQL catalog name "polaris"
 
-  Compare engines: python scripts/local-query.py --sf $SF --query all
+  Compare engines: python scripts/local-query.py --sf $SF --query all   (q1, q8, q14, q17 differ: known Sail decimal issue)
   Full benchmark:  python -m harness.suite_bench --sf $SF --engines comet,sail --reps 3
   Stop:            scripts/local-down.sh      (add --wipe to delete data)
 Activate the venv first: source .venv/bin/activate && export PYTHONPATH=$ROOT

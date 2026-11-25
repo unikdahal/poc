@@ -1,7 +1,10 @@
 """Distinguish catalog authorization, session state, and shared resource limits."""
 
+import json
 import math
 import statistics
+import subprocess
+import sys
 import threading
 import time
 
@@ -10,14 +13,15 @@ import pyarrow.flight as flight
 import requests
 
 from harness import common as base
-from harness.p3.common import begin, collect, error, fingerprint, group, save, scrub, timed
+from harness.p3.common import VARIANT, begin, collect, error, fingerprint, group, save, scrub, timed
 from harness.suite_flight import any_cmd_statement_query
 
 TENANTS = ("tenant_a", "tenant_b")
 HEAVY = ("SELECT sum(a.id+b.id) FROM range(40000) a CROSS JOIN range(40000) b")
 REFERENCE = "SELECT CAST(40000 AS BIGINT)*40000*39999"
 MEMORY_HEAVY = """SELECT sum(v) FROM (
-  SELECT id, max(pmod(id,31)) AS v FROM range(25000000) GROUP BY id
+  SELECT pmod(id,1000)*25000 + id DIV 1000 AS k, max(pmod(id,31)) AS v FROM range(25000000)
+  GROUP BY pmod(id,1000)*25000 + id DIV 1000
 )"""
 MEMORY_REFERENCE = "SELECT sum(pmod(id,31)) FROM range(25000000)"
 TOKEN_URL = f"{base.POLARIS}/api/catalog/v1/oauth/tokens"
@@ -308,8 +312,7 @@ def main():
                     op(result, f"flight-{actor}-{label}", sql, execute)
 
     group(result, "flight-global", flight_test, "flight", extra=catalog_env() | {"RUST_LOG": "info"})
-    for mode, mem, profile in (("local", "8g", "cpu"), ("local-cluster", "8g", "cpu"),
-                               ("local", "2g", "cpu"), ("local", "2g", "memory"), ("local", "8g", "memory")):
+    for mode, mem, profile in (("local", "8g", "cpu"), ("local-cluster", "8g", "cpu"), ("local", "2g", "cpu")):
         trial_labels = []
         for rep in range(3):
             port = 50500 + rep
@@ -333,5 +336,41 @@ def main():
     save(result)
 
 
+def memory_treatment(result, rep):
+    label = f"{VARIANT}-rep-{rep}"
+
+    def run(session, stats, _):
+        peer = named_session(50051, "tenant_b", "synthetic-tenant-b")
+        fairness(result, label, session, peer, result["memory_reference"], MEMORY_HEAVY, stats)
+
+    group(result, label, run, "sail", memory=VARIANT.rsplit("-", 1)[-1])
+
+
+def memory_sweep():
+    result = begin("tenancy")
+    expected = group(result, "spark-reference", lambda session, *_: fingerprint(collect(session, MEMORY_REFERENCE)), "spark")
+    if expected is None:
+        return
+    result["memory_reference"] = expected
+    save(result)
+    for rep in range(3):
+        print(f"{VARIANT} trial {rep+1}", flush=True)
+        subprocess.run([sys.executable, "-u", "-m", "harness.p3.tenancy", "--memory-trial", str(rep)],
+                       timeout=240, check=False)
+    result = json.loads((base.OUT / "result.json").read_text())
+    keys = [f"{VARIANT}-rep-{i}" for i in range(3)]
+    records = [result["cases"].get(k, {}) for k in keys]
+    if len(records) == 3 and all(r.get("p99_under_load_s") is not None for r in records):
+        result["fairness_medians"] = {VARIANT: {
+            name: statistics.median(r[name] for r in records[1:])
+            for name in ("p99_idle_s", "p99_under_load_s")}}
+    save(result)
+
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 3 and sys.argv[1] == "--memory-trial":
+        memory_treatment(json.loads((base.OUT / "result.json").read_text()), int(sys.argv[2]))
+    elif VARIANT.startswith("memory-"):
+        memory_sweep()
+    else:
+        main()

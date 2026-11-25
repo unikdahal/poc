@@ -3,15 +3,22 @@
 import os
 import threading
 from pathlib import Path
+from contextlib import contextmanager
 from tempfile import TemporaryDirectory
 
 from harness import common as base, tpch
 from harness.p3.common import (VARIANT, begin, bounded, cmd, collect, fingerprint, group, load_tpcds,
-                               load_tpch, median_if_valid, query_file, save, timed, tpch_rows)
+                               error, load_tpch, median_if_valid, query_file, save, timed, tpch_rows)
 
 TASK = "scale-up"
 SCALE = 50 if VARIANT == "tpch50" else 10
-QUERIES = range(1, 23) if VARIANT == "tpch50" else (7, 9, 12, 18, 20, 27, 36, 49, 66, 77, 83, 98)
+if VARIANT == "tpch50":
+    QUERIES = range(1, 23)
+elif VARIANT.startswith("tpcds10-"):
+    shard = int(VARIANT.rsplit("-", 1)[-1])
+    QUERIES = range(33 * (shard - 1) + 1, 33 * shard + 1)
+else:
+    QUERIES = (7, 9, 12, 18, 20, 27, 36, 49, 66, 77, 83, 98)
 PATHS = Path(__file__).with_name("queries")
 
 
@@ -49,6 +56,33 @@ def spill_stats(path):
     return total, count
 
 
+@contextmanager
+def memory_cap(result, name, stats):
+    if name != "comet":
+        yield
+        return
+    limit = 8 * 2**30
+    cfg = result["engines"][name]
+    cgroup = Path(f"/sys/fs/cgroup/p3-comet-{os.getpid()}")
+    try:
+        cmd("sudo", "mkdir", str(cgroup), timeout=8)
+        cmd("sudo", "tee", str(cgroup / "memory.max"), input=f"{limit}\n", timeout=8)
+        cmd("sudo", "tee", str(cgroup / "memory.swap.max"), input="0\n", timeout=8)
+        processes = [stats.proc, *stats.proc.children(recursive=True)]
+        for process in processes:
+            cmd("sudo", "tee", str(cgroup / "cgroup.procs"), input=f"{process.pid}\n", timeout=8)
+        cfg["host_cgroup"] = {"memory_max": int((cgroup / "memory.max").read_text()),
+                              "memory_swap_max": int((cgroup / "memory.swap.max").read_text()),
+                              "startup_outside_cgroup": True}
+    except Exception as exc:
+        cfg["host_cgroup"] = {"error": error(exc)}
+    try:
+        yield
+    finally:
+        if (cgroup / "memory.events").exists():
+            cfg["host_cgroup"]["memory_events"] = dict(line.split() for line in (cgroup / "memory.events").read_text().splitlines())
+
+
 def main():
     result = begin(TASK)
     result["scale"] = SCALE
@@ -69,6 +103,7 @@ def main():
             done.set()
             thread.join(5)
         for q in QUERIES:
+            print(f"Spark reference {VARIANT} Q{q}", flush=True)
             record, rows = timed(lambda: run_query(spark, q))
             if rows is not None:
                 reference[q] = signature(rows, q)
@@ -91,6 +126,7 @@ def main():
             def execute(spark, stats, _):
                 cases = result["cases"][name] = {}
                 for q in QUERIES:
+                    print(f"{name} {VARIANT} Q{q}", flush=True)
                     samples = []
                     for _ in range(3):
                         done = threading.Event()
@@ -117,14 +153,17 @@ def main():
                     save(result)
                     if samples[-1]["status"] == "timeout" and "active=True" in samples[-1]["error"]:
                         break
-            group(result, name, execute, name, memory="8g" if name == "sail" else "6g",
+            def run(spark, stats, container):
+                with memory_cap(result, name, stats):
+                    execute(spark, stats, container)
+            group(result, name, run, name, memory="8g" if name == "sail" else "6g",
                   extra={"SAIL_RUNTIME__MEMORY_POOL__TYPE": "fair",
                          "SAIL_RUNTIME__MEMORY_POOL__FAIR__MAX_SIZE": str(4 * 2**30),
                          "SAIL_RUNTIME__TEMPORARY_FILES__PATHS": '["/spill"]'},
                   options=("-v", f"{path}:/spill"), spark_conf={"spark.memory.offHeap.size": "2g",
                    "spark.local.dir": str(path)})
     result["disk_after_run_bytes"] = free_bytes()
-    result["storage_limit"] = "Sail container has an 8 GiB cgroup cap. Comet has a 6 GiB JVM heap plus 2 GiB off-heap allocation limit."
+    result["storage_limit"] = "Sail has an 8 GiB container cap. Comet has 6 GiB heap and 2 GiB off-heap. The raw host cgroup record shows whether its post-startup total cap was applied."
     save(result)
 
 

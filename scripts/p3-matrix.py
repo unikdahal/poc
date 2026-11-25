@@ -12,7 +12,7 @@ variants = {
     "faults-storage": ("storage", "catalog"),
     "api-coverage": ("python35", "python4", "jvm35", "jvm4"),
     "ops": ("operator",),
-    "scale-up": ("tpch50", "tpcds10"),
+    "scale-up": ("tpch50", "tpcds10-1", "tpcds10-2", "tpcds10-3"),
 }
 
 if __name__ == "__main__":

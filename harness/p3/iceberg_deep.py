@@ -261,6 +261,41 @@ def evolution(result):
     group(result, "sail-evolution", read, "sail")
 
 
+def nested_collections(result):
+    table = f"{NS}.nested_collections"
+    check_sql = f"SELECT id, m, a FROM {table} ORDER BY id"
+    expected = {}
+
+    def prepare(spark, *_):
+        statements(result, "prepare-nested", spark, [
+            f"CREATE NAMESPACE {NS}",
+            f"""CREATE TABLE {table} USING iceberg AS SELECT id,
+              map('k', named_struct('keep',CAST(id AS INT),'prior','old','remove',true)) AS m,
+              array(named_struct('keep',CAST(id AS FLOAT),'prior','old','remove',true)) AS a
+              FROM range(4)"""])
+        for nested in ("m.value", "a.element"):
+            statements(result, f"evolve-{nested}", spark, [
+                f"ALTER TABLE {table} RENAME COLUMN {nested}.prior TO label",
+                f"ALTER TABLE {table} ADD COLUMN {nested}.added STRING",
+                f"ALTER TABLE {table} DROP COLUMN {nested}.remove",
+                f"ALTER TABLE {table} ALTER COLUMN {nested}.keep AFTER label",
+                f"ALTER TABLE {table} ALTER COLUMN {nested}.keep TYPE "
+                + ("BIGINT" if nested.startswith("m.") else "DOUBLE"),
+            ])
+        rows = collect(spark, check_sql)
+        expected["signature"] = fingerprint(rows, True)
+        result["cases"]["spark-read-old-files"] = {"rows": [row.asDict(recursive=True) for row in rows],
+                                                   "signature": expected["signature"], "sql": check_sql}
+    group(result, "spark-nested-collections", prepare, "spark")
+
+    def verify(sail, *_):
+        observation, rows = timed(lambda: collect(sail, check_sql))
+        result["cases"]["sail-read-old-files"] = observation | {
+            "rows": [row.asDict(recursive=True) for row in rows] if rows is not None else None,
+            "matches_spark": rows is not None and fingerprint(rows, True) == expected.get("signature")}
+    group(result, "sail-nested-collections", verify, "sail")
+
+
 def merge_sql(table, v):
     return (f"MERGE INTO {table} t USING (SELECT id FROM range(0,100)) s ON t.id=s.id "
             f"WHEN MATCHED THEN UPDATE SET v=t.v+{v}")
@@ -269,6 +304,15 @@ def merge_sql(table, v):
 def maintenance(result):
     table = f"{NS}.merge_history"
     baseline = {}
+    file_detail = VARIANT == "maintenance-files"
+
+    def delete_links(spark, label):
+        statements(result, label, spark, [
+            f"""SELECT data.file_path, count(DISTINCT deletes.delete_file_path) AS delete_files
+            FROM {table}.data_files data LEFT JOIN {table}.position_deletes deletes
+            ON data.file_path = deletes.file_path
+            GROUP BY data.file_path ORDER BY data.file_path""",
+        ])
 
     def prepare(spark, *_):
         statements(result, "create-maintenance-table", spark, [
@@ -310,6 +354,8 @@ def maintenance(result):
             statements(result, f"files-after-{checkpoint}", sp, [
                 f"SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM {table}.files GROUP BY 1,2,3",
                 f"SELECT count(*) FROM {table}.manifests"])
+            if file_detail:
+                delete_links(sp, f"data-delete-links-{checkpoint}")
         group(result, f"spark-files-{checkpoint}", inspect, "spark", port=15220 + trial)
     if done == 50:
         def compact(spark, stats, *_):
@@ -318,6 +364,9 @@ def maintenance(result):
                 "CALL polaris.system.rewrite_position_delete_files(table => 'p3_iceberg.merge_history')",
                 f"SELECT content,count(*) FROM {table}.files GROUP BY content"])
             measures(spark, stats, "spark-after-compaction", baseline[50])
+            if file_detail:
+                delete_links(spark, "data-delete-links-compacted")
+                return
             small = f"{NS}.metadata_growth"
             collect(spark, f"CREATE TABLE {small} (id BIGINT) USING iceberg")
             record = result["cases"]["metadata_growth"] = {"completed_commits": 0}
@@ -444,7 +493,8 @@ def conflict(result):
 def main():
     result = begin(TASK)
     base.start_token_refresher()
-    {"interop": interop, "evolution": evolution, "maintenance": maintenance, "conflict": conflict, "conflict-snapshot": conflict, "layout": layout}[VARIANT](result)
+    {"interop": interop, "evolution": evolution, "maintenance": maintenance, "conflict": conflict, "conflict-snapshot": conflict, "layout": layout, "maintenance-files": maintenance,
+     "nested-collections": nested_collections}[VARIANT](result)
     save(result)
 
 

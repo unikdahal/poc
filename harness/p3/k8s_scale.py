@@ -15,7 +15,7 @@ import yaml
 
 from harness import common as base, suite_k8s as existing, tpch
 from harness.p3.common import (VARIANT, begin, bounded, cmd, collect, fingerprint, group, load_tpch,
-                               median_if_valid, sail_state, save, timed, tpch_rows)
+                               error, median_if_valid, sail_state, save, timed, tpch_rows)
 
 KIND = "kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a"
 TASK = "k8s-scale"
@@ -37,7 +37,7 @@ def get_pods():
 def pod_record(pod):
     spec, meta, state = pod["spec"], pod["metadata"], pod["status"]
     return {"name": meta["name"], "uid": meta["uid"], "node": spec.get("nodeName"),
-            "created": meta["creationTimestamp"], "started": state.get("startTime"), "phase": state.get("phase"),
+            "created": meta["creationTimestamp"], "started": state.get("startTime"), "phase": state.get("phase"), "ip": state.get("podIP"),
             "labels": meta.get("labels", {}), "containers": state.get("containerStatuses", [])}
 
 
@@ -71,7 +71,7 @@ def start_cluster(result):
     return kind, local_image
 
 
-def deploy(image, backend, count, memory="2Gi"):
+def deploy(image, backend, count, memory="2Gi", cpu="1"):
     kubectl("delete", "deployment", NAME, "--ignore-not-found", "--wait=true", timeout=120)
     kubectl("delete", "pods", "-l", "app.kubernetes.io/component=worker", "--ignore-not-found", "--wait=true", timeout=120)
     existing.refresh_token_secret()
@@ -90,7 +90,7 @@ def deploy(image, backend, count, memory="2Gi"):
             template["spec"]["topologySpreadConstraints"] = [{"maxSkew": 1, "topologyKey": "kubernetes.io/hostname",
                 "whenUnsatisfiable": "ScheduleAnyway", "labelSelector": {"matchLabels": {"p3-worker": "true"}}}]
             template["spec"]["containers"][0]["resources"] = {
-                "requests": {"cpu": "200m", "memory": "32Mi"}, "limits": {"cpu": "1", "memory": memory}}
+                "requests": {"cpu": "150m", "memory": "32Mi"}, "limits": {"cpu": cpu, "memory": memory}}
             variable["value"] = json.dumps(template)
     kubectl("apply", "-f", "-", input=yaml.safe_dump_all([deployment, service]))
     kubectl("rollout", "status", "deployment/" + NAME, "--timeout=120s", timeout=130)
@@ -129,18 +129,39 @@ class Watcher:
         self.thread.join(25)
 
 
-def stage_rows(control, client):
+def internal_id(client):
     client_id = client.client._session_id
-    rows = collect(control, f"SELECT session_id FROM system.session.sessions WHERE client_session_id='{client_id}'", 12)
-    if not rows:
-        return []
-    internal = rows[0][0]
-    return [row.asDict() for row in collect(control, f"""
-        SELECT CAST(job_id AS BIGINT) AS job, CAST(stage AS BIGINT) AS stage, mode, status,
-               created_at, stopped_at
-        FROM system.execution.stages WHERE session_id='{internal}' ORDER BY job, stage
-        """, 12)]
+    rows = collect(client, f"SELECT session_id FROM system.session.sessions WHERE client_session_id='{client_id}'", 12)
+    return rows[0][0] if rows else None
 
+
+def stage_rows(client, internal, started):
+    rows = collect(client, f"""
+        SELECT CAST(job_id AS BIGINT) AS job, CAST(stage AS BIGINT) AS stage, mode, status,
+               inputs, placement, distribution, created_at, stopped_at
+        FROM system.execution.stages
+        WHERE session_id='{internal}' AND created_at >= TIMESTAMP '{started.isoformat(sep=" ")}'
+        ORDER BY job, stage
+        """, 12)
+    return [row.asDict(recursive=True) for row in rows]
+
+
+def running_stage(client, internal, started, label):
+    nodes = stage_rows(client, internal, started)
+    rows = collect(client, f"""
+        SELECT CAST(job_id AS BIGINT), CAST(stage AS BIGINT), count(*)
+        FROM system.execution.tasks
+        WHERE session_id='{internal}' AND status='RUNNING'
+          AND created_at >= TIMESTAMP '{started.isoformat(sep=" ")}'
+        GROUP BY job_id, stage
+        """, 12)
+    underway = {(row[0], row[1]): row[2] for row in rows}
+    for node in nodes:
+        key = (node["job"], node["stage"])
+        want = (not node["inputs"] and node["distribution"].lower() != "single") if label == "map-kill" else             any("blocking" in edge["mode"].lower() for edge in node["inputs"])
+        if key in underway and want and "worker" in node["placement"].lower():
+            return node | {"running_tasks": underway[key], "worker_assignment_exposed": False}
+    return None
 
 def shuffle_bytes():
     import boto3
@@ -153,13 +174,14 @@ def shuffle_bytes():
 
 
 def benchmark(result, backend, count, reference):
-    spark, control = base.connect(PORT), base.connect(PORT)
+    spark = base.connect(PORT)
     tpch.use(spark, "tpch_sf10")
+    internal = internal_id(spark)
     entries = result["cases"]["queries"] = {}
     for q in QUERIES:
         samples = []
         for rep in range(3):
-            started_at = dt.datetime.now()
+            started_at = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
             first = {}
 
             def execute():
@@ -172,6 +194,8 @@ def benchmark(result, backend, count, reference):
                             if not rows:
                                 first["elapsed_s"] = time.perf_counter() - clock[0]
                             rows.append(row)
+                    else:
+                        df.collect()
                 return rows
 
             clock = [time.perf_counter()]
@@ -181,7 +205,7 @@ def benchmark(result, backend, count, reference):
                 rec["client_first_row_s"] = first.get("elapsed_s")
             rec["started_at"] = started_at.isoformat()
             if rep == 2:
-                stage_status, stage = timed(lambda: stage_rows(control, spark))
+                stage_status, stage = timed(lambda: stage_rows(spark, internal, started_at))
                 rec["stage_records"] = stage if stage is not None else stage_status
                 if backend == "storage":
                     observation, size = timed(shuffle_bytes)
@@ -189,16 +213,40 @@ def benchmark(result, backend, count, reference):
             samples.append(rec)
             if rec["status"] == "timeout":
                 break
-        entries[str(q)] = {"samples": samples, "warm_median": median_if_valid(samples)}
+        median = median_if_valid(samples)
+        if median and all(record.get("client_first_row_s") is not None for record in samples[1:]):
+            median["client_first_row_s"] = statistics.median(record["client_first_row_s"] for record in samples[1:])
+        entries[str(q)] = {"samples": samples, "warm_median": median}
         save(result)
+
+
+def apply_netem(pods):
+    applied = []
+    for pod in pods:
+        peers = [other["ip"] for other in pods if other["node"] != pod["node"] and other["ip"]]
+        if not peers:
+            continue
+        prefix = ("docker", "exec", pod["node"], "tc")
+        commands = [("qdisc", "replace", "dev", "eth0", "root", "handle", "1:", "prio"),
+                    ("qdisc", "replace", "dev", "eth0", "parent", "1:3", "handle", "30:", "netem", "delay", "50ms", "loss", "1%")]
+        commands.extend(("filter", "add", "dev", "eth0", "protocol", "ip", "parent", "1:", "prio", str(idx),
+                         "u32", "match", "ip", "dst", f"{ip}/32", "flowid", "1:3")
+                        for idx, ip in enumerate(peers, 1))
+        for command in commands:
+            cmd(*prefix, *command)
+        applied.append({"node": pod["node"], "destination_pods": peers})
+    return applied
 
 
 def fault(result, label, ref):
     observations = result["cases"].setdefault(label, [])
-    session, control = base.connect(PORT), base.connect(PORT)
-    outcome = {}
+    session = base.connect(PORT)
+    tpch.use(session, "tpch_sf10")
+    internal = internal_id(session)
+    outcome, stage_observations = {}, []
     query = 9
     start = time.monotonic()
+    started_at = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
 
     def execute():
         record, rows = timed(lambda: tpch_rows(session, "tpch_sf10", query, 150))
@@ -208,24 +256,23 @@ def fault(result, label, ref):
     thread.start()
     applied = None
     if label == "pod-oom":
-        applied = "worker pod memory limit set to 40Mi before query"
+        applied = {"status": "configured", "worker_memory": "40Mi"}
     elif label == "driver-restart":
-        time.sleep(3)
+        time.sleep(2)
         applied, _ = timed(lambda: kubectl("rollout", "restart", "deployment/" + NAME))
+        applied["client_active_at_injection"] = thread.is_alive()
     else:
         while thread.is_alive() and time.monotonic() - start < 40:
-            running = workers([pod_record(pod) for pod in get_pods()])
+            running = [pod for pod in workers([pod_record(pod) for pod in get_pods()]) if pod["phase"] == "Running"]
             if not running:
-                time.sleep(.5)
+                time.sleep(.2)
                 continue
             if label in ("map-kill", "reduce-kill"):
-                stage_rec, stage = timed(lambda: stage_rows(control, session))
-                if not stage:
-                    time.sleep(.3)
-                    continue
-                phases = [row for row in stage if row["status"].upper() in ("RUNNING", "ACTIVE")]
-                target_stage = 0 if label == "map-kill" else max(row["stage"] for row in stage)
-                if all(row["stage"] != target_stage for row in phases):
+                rec, stage = timed(lambda: running_stage(session, internal, started_at, label))
+                if rec["status"] != "ok":
+                    stage_observations.append(rec)
+                if not stage or not thread.is_alive():
+                    time.sleep(.1)
                     continue
             pod = running[0]
             if label == "drain":
@@ -233,36 +280,45 @@ def fault(result, label, ref):
                                                    "--force", "--timeout=50s", timeout=55))
                 kubectl("uncordon", pod["node"], check=False)
             elif label == "netem":
-                applied, _ = timed(lambda: cmd("docker", "exec", pod["node"], "tc", "qdisc", "replace", "dev", "eth0",
-                                              "root", "netem", "delay", "50ms", "loss", "1%"))
+                applied, paths = timed(lambda: apply_netem(running))
+                applied["paths"] = paths
             else:
                 applied, _ = timed(lambda: kubectl("delete", "pod", pod["name"], "--grace-period=0", "--force", "--wait=false"))
-                applied["observed_stage"] = target_stage
+                applied["observed_stage"] = stage
+            applied.update({"pod": pod["name"], "node": pod["node"], "elapsed_from_query_s": time.monotonic() - start})
             break
     thread.join(155)
     if label == "netem":
         for node in ("p3-worker", "p3-worker2", "p3-worker3"):
             cmd("docker", "exec", node, "tc", "qdisc", "del", "dev", "eth0", "root", check=False)
-    observations.append({"query": query, "injection": applied, "query_result": outcome, "client_active": thread.is_alive()})
+    observations.append({"query": query, "injection": applied, "query_result": outcome,
+                         "client_active": thread.is_alive(), "stage_probe_errors": stage_observations})
     save(result)
 
-
 def burst(result, reference):
+    seed = base.connect(PORT)
+    seed_status, seed_rows = timed(lambda: tpch_rows(seed, "tpch_sf10", 6, 60))
+    seed_status["matches_spark"] = seed_rows is not None and fingerprint(seed_rows, tpch.ordered(6)) == reference.get(6)
     started = time.monotonic()
     clean = False
+    starting_pods = [pod_record(pod) for pod in get_pods()]
     while time.monotonic() - started < 120:
-        if not workers([pod_record(pod) for pod in get_pods()]):
+        if not any(pod["phase"] in ("Running", "Pending") for pod in workers([pod_record(pod) for pod in get_pods()])):
             clean = True
             break
         time.sleep(2)
-    active = []
+    active, clients = [], []
+    together = threading.Barrier(20, timeout=12)
 
     def arrive():
-        session = base.connect(PORT)
-        record, rows = timed(lambda: tpch_rows(session, "tpch_sf10", 6, 140))
+        together.wait()
+        def exercise():
+            session = base.connect(PORT)
+            clients.append(session)
+            return tpch_rows(session, "tpch_sf10", 6, 140)
+        record, rows = timed(exercise)
         record["matches_spark"] = rows is not None and fingerprint(rows, tpch.ordered(6)) == reference.get(6)
         active.append(record)
-        bounded(session.stop, 5)
 
     ts = [threading.Thread(target=arrive, daemon=True) for _ in range(20)]
     for thread in ts:
@@ -270,10 +326,13 @@ def burst(result, reference):
     for thread in ts:
         thread.join(150)
     latency = sorted(r["elapsed_s"] for r in active if r["matches_spark"])
-    result["cases"]["burst"] = {"reaped_before_arrival": clean, "attempts": active,
+    result["cases"]["burst"] = {"seed": seed_status, "pods_after_seed": starting_pods,
+        "reaped_before_arrival": clean, "idle_wait_s": time.monotonic() - started, "attempts": active,
         "p50_s": statistics.median(latency) if latency else None,
         "p95_s": latency[max(0, -(-len(latency) * 95 // 100) - 1)] if latency else None}
-    time.sleep(65)
+    for client in clients:
+        bounded(client.stop, 5)
+    time.sleep(70)
     result["cases"]["burst"]["remaining"] = [pod_record(pod) for pod in get_pods()]
 
 
@@ -294,20 +353,20 @@ def main():
     kind, image = start_cluster(result)
     processes = []
     try:
-        failure = VARIANT == "failure"
-        backend, count = ("flight", 2) if failure else VARIANT.split("-")
+        failure = VARIANT in FAULTS or VARIANT == "burst"
+        backend, count = ("flight", 1 if VARIANT == "burst" else 2) if failure else VARIANT.split("-")
         result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}}
         with Watcher() as watcher:
-            if failure:
-                for treatment in FAULTS:
-                    for _ in range(3):
-                        if processes:
-                            processes.pop().terminate()
-                        processes.append(deploy(image, backend, int(count), memory="40Mi" if treatment == "pod-oom" else "2Gi"))
-                        fault(result, treatment, reference.get(9))
-                processes.pop().terminate()
-                processes.append(deploy(image, backend, int(count)))
+            if VARIANT == "burst":
+                processes.append(deploy(image, backend, int(count), memory="512Mi", cpu="250m"))
                 burst(result, reference)
+            elif failure:
+                for trial in range(3):
+                    print(f"{VARIANT} trial {trial + 1}", flush=True)
+                    if processes:
+                        processes.pop().terminate()
+                    processes.append(deploy(image, backend, int(count), memory="40Mi" if VARIANT == "pod-oom" else "2Gi"))
+                    fault(result, VARIANT, reference.get(9))
             else:
                 processes.append(deploy(image, backend, int(count)))
                 benchmark(result, backend, int(count), reference)
@@ -318,6 +377,9 @@ def main():
         result["last_pods"] = [pod_record(pod) for pod in get_pods()]
         result["kind_container_states"] = {name: sail_state(name) for name in
             ("p3-control-plane", "p3-worker", "p3-worker2", "p3-worker3")}
+        for pod in result["last_pods"]:
+            log = kubectl("logs", pod["name"], "--tail=230", check=False, timeout=15)
+            (base.OUT / (pod["name"] + ".log")).write_text(log)
         (base.OUT / "kubernetes.log").write_text(kubectl("get", "events", "--sort-by=.lastTimestamp", check=False))
         save(result)
         cmd(kind, "delete", "cluster", "--name", CLUSTER, check=False, timeout=120)

@@ -4,7 +4,8 @@ import os
 
 variants = {
     "tenancy": ("isolation",),
-    "k8s-scale": ("flight-1", "flight-2", "flight-4", "storage-1", "storage-2", "storage-4", "failure"),
+    "k8s-scale": ("flight-1", "flight-2", "flight-4", "storage-1", "storage-2", "storage-4",
+                  "map-kill", "reduce-kill", "drain", "netem", "pod-oom", "driver-restart", "burst"),
     "soak": ("local", "local-cluster"),
     "iceberg-deep": ("interop", "evolution", "maintenance", "conflict"),
     "cpu-scaling": ("runner-1", "runner-2"),

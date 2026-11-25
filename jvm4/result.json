@@ -1,8 +1,8 @@
 {
   "task": "api-coverage",
   "variant": "jvm4",
-  "revision": "7e6420162a2a963481832119c1c2ea8b11b0186a",
-  "run_id": "45554682627",
+  "revision": "c2491b5858d15e158fd9148f218d0ea5e55a053b",
+  "run_id": "45555832626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,8 +19,8 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
-      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
       "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
@@ -68,10 +68,10 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464302080,
-    "disk": "/dev/mapper/cow-root 154894188544 44081057792 110796353536  29% /"
+    "total_memory_bytes": 16759308288,
+    "disk": "/dev/root      154894188544 47527190528 107350220800  31% /"
   },
   "engines": {},
   "cases": {},
-  "error": "RuntimeError: mvn exit 1: [ERROR] Plugin org.apache.maven.plugins:maven-dependency-plugin:3.8.1 or one of its dependencies could not be resolved:\n[ERROR] \tThe following artifacts could not be resolved: org.apache.maven.plugins:maven-dependency-plugin:pom:3.8.1 (absent): Could not transfer artifact org.apache.maven.plugins:maven-dependency-plugin:pom:3.8.1 from/to central (https://repo.maven.apache.org/maven2): HTTP Status: 429\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResolutionException\n"
+  "error": "RuntimeError: javac exit 1: /home/runner/work/poc/poc/harness/p3/tools/ConnectProbe.java:23: error: unreported exception IOException; must be caught or declared to be thrown\n        try (SparkSession session = SparkSession.builder().remote(args[0]).create()) {\n                          ^\n  exception thrown from implicit call to close() on resource variable 'session'\n1 error\n"
 }

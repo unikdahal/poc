@@ -1,8 +1,8 @@
 {
   "task": "rootcause",
   "variant": "pinned",
-  "revision": "c9d0fc85443e3b85ab8340237d32feb37a22b998",
-  "run_id": "45553201626",
+  "revision": "efebe701c6d988843c27f24f304ccafce5a4d377",
+  "run_id": "45555369356",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -20,7 +20,7 @@
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
       "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
-      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
       "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
@@ -66,8 +66,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16760332288,
-    "disk": "/dev/root      154894188544 67546656768 87330754560  44% /"
+    "total_memory_bytes": 16464306176,
+    "disk": "/dev/mapper/cow-root 154894188544 64100519936 90776891392  42% /"
   },
   "engines": {
     "spark-reference": {
@@ -76,13 +76,15 @@
         "cores": 4,
         "driver_memory": "9g",
         "catalog_cache": false,
-        "overrides": {},
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
         "port": 15002
       },
-      "listen_s": 8.00991678237915,
+      "listen_s": 7.509376287460327,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 1.5711543989999939
+        "elapsed_s": 1.8177434549999987
       }
     },
     "sail": {
@@ -103,10 +105,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.15626445499998454,
+      "listen_s": 0.10613076099997443,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.005289901999987023
+        "elapsed_s": 0.006817941999997856
       },
       "before_shutdown": {
         "Status": "running",
@@ -115,10 +117,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 7102,
+        "Pid": 7323,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:26:17.574822651Z",
+        "StartedAt": "2026-11-25T05:45:26.54881381Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -131,8 +133,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:26:17.574822651Z",
-        "FinishedAt": "2026-11-25T05:26:38.645986861Z"
+        "StartedAt": "2026-11-25T05:45:26.54881381Z",
+        "FinishedAt": "2026-11-25T05:45:49.918104362Z"
       }
     }
   },
@@ -194456,35 +194458,35 @@
     "tpch": {
       "nation": {
         "rows": 25,
-        "seconds": 2.81
+        "seconds": 3.45
       },
       "region": {
         "rows": 5,
-        "seconds": 0.49
+        "seconds": 0.58
       },
       "part": {
         "rows": 200000,
-        "seconds": 1.04
+        "seconds": 1.29
       },
       "supplier": {
         "rows": 10000,
-        "seconds": 0.55
+        "seconds": 0.59
       },
       "partsupp": {
         "rows": 800000,
-        "seconds": 1.19
+        "seconds": 1.39
       },
       "customer": {
         "rows": 150000,
-        "seconds": 0.68
+        "seconds": 0.82
       },
       "orders": {
         "rows": 1500000,
-        "seconds": 1.55
+        "seconds": 1.88
       },
       "lineitem": {
         "rows": 6001215,
-        "seconds": 5.14
+        "seconds": 5.97
       }
     },
     "tpcds": {

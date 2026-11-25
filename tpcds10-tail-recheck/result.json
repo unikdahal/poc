@@ -1,0 +1,799 @@
+{
+  "task": "scale-up",
+  "variant": "tpcds10-tail-recheck",
+  "revision": "245e178ece9fdeab8c67d1b1240b509cbf285f3c",
+  "run_id": "45570638184",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.scale_up"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   13 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   11 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464293888,
+    "disk": "/dev/mapper/cow-root 154894188544 44081700864 110795710464  29% /"
+  },
+  "engines": {
+    "spark-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15002
+      },
+      "listen_s": 7.514703273773193,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.144422640000016
+      }
+    },
+    "comet": {
+      "settings": {
+        "comet": true,
+        "cores": 4,
+        "driver_memory": "6g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.memory.offHeap.size": "2g",
+          "spark.local.dir": "/tmp/p3-spill-wkwtdv2s"
+        },
+        "port": 15012
+      },
+      "listen_s": 5.260921478271484,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 3.1376916939999546
+      },
+      "host_cgroup": {
+        "memory_max": 8589934592,
+        "memory_swap_max": 0,
+        "startup_outside_cgroup": true,
+        "memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "26942",
+          "oom": "3",
+          "oom_kill": "1",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        }
+      }
+    },
+    "comet-restart-1": {
+      "settings": {
+        "comet": true,
+        "cores": 4,
+        "driver_memory": "6g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.memory.offHeap.size": "2g",
+          "spark.local.dir": "/tmp/p3-spill-98ufxzqm"
+        },
+        "port": 15012
+      },
+      "listen_s": 3.0092437267303467,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 3.0510270209999817
+      },
+      "host_cgroup": {
+        "memory_max": 8589934592,
+        "memory_swap_max": 0,
+        "startup_outside_cgroup": true,
+        "memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        }
+      }
+    }
+  },
+  "cases": {
+    "reference": {
+      "14": {
+        "status": "ok",
+        "error": null,
+        "result": [
+          {
+            "rows": 100,
+            "sha256": "0d47798daa7b761bafa471369f4e4697185041c07e8536ca5011e3a7f2c7f62b"
+          },
+          {
+            "rows": 100,
+            "sha256": "19d35e6c20585db1cf8630fd8ae6f867b3768c32ba525666f7cf07cdfb6bc1d3"
+          }
+        ]
+      },
+      "15": {
+        "status": "ok",
+        "error": null,
+        "result": [
+          {
+            "rows": 100,
+            "sha256": "bd26cfe849f02b8b5dee5fbcad7890b41a7242483265d97669d506d25277bbf0"
+          }
+        ]
+      },
+      "64": {
+        "status": "ok",
+        "error": null,
+        "result": [
+          {
+            "rows": 25,
+            "sha256": "5d30155d8c819e763df3c1f521380e99b138fcc3880edf9908c57da91061fce5"
+          }
+        ]
+      },
+      "72": {
+        "status": "ok",
+        "error": null,
+        "result": [
+          {
+            "rows": 100,
+            "sha256": "592217acdba8f58da1629d2ecf4d093216a9bcf63c4ffce9e0caba150597f24d"
+          }
+        ]
+      },
+      "73": {
+        "status": "ok",
+        "error": null,
+        "result": [
+          {
+            "rows": 10,
+            "sha256": "31e4f6099031e7fbfe2c36892a2723a697b47262340238c332dc857b2d340256"
+          }
+        ]
+      },
+      "82": {
+        "status": "ok",
+        "error": null,
+        "result": [
+          {
+            "rows": 12,
+            "sha256": "81f630e91ac6a3f89ed0a9b396be4441470bce3b1a9b5407bd4b248c66546861"
+          }
+        ]
+      }
+    },
+    "comet": {
+      "14": {
+        "samples": [
+          {
+            "status": "ok",
+            "elapsed_s": 34.909471293000024,
+            "cpu_s": 111.16,
+            "peak_bytes": 5117657088,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 983776122,
+            "peak_sampled_spill_files": 248,
+            "minimum_free_disk_bytes": 106324537344
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 25.20611875999998,
+            "cpu_s": 76.76000000000002,
+            "peak_bytes": 5931765760,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 983775029,
+            "peak_sampled_spill_files": 248,
+            "minimum_free_disk_bytes": 106317885440
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 23.30046999500007,
+            "cpu_s": 69.03,
+            "peak_bytes": 5968670720,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 983776283,
+            "peak_sampled_spill_files": 248,
+            "minimum_free_disk_bytes": 106311352320
+          }
+        ],
+        "warm_median": {
+          "elapsed_s": 24.253294377500026,
+          "cpu_s": 72.89500000000001,
+          "peak_bytes": 5950218240.0
+        }
+      },
+      "15": {
+        "samples": [
+          {
+            "status": "ok",
+            "elapsed_s": 1.3983595319999722,
+            "cpu_s": 3.9699999999999704,
+            "peak_bytes": 5988233216,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 728741694,
+            "peak_sampled_spill_files": 229,
+            "minimum_free_disk_bytes": 106564206592
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 1.2692707880000853,
+            "cpu_s": 3.5100000000000477,
+            "peak_bytes": 5989138432,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 733182471,
+            "peak_sampled_spill_files": 250,
+            "minimum_free_disk_bytes": 106559553536
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 1.2206367699999419,
+            "cpu_s": 3.409999999999968,
+            "peak_bytes": 5990940672,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 733182471,
+            "peak_sampled_spill_files": 250,
+            "minimum_free_disk_bytes": 106559553536
+          }
+        ],
+        "warm_median": {
+          "elapsed_s": 1.2449537790000136,
+          "cpu_s": 3.460000000000008,
+          "peak_bytes": 5990039552.0
+        }
+      },
+      "64": {
+        "samples": [
+          {
+            "status": "ok",
+            "elapsed_s": 20.836613387000057,
+            "cpu_s": 69.12,
+            "peak_bytes": 7852937216,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 2093069724,
+            "peak_sampled_spill_files": 214,
+            "minimum_free_disk_bytes": 105200771072
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 20.263137117000042,
+            "cpu_s": 67.91000000000003,
+            "peak_bytes": 8238698496,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 3429908479,
+            "peak_sampled_spill_files": 345,
+            "minimum_free_disk_bytes": 103862128640
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 19.741012608000005,
+            "cpu_s": 65.76000000000005,
+            "peak_bytes": 8833523712,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 4684592053,
+            "peak_sampled_spill_files": 412,
+            "minimum_free_disk_bytes": 102605901824
+          }
+        ],
+        "warm_median": {
+          "elapsed_s": 20.002074862500024,
+          "cpu_s": 66.83500000000004,
+          "peak_bytes": 8536111104.0
+        }
+      },
+      "72": {
+        "samples": [
+          {
+            "status": "error",
+            "error": "SparkConnectGrpcException: <_MultiThreadedRendezvous of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:15012: Failed to connect to remote host: Connection refused\"\n\tdebug_error_string = \"UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:15012: Failed to connect to remote host: Connection refused\"\n>",
+            "elapsed_s": 614.099489198,
+            "cpu_s": 10.859999999999957,
+            "peak_bytes": 9083228160,
+            "matches_spark": false,
+            "peak_sampled_spill_bytes": 4429342512,
+            "peak_sampled_spill_files": 414,
+            "minimum_free_disk_bytes": 102860566528,
+            "jvm_running_after_sample": true
+          },
+          {
+            "status": "timeout",
+            "error": "TimeoutError: 30s deadline, client active=True",
+            "elapsed_s": 33.00142464600003,
+            "cpu_s": 0.0,
+            "peak_bytes": null,
+            "matches_spark": false,
+            "peak_sampled_spill_bytes": 3148306011,
+            "peak_sampled_spill_files": 226,
+            "minimum_free_disk_bytes": 104141905920,
+            "jvm_running_after_sample": true
+          }
+        ],
+        "warm_median": null
+      },
+      "73": {
+        "samples": [
+          {
+            "status": "ok",
+            "elapsed_s": 4.6085681039999145,
+            "cpu_s": 14.179999999999996,
+            "peak_bytes": 1419632640,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 245954870,
+            "peak_sampled_spill_files": 46,
+            "minimum_free_disk_bytes": 106916425728
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 2.081141953000042,
+            "cpu_s": 6.790000000000006,
+            "peak_bytes": 1717903360,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 261191107,
+            "peak_sampled_spill_files": 46,
+            "minimum_free_disk_bytes": 106901024768
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 1.7436349150000297,
+            "cpu_s": 5.769999999999996,
+            "peak_bytes": 1798926336,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 245954346,
+            "peak_sampled_spill_files": 44,
+            "minimum_free_disk_bytes": 106915946496
+          }
+        ],
+        "warm_median": {
+          "elapsed_s": 1.9123884340000359,
+          "cpu_s": 6.280000000000001,
+          "peak_bytes": 1758414848.0
+        }
+      },
+      "82": {
+        "samples": [
+          {
+            "status": "ok",
+            "elapsed_s": 4.423263674000054,
+            "cpu_s": 14.630000000000003,
+            "peak_bytes": 3015254016,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 345240529,
+            "peak_sampled_spill_files": 56,
+            "minimum_free_disk_bytes": 106816462848
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 4.216848062999816,
+            "cpu_s": 13.860000000000007,
+            "peak_bytes": 3180466176,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 345240529,
+            "peak_sampled_spill_files": 56,
+            "minimum_free_disk_bytes": 106816331776
+          },
+          {
+            "status": "ok",
+            "elapsed_s": 4.169602737999867,
+            "cpu_s": 13.769999999999996,
+            "peak_bytes": 3463536640,
+            "matches_spark": true,
+            "peak_sampled_spill_bytes": 345240529,
+            "peak_sampled_spill_files": 56,
+            "minimum_free_disk_bytes": 106816151552
+          }
+        ],
+        "warm_median": {
+          "elapsed_s": 4.193225400499841,
+          "cpu_s": 13.815000000000001,
+          "peak_bytes": 3322001408.0
+        }
+      }
+    }
+  },
+  "scale": 10,
+  "disk_before_generation_bytes": 110795706368,
+  "load_disk_samples": [
+    110400393216,
+    110358188032,
+    110328025088,
+    110295515136,
+    110256193536,
+    110217658368,
+    110178074624,
+    110143995904,
+    110115946496,
+    110062469120,
+    110032846848,
+    109999030272,
+    109957611520,
+    109921959936,
+    109882638336,
+    109851181056,
+    109805568000,
+    109772275712,
+    109743177728,
+    109704118272,
+    109658767360,
+    109619183616,
+    109583007744,
+    109556269056,
+    109510127616,
+    109479456768,
+    109447475200,
+    109407629312,
+    109377744896,
+    109360705536,
+    109355986944,
+    109354414080,
+    109352333312,
+    109344993280,
+    109337128960,
+    109329526784,
+    109322186752,
+    109314584576,
+    109306720256,
+    109299118080,
+    109291515904,
+    109283651584,
+    109276311552,
+    109268447232,
+    109260845056,
+    109252980736,
+    109245378560,
+    109237776384,
+    109229912064,
+    109222572032,
+    109214707712,
+    109207367680,
+    109199503360,
+    109192163328,
+    109184819200,
+    109180624896,
+    109177479168,
+    109174595584,
+    109171449856,
+    109168304128,
+    109165420544,
+    109162274816,
+    109157294080,
+    109149691904,
+    109141827584,
+    109133963264,
+    109126623232,
+    109118758912,
+    109111156736,
+    109104340992,
+    109099098112,
+    109083107328,
+    109056106496,
+    109034610688,
+    109013377024,
+    108986376192,
+    108970385408,
+    108943384576,
+    108911140864,
+    108895150080,
+    108868149248,
+    108852158464,
+    108830662656,
+    108798418944,
+    108782428160,
+    108758835200,
+    108739436544,
+    108707192832,
+    108680192000,
+    108664201216,
+    108647948288,
+    108610461696,
+    108588965888,
+    108572712960,
+    108545974272,
+    108524216320,
+    108500099072,
+    108475981824,
+    108459728896,
+    108427747328,
+    108405989376,
+    108384493568,
+    108357754880,
+    108341501952,
+    108309258240,
+    108287762432,
+    108266266624,
+    108239527936,
+    108218032128,
+    108198633472,
+    108175040512,
+    108153540608,
+    108121300992,
+    108099805184,
+    108082765824,
+    108056813568,
+    108024569856,
+    108007530496,
+    107981578240,
+    107965587456,
+    107938586624,
+    107911585792,
+    107895595008,
+    107868594176,
+    107852603392,
+    107820359680,
+    107793358848,
+    107777368064,
+    107755085824,
+    107728871424,
+    107719172096,
+    107698462720,
+    107669626880,
+    107660451840,
+    107630043136,
+    107622440960,
+    107585478656,
+    107577876480,
+    107547467776,
+    107530952704,
+    107509456896,
+    107486650368,
+    107457814528,
+    107435008000,
+    107419799552,
+    107396993024,
+    107381788672,
+    107358982144,
+    107334864896,
+    107314413568,
+    107291611136,
+    107276406784,
+    107230269440,
+    107150839808,
+    107150811136,
+    107150782464,
+    107149414400,
+    107149344768,
+    107124932608,
+    107014352896,
+    107014361088,
+    107014361088,
+    106996707328,
+    107052081152,
+    106939834368,
+    106821394432,
+    106704764928,
+    106585526272,
+    106469392384,
+    106353336320,
+    106234667008,
+    106117120000,
+    106005065728,
+    105889980416,
+    105835745280,
+    105835757568,
+    105835757568,
+    105835757568,
+    105835757568,
+    105835757568,
+    105835757568,
+    105835757568,
+    105835757568,
+    105835757568,
+    105718816768,
+    105536241664,
+    105491165184,
+    105478254592,
+    105478258688,
+    105478258688,
+    105478254592,
+    105478258688,
+    105478258688,
+    105478258688,
+    105478258688,
+    105335201792,
+    105208016896,
+    105037787136,
+    105101750272,
+    105101750272,
+    105101750272,
+    105101750272,
+    106223714304,
+    106200170496,
+    106209918976,
+    106213957632,
+    106202636288,
+    106212245504,
+    106214273024,
+    106090061824,
+    105941852160,
+    105794101248,
+    105647177728,
+    105496268800,
+    105341919232,
+    105225584640,
+    105225650176,
+    105225650176,
+    105225650176,
+    105225650176,
+    105225646080,
+    105225646080,
+    105098014720,
+    105047670784,
+    105047670784,
+    105031729152,
+    105031729152,
+    105031729152,
+    105031729152,
+    105871511552,
+    105878044672,
+    105877712896,
+    105813499904,
+    105679077376,
+    105671806976,
+    105671852032,
+    105671852032,
+    105731055616,
+    105633951744,
+    105535111168,
+    105438617600,
+    105339203584,
+    105240211456,
+    105144201216,
+    105045811200,
+    104949370880,
+    104853475328,
+    104755466240,
+    104659419136,
+    104563064832,
+    104465637376,
+    104367677440,
+    104270647296,
+    104171773952,
+    104125833216,
+    104125841408,
+    104125841408,
+    104125837312,
+    104125841408,
+    104125841408,
+    104125841408,
+    104125841408,
+    104125841408,
+    104108572672,
+    103935561728,
+    103790624768,
+    103790837760,
+    103790837760,
+    103790837760,
+    103790837760,
+    103790837760,
+    103790837760,
+    103790837760,
+    103790837760,
+    103790829568,
+    103431266304,
+    103451185152,
+    103451185152,
+    103451185152,
+    103451185152,
+    103451185152,
+    103451181056,
+    103451181056,
+    103451181056,
+    103451181056,
+    103353798656,
+    103136878592,
+    104729927680,
+    104730652672,
+    104665604096,
+    104639086592,
+    104618569728,
+    104490717184,
+    104359284736,
+    104230912000,
+    104119721984,
+    104070410240,
+    104070422528,
+    104070422528,
+    104070422528,
+    104070455296,
+    104070455296,
+    104070455296,
+    104070455296,
+    104070455296,
+    103926714368,
+    103775789056,
+    103745294336,
+    103745298432,
+    103708459008,
+    104315998208
+  ],
+  "data_load": {
+    "call_center": 24,
+    "catalog_page": 12000,
+    "catalog_returns": 1441224,
+    "catalog_sales": 14401261,
+    "customer": 500000,
+    "customer_address": 250000,
+    "customer_demographics": 1920800,
+    "date_dim": 73049,
+    "household_demographics": 7200,
+    "income_band": 20,
+    "inventory": 133110000,
+    "item": 102000,
+    "promotion": 500,
+    "reason": 45,
+    "ship_mode": 20,
+    "store": 102,
+    "store_returns": 2877532,
+    "store_sales": 28800991,
+    "time_dim": 86400,
+    "warehouse": 10,
+    "web_page": 200,
+    "web_returns": 719222,
+    "web_sales": 7197566,
+    "web_site": 42
+  },
+  "harness_exit_codes": {
+    "comet": [
+      0
+    ]
+  },
+  "disk_after_run_bytes": 107307282432,
+  "storage_limit": "Sail has an 8 GiB container cap. Comet has 6 GiB heap and 2 GiB off-heap. The raw host cgroup record shows whether its post-startup total cap was applied."
+}

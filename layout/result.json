@@ -1,0 +1,325 @@
+{
+  "task": "iceberg-deep",
+  "variant": "layout",
+  "revision": "0e925fad7aa33e9644a2433b70e8030ac7477835",
+  "run_id": "45558533058",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.iceberg_deep"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464306176,
+    "disk": "/dev/mapper/cow-root 154894188544 44086661120 110790750208  29% /"
+  },
+  "engines": {
+    "spark-layout-create": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15002
+      },
+      "listen_s": 6.7606565952301025,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9359085460000074
+      }
+    },
+    "sail-layout-write": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.1754865820000191,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006017464999956701
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 3845,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:17:56.319389566Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:17:56.319389566Z",
+        "FinishedAt": "2026-11-25T06:18:05.883500669Z"
+      }
+    },
+    "spark-layout-read": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15002
+      },
+      "listen_s": 2.7553975582122803,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.066722002000006
+      }
+    }
+  },
+  "cases": {
+    "layout-write": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.26678844900004606,
+        "sql": "INSERT INTO polaris.p3_iceberg.file_layout SELECT 99999-id AS id, CAST(pmod(id,8) AS INT) AS g, sha2(CAST(id AS STRING),512) AS payload FROM range(100000)",
+        "output": []
+      }
+    ],
+    "layout-readback": {
+      "matches_spark": true,
+      "expected": {
+        "rows": 1,
+        "sha256": "15aef35eac22dad652e338d169e03c1c78cd10bcdb7102220a9b3c7d237544b0"
+      },
+      "actual": {
+        "rows": 1,
+        "sha256": "15aef35eac22dad652e338d169e03c1c78cd10bcdb7102220a9b3c7d237544b0"
+      }
+    },
+    "physical_layout": [
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=0/part-9a659654-6604-48f9-a939-490760a946a8-00000000000000000006.parquet",
+        "size_bytes": 587061,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 0,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=1/part-17b8ca85-a860-40c7-a34f-8850099bc4e9-00000000000000000001.parquet",
+        "size_bytes": 585757,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 1,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=3/part-3c9b241a-aec8-427a-bfba-83d4132898f6-00000000000000000004.parquet",
+        "size_bytes": 588547,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 3,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=6/part-1850d01a-c3a3-47a0-a9c0-83af35cefd93-00000000000000000000.parquet",
+        "size_bytes": 585227,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 6,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=5/part-ef0165e6-30d2-469a-8e1b-5470414d9026-00000000000000000005.parquet",
+        "size_bytes": 586453,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 5,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=2/part-897c6576-0111-4d75-a779-a4b661a6c846-00000000000000000007.parquet",
+        "size_bytes": 586463,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 2,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=7/part-650dc9e4-dfcc-42eb-b0e9-beeddb701ee4-00000000000000000002.parquet",
+        "size_bytes": 589586,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 7,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=4/part-51de18c6-9d84-44b9-8fad-e503724cca7b-00000000000000000003.parquet",
+        "size_bytes": 585204,
+        "records": 8168,
+        "sort_order_id": 1,
+        "partition": 4,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=1/part-ec2c55a4-4d80-4573-89d1-aa7fae110d8a-00000000000000000009.parquet",
+        "size_bytes": 310512,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 1,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=2/part-aa64e50d-d463-43f2-bef3-2f5c8e98714a-00000000000000000013.parquet",
+        "size_bytes": 312843,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 2,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=4/part-6314f7b3-d67b-4ce0-848c-5574e41b0ac3-00000000000000000015.parquet",
+        "size_bytes": 312111,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 4,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=6/part-4a9ea2d8-ef67-46f2-873f-b84741193ab2-00000000000000000011.parquet",
+        "size_bytes": 312618,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 6,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=5/part-a4a97e48-aaa2-4745-a545-7ddf153ce4ae-00000000000000000012.parquet",
+        "size_bytes": 313359,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 5,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=0/part-5e16720f-dc4a-427f-9b9f-6aac410dec56-00000000000000000008.parquet",
+        "size_bytes": 312507,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 0,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=7/part-8f6bbbc6-0ddc-4005-906c-c504f50540b7-00000000000000000014.parquet",
+        "size_bytes": 311161,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 7,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      },
+      {
+        "file": "s3://warehouse/poc/p3_iceberg/file_layout/data/g=3/part-e699acf0-b804-4e6d-9439-78fef9f950e1-00000000000000000010.parquet",
+        "size_bytes": 312324,
+        "records": 4332,
+        "sort_order_id": 1,
+        "partition": 3,
+        "content_matches_partition": true,
+        "ids_ascending": true
+      }
+    ]
+  }
+}

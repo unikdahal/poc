@@ -10,7 +10,7 @@ import pyarrow.flight as flight
 import requests
 
 from harness import common as base
-from harness.p3.common import begin, collect, fingerprint, group, save, scrub, timed
+from harness.p3.common import begin, collect, error, fingerprint, group, save, scrub, timed
 from harness.suite_flight import any_cmd_statement_query
 
 TENANTS = ("tenant_a", "tenant_b")
@@ -100,6 +100,10 @@ def setup_tables(spark, *_):
 
 def rest_checks(result, secrets):
     headers = {"Polaris-Realm": base.REALM}
+    admin = boto3.client("s3", endpoint_url="http://localhost:9000", aws_access_key_id=base.S3["key"],
+                         aws_secret_access_key=base.S3["secret"], region_name=base.S3["region"])
+    paths = {}
+    credentials = {}
     for actor in TENANTS:
         for table in TENANTS:
             endpoint = f"{base.POLARIS}/api/catalog/v1/{table}/namespaces/isolated/tables/anchor"
@@ -108,6 +112,18 @@ def rest_checks(result, secrets):
                 response = requests.get(endpoint, headers=headers | extra | {"Authorization": f"Bearer {secrets[actor]}"}, timeout=20)
                 value = response.json()
                 config = value.get("config", {})
+                if response.ok and actor == table and scope == "vended":
+                    credentials[actor] = config
+                    locations = {"anchor": value["metadata"]["location"]}
+                    other = requests.get(endpoint.rsplit("/", 1)[0] + "/connect_a",
+                        headers=headers | {"Authorization": f"Bearer {secrets[actor]}"}, timeout=20)
+                    other.raise_for_status()
+                    locations["other_table"] = other.json()["metadata"]["location"]
+                    for key, location in locations.items():
+                        bucket, prefix = location.removeprefix("s3://").split("/", 1)
+                        data = admin.list_objects_v2(Bucket=bucket, Prefix=prefix.rstrip("/") + "/data/").get("Contents", [])
+                        if data:
+                            paths[(actor, key)] = (bucket, data[0]["Key"])
                 result["cases"][f"rest-{actor}-{table}-{scope}"] = {
                     "http": response.status_code, "vended_storage_config_keys": sorted(config),
                     "storage_credentials_count": len(value.get("storage-credentials", [])),
@@ -117,6 +133,24 @@ def rest_checks(result, secrets):
         aws_access_key_id=base.S3["key"], aws_secret_access_key=base.S3["secret"], region_name=base.S3["region"]).assume_role(
             RoleArn="arn:aws:iam::000000000000:role/tenant-a", RoleSessionName="tenant-a-check", DurationSeconds=900))
     result["cases"]["sts-assume-role"] = operation
+    for actor, config in credentials.items():
+        try:
+            storage = boto3.client("s3", endpoint_url="http://localhost:9000", region_name=base.S3["region"],
+                aws_access_key_id=config["s3.access-key-id"], aws_secret_access_key=config["s3.secret-access-key"],
+                aws_session_token=config["s3.session-token"])
+        except Exception as exc:
+            result["cases"][f"sts-{actor}-credential-client"] = {"status": "error", "error": error(exc)}
+            continue
+        for (table, role), (bucket, key) in paths.items():
+            rec = {"bucket": bucket, "object": key}
+            try:
+                response = storage.get_object(Bucket=bucket, Key=key, Range="bytes=0-3")
+                with response["Body"] as body:
+                    rec.update({"http": response["ResponseMetadata"]["HTTPStatusCode"], "prefix_hex": body.read().hex()})
+            except Exception as exc:
+                rec.update({"error": error(exc), "http": getattr(exc, "response", {}).get("ResponseMetadata", {}).get("HTTPStatusCode")})
+            result["cases"][f"sts-{actor}-{table}-{role}"] = rec
+    save(result)
 
 
 def op(result, label, query, execute):
@@ -158,8 +192,10 @@ def session_probes(result, a, b):
             a.catalog.setCurrentDatabase("isolated")
             record, _ = timed(lambda: a.udf.register("tenant_increment", lambda x: x + 1, "int"))
             result["cases"]["python-udf-register-a"] = record
+        zone, value = timed(lambda: spark.conf.get("spark.sql.session.timeZone"))
+        result["cases"][f"session-{name}-config-zone"] = zone | {"value": value}
         for key, sql in (("view", "SELECT * FROM tenant_marker"),
-                         ("zone", "SET spark.sql.session.timeZone"),
+                         ("zone", "SELECT current_timezone()"),
                          ("context", "SELECT current_catalog(), current_database()"),
                          ("udf", "SELECT tenant_increment(1)")):
             op(result, f"session-{name}-{key}", sql, execute)
@@ -219,16 +255,31 @@ def main():
     group(result, "connect-aliases", connect_test("aliases", 50052), "sail", port=50052, extra=catalog_env(True))
 
     def flight_test(*_):
-        for actor in TENANTS:
-            client = flight.FlightClient("grpc://127.0.0.1:32010")
-            opts = flight.FlightCallOptions(timeout=35, headers=[(b"authorization", f"Bearer {secrets[actor]}".encode())])
+        def executor(client, opts):
             def execute(sql):
                 info = client.get_flight_info(flight.FlightDescriptor.for_command(any_cmd_statement_query(sql)), opts)
                 return [list(row.values()) for ep in info.endpoints for row in client.do_get(ep.ticket, opts).read_all().to_pylist()]
-            cross_actions(result, "flight", actor, execute)
-        client.close()
+            return execute
 
-    group(result, "flight-global", flight_test, "flight", extra=catalog_env())
+        for attempt in range(10):
+            with flight.FlightClient("grpc://127.0.0.1:32010") as client:
+                ready = op(result, f"flight-ready-{attempt}", "SELECT 1", executor(client, flight.FlightCallOptions(timeout=5)))
+            if ready["status"] == "ok":
+                break
+            time.sleep(.4)
+        for actor in TENANTS:
+            with flight.FlightClient("grpc://127.0.0.1:32010") as client:
+                opts = flight.FlightCallOptions(timeout=35, headers=[(b"authorization", f"Bearer {secrets[actor]}".encode())])
+                execute = executor(client, opts)
+                cross_actions(result, "flight", actor, execute)
+                if actor == "tenant_a":
+                    op(result, "flight-create-temp-view", "CREATE TEMPORARY VIEW flight_tenant_marker AS SELECT 71 AS v", execute)
+                    op(result, "flight-set-zone", "SET timezone = 'Pacific/Honolulu'", execute)
+                for label, sql in (("view", "SELECT * FROM flight_tenant_marker"), ("zone", "SELECT current_timezone()"),
+                                   ("context", "SELECT current_catalog(), current_database()")):
+                    op(result, f"flight-{actor}-{label}", sql, execute)
+
+    group(result, "flight-global", flight_test, "flight", extra=catalog_env() | {"RUST_LOG": "info"})
     for mode, mem in (("local", "8g"), ("local-cluster", "8g"), ("local", "2g")):
         trial_labels = []
         for rep in range(3):
@@ -245,7 +296,7 @@ def main():
                 name: statistics.median(s[name] for s in samples) for name in ("p99_idle_s", "p99_under_load_s")
             }
     result["source_candidates"] = {
-        "flight_session": SOURCE + "crates/sail-flight/src/service.rs#L54",
+        "flight_session": SOURCE + "crates/sail-flight/src/service.rs#L58-L69",
         "spark_session": SOURCE + "crates/sail-session/src/session_manager/actor/handler.rs#L45",
     }
     save(result)

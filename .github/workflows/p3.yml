@@ -1,6 +1,9 @@
 name: Phase 3
 
 on:
+  push:
+    branches: [agent2-phase3]
+    paths: [".github/workflows/p3.yml"]
   workflow_dispatch:
     inputs:
       tasks:
@@ -17,7 +20,7 @@ env:
 
 jobs:
   latest-image:
-    if: github.ref == 'refs/heads/agent2-phase3' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,') || contains(format(',{0},', inputs.tasks), ',build-latest,'))
+    if: github.ref == 'refs/heads/agent2-phase3' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,') || contains(format(',{0},', inputs.tasks), ',build-latest,') || contains(github.event.head_commit.message, '[p3-build]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     permissions:

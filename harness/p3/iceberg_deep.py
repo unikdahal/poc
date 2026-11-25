@@ -52,9 +52,9 @@ FLINK_IMAGE = "flink:1.20.4-scala_2.12-java17@sha256:912157e4e22718a5fa712cd3d3c
 ICEBERG_VERSION = "1.12.0"
 HADOOP_CLIENT_VERSION = "3.3.4"
 FLINK_CATALOG = """CREATE CATALOG p3cat WITH ('type'='iceberg','catalog-type'='rest',
-'uri'='http://polaris:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',
+'uri'='http://localhost:8181/api/catalog','warehouse'='poc','credential'='root:s3cr3t',
 'scope'='PRINCIPAL_ROLE:ALL','io-impl'='org.apache.iceberg.aws.s3.S3FileIO',
-'s3.endpoint'='http://minio:9000','s3.path-style-access'='true','s3.access-key-id'='admin',
+'s3.endpoint'='http://localhost:9000','s3.path-style-access'='true','s3.access-key-id'='admin',
 's3.secret-access-key'='password','client.region'='us-east-1');"""
 
 
@@ -80,13 +80,15 @@ def flink_service(result):
             mounts.extend(("-v", f"{path}:/opt/flink/lib/{artifact}:ro"))
         container = "p3-flink"
         try:
-            cmd("docker", "run", "-d", "--name", container, "--network", "poc", "--memory", "5g", "--cpus", "3",
-                "-p", "127.0.0.1:18081:8081", "-e", "AWS_REGION=us-east-1", *mounts, FLINK_IMAGE,
+            cmd("docker", "run", "-d", "--name", container, "--network", "host", "--memory", "5g", "--cpus", "3",
+                "-e", "AWS_REGION=us-east-1", *mounts, FLINK_IMAGE,
                 "bash", "-c", "bin/start-cluster.sh && tail -f /dev/null", timeout=300)
-            base.wait_port(18081, timeout=90)
+            base.wait_port(8081, timeout=90)
             yield container
         finally:
-            (base.OUT / "flink-service.log").write_text(cmd("docker", "logs", "--tail", "800", container, check=False))
+            launcher = cmd("docker", "logs", "--tail", "800", container, check=False)
+            logs = cmd("docker", "exec", container, "bash", "-c", "tail -n 250 /opt/flink/log/*.log", check=False)
+            (base.OUT / "flink-service.log").write_text(launcher + "\n" + logs)
             cmd("docker", "stop", "-t", "6", container, check=False, timeout=15)
             result["flink_container_state"] = sail_state(container)
             cmd("docker", "rm", "-f", container, check=False)
@@ -113,7 +115,7 @@ def interop(result):
     ref = {}
     ordinary = [(writer, v, "base", f"{NS}.{writer}_v{v}") for writer in ("spark", "sail", "pyiceberg", "flink") for v in (2, 3)]
     deleted = [(writer, v, "delete", f"{NS}.{writer}_delete_v{v}") for writer in ("spark", "sail") for v in (2, 3)]
-    equality = [("flink", 2, "equality", f"{NS}.flink_equality_v2")]
+    equality = [("flink", v, "equality", f"{NS}.flink_equality_v{v}") for v in (2, 3)]
     targets = ordinary + deleted + equality
     row_sql = "SELECT CAST(id AS BIGINT) AS id, concat('row-', id) AS payload FROM range(12)"
     digest_sql = lambda table: f"SELECT id, payload FROM {table} ORDER BY id"

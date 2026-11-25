@@ -1,8 +1,8 @@
 {
   "task": "k8s-scale",
   "variant": "netem",
-  "revision": "f563fbf19bb0cf1ae9e2654a22116fb0fbdcf682",
-  "run_id": "45556141965",
+  "revision": "c0c9788450fb829acdfac74024db4b690f5fdde0",
+  "run_id": "45560024043",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -20,7 +20,7 @@
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
       "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
-      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
       "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
@@ -66,8 +66,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16760340480,
-    "disk": "/dev/root      154894188544 47527305216 107350106112  31% /"
+    "total_memory_bytes": 16464302080,
+    "disk": "/dev/mapper/cow-root 154894188544 44081750016 110795661312  29% /"
   },
   "engines": {
     "spark-reference": {
@@ -81,10 +81,10 @@
         },
         "port": 15002
       },
-      "listen_s": 17.52421474456787,
+      "listen_s": 7.009466171264648,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.9039146229999915
+        "elapsed_s": 1.8986255649999748
       }
     }
   },
@@ -118,47 +118,31 @@
         "query": 9,
         "injection": {
           "status": "ok",
-          "elapsed_s": 5.249999958323315e-06,
-          "paths": [],
-          "pod": "sail-worker-mkej7qbgmz-2",
-          "node": "p3-worker2",
-          "elapsed_from_query_s": 0.843783325000004
-        },
-        "query_result": {
-          "status": "ok",
-          "elapsed_s": 15.951891571000033,
-          "matches_spark": true
-        },
-        "client_active": false,
-        "stage_probe_errors": []
-      },
-      {
-        "query": 9,
-        "injection": {
-          "status": "ok",
-          "elapsed_s": 0.5025625979999404,
+          "elapsed_s": 0.32814831700000013,
           "paths": [
-            {
-              "node": "p3-worker2",
-              "destination_pods": [
-                "10.244.1.3"
-              ]
-            },
             {
               "node": "p3-worker3",
               "destination_pods": [
-                "10.244.3.3"
-              ]
+                "10.244.3.2"
+              ],
+              "tc_counters": "qdisc prio 1: root refcnt 5 bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1\n Sent 213228709 bytes 146383 pkt (dropped 82, overlimits 0 requeues 0) \n backlog 38323b 8p requeues 0\nqdisc netem 30: parent 1:3 limit 1000 delay 50ms loss 1%\n Sent 213125220 bytes 145223 pkt (dropped 82, overlimits 0 requeues 0) \n backlog 38323b 8p requeues 0"
+            },
+            {
+              "node": "p3-worker",
+              "destination_pods": [
+                "10.244.2.2"
+              ],
+              "tc_counters": "qdisc prio 1: root refcnt 5 bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1\n Sent 239803137 bytes 164376 pkt (dropped 83, overlimits 0 requeues 0) \n backlog 396b 6p requeues 0\nqdisc netem 30: parent 1:3 limit 1000 delay 50ms loss 1%\n Sent 239621497 bytes 162281 pkt (dropped 83, overlimits 0 requeues 0) \n backlog 396b 6p requeues 0"
             }
           ],
-          "pod": "sail-worker-zny5wz866v-1",
-          "node": "p3-worker2",
-          "elapsed_from_query_s": 1.4685382239999853
+          "pod": "sail-worker-tvaqgn6ya2-1",
+          "node": "p3-worker3",
+          "elapsed_from_query_s": 1.4601452509999717
         },
         "query_result": {
           "status": "timeout",
           "error": "TimeoutError: 150s deadline, client active=False",
-          "elapsed_s": 150.01090028299996,
+          "elapsed_s": 150.0084590009999,
           "matches_spark": false
         },
         "client_active": false,
@@ -168,29 +152,65 @@
         "query": 9,
         "injection": {
           "status": "ok",
-          "elapsed_s": 0.4120426000001771,
+          "elapsed_s": 0.27227158799996687,
           "paths": [
             {
-              "node": "p3-worker3",
+              "node": "p3-worker",
               "destination_pods": [
-                "10.244.3.4"
-              ]
+                "10.244.1.3"
+              ],
+              "tc_counters": "qdisc prio 1: root refcnt 5 bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1\n Sent 187335763 bytes 128695 pkt (dropped 87, overlimits 0 requeues 0) \n backlog 949b 13p requeues 0\nqdisc netem 30: parent 1:3 limit 1000 delay 50ms loss 1%\n Sent 187108202 bytes 127193 pkt (dropped 87, overlimits 0 requeues 0) \n backlog 949b 13p requeues 0"
             },
             {
               "node": "p3-worker2",
               "destination_pods": [
-                "10.244.1.4"
-              ]
+                "10.244.3.3"
+              ],
+              "tc_counters": "qdisc prio 1: root refcnt 5 bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1\n Sent 151307946 bytes 105211 pkt (dropped 90, overlimits 0 requeues 0) \n backlog 381726b 10p requeues 0\nqdisc netem 30: parent 1:3 limit 1000 delay 50ms loss 1%\n Sent 151080020 bytes 103693 pkt (dropped 90, overlimits 0 requeues 0) \n backlog 381726b 10p requeues 0"
             }
           ],
-          "pod": "sail-worker-ha4ij1458q-1",
-          "node": "p3-worker3",
-          "elapsed_from_query_s": 1.215978363999966
+          "pod": "sail-worker-k0gloyldm7-1",
+          "node": "p3-worker",
+          "elapsed_from_query_s": 1.2936164519999238
         },
         "query_result": {
           "status": "timeout",
           "error": "TimeoutError: 150s deadline, client active=False",
-          "elapsed_s": 150.00649824700008,
+          "elapsed_s": 150.00798568300002,
+          "matches_spark": false
+        },
+        "client_active": false,
+        "stage_probe_errors": []
+      },
+      {
+        "query": 9,
+        "injection": {
+          "status": "ok",
+          "elapsed_s": 0.3046916669998154,
+          "paths": [
+            {
+              "node": "p3-worker3",
+              "destination_pods": [
+                "10.244.1.4"
+              ],
+              "tc_counters": "qdisc prio 1: root refcnt 5 bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1\n Sent 209830657 bytes 143263 pkt (dropped 74, overlimits 0 requeues 0) \n backlog 1102b 14p requeues 0\nqdisc netem 30: parent 1:3 limit 1000 delay 50ms loss 1%\n Sent 209729168 bytes 142236 pkt (dropped 74, overlimits 0 requeues 0) \n backlog 1102b 14p requeues 0"
+            },
+            {
+              "node": "p3-worker2",
+              "destination_pods": [
+                "10.244.2.4"
+              ],
+              "tc_counters": "qdisc prio 1: root refcnt 5 bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1\n Sent 214596403 bytes 147155 pkt (dropped 103, overlimits 0 requeues 0) \n backlog 330b 5p requeues 0\nqdisc netem 30: parent 1:3 limit 1000 delay 50ms loss 1%\n Sent 214436435 bytes 145666 pkt (dropped 103, overlimits 0 requeues 0) \n backlog 330b 5p requeues 0"
+            }
+          ],
+          "pod": "sail-worker-v7ikgnaz1x-1",
+          "node": "p3-worker3",
+          "elapsed_from_query_s": 1.2297719639998377
+        },
+        "query_result": {
+          "status": "timeout",
+          "error": "TimeoutError: 150s deadline, client active=False",
+          "elapsed_s": 150.00675656800013,
           "matches_spark": false
         },
         "client_active": false,
@@ -201,41 +221,41 @@
   "data_load": {
     "nation": {
       "rows": 25,
-      "seconds": 5.09
+      "seconds": 3.25
     },
     "region": {
       "rows": 5,
-      "seconds": 0.88
+      "seconds": 0.57
     },
     "part": {
       "rows": 2000000,
-      "seconds": 4.83
+      "seconds": 3.24
     },
     "supplier": {
       "rows": 100000,
-      "seconds": 1.19
+      "seconds": 0.85
     },
     "partsupp": {
       "rows": 8000000,
-      "seconds": 7.92
+      "seconds": 5.36
     },
     "customer": {
       "rows": 1500000,
-      "seconds": 3.11
+      "seconds": 2.17
     },
     "orders": {
       "rows": 15000000,
-      "seconds": 19.06
+      "seconds": 12.49
     },
     "lineitem": {
       "rows": 59986052,
-      "seconds": 72.51
+      "seconds": 48.37
     }
   },
   "kind": {
     "version": "0.30.0",
     "image": "kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a",
-    "nodes": "NAME               STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION     CONTAINER-RUNTIME\np3-control-plane   Ready    control-plane   34s   v1.34.0   172.19.0.2    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1017-azure   containerd://2.1.3\np3-worker          Ready    <none>          23s   v1.34.0   172.19.0.3    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1017-azure   containerd://2.1.3\np3-worker2         Ready    <none>          22s   v1.34.0   172.19.0.4    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1017-azure   containerd://2.1.3\np3-worker3         Ready    <none>          23s   v1.34.0   172.19.0.5    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1017-azure   containerd://2.1.3"
+    "nodes": "NAME               STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME\np3-control-plane   Ready    control-plane   24s   v1.34.0   172.19.0.4    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1014-aws   containerd://2.1.3\np3-worker          Ready    <none>          15s   v1.34.0   172.19.0.3    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1014-aws   containerd://2.1.3\np3-worker2         Ready    <none>          15s   v1.34.0   172.19.0.2    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1014-aws   containerd://2.1.3\np3-worker3         Ready    <none>          15s   v1.34.0   172.19.0.5    <none>        Debian GNU/Linux 12 (bookworm)   7.0.0-1014-aws   containerd://2.1.3"
   },
   "deployment": {
     "shuffle": "flight",
@@ -247,258 +267,30 @@
   },
   "pod_timeline": [
     {
-      "elapsed_s": 0.08828228700008367,
+      "elapsed_s": 0.056631159000062326,
       "pods": []
     },
     {
-      "elapsed_s": 0.7194996220000576,
+      "elapsed_s": 0.6031171160000213,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-dh6j2",
-          "uid": "83103ffb-1b2b-4c6d-8dc2-2f014a109e4f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:05:09Z",
-          "started": "2026-11-25T06:05:09Z",
-          "phase": "Pending",
-          "ip": null,
-          "labels": {
-            "app": "sail-server",
-            "pod-template-hash": "5b45f5b494"
-          },
-          "containers": [
-            {
-              "image": "p3-sail:790c622e5c4d",
-              "imageID": "",
-              "lastState": {},
-              "name": "server",
-              "ready": false,
-              "restartCount": 0,
-              "started": false,
-              "state": {
-                "waiting": {
-                  "reason": "ContainerCreating"
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-v7gj2",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "elapsed_s": 1.863876644000129,
-      "pods": [
-        {
-          "name": "sail-spark-server-5b45f5b494-dh6j2",
-          "uid": "83103ffb-1b2b-4c6d-8dc2-2f014a109e4f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:05:09Z",
-          "started": "2026-11-25T06:05:09Z",
-          "phase": "Running",
-          "ip": "10.244.2.2",
-          "labels": {
-            "app": "sail-server",
-            "pod-template-hash": "5b45f5b494"
-          },
-          "containers": [
-            {
-              "allocatedResources": {
-                "cpu": "250m",
-                "memory": "256Mi"
-              },
-              "containerID": "containerd://5c7adf290da23141367bee2d672432ad5ec600f3540c2d088b3948ea0585f151",
-              "image": "docker.io/library/p3-sail:790c622e5c4d",
-              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
-              "lastState": {},
-              "name": "server",
-              "ready": true,
-              "resources": {
-                "limits": {
-                  "cpu": "1",
-                  "memory": "3Gi"
-                },
-                "requests": {
-                  "cpu": "250m",
-                  "memory": "256Mi"
-                }
-              },
-              "restartCount": 0,
-              "started": true,
-              "state": {
-                "running": {
-                  "startedAt": "2026-11-25T06:05:09Z"
-                }
-              },
-              "user": {
-                "linux": {
-                  "gid": 0,
-                  "supplementalGroups": [
-                    0
-                  ],
-                  "uid": 0
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-v7gj2",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "elapsed_s": 4.144315892000122,
-      "pods": [
-        {
-          "name": "sail-spark-server-5b45f5b494-dh6j2",
-          "uid": "83103ffb-1b2b-4c6d-8dc2-2f014a109e4f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:05:09Z",
-          "started": "2026-11-25T06:05:09Z",
-          "phase": "Running",
-          "ip": "10.244.2.2",
-          "labels": {
-            "app": "sail-server",
-            "pod-template-hash": "5b45f5b494"
-          },
-          "containers": [
-            {
-              "allocatedResources": {
-                "cpu": "250m",
-                "memory": "256Mi"
-              },
-              "containerID": "containerd://5c7adf290da23141367bee2d672432ad5ec600f3540c2d088b3948ea0585f151",
-              "image": "docker.io/library/p3-sail:790c622e5c4d",
-              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
-              "lastState": {},
-              "name": "server",
-              "ready": true,
-              "resources": {
-                "limits": {
-                  "cpu": "1",
-                  "memory": "3Gi"
-                },
-                "requests": {
-                  "cpu": "250m",
-                  "memory": "256Mi"
-                }
-              },
-              "restartCount": 0,
-              "started": true,
-              "state": {
-                "running": {
-                  "startedAt": "2026-11-25T06:05:09Z"
-                }
-              },
-              "user": {
-                "linux": {
-                  "gid": 0,
-                  "supplementalGroups": [
-                    0
-                  ],
-                  "uid": 0
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-v7gj2",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "sail-worker-mkej7qbgmz-1",
-          "uid": "b4e71698-6894-4958-90a0-e1796d6c1cf2",
-          "node": "p3-worker3",
-          "created": "2026-11-25T06:05:12Z",
-          "started": "2026-11-25T06:05:12Z",
-          "phase": "Pending",
-          "ip": null,
-          "labels": {
-            "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "mkej7qbgmz-1",
-            "app.kubernetes.io/name": "sail",
-            "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "mkej7qbgmz"
-          },
-          "containers": [
-            {
-              "image": "p3-sail:790c622e5c4d",
-              "imageID": "",
-              "lastState": {},
-              "name": "worker",
-              "ready": false,
-              "restartCount": 0,
-              "started": false,
-              "state": {
-                "waiting": {
-                  "reason": "ContainerCreating"
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-86l4w",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "sail-worker-mkej7qbgmz-2",
-          "uid": "050b55bb-7638-4216-8d26-4b5633741d92",
+          "name": "sail-spark-server-5b45f5b494-k59vc",
+          "uid": "46f9f511-9665-4d32-8446-74eb9372c9ad",
           "node": "p3-worker2",
-          "created": "2026-11-25T06:05:12Z",
-          "started": "2026-11-25T06:05:12Z",
+          "created": "2026-11-25T06:32:05Z",
+          "started": "2026-11-25T06:32:05Z",
           "phase": "Pending",
           "ip": null,
           "labels": {
-            "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "mkej7qbgmz-2",
-            "app.kubernetes.io/name": "sail",
-            "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "mkej7qbgmz"
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
           },
           "containers": [
             {
               "image": "p3-sail:790c622e5c4d",
               "imageID": "",
               "lastState": {},
-              "name": "worker",
+              "name": "server",
               "ready": false,
               "restartCount": 0,
               "started": false,
@@ -514,7 +306,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-44zp8",
+                  "name": "kube-api-access-s6drq",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -525,115 +317,47 @@
       ]
     },
     {
-      "elapsed_s": 6.052181544999939,
+      "elapsed_s": 2.2473180450000427,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-dh6j2",
-          "uid": "83103ffb-1b2b-4c6d-8dc2-2f014a109e4f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:05:09Z",
-          "started": "2026-11-25T06:05:09Z",
-          "phase": "Running",
-          "ip": "10.244.2.2",
-          "labels": {
-            "app": "sail-server",
-            "pod-template-hash": "5b45f5b494"
-          },
-          "containers": [
-            {
-              "allocatedResources": {
-                "cpu": "250m",
-                "memory": "256Mi"
-              },
-              "containerID": "containerd://5c7adf290da23141367bee2d672432ad5ec600f3540c2d088b3948ea0585f151",
-              "image": "docker.io/library/p3-sail:790c622e5c4d",
-              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
-              "lastState": {},
-              "name": "server",
-              "ready": true,
-              "resources": {
-                "limits": {
-                  "cpu": "1",
-                  "memory": "3Gi"
-                },
-                "requests": {
-                  "cpu": "250m",
-                  "memory": "256Mi"
-                }
-              },
-              "restartCount": 0,
-              "started": true,
-              "state": {
-                "running": {
-                  "startedAt": "2026-11-25T06:05:09Z"
-                }
-              },
-              "user": {
-                "linux": {
-                  "gid": 0,
-                  "supplementalGroups": [
-                    0
-                  ],
-                  "uid": 0
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-v7gj2",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "sail-worker-mkej7qbgmz-1",
-          "uid": "b4e71698-6894-4958-90a0-e1796d6c1cf2",
-          "node": "p3-worker3",
-          "created": "2026-11-25T06:05:12Z",
-          "started": "2026-11-25T06:05:12Z",
+          "name": "sail-spark-server-5b45f5b494-k59vc",
+          "uid": "46f9f511-9665-4d32-8446-74eb9372c9ad",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:32:05Z",
+          "started": "2026-11-25T06:32:05Z",
           "phase": "Running",
           "ip": "10.244.1.2",
           "labels": {
-            "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "mkej7qbgmz-1",
-            "app.kubernetes.io/name": "sail",
-            "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "mkej7qbgmz"
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
           },
           "containers": [
             {
               "allocatedResources": {
-                "cpu": "150m",
-                "memory": "32Mi"
+                "cpu": "250m",
+                "memory": "256Mi"
               },
-              "containerID": "containerd://4b55cf47b917f029d5ec9467c169eac73e6881bff42b1c0acb16be6ef3a91e81",
+              "containerID": "containerd://d6147157e5b14c936be41d4cb045ff7ec66aba9245f0d84e451d653caa8b780b",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
-              "name": "worker",
+              "name": "server",
               "ready": true,
               "resources": {
                 "limits": {
                   "cpu": "1",
-                  "memory": "2Gi"
+                  "memory": "3Gi"
                 },
                 "requests": {
-                  "cpu": "150m",
-                  "memory": "32Mi"
+                  "cpu": "250m",
+                  "memory": "256Mi"
                 }
               },
               "restartCount": 0,
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:05:13Z"
+                  "startedAt": "2026-11-25T06:32:05Z"
                 }
               },
               "user": {
@@ -652,7 +376,77 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-86l4w",
+                  "name": "kube-api-access-s6drq",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elapsed_s": 2.7983569740000576,
+      "pods": [
+        {
+          "name": "sail-spark-server-5b45f5b494-k59vc",
+          "uid": "46f9f511-9665-4d32-8446-74eb9372c9ad",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:32:05Z",
+          "started": "2026-11-25T06:32:05Z",
+          "phase": "Running",
+          "ip": "10.244.1.2",
+          "labels": {
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "250m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://d6147157e5b14c936be41d4cb045ff7ec66aba9245f0d84e451d653caa8b780b",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "server",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "3Gi"
+                },
+                "requests": {
+                  "cpu": "250m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:32:05Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-s6drq",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -661,19 +455,221 @@
           ]
         },
         {
-          "name": "sail-worker-mkej7qbgmz-2",
-          "uid": "050b55bb-7638-4216-8d26-4b5633741d92",
+          "name": "sail-worker-tvaqgn6ya2-1",
+          "uid": "08357984-d2c8-4069-b608-1f8f74246c32",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Pending",
+          "ip": null,
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
+          },
+          "containers": [
+            {
+              "image": "p3-sail:790c622e5c4d",
+              "imageID": "",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "waiting": {
+                  "reason": "ContainerCreating"
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-df58l",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-tvaqgn6ya2-2",
+          "uid": "6f45babb-b023-40c2-ad2d-6b8430cbfd31",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Pending",
+          "ip": null,
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-2",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
+          },
+          "containers": [
+            {
+              "image": "p3-sail:790c622e5c4d",
+              "imageID": "",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "waiting": {
+                  "reason": "ContainerCreating"
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-lrc6s",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elapsed_s": 4.070885342999986,
+      "pods": [
+        {
+          "name": "sail-spark-server-5b45f5b494-k59vc",
+          "uid": "46f9f511-9665-4d32-8446-74eb9372c9ad",
           "node": "p3-worker2",
-          "created": "2026-11-25T06:05:12Z",
-          "started": "2026-11-25T06:05:12Z",
+          "created": "2026-11-25T06:32:05Z",
+          "started": "2026-11-25T06:32:05Z",
+          "phase": "Running",
+          "ip": "10.244.1.2",
+          "labels": {
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "250m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://d6147157e5b14c936be41d4cb045ff7ec66aba9245f0d84e451d653caa8b780b",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "server",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "3Gi"
+                },
+                "requests": {
+                  "cpu": "250m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:32:05Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-s6drq",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-tvaqgn6ya2-1",
+          "uid": "08357984-d2c8-4069-b608-1f8f74246c32",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Pending",
+          "ip": null,
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
+          },
+          "containers": [
+            {
+              "image": "p3-sail:790c622e5c4d",
+              "imageID": "",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "waiting": {
+                  "reason": "ContainerCreating"
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-df58l",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-tvaqgn6ya2-2",
+          "uid": "6f45babb-b023-40c2-ad2d-6b8430cbfd31",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
           "phase": "Running",
           "ip": "10.244.3.2",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "mkej7qbgmz-2",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "mkej7qbgmz"
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
           },
           "containers": [
             {
@@ -681,7 +677,7 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://baac13d4753cbf0f6a034ade0c2c03ced9d81be6a75c84a2b4705ffc3b64bba2",
+              "containerID": "containerd://f2dcdc3f116d46e094b88e0151f05d9c6df5985c7554d0c19e5c94cfdff889e0",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -701,7 +697,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:05:13Z"
+                  "startedAt": "2026-11-25T06:32:07Z"
                 }
               },
               "user": {
@@ -720,7 +716,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-44zp8",
+                  "name": "kube-api-access-lrc6s",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -731,16 +727,16 @@
       ]
     },
     {
-      "elapsed_s": 51.55018254200013,
+      "elapsed_s": 4.671416802000067,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-dh6j2",
-          "uid": "83103ffb-1b2b-4c6d-8dc2-2f014a109e4f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:05:09Z",
-          "started": "2026-11-25T06:05:09Z",
-          "phase": "Failed",
-          "ip": "10.244.2.2",
+          "name": "sail-spark-server-5b45f5b494-k59vc",
+          "uid": "46f9f511-9665-4d32-8446-74eb9372c9ad",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:32:05Z",
+          "started": "2026-11-25T06:32:05Z",
+          "phase": "Running",
+          "ip": "10.244.1.2",
           "labels": {
             "app": "sail-server",
             "pod-template-hash": "5b45f5b494"
@@ -751,12 +747,12 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://5c7adf290da23141367bee2d672432ad5ec600f3540c2d088b3948ea0585f151",
+              "containerID": "containerd://d6147157e5b14c936be41d4cb045ff7ec66aba9245f0d84e451d653caa8b780b",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
               "name": "server",
-              "ready": false,
+              "ready": true,
               "resources": {
                 "limits": {
                   "cpu": "1",
@@ -768,14 +764,10 @@
                 }
               },
               "restartCount": 0,
-              "started": false,
+              "started": true,
               "state": {
-                "terminated": {
-                  "containerID": "containerd://5c7adf290da23141367bee2d672432ad5ec600f3540c2d088b3948ea0585f151",
-                  "exitCode": 137,
-                  "finishedAt": "2026-11-25T06:05:59Z",
-                  "reason": "Error",
-                  "startedAt": "2026-11-25T06:05:09Z"
+                "running": {
+                  "startedAt": "2026-11-25T06:32:05Z"
                 }
               },
               "user": {
@@ -794,7 +786,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-v7gj2",
+                  "name": "kube-api-access-s6drq",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -803,19 +795,19 @@
           ]
         },
         {
-          "name": "sail-worker-mkej7qbgmz-1",
-          "uid": "b4e71698-6894-4958-90a0-e1796d6c1cf2",
+          "name": "sail-worker-tvaqgn6ya2-1",
+          "uid": "08357984-d2c8-4069-b608-1f8f74246c32",
           "node": "p3-worker3",
-          "created": "2026-11-25T06:05:12Z",
-          "started": "2026-11-25T06:05:12Z",
-          "phase": "Failed",
-          "ip": "10.244.1.2",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Running",
+          "ip": "10.244.2.2",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "mkej7qbgmz-1",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-1",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "mkej7qbgmz"
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
           },
           "containers": [
             {
@@ -823,12 +815,12 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://4b55cf47b917f029d5ec9467c169eac73e6881bff42b1c0acb16be6ef3a91e81",
+              "containerID": "containerd://fa3a614bd80dcd0bc1445cc323e1d01a3b36c0960791c1fc58e5be093d94e1ac",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
               "name": "worker",
-              "ready": false,
+              "ready": true,
               "resources": {
                 "limits": {
                   "cpu": "1",
@@ -840,14 +832,10 @@
                 }
               },
               "restartCount": 0,
-              "started": false,
+              "started": true,
               "state": {
-                "terminated": {
-                  "containerID": "containerd://4b55cf47b917f029d5ec9467c169eac73e6881bff42b1c0acb16be6ef3a91e81",
-                  "exitCode": 137,
-                  "finishedAt": "2026-11-25T06:06:00Z",
-                  "reason": "Error",
-                  "startedAt": "2026-11-25T06:05:13Z"
+                "running": {
+                  "startedAt": "2026-11-25T06:32:07Z"
                 }
               },
               "user": {
@@ -866,7 +854,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-86l4w",
+                  "name": "kube-api-access-df58l",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -875,19 +863,19 @@
           ]
         },
         {
-          "name": "sail-worker-mkej7qbgmz-2",
-          "uid": "050b55bb-7638-4216-8d26-4b5633741d92",
-          "node": "p3-worker2",
-          "created": "2026-11-25T06:05:12Z",
-          "started": "2026-11-25T06:05:12Z",
-          "phase": "Failed",
+          "name": "sail-worker-tvaqgn6ya2-2",
+          "uid": "6f45babb-b023-40c2-ad2d-6b8430cbfd31",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Running",
           "ip": "10.244.3.2",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "mkej7qbgmz-2",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "mkej7qbgmz"
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
           },
           "containers": [
             {
@@ -895,12 +883,12 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://baac13d4753cbf0f6a034ade0c2c03ced9d81be6a75c84a2b4705ffc3b64bba2",
+              "containerID": "containerd://f2dcdc3f116d46e094b88e0151f05d9c6df5985c7554d0c19e5c94cfdff889e0",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
               "name": "worker",
-              "ready": false,
+              "ready": true,
               "resources": {
                 "limits": {
                   "cpu": "1",
@@ -912,14 +900,10 @@
                 }
               },
               "restartCount": 0,
-              "started": false,
+              "started": true,
               "state": {
-                "terminated": {
-                  "containerID": "containerd://baac13d4753cbf0f6a034ade0c2c03ced9d81be6a75c84a2b4705ffc3b64bba2",
-                  "exitCode": 137,
-                  "finishedAt": "2026-11-25T06:06:00Z",
-                  "reason": "Error",
-                  "startedAt": "2026-11-25T06:05:13Z"
+                "running": {
+                  "startedAt": "2026-11-25T06:32:07Z"
                 }
               },
               "user": {
@@ -938,7 +922,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-44zp8",
+                  "name": "kube-api-access-lrc6s",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -949,18 +933,163 @@
       ]
     },
     {
-      "elapsed_s": 52.13361228300005,
-      "pods": []
-    },
-    {
-      "elapsed_s": 52.73205231299994,
+      "elapsed_s": 184.053392465,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-5lgr6",
-          "uid": "f0a45943-8421-465c-a392-2faeea8f267f",
+          "name": "sail-worker-tvaqgn6ya2-1",
+          "uid": "08357984-d2c8-4069-b608-1f8f74246c32",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Failed",
+          "ip": "10.244.2.2",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://fa3a614bd80dcd0bc1445cc323e1d01a3b36c0960791c1fc58e5be093d94e1ac",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "terminated": {
+                  "containerID": "containerd://fa3a614bd80dcd0bc1445cc323e1d01a3b36c0960791c1fc58e5be093d94e1ac",
+                  "exitCode": 137,
+                  "finishedAt": "2026-11-25T06:35:08Z",
+                  "reason": "Error",
+                  "startedAt": "2026-11-25T06:32:07Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-df58l",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-tvaqgn6ya2-2",
+          "uid": "6f45babb-b023-40c2-ad2d-6b8430cbfd31",
           "node": "p3-worker",
-          "created": "2026-11-25T06:06:01Z",
-          "started": "2026-11-25T06:06:01Z",
+          "created": "2026-11-25T06:32:07Z",
+          "started": "2026-11-25T06:32:07Z",
+          "phase": "Failed",
+          "ip": "10.244.3.2",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "tvaqgn6ya2-2",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "tvaqgn6ya2"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://f2dcdc3f116d46e094b88e0151f05d9c6df5985c7554d0c19e5c94cfdff889e0",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "terminated": {
+                  "containerID": "containerd://f2dcdc3f116d46e094b88e0151f05d9c6df5985c7554d0c19e5c94cfdff889e0",
+                  "exitCode": 137,
+                  "finishedAt": "2026-11-25T06:35:08Z",
+                  "reason": "Error",
+                  "startedAt": "2026-11-25T06:32:07Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-lrc6s",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elapsed_s": 184.607040471,
+      "pods": [
+        {
+          "name": "sail-spark-server-5b45f5b494-r8lkk",
+          "uid": "d030e5f7-ec02-436f-bfae-d445c22c035b",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:35:09Z",
+          "started": "2026-11-25T06:35:09Z",
           "phase": "Pending",
           "ip": null,
           "labels": {
@@ -988,7 +1117,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-vskq5",
+                  "name": "kube-api-access-npk8c",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -999,14 +1128,14 @@
       ]
     },
     {
-      "elapsed_s": 53.307986579000044,
+      "elapsed_s": 185.70126530799996,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-5lgr6",
-          "uid": "f0a45943-8421-465c-a392-2faeea8f267f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:06:01Z",
-          "started": "2026-11-25T06:06:01Z",
+          "name": "sail-spark-server-5b45f5b494-r8lkk",
+          "uid": "d030e5f7-ec02-436f-bfae-d445c22c035b",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:35:09Z",
+          "started": "2026-11-25T06:35:09Z",
           "phase": "Running",
           "ip": "10.244.2.3",
           "labels": {
@@ -1019,7 +1148,7 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://2819ecbce94be6094dd314ffda54b61ae924f080ae4aa525b264a1d0e41a9d50",
+              "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1039,7 +1168,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:06:01Z"
+                  "startedAt": "2026-11-25T06:35:09Z"
                 }
               },
               "user": {
@@ -1058,77 +1187,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-vskq5",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "elapsed_s": 53.93468737500007,
-      "pods": [
-        {
-          "name": "sail-spark-server-5b45f5b494-5lgr6",
-          "uid": "f0a45943-8421-465c-a392-2faeea8f267f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:06:01Z",
-          "started": "2026-11-25T06:06:01Z",
-          "phase": "Running",
-          "ip": "10.244.2.3",
-          "labels": {
-            "app": "sail-server",
-            "pod-template-hash": "5b45f5b494"
-          },
-          "containers": [
-            {
-              "allocatedResources": {
-                "cpu": "250m",
-                "memory": "256Mi"
-              },
-              "containerID": "containerd://2819ecbce94be6094dd314ffda54b61ae924f080ae4aa525b264a1d0e41a9d50",
-              "image": "docker.io/library/p3-sail:790c622e5c4d",
-              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
-              "lastState": {},
-              "name": "server",
-              "ready": true,
-              "resources": {
-                "limits": {
-                  "cpu": "1",
-                  "memory": "3Gi"
-                },
-                "requests": {
-                  "cpu": "250m",
-                  "memory": "256Mi"
-                }
-              },
-              "restartCount": 0,
-              "started": true,
-              "state": {
-                "running": {
-                  "startedAt": "2026-11-25T06:06:01Z"
-                }
-              },
-              "user": {
-                "linux": {
-                  "gid": 0,
-                  "supplementalGroups": [
-                    0
-                  ],
-                  "uid": 0
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-vskq5",
+                  "name": "kube-api-access-npk8c",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1137,77 +1196,33 @@
           ]
         },
         {
-          "name": "sail-worker-zny5wz866v-1",
-          "uid": "f98ad919-edf1-4154-84ea-d57e01aa0ed3",
-          "node": "p3-worker2",
-          "created": "2026-11-25T06:06:02Z",
+          "name": "sail-worker-k0gloyldm7-2",
+          "uid": "e4051d66-0192-4a3b-8fc4-3abc82c2cff0",
+          "node": null,
+          "created": "2026-11-25T06:35:10Z",
           "started": null,
           "phase": "Pending",
           "ip": null,
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "zny5wz866v-1",
+            "app.kubernetes.io/instance": "k0gloyldm7-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "zny5wz866v"
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
           },
           "containers": []
-        },
-        {
-          "name": "sail-worker-zny5wz866v-2",
-          "uid": "d15bd32d-7eb5-4d5e-8fba-76d552ce9fc4",
-          "node": "p3-worker3",
-          "created": "2026-11-25T06:06:02Z",
-          "started": "2026-11-25T06:06:02Z",
-          "phase": "Pending",
-          "ip": null,
-          "labels": {
-            "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "zny5wz866v-2",
-            "app.kubernetes.io/name": "sail",
-            "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "zny5wz866v"
-          },
-          "containers": [
-            {
-              "image": "p3-sail:790c622e5c4d",
-              "imageID": "",
-              "lastState": {},
-              "name": "worker",
-              "ready": false,
-              "restartCount": 0,
-              "started": false,
-              "state": {
-                "waiting": {
-                  "reason": "ContainerCreating"
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-dhjfj",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
         }
       ]
     },
     {
-      "elapsed_s": 55.39933694199999,
+      "elapsed_s": 186.291862057,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-5lgr6",
-          "uid": "f0a45943-8421-465c-a392-2faeea8f267f",
-          "node": "p3-worker",
-          "created": "2026-11-25T06:06:01Z",
-          "started": "2026-11-25T06:06:01Z",
+          "name": "sail-spark-server-5b45f5b494-r8lkk",
+          "uid": "d030e5f7-ec02-436f-bfae-d445c22c035b",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:35:09Z",
+          "started": "2026-11-25T06:35:09Z",
           "phase": "Running",
           "ip": "10.244.2.3",
           "labels": {
@@ -1220,7 +1235,7 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://2819ecbce94be6094dd314ffda54b61ae924f080ae4aa525b264a1d0e41a9d50",
+              "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1240,7 +1255,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:06:01Z"
+                  "startedAt": "2026-11-25T06:35:09Z"
                 }
               },
               "user": {
@@ -1259,7 +1274,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-vskq5",
+                  "name": "kube-api-access-npk8c",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1268,19 +1283,19 @@
           ]
         },
         {
-          "name": "sail-worker-zny5wz866v-1",
-          "uid": "f98ad919-edf1-4154-84ea-d57e01aa0ed3",
-          "node": "p3-worker2",
-          "created": "2026-11-25T06:06:02Z",
-          "started": "2026-11-25T06:06:02Z",
+          "name": "sail-worker-k0gloyldm7-1",
+          "uid": "f9e89cfd-dda2-4e59-9598-f3e606009d1d",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
           "phase": "Running",
           "ip": "10.244.3.3",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "zny5wz866v-1",
+            "app.kubernetes.io/instance": "k0gloyldm7-1",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "zny5wz866v"
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
           },
           "containers": [
             {
@@ -1288,7 +1303,7 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://dbb82c39947599f89e9e8b15b4025db31d2e5247b8cddc530555f36ae0414db3",
+              "containerID": "containerd://2365a34fbcc07a98ed0d73d9217b5ad9b9ee5edc4333f3956c4caec92cf2f9cc",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1308,7 +1323,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:06:02Z"
+                  "startedAt": "2026-11-25T06:35:10Z"
                 }
               },
               "user": {
@@ -1327,7 +1342,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-gtxzk",
+                  "name": "kube-api-access-j554f",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1336,56 +1351,32 @@
           ]
         },
         {
-          "name": "sail-worker-zny5wz866v-2",
-          "uid": "d15bd32d-7eb5-4d5e-8fba-76d552ce9fc4",
-          "node": "p3-worker3",
-          "created": "2026-11-25T06:06:02Z",
-          "started": "2026-11-25T06:06:02Z",
-          "phase": "Running",
-          "ip": "10.244.1.3",
+          "name": "sail-worker-k0gloyldm7-2",
+          "uid": "e4051d66-0192-4a3b-8fc4-3abc82c2cff0",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
+          "phase": "Pending",
+          "ip": null,
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "zny5wz866v-2",
+            "app.kubernetes.io/instance": "k0gloyldm7-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "zny5wz866v"
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
           },
           "containers": [
             {
-              "allocatedResources": {
-                "cpu": "150m",
-                "memory": "32Mi"
-              },
-              "containerID": "containerd://93ca93ce523aadf96f035822dae44bf08c7163fbfa070ccab3ad2d1883222345",
-              "image": "docker.io/library/p3-sail:790c622e5c4d",
-              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "image": "p3-sail:790c622e5c4d",
+              "imageID": "",
               "lastState": {},
               "name": "worker",
-              "ready": true,
-              "resources": {
-                "limits": {
-                  "cpu": "1",
-                  "memory": "2Gi"
-                },
-                "requests": {
-                  "cpu": "150m",
-                  "memory": "32Mi"
-                }
-              },
+              "ready": false,
               "restartCount": 0,
-              "started": true,
+              "started": false,
               "state": {
-                "running": {
-                  "startedAt": "2026-11-25T06:06:02Z"
-                }
-              },
-              "user": {
-                "linux": {
-                  "gid": 0,
-                  "supplementalGroups": [
-                    0
-                  ],
-                  "uid": 0
+                "waiting": {
+                  "reason": "ContainerCreating"
                 }
               },
               "volumeMounts": [
@@ -1395,7 +1386,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-dhjfj",
+                  "name": "kube-api-access-4qpj5",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1406,14 +1397,220 @@
       ]
     },
     {
-      "elapsed_s": 234.7976795950001,
+      "elapsed_s": 187.48365316499996,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-5lgr6",
-          "uid": "f0a45943-8421-465c-a392-2faeea8f267f",
+          "name": "sail-spark-server-5b45f5b494-r8lkk",
+          "uid": "d030e5f7-ec02-436f-bfae-d445c22c035b",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:35:09Z",
+          "started": "2026-11-25T06:35:09Z",
+          "phase": "Running",
+          "ip": "10.244.2.3",
+          "labels": {
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "250m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "server",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "3Gi"
+                },
+                "requests": {
+                  "cpu": "250m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:35:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-npk8c",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-k0gloyldm7-1",
+          "uid": "f9e89cfd-dda2-4e59-9598-f3e606009d1d",
           "node": "p3-worker",
-          "created": "2026-11-25T06:06:01Z",
-          "started": "2026-11-25T06:06:01Z",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
+          "phase": "Running",
+          "ip": "10.244.3.3",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "k0gloyldm7-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://2365a34fbcc07a98ed0d73d9217b5ad9b9ee5edc4333f3956c4caec92cf2f9cc",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:35:10Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-j554f",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-k0gloyldm7-2",
+          "uid": "e4051d66-0192-4a3b-8fc4-3abc82c2cff0",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
+          "phase": "Running",
+          "ip": "10.244.1.3",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "k0gloyldm7-2",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://be99812582096e57eb94c593aa423bac9284f5d63cdd5300dfeb39d289f4de8b",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:35:10Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-4qpj5",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elapsed_s": 366.66214320000006,
+      "pods": [
+        {
+          "name": "sail-spark-server-5b45f5b494-r8lkk",
+          "uid": "d030e5f7-ec02-436f-bfae-d445c22c035b",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:35:09Z",
+          "started": "2026-11-25T06:35:09Z",
           "phase": "Failed",
           "ip": "10.244.2.3",
           "labels": {
@@ -1426,7 +1623,7 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://2819ecbce94be6094dd314ffda54b61ae924f080ae4aa525b264a1d0e41a9d50",
+              "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1446,11 +1643,11 @@
               "started": false,
               "state": {
                 "terminated": {
-                  "containerID": "containerd://2819ecbce94be6094dd314ffda54b61ae924f080ae4aa525b264a1d0e41a9d50",
+                  "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
                   "exitCode": 137,
-                  "finishedAt": "2026-11-25T06:09:03Z",
+                  "finishedAt": "2026-11-25T06:38:11Z",
                   "reason": "Error",
-                  "startedAt": "2026-11-25T06:06:01Z"
+                  "startedAt": "2026-11-25T06:35:09Z"
                 }
               },
               "user": {
@@ -1469,7 +1666,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-vskq5",
+                  "name": "kube-api-access-npk8c",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1478,19 +1675,19 @@
           ]
         },
         {
-          "name": "sail-worker-zny5wz866v-1",
-          "uid": "f98ad919-edf1-4154-84ea-d57e01aa0ed3",
-          "node": "p3-worker2",
-          "created": "2026-11-25T06:06:02Z",
-          "started": "2026-11-25T06:06:02Z",
+          "name": "sail-worker-k0gloyldm7-1",
+          "uid": "f9e89cfd-dda2-4e59-9598-f3e606009d1d",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
           "phase": "Failed",
           "ip": "10.244.3.3",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "zny5wz866v-1",
+            "app.kubernetes.io/instance": "k0gloyldm7-1",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "zny5wz866v"
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
           },
           "containers": [
             {
@@ -1498,7 +1695,7 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://dbb82c39947599f89e9e8b15b4025db31d2e5247b8cddc530555f36ae0414db3",
+              "containerID": "containerd://2365a34fbcc07a98ed0d73d9217b5ad9b9ee5edc4333f3956c4caec92cf2f9cc",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1518,11 +1715,11 @@
               "started": false,
               "state": {
                 "terminated": {
-                  "containerID": "containerd://dbb82c39947599f89e9e8b15b4025db31d2e5247b8cddc530555f36ae0414db3",
+                  "containerID": "containerd://2365a34fbcc07a98ed0d73d9217b5ad9b9ee5edc4333f3956c4caec92cf2f9cc",
                   "exitCode": 137,
-                  "finishedAt": "2026-11-25T06:09:03Z",
+                  "finishedAt": "2026-11-25T06:38:11Z",
                   "reason": "Error",
-                  "startedAt": "2026-11-25T06:06:02Z"
+                  "startedAt": "2026-11-25T06:35:10Z"
                 }
               },
               "user": {
@@ -1541,7 +1738,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-gtxzk",
+                  "name": "kube-api-access-j554f",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1550,19 +1747,19 @@
           ]
         },
         {
-          "name": "sail-worker-zny5wz866v-2",
-          "uid": "d15bd32d-7eb5-4d5e-8fba-76d552ce9fc4",
-          "node": "p3-worker3",
-          "created": "2026-11-25T06:06:02Z",
-          "started": "2026-11-25T06:06:02Z",
+          "name": "sail-worker-k0gloyldm7-2",
+          "uid": "e4051d66-0192-4a3b-8fc4-3abc82c2cff0",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
           "phase": "Failed",
           "ip": "10.244.1.3",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "zny5wz866v-2",
+            "app.kubernetes.io/instance": "k0gloyldm7-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "zny5wz866v"
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
           },
           "containers": [
             {
@@ -1570,7 +1767,7 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://93ca93ce523aadf96f035822dae44bf08c7163fbfa070ccab3ad2d1883222345",
+              "containerID": "containerd://be99812582096e57eb94c593aa423bac9284f5d63cdd5300dfeb39d289f4de8b",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1590,11 +1787,11 @@
               "started": false,
               "state": {
                 "terminated": {
-                  "containerID": "containerd://93ca93ce523aadf96f035822dae44bf08c7163fbfa070ccab3ad2d1883222345",
+                  "containerID": "containerd://be99812582096e57eb94c593aa423bac9284f5d63cdd5300dfeb39d289f4de8b",
                   "exitCode": 137,
-                  "finishedAt": "2026-11-25T06:09:03Z",
+                  "finishedAt": "2026-11-25T06:38:11Z",
                   "reason": "Error",
-                  "startedAt": "2026-11-25T06:06:02Z"
+                  "startedAt": "2026-11-25T06:35:10Z"
                 }
               },
               "user": {
@@ -1613,7 +1810,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-dhjfj",
+                  "name": "kube-api-access-4qpj5",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1624,18 +1821,160 @@
       ]
     },
     {
-      "elapsed_s": 235.38316030500005,
-      "pods": []
-    },
-    {
-      "elapsed_s": 235.95966220000014,
+      "elapsed_s": 367.20983036199993,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-jtx2g",
-          "uid": "bfe03a8a-5c30-412b-8253-3de28576f19f",
+          "name": "sail-spark-server-5b45f5b494-r8lkk",
+          "uid": "d030e5f7-ec02-436f-bfae-d445c22c035b",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:35:09Z",
+          "started": "2026-11-25T06:35:09Z",
+          "phase": "Failed",
+          "ip": "10.244.2.3",
+          "labels": {
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "250m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "server",
+              "ready": false,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "3Gi"
+                },
+                "requests": {
+                  "cpu": "250m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "terminated": {
+                  "containerID": "containerd://21b101836838fb54e8ba4d25a0db1a406467aeab2625b70bcd6096ab42642955",
+                  "exitCode": 137,
+                  "finishedAt": "2026-11-25T06:38:11Z",
+                  "reason": "Error",
+                  "startedAt": "2026-11-25T06:35:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-npk8c",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-k0gloyldm7-1",
+          "uid": "f9e89cfd-dda2-4e59-9598-f3e606009d1d",
           "node": "p3-worker",
-          "created": "2026-11-25T06:09:04Z",
-          "started": "2026-11-25T06:09:04Z",
+          "created": "2026-11-25T06:35:10Z",
+          "started": "2026-11-25T06:35:10Z",
+          "phase": "Failed",
+          "ip": "10.244.3.3",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "k0gloyldm7-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "k0gloyldm7"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://2365a34fbcc07a98ed0d73d9217b5ad9b9ee5edc4333f3956c4caec92cf2f9cc",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "terminated": {
+                  "containerID": "containerd://2365a34fbcc07a98ed0d73d9217b5ad9b9ee5edc4333f3956c4caec92cf2f9cc",
+                  "exitCode": 137,
+                  "finishedAt": "2026-11-25T06:38:11Z",
+                  "reason": "Error",
+                  "startedAt": "2026-11-25T06:35:10Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-j554f",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elapsed_s": 367.755669515,
+      "pods": [
+        {
+          "name": "sail-spark-server-5b45f5b494-xqhdd",
+          "uid": "b80d5cc3-aa63-44d6-87ea-d9604cb4dfa5",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:38:12Z",
+          "started": "2026-11-25T06:38:12Z",
           "phase": "Pending",
           "ip": null,
           "labels": {
@@ -1663,7 +2002,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-f2nbk",
+                  "name": "kube-api-access-pxsmp",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1674,16 +2013,16 @@
       ]
     },
     {
-      "elapsed_s": 236.53710491800007,
+      "elapsed_s": 368.85296538,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-jtx2g",
-          "uid": "bfe03a8a-5c30-412b-8253-3de28576f19f",
+          "name": "sail-spark-server-5b45f5b494-xqhdd",
+          "uid": "b80d5cc3-aa63-44d6-87ea-d9604cb4dfa5",
           "node": "p3-worker",
-          "created": "2026-11-25T06:09:04Z",
-          "started": "2026-11-25T06:09:04Z",
+          "created": "2026-11-25T06:38:12Z",
+          "started": "2026-11-25T06:38:12Z",
           "phase": "Running",
-          "ip": "10.244.2.4",
+          "ip": "10.244.3.4",
           "labels": {
             "app": "sail-server",
             "pod-template-hash": "5b45f5b494"
@@ -1694,7 +2033,7 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://fc16fe67c24ae7ba1bd3543b87df80874c0f46f61669975bd88a32684c4a6ff2",
+              "containerID": "containerd://d547e6485377535ae813983b27894053535b7594132d23aaa35b9c3fdd8c8320",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1714,7 +2053,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:09:04Z"
+                  "startedAt": "2026-11-25T06:38:12Z"
                 }
               },
               "user": {
@@ -1733,7 +2072,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-f2nbk",
+                  "name": "kube-api-access-pxsmp",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1744,16 +2083,16 @@
       ]
     },
     {
-      "elapsed_s": 237.14464673099997,
+      "elapsed_s": 369.4566233900001,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-jtx2g",
-          "uid": "bfe03a8a-5c30-412b-8253-3de28576f19f",
+          "name": "sail-spark-server-5b45f5b494-xqhdd",
+          "uid": "b80d5cc3-aa63-44d6-87ea-d9604cb4dfa5",
           "node": "p3-worker",
-          "created": "2026-11-25T06:09:04Z",
-          "started": "2026-11-25T06:09:04Z",
+          "created": "2026-11-25T06:38:12Z",
+          "started": "2026-11-25T06:38:12Z",
           "phase": "Running",
-          "ip": "10.244.2.4",
+          "ip": "10.244.3.4",
           "labels": {
             "app": "sail-server",
             "pod-template-hash": "5b45f5b494"
@@ -1764,7 +2103,7 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://fc16fe67c24ae7ba1bd3543b87df80874c0f46f61669975bd88a32684c4a6ff2",
+              "containerID": "containerd://d547e6485377535ae813983b27894053535b7594132d23aaa35b9c3fdd8c8320",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1784,7 +2123,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:09:04Z"
+                  "startedAt": "2026-11-25T06:38:12Z"
                 }
               },
               "user": {
@@ -1803,7 +2142,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-f2nbk",
+                  "name": "kube-api-access-pxsmp",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1812,19 +2151,19 @@
           ]
         },
         {
-          "name": "sail-worker-ha4ij1458q-1",
-          "uid": "e3e39950-3711-4e73-92b5-287463ae2845",
+          "name": "sail-worker-v7ikgnaz1x-1",
+          "uid": "7f86089b-5d28-4a55-8cd8-cd5d59d8883d",
           "node": "p3-worker3",
-          "created": "2026-11-25T06:09:05Z",
-          "started": "2026-11-25T06:09:05Z",
+          "created": "2026-11-25T06:38:13Z",
+          "started": "2026-11-25T06:38:13Z",
           "phase": "Pending",
           "ip": null,
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "ha4ij1458q-1",
+            "app.kubernetes.io/instance": "v7ikgnaz1x-1",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "ha4ij1458q"
+            "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
           },
           "containers": [
             {
@@ -1847,7 +2186,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-m29zf",
+                  "name": "kube-api-access-2sxb5",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1856,19 +2195,19 @@
           ]
         },
         {
-          "name": "sail-worker-ha4ij1458q-2",
-          "uid": "6e8afa48-670f-4424-ba9d-8b203a66c374",
+          "name": "sail-worker-v7ikgnaz1x-2",
+          "uid": "f9f4cd44-02c7-461c-89b6-7b77bf78dd46",
           "node": "p3-worker2",
-          "created": "2026-11-25T06:09:05Z",
-          "started": "2026-11-25T06:09:05Z",
+          "created": "2026-11-25T06:38:13Z",
+          "started": "2026-11-25T06:38:13Z",
           "phase": "Pending",
           "ip": null,
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "ha4ij1458q-2",
+            "app.kubernetes.io/instance": "v7ikgnaz1x-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "ha4ij1458q"
+            "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
           },
           "containers": [
             {
@@ -1891,7 +2230,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-wsxps",
+                  "name": "kube-api-access-bp4zs",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1902,16 +2241,16 @@
       ]
     },
     {
-      "elapsed_s": 238.47869929000012,
+      "elapsed_s": 370.00847344500005,
       "pods": [
         {
-          "name": "sail-spark-server-5b45f5b494-jtx2g",
-          "uid": "bfe03a8a-5c30-412b-8253-3de28576f19f",
+          "name": "sail-spark-server-5b45f5b494-xqhdd",
+          "uid": "b80d5cc3-aa63-44d6-87ea-d9604cb4dfa5",
           "node": "p3-worker",
-          "created": "2026-11-25T06:09:04Z",
-          "started": "2026-11-25T06:09:04Z",
+          "created": "2026-11-25T06:38:12Z",
+          "started": "2026-11-25T06:38:12Z",
           "phase": "Running",
-          "ip": "10.244.2.4",
+          "ip": "10.244.3.4",
           "labels": {
             "app": "sail-server",
             "pod-template-hash": "5b45f5b494"
@@ -1922,7 +2261,7 @@
                 "cpu": "250m",
                 "memory": "256Mi"
               },
-              "containerID": "containerd://fc16fe67c24ae7ba1bd3543b87df80874c0f46f61669975bd88a32684c4a6ff2",
+              "containerID": "containerd://d547e6485377535ae813983b27894053535b7594132d23aaa35b9c3fdd8c8320",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -1942,7 +2281,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:09:04Z"
+                  "startedAt": "2026-11-25T06:38:12Z"
                 }
               },
               "user": {
@@ -1961,7 +2300,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-f2nbk",
+                  "name": "kube-api-access-pxsmp",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -1970,19 +2309,269 @@
           ]
         },
         {
-          "name": "sail-worker-ha4ij1458q-1",
-          "uid": "e3e39950-3711-4e73-92b5-287463ae2845",
+          "name": "sail-worker-v7ikgnaz1x-1",
+          "uid": "7f86089b-5d28-4a55-8cd8-cd5d59d8883d",
           "node": "p3-worker3",
-          "created": "2026-11-25T06:09:05Z",
-          "started": "2026-11-25T06:09:05Z",
+          "created": "2026-11-25T06:38:13Z",
+          "started": "2026-11-25T06:38:13Z",
+          "phase": "Running",
+          "ip": "10.244.2.4",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "v7ikgnaz1x-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://88aac1a865a5d37ac428f77e8348481ca4e631e51db7a25916399526a6a1ee3e",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:38:14Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-2sxb5",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-v7ikgnaz1x-2",
+          "uid": "f9f4cd44-02c7-461c-89b6-7b77bf78dd46",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:38:13Z",
+          "started": "2026-11-25T06:38:13Z",
+          "phase": "Pending",
+          "ip": null,
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "v7ikgnaz1x-2",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
+          },
+          "containers": [
+            {
+              "image": "p3-sail:790c622e5c4d",
+              "imageID": "",
+              "lastState": {},
+              "name": "worker",
+              "ready": false,
+              "restartCount": 0,
+              "started": false,
+              "state": {
+                "waiting": {
+                  "reason": "ContainerCreating"
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-bp4zs",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elapsed_s": 370.60102042899996,
+      "pods": [
+        {
+          "name": "sail-spark-server-5b45f5b494-xqhdd",
+          "uid": "b80d5cc3-aa63-44d6-87ea-d9604cb4dfa5",
+          "node": "p3-worker",
+          "created": "2026-11-25T06:38:12Z",
+          "started": "2026-11-25T06:38:12Z",
+          "phase": "Running",
+          "ip": "10.244.3.4",
+          "labels": {
+            "app": "sail-server",
+            "pod-template-hash": "5b45f5b494"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "250m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://d547e6485377535ae813983b27894053535b7594132d23aaa35b9c3fdd8c8320",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "server",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "3Gi"
+                },
+                "requests": {
+                  "cpu": "250m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:38:12Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-pxsmp",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-v7ikgnaz1x-1",
+          "uid": "7f86089b-5d28-4a55-8cd8-cd5d59d8883d",
+          "node": "p3-worker3",
+          "created": "2026-11-25T06:38:13Z",
+          "started": "2026-11-25T06:38:13Z",
+          "phase": "Running",
+          "ip": "10.244.2.4",
+          "labels": {
+            "app.kubernetes.io/component": "worker",
+            "app.kubernetes.io/instance": "v7ikgnaz1x-1",
+            "app.kubernetes.io/name": "sail",
+            "p3-worker": "true",
+            "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
+          },
+          "containers": [
+            {
+              "allocatedResources": {
+                "cpu": "150m",
+                "memory": "32Mi"
+              },
+              "containerID": "containerd://88aac1a865a5d37ac428f77e8348481ca4e631e51db7a25916399526a6a1ee3e",
+              "image": "docker.io/library/p3-sail:790c622e5c4d",
+              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+              "lastState": {},
+              "name": "worker",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "2Gi"
+                },
+                "requests": {
+                  "cpu": "150m",
+                  "memory": "32Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-11-25T06:38:14Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 0
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/tokens",
+                  "name": "tokens"
+                },
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-2sxb5",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sail-worker-v7ikgnaz1x-2",
+          "uid": "f9f4cd44-02c7-461c-89b6-7b77bf78dd46",
+          "node": "p3-worker2",
+          "created": "2026-11-25T06:38:13Z",
+          "started": "2026-11-25T06:38:13Z",
           "phase": "Running",
           "ip": "10.244.1.4",
           "labels": {
             "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "ha4ij1458q-1",
+            "app.kubernetes.io/instance": "v7ikgnaz1x-2",
             "app.kubernetes.io/name": "sail",
             "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "ha4ij1458q"
+            "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
           },
           "containers": [
             {
@@ -1990,7 +2579,7 @@
                 "cpu": "150m",
                 "memory": "32Mi"
               },
-              "containerID": "containerd://2d815d3d181c9093cd61394982b72194dbf62639e19d73fc9b4271dc91cadd96",
+              "containerID": "containerd://d69b519f31867e071d87f62369df6af6f361b3b97398f72b87d654cd365f42d3",
               "image": "docker.io/library/p3-sail:790c622e5c4d",
               "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
               "lastState": {},
@@ -2010,7 +2599,7 @@
               "started": true,
               "state": {
                 "running": {
-                  "startedAt": "2026-11-25T06:09:06Z"
+                  "startedAt": "2026-11-25T06:38:14Z"
                 }
               },
               "user": {
@@ -2029,75 +2618,7 @@
                 },
                 {
                   "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-m29zf",
-                  "readOnly": true,
-                  "recursiveReadOnly": "Disabled"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "sail-worker-ha4ij1458q-2",
-          "uid": "6e8afa48-670f-4424-ba9d-8b203a66c374",
-          "node": "p3-worker2",
-          "created": "2026-11-25T06:09:05Z",
-          "started": "2026-11-25T06:09:05Z",
-          "phase": "Running",
-          "ip": "10.244.3.4",
-          "labels": {
-            "app.kubernetes.io/component": "worker",
-            "app.kubernetes.io/instance": "ha4ij1458q-2",
-            "app.kubernetes.io/name": "sail",
-            "p3-worker": "true",
-            "sail.lakesail.com/worker-manager": "ha4ij1458q"
-          },
-          "containers": [
-            {
-              "allocatedResources": {
-                "cpu": "150m",
-                "memory": "32Mi"
-              },
-              "containerID": "containerd://022f01a6e1487a38baf275fdad4f844aacf6eaa3449e224bb8e728029033aebc",
-              "image": "docker.io/library/p3-sail:790c622e5c4d",
-              "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
-              "lastState": {},
-              "name": "worker",
-              "ready": true,
-              "resources": {
-                "limits": {
-                  "cpu": "1",
-                  "memory": "2Gi"
-                },
-                "requests": {
-                  "cpu": "150m",
-                  "memory": "32Mi"
-                }
-              },
-              "restartCount": 0,
-              "started": true,
-              "state": {
-                "running": {
-                  "startedAt": "2026-11-25T06:09:06Z"
-                }
-              },
-              "user": {
-                "linux": {
-                  "gid": 0,
-                  "supplementalGroups": [
-                    0
-                  ],
-                  "uid": 0
-                }
-              },
-              "volumeMounts": [
-                {
-                  "mountPath": "/tokens",
-                  "name": "tokens"
-                },
-                {
-                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                  "name": "kube-api-access-wsxps",
+                  "name": "kube-api-access-bp4zs",
                   "readOnly": true,
                   "recursiveReadOnly": "Disabled"
                 }
@@ -2110,13 +2631,13 @@
   ],
   "last_pods": [
     {
-      "name": "sail-spark-server-5b45f5b494-jtx2g",
-      "uid": "bfe03a8a-5c30-412b-8253-3de28576f19f",
+      "name": "sail-spark-server-5b45f5b494-xqhdd",
+      "uid": "b80d5cc3-aa63-44d6-87ea-d9604cb4dfa5",
       "node": "p3-worker",
-      "created": "2026-11-25T06:09:04Z",
-      "started": "2026-11-25T06:09:04Z",
+      "created": "2026-11-25T06:38:12Z",
+      "started": "2026-11-25T06:38:12Z",
       "phase": "Running",
-      "ip": "10.244.2.4",
+      "ip": "10.244.3.4",
       "labels": {
         "app": "sail-server",
         "pod-template-hash": "5b45f5b494"
@@ -2127,7 +2648,7 @@
             "cpu": "250m",
             "memory": "256Mi"
           },
-          "containerID": "containerd://fc16fe67c24ae7ba1bd3543b87df80874c0f46f61669975bd88a32684c4a6ff2",
+          "containerID": "containerd://d547e6485377535ae813983b27894053535b7594132d23aaa35b9c3fdd8c8320",
           "image": "docker.io/library/p3-sail:790c622e5c4d",
           "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
           "lastState": {},
@@ -2147,7 +2668,7 @@
           "started": true,
           "state": {
             "running": {
-              "startedAt": "2026-11-25T06:09:04Z"
+              "startedAt": "2026-11-25T06:38:12Z"
             }
           },
           "user": {
@@ -2166,7 +2687,7 @@
             },
             {
               "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-              "name": "kube-api-access-f2nbk",
+              "name": "kube-api-access-pxsmp",
               "readOnly": true,
               "recursiveReadOnly": "Disabled"
             }
@@ -2175,19 +2696,87 @@
       ]
     },
     {
-      "name": "sail-worker-ha4ij1458q-1",
-      "uid": "e3e39950-3711-4e73-92b5-287463ae2845",
+      "name": "sail-worker-v7ikgnaz1x-1",
+      "uid": "7f86089b-5d28-4a55-8cd8-cd5d59d8883d",
       "node": "p3-worker3",
-      "created": "2026-11-25T06:09:05Z",
-      "started": "2026-11-25T06:09:05Z",
+      "created": "2026-11-25T06:38:13Z",
+      "started": "2026-11-25T06:38:13Z",
+      "phase": "Running",
+      "ip": "10.244.2.4",
+      "labels": {
+        "app.kubernetes.io/component": "worker",
+        "app.kubernetes.io/instance": "v7ikgnaz1x-1",
+        "app.kubernetes.io/name": "sail",
+        "p3-worker": "true",
+        "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
+      },
+      "containers": [
+        {
+          "allocatedResources": {
+            "cpu": "150m",
+            "memory": "32Mi"
+          },
+          "containerID": "containerd://88aac1a865a5d37ac428f77e8348481ca4e631e51db7a25916399526a6a1ee3e",
+          "image": "docker.io/library/p3-sail:790c622e5c4d",
+          "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
+          "lastState": {},
+          "name": "worker",
+          "ready": true,
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "2Gi"
+            },
+            "requests": {
+              "cpu": "150m",
+              "memory": "32Mi"
+            }
+          },
+          "restartCount": 0,
+          "started": true,
+          "state": {
+            "running": {
+              "startedAt": "2026-11-25T06:38:14Z"
+            }
+          },
+          "user": {
+            "linux": {
+              "gid": 0,
+              "supplementalGroups": [
+                0
+              ],
+              "uid": 0
+            }
+          },
+          "volumeMounts": [
+            {
+              "mountPath": "/tokens",
+              "name": "tokens"
+            },
+            {
+              "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+              "name": "kube-api-access-2sxb5",
+              "readOnly": true,
+              "recursiveReadOnly": "Disabled"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sail-worker-v7ikgnaz1x-2",
+      "uid": "f9f4cd44-02c7-461c-89b6-7b77bf78dd46",
+      "node": "p3-worker2",
+      "created": "2026-11-25T06:38:13Z",
+      "started": "2026-11-25T06:38:13Z",
       "phase": "Running",
       "ip": "10.244.1.4",
       "labels": {
         "app.kubernetes.io/component": "worker",
-        "app.kubernetes.io/instance": "ha4ij1458q-1",
+        "app.kubernetes.io/instance": "v7ikgnaz1x-2",
         "app.kubernetes.io/name": "sail",
         "p3-worker": "true",
-        "sail.lakesail.com/worker-manager": "ha4ij1458q"
+        "sail.lakesail.com/worker-manager": "v7ikgnaz1x"
       },
       "containers": [
         {
@@ -2195,7 +2784,7 @@
             "cpu": "150m",
             "memory": "32Mi"
           },
-          "containerID": "containerd://2d815d3d181c9093cd61394982b72194dbf62639e19d73fc9b4271dc91cadd96",
+          "containerID": "containerd://d69b519f31867e071d87f62369df6af6f361b3b97398f72b87d654cd365f42d3",
           "image": "docker.io/library/p3-sail:790c622e5c4d",
           "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
           "lastState": {},
@@ -2215,7 +2804,7 @@
           "started": true,
           "state": {
             "running": {
-              "startedAt": "2026-11-25T06:09:06Z"
+              "startedAt": "2026-11-25T06:38:14Z"
             }
           },
           "user": {
@@ -2234,75 +2823,7 @@
             },
             {
               "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-              "name": "kube-api-access-m29zf",
-              "readOnly": true,
-              "recursiveReadOnly": "Disabled"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "sail-worker-ha4ij1458q-2",
-      "uid": "6e8afa48-670f-4424-ba9d-8b203a66c374",
-      "node": "p3-worker2",
-      "created": "2026-11-25T06:09:05Z",
-      "started": "2026-11-25T06:09:05Z",
-      "phase": "Running",
-      "ip": "10.244.3.4",
-      "labels": {
-        "app.kubernetes.io/component": "worker",
-        "app.kubernetes.io/instance": "ha4ij1458q-2",
-        "app.kubernetes.io/name": "sail",
-        "p3-worker": "true",
-        "sail.lakesail.com/worker-manager": "ha4ij1458q"
-      },
-      "containers": [
-        {
-          "allocatedResources": {
-            "cpu": "150m",
-            "memory": "32Mi"
-          },
-          "containerID": "containerd://022f01a6e1487a38baf275fdad4f844aacf6eaa3449e224bb8e728029033aebc",
-          "image": "docker.io/library/p3-sail:790c622e5c4d",
-          "imageID": "sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53",
-          "lastState": {},
-          "name": "worker",
-          "ready": true,
-          "resources": {
-            "limits": {
-              "cpu": "1",
-              "memory": "2Gi"
-            },
-            "requests": {
-              "cpu": "150m",
-              "memory": "32Mi"
-            }
-          },
-          "restartCount": 0,
-          "started": true,
-          "state": {
-            "running": {
-              "startedAt": "2026-11-25T06:09:06Z"
-            }
-          },
-          "user": {
-            "linux": {
-              "gid": 0,
-              "supplementalGroups": [
-                0
-              ],
-              "uid": 0
-            }
-          },
-          "volumeMounts": [
-            {
-              "mountPath": "/tokens",
-              "name": "tokens"
-            },
-            {
-              "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-              "name": "kube-api-access-wsxps",
+              "name": "kube-api-access-bp4zs",
               "readOnly": true,
               "recursiveReadOnly": "Disabled"
             }
@@ -2319,10 +2840,10 @@
       "Restarting": false,
       "OOMKilled": false,
       "Dead": false,
-      "Pid": 13747,
+      "Pid": 10749,
       "ExitCode": 0,
       "Error": "",
-      "StartedAt": "2026-11-25T06:03:42.279151897Z",
+      "StartedAt": "2026-11-25T06:31:05.659044468Z",
       "FinishedAt": "0001-01-01T00:00:00Z"
     },
     "p3-worker": {
@@ -2332,10 +2853,10 @@
       "Restarting": false,
       "OOMKilled": false,
       "Dead": false,
-      "Pid": 13761,
+      "Pid": 10747,
       "ExitCode": 0,
       "Error": "",
-      "StartedAt": "2026-11-25T06:03:42.278335174Z",
+      "StartedAt": "2026-11-25T06:31:05.658887664Z",
       "FinishedAt": "0001-01-01T00:00:00Z"
     },
     "p3-worker2": {
@@ -2345,10 +2866,10 @@
       "Restarting": false,
       "OOMKilled": false,
       "Dead": false,
-      "Pid": 13769,
+      "Pid": 10737,
       "ExitCode": 0,
       "Error": "",
-      "StartedAt": "2026-11-25T06:03:42.281776384Z",
+      "StartedAt": "2026-11-25T06:31:05.659692515Z",
       "FinishedAt": "0001-01-01T00:00:00Z"
     },
     "p3-worker3": {
@@ -2358,10 +2879,10 @@
       "Restarting": false,
       "OOMKilled": false,
       "Dead": false,
-      "Pid": 13776,
+      "Pid": 10750,
       "ExitCode": 0,
       "Error": "",
-      "StartedAt": "2026-11-25T06:03:42.281036324Z",
+      "StartedAt": "2026-11-25T06:31:05.659128281Z",
       "FinishedAt": "0001-01-01T00:00:00Z"
     }
   }

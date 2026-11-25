@@ -278,7 +278,8 @@ def fault(result, label, ref):
     else:
         while thread.is_alive() and time.monotonic() - start < 40:
             running = [pod for pod in workers([pod_record(pod) for pod in get_pods()]) if pod["phase"] == "Running"]
-            if not running:
+            distinct_nodes = {pod["node"] for pod in running if pod["ip"]}
+            if not running or (label == "netem" and len(distinct_nodes) < 2):
                 time.sleep(.2)
                 continue
             if label in ("map-kill", "reduce-kill"):
@@ -303,6 +304,10 @@ def fault(result, label, ref):
             break
     thread.join(155)
     if label == "netem":
+        if applied and applied.get("paths"):
+            for path in applied["paths"]:
+                path["tc_counters"] = cmd("docker", "exec", path["node"], "tc", "-s", "qdisc", "show",
+                                           "dev", "eth0", check=False, timeout=10)
         for node in ("p3-worker", "p3-worker2", "p3-worker3"):
             cmd("docker", "exec", node, "tc", "qdisc", "del", "dev", "eth0", "root", check=False)
     if applied and label == "driver-restart":

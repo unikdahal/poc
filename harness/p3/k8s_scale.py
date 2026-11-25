@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import os
+import re
 import statistics
 import subprocess
 import threading
@@ -365,6 +366,64 @@ def burst(result, reference):
     result["cases"]["burst"]["remaining"] = pods
 
 
+def shuffle_traffic(result, image, reference, processes):
+    for backend in ("flight", "storage"):
+        if processes:
+            processes.pop().terminate()
+        processes.append(deploy(image, backend, 2))
+        spark = base.connect(PORT)
+        warm, before = timed(lambda: tpch_rows(spark, "tpch_sf10", 6, 120))
+        result["cases"][f"traffic-{backend}-readiness"] = warm | {
+            "matches_spark": before is not None and fingerprint(before, tpch.ordered(6)) == reference.get(6)}
+        pods = [pod for pod in workers([pod_record(pod) for pod in get_pods()])
+                if pod["phase"] == "Running" and pod["ip"]]
+        observations = result["cases"][f"traffic-{backend}"] = []
+        if len(pods) != 2 or pods[0]["node"] == pods[1]["node"]:
+            result["cases"][f"traffic-{backend}-setup"] = {
+                "error": "Two cross-node worker IPs were required", "pods": pods, "backend": backend}
+            continue
+
+        def counters():
+            output = {}
+            for pod in pods:
+                status = cmd("docker", "exec", pod["node"], "tc", "-s", "qdisc", "show", "dev", "eth0", timeout=10)
+                sent = re.search(r"qdisc pfifo 30:[^\n]*\n\s*Sent (\d+) bytes (\d+) pkt", status)
+                if sent is None:
+                    raise RuntimeError(f"No cross-pod queue counters on {pod['node']}: {status[:350]}")
+                output[pod["node"]] = {"bytes": int(sent[1]), "packets": int(sent[2])}
+            return output
+
+        try:
+            for pod, peer in ((pods[0], pods[1]), (pods[1], pods[0])):
+                tc = ("docker", "exec", pod["node"], "tc")
+                cmd(*tc, "qdisc", "replace", "dev", "eth0", "root", "handle", "1:", "prio")
+                cmd(*tc, "qdisc", "replace", "dev", "eth0", "parent", "1:3", "handle", "30:", "pfifo")
+                cmd(*tc, "filter", "add", "dev", "eth0", "protocol", "ip", "parent", "1:", "prio", "10",
+                    "u32", "match", "ip", "src", f"{pod['ip']}/32", "match", "ip", "dst", f"{peer['ip']}/32", "flowid", "1:3")
+            idle_before = counters()
+            time.sleep(2)
+            result["cases"][f"traffic-{backend}-idle"] = {
+                "before": idle_before, "after": counters(), "seconds": 2}
+            for rep in range(3):
+                print(f"{backend} cross-worker traffic Q9 trial {rep+1}", flush=True)
+                pre = counters()
+                pre_s3 = shuffle_bytes() if backend == "storage" else None
+                sample, rows = timed(lambda: tpch_rows(spark, "tpch_sf10", 9, 180))
+                post = counters()
+                sample["matches_spark"] = rows is not None and fingerprint(rows, tpch.ordered(9)) == reference.get(9)
+                sample["cross_worker_egress_wire_bytes"] = sum(post[n]["bytes"] - pre[n]["bytes"] for n in pre)
+                sample["cross_worker_egress_packets"] = sum(post[n]["packets"] - pre[n]["packets"] for n in pre)
+                if pre_s3 is not None:
+                    sample["retained_s3_shuffle_delta_bytes"] = shuffle_bytes() - pre_s3
+                observations.append(sample)
+                save(result)
+        except Exception as exc:
+            result["cases"][f"traffic-{backend}-setup"] = {"error": error(exc)}
+        finally:
+            for pod in pods:
+                cmd("docker", "exec", pod["node"], "tc", "qdisc", "del", "dev", "eth0", "root", check=False)
+
+
 def startup_cells(result, image, reference, processes):
     for backend in ("flight", "storage"):
         for count in (1, 2, 4):
@@ -416,11 +475,13 @@ def main():
     processes = []
     try:
         failure = VARIANT in FAULTS or VARIANT == "burst"
-        backend, count = ("flight", 1 if VARIANT in ("startup","burst") else 2) if failure or VARIANT == "startup" else VARIANT.split("-")
+        backend, count = ("flight", 1 if VARIANT in ("startup","burst") else 2) if failure or VARIANT in ("startup","shuffle-traffic") else VARIANT.split("-")
         result["deployment"] = {"shuffle": backend, "workers": int(count), "limits": {"server": "1 CPU, 3 GiB", "worker": "1 CPU, 2 GiB"}}
         with Watcher() as watcher:
             if VARIANT == "startup":
                 startup_cells(result, image, reference, processes)
+            elif VARIANT == "shuffle-traffic":
+                shuffle_traffic(result, image, reference, processes)
             elif VARIANT == "burst":
                 processes.append(deploy(image, backend, int(count), memory="512Mi", cpu="250m", session_idle=120))
                 burst(result, reference)

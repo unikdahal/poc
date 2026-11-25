@@ -1,8 +1,8 @@
 {
   "task": "rootcause",
   "variant": "pinned",
-  "revision": "e8327c45c40c91e0c8af44f4b2ba5af30cc860a3",
-  "run_id": "45550739329",
+  "revision": "c9d0fc85443e3b85ab8340237d32feb37a22b998",
+  "run_id": "45553201626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -66,8 +66,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16760344576,
-    "disk": "/dev/root      154894188544 67546484736 87330926592  44% /"
+    "total_memory_bytes": 16760332288,
+    "disk": "/dev/root      154894188544 67546656768 87330754560  44% /"
   },
   "engines": {
     "spark-reference": {
@@ -79,10 +79,10 @@
         "overrides": {},
         "port": 15002
       },
-      "listen_s": 8.268398761749268,
+      "listen_s": 8.00991678237915,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.7353672800000055
+        "elapsed_s": 1.5711543989999939
       }
     },
     "sail": {
@@ -103,10 +103,10 @@
           "RUST_LOG": "warn"
         }
       },
-      "listen_s": 0.17817252899999403,
+      "listen_s": 0.15626445499998454,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 0.007197179000002052
+        "elapsed_s": 0.005289901999987023
       },
       "before_shutdown": {
         "Status": "running",
@@ -115,10 +115,10 @@
         "Restarting": false,
         "OOMKilled": false,
         "Dead": false,
-        "Pid": 8394,
+        "Pid": 7102,
         "ExitCode": 0,
         "Error": "",
-        "StartedAt": "2026-11-25T05:06:05.838401318Z",
+        "StartedAt": "2026-11-25T05:26:17.574822651Z",
         "FinishedAt": "0001-01-01T00:00:00Z"
       },
       "exit_state": {
@@ -131,8 +131,8 @@
         "Pid": 0,
         "ExitCode": 137,
         "Error": "",
-        "StartedAt": "2026-11-25T05:06:05.838401318Z",
-        "FinishedAt": "2026-11-25T05:06:36.551145496Z"
+        "StartedAt": "2026-11-25T05:26:17.574822651Z",
+        "FinishedAt": "2026-11-25T05:26:38.645986861Z"
       }
     }
   },
@@ -194380,15 +194380,68 @@
       "sail": {
         "original": {
           "status": "error",
-          "error": "AnalysisException: cannot resolve Iceberg table metadata: Error during planning: Ambiguous Iceberg metadata version 0: poc/p3_timezone/case_table/metadata/00000-43b28729-6e61-4334-8528-27145116822b.metadata.json and poc/p3_timezone/case_table/metadata/00000-d936a2b4-7961-4284-a97b-d7074cac76b5.metadata.json; explicit recovery required"
+          "error": "AnalysisException: error in DataFusion: Error during planning: Unsupported timezone for Iceberg Timestamptz conversion: Etc/UTC. Timezone must be UTC or +00:00"
         },
         "repro": {
           "status": "error",
-          "error": "AnalysisException: cannot resolve Iceberg table metadata: Error during planning: Ambiguous Iceberg metadata version 0: poc/p3_timezone/case_table/metadata/00000-43b28729-6e61-4334-8528-27145116822b.metadata.json and poc/p3_timezone/case_table/metadata/00000-d936a2b4-7961-4284-a97b-d7074cac76b5.metadata.json; explicit recovery required"
+          "error": "AnalysisException: error in DataFusion: Error during planning: Unsupported timezone for Iceberg Timestamptz conversion: Etc/UTC. Timezone must be UTC or +00:00"
         },
         "utc_control": {
-          "status": "error",
-          "error": "AnalysisException: cannot resolve Iceberg table metadata: Error during planning: Ambiguous Iceberg metadata version 0: poc/p3_timezone/case_table/metadata/00000-43b28729-6e61-4334-8528-27145116822b.metadata.json and poc/p3_timezone/case_table/metadata/00000-d936a2b4-7961-4284-a97b-d7074cac76b5.metadata.json; explicit recovery required"
+          "status": "ok",
+          "outputs": [
+            {
+              "rows": [
+                [
+                  true
+                ]
+              ],
+              "names": [
+                "value"
+              ],
+              "types": [
+                "boolean"
+              ]
+            },
+            {
+              "rows": [
+                [
+                  true
+                ]
+              ],
+              "names": [
+                "value"
+              ],
+              "types": [
+                "boolean"
+              ]
+            },
+            {
+              "rows": [
+                [
+                  1
+                ]
+              ],
+              "names": [
+                "count"
+              ],
+              "types": [
+                "bigint"
+              ]
+            },
+            {
+              "rows": [
+                [
+                  "2024-01-01 12:00:00"
+                ]
+              ],
+              "names": [
+                "ts"
+              ],
+              "types": [
+                "string"
+              ]
+            }
+          ]
         }
       },
       "original_diff": {
@@ -194403,35 +194456,35 @@
     "tpch": {
       "nation": {
         "rows": 25,
-        "seconds": 4.7
+        "seconds": 2.81
       },
       "region": {
         "rows": 5,
-        "seconds": 0.81
+        "seconds": 0.49
       },
       "part": {
         "rows": 200000,
-        "seconds": 1.72
+        "seconds": 1.04
       },
       "supplier": {
         "rows": 10000,
-        "seconds": 0.84
+        "seconds": 0.55
       },
       "partsupp": {
         "rows": 800000,
-        "seconds": 2.0
+        "seconds": 1.19
       },
       "customer": {
         "rows": 150000,
-        "seconds": 1.16
+        "seconds": 0.68
       },
       "orders": {
         "rows": 1500000,
-        "seconds": 2.71
+        "seconds": 1.55
       },
       "lineitem": {
         "rows": 6001215,
-        "seconds": 8.51
+        "seconds": 5.14
       }
     },
     "tpcds": {

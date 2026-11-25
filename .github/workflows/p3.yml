@@ -1,0 +1,44 @@
+name: Phase 3
+
+on:
+  workflow_dispatch:
+    inputs:
+      tasks:
+        description: "Comma-separated task names, all, or build-latest"
+        default: all
+
+permissions:
+  contents: write
+  packages: read
+
+env:
+  P3_PINNED_SHA: 790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f
+  P3_NEW_SHA: da1e7351d28046452f0ec3e8232aee28458f3852
+
+jobs:
+  latest-image:
+    if: github.ref == 'refs/heads/agent2-phase3' && (inputs.tasks == 'all' || contains(format(',{0},', inputs.tasks), ',rootcause,') || contains(format(',{0},', inputs.tasks), ',build-latest,'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Free build space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          docker system prune -af
+      - name: Build pinned upstream main
+        continue-on-error: true
+        timeout-minutes: 325
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          bash scripts/p3-build.sh
+      - name: Publish build evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/p3-publish.sh rootcause build-latest out

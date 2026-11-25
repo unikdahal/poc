@@ -53,7 +53,28 @@ Set these as environment variables before the command:
 
 If you already have the Sail image, pass its tag in `SAIL_IMAGE`. If pulling it from GHCR says `unauthorized`, either run `docker login ghcr.io -u <user>` with a token that has `read:packages`, or make the package public in GitHub's package settings.
 
-## Use it
+## Query workbench (UI)
+
+`local-up.sh` also starts a web UI at **http://localhost:8088**. Run it by hand with `python ui/server.py`; add `--host 0.0.0.0` to open it from another machine.
+
+1. Tick the engines to compare: Spark + Comet, plain Spark (when started with `ENGINES=comet,spark,sail`), Sail over Spark Connect, and Sail over Flight SQL. A green dot means the engine is running.
+2. Pick a namespace (e.g. `tpch_sf1`) so unqualified table names resolve, or write fully qualified names such as `polaris.tpch_sf1.orders`.
+3. Write SQL, or choose a preset (the 22 TPC-H queries and a few probes). Ctrl/⌘ + Enter runs it. Several statements separated by `;` run in order, and the last one's result is compared.
+4. Settings:
+   - **Runs:** timed repetitions; the median is reported.
+   - **Warm-up:** one untimed run first.
+   - **Sequential or parallel:** parallel shows how the engines behave when they compete for the machine.
+   - **Tolerance:** for numeric differences.
+   - **Timeout:** interrupts a query that runs too long.
+   - **Plans:** shows `EXPLAIN` output.
+
+For each engine you get median and min wall time, every run, CPU-seconds, peak memory, rows, and how much slower it was than the fastest engine. CPU and memory are read from the Sail container's cgroup and from the Spark JVM's process tree.
+
+The result comparison uses the first engine as the reference. It reports one of: identical, equal within tolerance, or different. Differences show the column types that differ, the largest absolute and relative numeric difference, the cells over tolerance, and rows found in only one engine. Rows are compared in order when the query has `ORDER BY`, and as a multiset otherwise.
+
+**Run TPC-H suite** runs all 22 queries with the current settings and builds a table of time per engine, the speedup, result checks, and totals for wall time, CPU and peak memory. Each run and each suite can be exported as JSON or CSV. The sidebar shows the catalog (click a table for its columns, double-click to insert its name) and recent runs.
+
+## Use it from code
 
 ```bash
 source .venv/bin/activate && export PYTHONPATH=$PWD

@@ -1,0 +1,222 @@
+{
+  "task": "faults-storage",
+  "variant": "token",
+  "revision": "ea25ee9588bd3a1e63d520a247b464ff523dc24f",
+  "run_id": "45559834940",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.faults_storage"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ],
+    "toxiproxy": {
+      "version": "2.12.0",
+      "sha256": "65e042d3fc2290c099527bc506446a6fd863a09f113b8944b636ece70221c2b3"
+    }
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16760344576,
+    "disk": "/dev/root      154894188544 47527768064 107349643264  31% /"
+  },
+  "engines": {
+    "spark-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.p3fault.type": "rest",
+          "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.p3fault.warehouse": "p3fault",
+          "spark.sql.catalog.p3fault.credential": "root:s3cr3t",
+          "spark.sql.catalog.p3fault.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.p3fault.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.p3fault.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.p3fault.s3.path-style-access": "true",
+          "spark.sql.catalog.p3fault.s3.access-key-id": "admin",
+          "spark.sql.catalog.p3fault.s3.secret-access-key": "password",
+          "spark.sql.catalog.p3fault.client.region": "us-east-1",
+          "spark.sql.catalog.p3fault.cache-enabled": "false"
+        },
+        "port": 15002
+      },
+      "listen_s": 9.01467514038086,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8666070769999976
+      }
+    },
+    "token-expiry": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 1.5016471560000184,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.005756883000003654
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4466,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:23:27.490005558Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T06:23:27.490005558Z",
+        "FinishedAt": "2026-11-25T06:25:38.056040368Z"
+      }
+    }
+  },
+  "cases": {
+    "token_expiry": {
+      "issued_expires_at": 1795587928,
+      "reported_ttl_s": 120,
+      "pacing_max_requests": 120,
+      "pacing_s_per_request": 5.1,
+      "query_sql": "SELECT count(*), sum(v) FROM (SELECT id + 0 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 1 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 2 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 3 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 4 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 5 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 6 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 7 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 8 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 9 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 10 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 11 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 12 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 13 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 14 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 15 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 16 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 17 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 18 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 19 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 20 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 21 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 22 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 23 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 24 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 25 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 26 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 27 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 28 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 29 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 30 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 31 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 32 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 33 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 34 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 35 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 36 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 37 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 38 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 39 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 40 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 41 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 42 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 43 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 44 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 45 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 46 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 47 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 48 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 49 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 50 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 51 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 52 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 53 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 54 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 55 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 56 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 57 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 58 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 59 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 60 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 61 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 62 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 63 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 64 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 65 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 66 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 67 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 68 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 69 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 70 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 71 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 72 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 73 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 74 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 75 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 76 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 77 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 78 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 79 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 80 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 81 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 82 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 83 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 84 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 85 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 86 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 87 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 88 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 89 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 90 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 91 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 92 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 93 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 94 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 95 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 96 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 97 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 98 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 99 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 100 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 101 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 102 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 103 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 104 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 105 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 106 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 107 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 108 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 109 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 110 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 111 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 112 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 113 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 114 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 115 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 116 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 117 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 118 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 119 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 120 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 121 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 122 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 123 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 124 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 125 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 126 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 127 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 128 AS v FROM p3fault.test.token_query UNION ALL SELECT id + 129 AS v FROM p3fault.test.token_query) p",
+      "direct_rest_before": 200,
+      "rotations": [],
+      "query_active_past_expiration": false,
+      "direct_rest_expired": 401,
+      "query": {
+        "status": "ok",
+        "elapsed_s": 5.43213172099999,
+        "cpu_s": 0.23493499999999998,
+        "peak_bytes": 108920832,
+        "matches_spark": true
+      },
+      "client_active": false,
+      "catalog_requests": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/config",
+          "at": 1795587808.8178558,
+          "status": 200,
+          "ended": 1795587808.8256884
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/token_query",
+          "at": 1795587808.8270764,
+          "pacing_delay_s": 5.1,
+          "status": 200,
+          "ended": 1795587813.9395735
+        }
+      ],
+      "paced_requests": 1,
+      "request_statuses": {
+        "200": 2,
+        "401": 0,
+        "403": 0
+      }
+    }
+  },
+  "proxy_routes": {
+    "s3": {
+      "toxiproxy": 19000,
+      "http_relay": 19001,
+      "service": 9000
+    },
+    "catalog": {
+      "toxiproxy": 18181,
+      "http_relay": 18182,
+      "service": 8181
+    }
+  },
+  "reference": {
+    "token": {
+      "rows": 1,
+      "sha256": "c5d9313e28136dd11122447d71aa66e255f244d743efa4006eba794c4d8a5e4e"
+    }
+  }
+}

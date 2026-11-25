@@ -1,8 +1,8 @@
 {
   "task": "faults-storage",
   "variant": "storage",
-  "revision": "c17f24c45051b369d87aba70b86281648610916c",
-  "run_id": "45555042191",
+  "revision": "c2491b5858d15e158fd9148f218d0ea5e55a053b",
+  "run_id": "45555832626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -19,8 +19,8 @@
     "java": "openjdk version \"17.0.21\" 2026-10-20",
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
-      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
-      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   11 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
       "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
@@ -70,8 +70,8 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464302080,
-    "disk": "/dev/mapper/cow-root 154894188544 44081111040 110796300288  29% /"
+    "total_memory_bytes": 16760344576,
+    "disk": "/dev/root      154894188544 47530668032 107346743296  31% /"
   },
   "engines": {
     "spark-reference": {
@@ -81,6 +81,7 @@
         "driver_memory": "9g",
         "catalog_cache": false,
         "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
           "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
           "spark.sql.catalog.p3fault.type": "rest",
           "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
@@ -97,15 +98,2242 @@
         },
         "port": 15002
       },
-      "listen_s": 8.268561601638794,
+      "listen_s": 8.01079511642456,
       "readiness_select1": {
         "status": "ok",
-        "elapsed_s": 2.1239917069999876
+        "elapsed_s": 2.4740183030000935
+      }
+    },
+    "baseline": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
       },
-      "error": "SparkConnectGrpcException: (org.apache.iceberg.exceptions.CommitStateUnknownException) Service failed: 500: Received an UnknownHostException when attempting to interact with a service. See cause for the exact endpoint that is failing to resolve. If this is happening on an endpoint that previously worked, there may be a network connectivity issue or your DNS cache could be storing endpoints for too long.\nCannot determine whether the commit was successful or not, the underlying data files may or may not be needed. Manual intervention via the Remove Orphan Files Action can remove these files when a connection to the Catalog can be re-established if the commit was actually unsuccessful.\nPlease check to see whether or not your commit was successful before retrying this commit. Retrying an already successful operation will result in duplicate records or unintentional modifications.\nAt this time no files will be deleted including possibly unused manifest lists."
+      "listen_s": 0.6770540929999243,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006783209000104762
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4975,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:49:28.686022901Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:49:28.686022901Z",
+        "FinishedAt": "2026-11-25T05:49:50.240538337Z"
+      }
+    },
+    "latency-20": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.1758243039998888,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.008131452000043282
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6035,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:49:50.467313047Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:49:50.467313047Z",
+        "FinishedAt": "2026-11-25T05:50:16.787175355Z"
+      }
+    },
+    "latency-100": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.1809533770001508,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007841488999929425
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7178,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:50:17.03302204Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:50:17.03302204Z",
+        "FinishedAt": "2026-11-25T05:50:51.549385607Z"
+      }
+    },
+    "http-503": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.18557707899981324,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00784147799981838
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8435,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:50:51.786286821Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:50:51.786286821Z",
+        "FinishedAt": "2026-11-25T05:51:12.275547467Z"
+      }
+    },
+    "scan-reset": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.21391763099995842,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007802277999871876
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 9486,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:51:12.531470027Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:51:12.531470027Z",
+        "FinishedAt": "2026-11-25T05:51:39.462582994Z"
+      }
+    },
+    "commit_reset": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [
+          "--add-host=host.docker.internal:host-gateway"
+        ],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"p3fault\",uri=\"http://host.docker.internal:18181/api/catalog\",warehouse=\"p3fault\",bearer_access_token_file=\"/tokens/p3fault\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "p3fault",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://host.docker.internal:19000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "info"
+        }
+      },
+      "listen_s": 0.2000631229998362,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007750628999929177
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 10716,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:51:39.729580285Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:51:39.729580285Z",
+        "FinishedAt": "2026-11-25T05:53:34.19020754Z"
+      }
+    },
+    "spark-integrity": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml",
+          "spark.sql.catalog.p3fault": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.p3fault.type": "rest",
+          "spark.sql.catalog.p3fault.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.p3fault.warehouse": "p3fault",
+          "spark.sql.catalog.p3fault.credential": "root:s3cr3t",
+          "spark.sql.catalog.p3fault.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.p3fault.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.p3fault.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.p3fault.s3.path-style-access": "true",
+          "spark.sql.catalog.p3fault.s3.access-key-id": "admin",
+          "spark.sql.catalog.p3fault.s3.secret-access-key": "password",
+          "spark.sql.catalog.p3fault.client.region": "us-east-1",
+          "spark.sql.catalog.p3fault.cache-enabled": "false"
+        },
+        "port": 15002
+      },
+      "listen_s": 3.7591822147369385,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.624914964000027
+      }
     }
   },
-  "cases": {},
+  "cases": {
+    "baseline": [
+      {
+        "status": "ok",
+        "elapsed_s": 10.855477692000022,
+        "cpu_s": 0.828802,
+        "peak_bytes": 242122752,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 228,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585770.0628495,
+                "status": 206,
+                "ended": 1795585770.0644894
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585770.0880768,
+                "status": 200,
+                "ended": 1795585770.089488
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585770.0923843,
+                "status": 200,
+                "ended": 1795585770.0935767
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585770.0947127,
+                "status": 200,
+                "ended": 1795585770.0959508
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00020-25-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585770.1024134,
+                "status": 206,
+                "ended": 1795585770.1268067
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585770.1028347,
+                "status": 206,
+                "ended": 1795585770.1227205
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00001-6-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585770.1030807,
+                "status": 206,
+                "ended": 1795585770.1235325
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00000-5-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585770.1033838,
+                "status": 206,
+                "ended": 1795585770.1209066
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00003-8-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585770.1037378,
+                "status": 206,
+                "ended": 1795585770.1232388
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00019-24-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585770.1042159,
+                "status": 206,
+                "ended": 1795585770.126144
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 2,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/config",
+                "at": 1795585770.047063,
+                "status": 200,
+                "ended": 1795585770.0529475
+              },
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585770.0540526,
+                "status": 200,
+                "ended": 1795585770.068839
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5196480600000086,
+        "cpu_s": 0.68269,
+        "peak_bytes": 254971904,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 116,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585780.989304,
+                "status": 206,
+                "ended": 1795585780.9910047
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585780.99634,
+                "status": 200,
+                "ended": 1795585780.9975955
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585780.9997087,
+                "status": 200,
+                "ended": 1795585781.0009527
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585781.0019436,
+                "status": 200,
+                "ended": 1795585781.0031588
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.0072596,
+                "status": 206,
+                "ended": 1795585781.0113494
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.0081987,
+                "status": 206,
+                "ended": 1795585781.017152
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.0086558,
+                "status": 206,
+                "ended": 1795585781.0162594
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.0091774,
+                "status": 206,
+                "ended": 1795585781.0169995
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.021728,
+                "status": 206,
+                "ended": 1795585781.0286963
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.0245156,
+                "status": 206,
+                "ended": 1795585781.031575
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585780.9783478,
+                "status": 200,
+                "ended": 1795585780.9949808
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5163052540001445,
+        "cpu_s": 0.6910699999999999,
+        "peak_bytes": 256974848,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 116,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585781.593721,
+                "status": 206,
+                "ended": 1795585781.5953317
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585781.600445,
+                "status": 200,
+                "ended": 1795585781.6019487
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585781.6045642,
+                "status": 200,
+                "ended": 1795585781.6060002
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585781.6072369,
+                "status": 200,
+                "ended": 1795585781.6086242
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.6145196,
+                "status": 206,
+                "ended": 1795585781.6207056
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.6149306,
+                "status": 206,
+                "ended": 1795585781.6237707
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.6160178,
+                "status": 206,
+                "ended": 1795585781.6243134
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.6166556,
+                "status": 206,
+                "ended": 1795585781.624051
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.6318433,
+                "status": 206,
+                "ended": 1795585781.6377513
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585781.6323466,
+                "status": 206,
+                "ended": 1795585781.6373115
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585781.5840597,
+                "status": 200,
+                "ended": 1795585781.5987108
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "latency-20": [
+      {
+        "status": "ok",
+        "elapsed_s": 11.365078506000145,
+        "cpu_s": 0.790483,
+        "peak_bytes": 230916096,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 228,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585795.0902479,
+                "status": 206,
+                "ended": 1795585795.091732
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585795.1356633,
+                "status": 200,
+                "ended": 1795585795.136966
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585795.1601202,
+                "status": 200,
+                "ended": 1795585795.1614552
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585795.1827571,
+                "status": 200,
+                "ended": 1795585795.183965
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00003-8-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585795.2116327,
+                "status": 206,
+                "ended": 1795585795.2366443
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00023-28-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585795.211915,
+                "status": 206,
+                "ended": 1795585795.2389529
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00026-31-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585795.212209,
+                "status": 206,
+                "ended": 1795585795.2397618
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585795.21245,
+                "status": 206,
+                "ended": 1795585795.2423623
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00019-24-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585795.2127104,
+                "status": 206,
+                "ended": 1795585795.243769
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00025-30-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585795.2130027,
+                "status": 206,
+                "ended": 1795585795.2410324
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 2,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/config",
+                "at": 1795585795.074812,
+                "status": 200,
+                "ended": 1795585795.0801666
+              },
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585795.0812705,
+                "status": 200,
+                "ended": 1795585795.1156342
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 1.0790891730000567,
+        "cpu_s": 0.6682549999999998,
+        "peak_bytes": 235495424,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 116,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585806.5209394,
+                "status": 206,
+                "ended": 1795585806.522523
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585806.5476122,
+                "status": 200,
+                "ended": 1795585806.5488932
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585806.5713847,
+                "status": 200,
+                "ended": 1795585806.5725727
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585806.5939903,
+                "status": 200,
+                "ended": 1795585806.596594
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585806.6213663,
+                "status": 206,
+                "ended": 1795585806.6285617
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585806.6221805,
+                "status": 206,
+                "ended": 1795585806.6297238
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585806.622869,
+                "status": 206,
+                "ended": 1795585806.6308255
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585806.6236339,
+                "status": 206,
+                "ended": 1795585806.6304736
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585806.654934,
+                "status": 206,
+                "ended": 1795585806.6616945
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585806.6569452,
+                "status": 206,
+                "ended": 1795585806.6631114
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585806.5109642,
+                "status": 200,
+                "ended": 1795585806.546226
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 1.0776839570000902,
+        "cpu_s": 0.6698550000000001,
+        "peak_bytes": 237600768,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 116,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585807.6292048,
+                "status": 206,
+                "ended": 1795585807.6311908
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585807.6570241,
+                "status": 200,
+                "ended": 1795585807.6586452
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585807.681508,
+                "status": 200,
+                "ended": 1795585807.6828878
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585807.7041688,
+                "status": 200,
+                "ended": 1795585807.705444
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585807.730551,
+                "status": 206,
+                "ended": 1795585807.7402508
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585807.731245,
+                "status": 206,
+                "ended": 1795585807.7380817
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585807.7320883,
+                "status": 206,
+                "ended": 1795585807.739848
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585807.7335832,
+                "status": 206,
+                "ended": 1795585807.740651
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585807.7651217,
+                "status": 206,
+                "ended": 1795585807.7716582
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585807.7670765,
+                "status": 206,
+                "ended": 1795585807.7723317
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585807.6188142,
+                "status": 200,
+                "ended": 1795585807.6554377
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "latency-100": [
+      {
+        "status": "ok",
+        "elapsed_s": 13.971029788999886,
+        "cpu_s": 0.7611399999999999,
+        "peak_bytes": 216195072,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 228,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585822.0369494,
+                "status": 206,
+                "ended": 1795585822.0385313
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585822.1612513,
+                "status": 200,
+                "ended": 1795585822.1625876
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585822.2656283,
+                "status": 200,
+                "ended": 1795585822.2668874
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585822.3684955,
+                "status": 200,
+                "ended": 1795585822.3698072
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00000-5-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585822.4757502,
+                "status": 206,
+                "ended": 1795585822.4892056
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00001-6-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585822.4764256,
+                "status": 206,
+                "ended": 1795585822.4818926
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585822.4769106,
+                "status": 206,
+                "ended": 1795585822.4954767
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00003-8-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585822.4775732,
+                "status": 206,
+                "ended": 1795585822.4893603
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585822.4782681,
+                "status": 206,
+                "ended": 1795585822.4906745
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00006-11-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585822.479115,
+                "status": 206,
+                "ended": 1795585822.4965343
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 2,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/config",
+                "at": 1795585822.0214875,
+                "status": 200,
+                "ended": 1795585822.0266502
+              },
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585822.0280874,
+                "status": 200,
+                "ended": 1795585822.1419506
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 3.652077036000037,
+        "cpu_s": 0.6623530000000001,
+        "peak_bytes": 225112064,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 116,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585836.0795612,
+                "status": 206,
+                "ended": 1795585836.0825338
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585836.1888528,
+                "status": 200,
+                "ended": 1795585836.1904483
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585836.2929268,
+                "status": 200,
+                "ended": 1795585836.2942111
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585836.395618,
+                "status": 200,
+                "ended": 1795585836.396927
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585836.501761,
+                "status": 206,
+                "ended": 1795585836.5074337
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585836.5024483,
+                "status": 206,
+                "ended": 1795585836.5080101
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585836.5032551,
+                "status": 206,
+                "ended": 1795585836.5105572
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585836.503682,
+                "status": 206,
+                "ended": 1795585836.5103533
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585836.6135309,
+                "status": 206,
+                "ended": 1795585836.618507
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585836.616391,
+                "status": 206,
+                "ended": 1795585836.6221056
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585836.0696967,
+                "status": 200,
+                "ended": 1795585836.1873505
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 3.6584816779998164,
+        "cpu_s": 0.672496,
+        "peak_bytes": 235577344,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 116,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585839.7933106,
+                "status": 206,
+                "ended": 1795585839.7949963
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585839.9008913,
+                "status": 200,
+                "ended": 1795585839.9025342
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585840.005411,
+                "status": 200,
+                "ended": 1795585840.0070283
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585840.108443,
+                "status": 200,
+                "ended": 1795585840.1103551
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585840.2150993,
+                "status": 206,
+                "ended": 1795585840.2245662
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585840.216279,
+                "status": 206,
+                "ended": 1795585840.2236555
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585840.2169995,
+                "status": 206,
+                "ended": 1795585840.2251637
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585840.217436,
+                "status": 206,
+                "ended": 1795585840.2255306
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585840.330302,
+                "status": 206,
+                "ended": 1795585840.3360705
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585840.3325717,
+                "status": 206,
+                "ended": 1795585840.3371973
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585839.7824242,
+                "status": 200,
+                "ended": 1795585839.8991485
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "http-503": [
+      {
+        "status": "ok",
+        "elapsed_s": 9.78327751200004,
+        "cpu_s": 0.830647,
+        "peak_bytes": 224915456,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 230,
+            "injected_503": 2,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585853.182456,
+                "status": 206,
+                "ended": 1795585853.1853704
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585853.206767,
+                "status": 200,
+                "ended": 1795585853.208304
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585853.2117214,
+                "status": 200,
+                "ended": 1795585853.2130408
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585853.2142618,
+                "status": 200,
+                "ended": 1795585853.2161326
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00010-15-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585853.222398,
+                "status": 206,
+                "ended": 1795585853.237556
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00000-5-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585853.2228854,
+                "status": 206,
+                "ended": 1795585853.2321289
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585853.2234952,
+                "status": 206,
+                "ended": 1795585853.2388234
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00023-28-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585853.2236655,
+                "status": 206,
+                "ended": 1795585853.2344246
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00019-24-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585853.2239256,
+                "status": 206,
+                "ended": 1795585853.243865
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00024-29-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585853.2244444,
+                "status": 206,
+                "ended": 1795585853.23934
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00095-100-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585861.4045007,
+                "status": 503,
+                "injected": true
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00029-34-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585862.8047702,
+                "status": 503,
+                "injected": true
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 2,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/config",
+                "at": 1795585853.1651013,
+                "status": 200,
+                "ended": 1795585853.1704507
+              },
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585853.1715033,
+                "status": 200,
+                "ended": 1795585853.1875763
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5192632759999469,
+        "cpu_s": 0.6803809999999999,
+        "peak_bytes": 237826048,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 117,
+            "injected_503": 1,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585863.0164661,
+                "status": 206,
+                "ended": 1795585863.0180097
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585863.022507,
+                "status": 200,
+                "ended": 1795585863.023931
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585863.026083,
+                "status": 200,
+                "ended": 1795585863.0273235
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585863.0283902,
+                "status": 200,
+                "ended": 1795585863.029769
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.035244,
+                "status": 206,
+                "ended": 1795585863.0416005
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.0357618,
+                "status": 206,
+                "ended": 1795585863.0428576
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.0366156,
+                "status": 206,
+                "ended": 1795585863.0439148
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.0374644,
+                "status": 206,
+                "ended": 1795585863.0467577
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.0561206,
+                "status": 206,
+                "ended": 1795585863.061531
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.058021,
+                "status": 206,
+                "ended": 1795585863.0631225
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00111-116-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.3127658,
+                "status": 503,
+                "injected": true
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585863.007705,
+                "status": 200,
+                "ended": 1795585863.0211828
+              }
+            ]
+          }
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5138875940001526,
+        "cpu_s": 0.671913,
+        "peak_bytes": 248430592,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 117,
+            "injected_503": 1,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585863.624131,
+                "status": 206,
+                "ended": 1795585863.625628
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585863.6298738,
+                "status": 200,
+                "ended": 1795585863.6311123
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585863.633177,
+                "status": 200,
+                "ended": 1795585863.6343234
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585863.6353312,
+                "status": 200,
+                "ended": 1795585863.6365302
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.6409953,
+                "status": 206,
+                "ended": 1795585863.649253
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.6417434,
+                "status": 206,
+                "ended": 1795585863.6508493
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.6421819,
+                "status": 206,
+                "ended": 1795585863.6500459
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.6429608,
+                "status": 206,
+                "ended": 1795585863.6508904
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00101-106-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.6571069,
+                "status": 206,
+                "ended": 1795585863.6679788
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00085-90-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.658905,
+                "status": 206,
+                "ended": 1795585863.6674755
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00091-96-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585863.8417702,
+                "status": 503,
+                "injected": true
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585863.614875,
+                "status": 200,
+                "ended": 1795585863.6286654
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "scan-reset": [
+      {
+        "status": "ok",
+        "elapsed_s": 12.905999612999949,
+        "cpu_s": 0.8443780000000001,
+        "peak_bytes": 226652160,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 250,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585873.9568462,
+                "status": 206,
+                "ended": 1795585873.9588652
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585873.981378,
+                "status": 200,
+                "ended": 1795585873.982859
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585873.9859095,
+                "status": 200,
+                "ended": 1795585873.9872203
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585873.988257,
+                "status": 200,
+                "ended": 1795585873.9895825
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00003-8-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.995334,
+                "gate_hit": true
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00007-12-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.9959579,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585874.0126379
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.9982111,
+                "status": 206,
+                "relay_error": "ConnectionResetError: [Errno 104] Connection reset by peer",
+                "ended": 1795585874.0082233
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00004-9-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.9984138,
+                "status": 206,
+                "ended": 1795585874.0049086
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00008-13-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.999031,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585874.0124876
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00017-22-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.9995658,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585874.0139682
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00003-8-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585873.995334,
+                "gate_hit": true
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 2,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/config",
+                "at": 1795585873.9419603,
+                "status": 200,
+                "ended": 1795585873.9469922
+              },
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585873.9480698,
+                "status": 200,
+                "ended": 1795585873.9620407
+              }
+            ]
+          }
+        },
+        "fault": {
+          "injected": true,
+          "at": 1795585874.00153,
+          "kind": "reset"
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 2.208743426999945,
+        "cpu_s": 0.7016179999999999,
+        "peak_bytes": 231112704,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 142,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585886.8962793,
+                "status": 206,
+                "ended": 1795585886.8985515
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585886.903913,
+                "status": 200,
+                "ended": 1795585886.9055815
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585886.9078991,
+                "status": 200,
+                "ended": 1795585886.9091954
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585886.9102879,
+                "status": 200,
+                "ended": 1795585886.9115126
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585886.9161243,
+                "gate_hit": true
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585886.9177282,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585886.9219663
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585886.918846,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585886.923968
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585886.9198523,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585886.923097
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585887.0222573,
+                "status": 206,
+                "relay_error": "ConnectionResetError: [Errno 104] Connection reset by peer",
+                "ended": 1795585887.0257545
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585887.0235171,
+                "status": 206,
+                "relay_error": "ConnectionResetError: [Errno 104] Connection reset by peer",
+                "ended": 1795585887.0276418
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585886.9161243,
+                "gate_hit": true
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585886.8850338,
+                "status": 200,
+                "ended": 1795585886.9021661
+              }
+            ]
+          }
+        },
+        "fault": {
+          "injected": true,
+          "at": 1795585886.9195194,
+          "kind": "reset"
+        }
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 2.303071563000003,
+        "cpu_s": 0.676059,
+        "peak_bytes": 233357312,
+        "matches_spark": true,
+        "traffic": {
+          "s3": {
+            "requests": 143,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585889.1096256,
+                "status": 206,
+                "ended": 1795585889.111671
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/00000-8b628f4d-fcab-47f6-9f82-6e4c8c7f4ef4.metadata.json",
+                "at": 1795585889.1162927,
+                "status": 200,
+                "ended": 1795585889.1177173
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/snap-3857454630392237311-1-d88784b8-09f7-450f-ab63-13548b1e5ea4.avro",
+                "at": 1795585889.1200087,
+                "status": 200,
+                "ended": 1795585889.1211536
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/metadata/d88784b8-09f7-450f-ab63-13548b1e5ea4-m0.avro",
+                "at": 1795585889.1221466,
+                "status": 200,
+                "ended": 1795585889.1233392
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.1280935,
+                "gate_hit": true
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.1284006,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585889.135178
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00005-10-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.13039,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585889.1356664
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.1308217,
+                "status": 206,
+                "relay_error": "BrokenPipeError: [Errno 32] Broken pipe",
+                "ended": 1795585889.1341672
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00002-7-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.235292,
+                "status": 206,
+                "relay_error": "ConnectionResetError: [Errno 104] Connection reset by peer",
+                "ended": 1795585889.239701
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00061-66-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.2358878,
+                "status": 206,
+                "relay_error": "ConnectionResetError: [Errno 104] Connection reset by peer",
+                "ended": 1795585889.2389457
+              },
+              {
+                "method": "GET",
+                "path": "/p3-fault/test/scan/data/00013-18-8c77bec2-9e72-4c06-b568-fda01f83b4e0-0-00001.parquet",
+                "at": 1795585889.1280935,
+                "gate_hit": true
+              }
+            ]
+          },
+          "catalog": {
+            "requests": 1,
+            "injected_503": 0,
+            "samples": [
+              {
+                "method": "GET",
+                "path": "/api/catalog/v1/p3fault/namespaces/test/tables/scan",
+                "at": 1795585889.0984411,
+                "status": 200,
+                "ended": 1795585889.1150284
+              }
+            ]
+          }
+        },
+        "fault": {
+          "injected": true,
+          "at": 1795585889.132157,
+          "kind": "reset"
+        }
+      }
+    ],
+    "p3fault.test.commit_reset_0": {
+      "sql": "INSERT INTO p3fault.test.commit_reset_0 SELECT id + 10000, 1 FROM p3fault.test.commit_reset_0",
+      "client": {
+        "status": "ok",
+        "elapsed_s": 0.21514864300002046,
+        "cpu_s": 0.048801999999999984,
+        "peak_bytes": 99938304
+      },
+      "fault": {
+        "not_observed": "No fault trigger matched a proxied request"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/config",
+          "at": 1795585901.1222072,
+          "status": 200,
+          "ended": 1795585901.1283236
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F0",
+          "at": 1795585901.1295846,
+          "status": 200,
+          "ended": 1795585901.146029
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F0",
+          "at": 1795585901.171767,
+          "status": 200,
+          "ended": 1795585901.185696
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F0",
+          "at": 1795585901.1867251,
+          "status": 200,
+          "ended": 1795585901.2006092
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F0",
+          "at": 1795585901.2017388,
+          "status": 200,
+          "ended": 1795585901.2170858
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F0",
+          "at": 1795585901.263191,
+          "status": 200,
+          "ended": 1795585901.2773676
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F0",
+          "at": 1795585901.2890348,
+          "status": 200,
+          "ended": 1795585901.3295028
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 2.7099003309999716,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            3925727432918823186,
+            null,
+            "append"
+          ],
+          [
+            8194447334116082977,
+            3925727432918823186,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/commit_reset_0/data/00000-146-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/00001-147-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/00002-148-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/00003-149-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/part-9c0e71f3-da88-4821-b532-cfb912dc8373-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/commit_reset_0/data/00000-146-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/00001-147-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/00002-148-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/00003-149-ba5b8694-6a7d-4168-a316-eea09a855b5b-0-00001.parquet",
+          "test/commit_reset_0/data/part-9c0e71f3-da88-4821-b532-cfb912dc8373-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "p3fault.test.commit_reset_1": {
+      "sql": "INSERT INTO p3fault.test.commit_reset_1 SELECT id + 10000, 1 FROM p3fault.test.commit_reset_1",
+      "client": {
+        "status": "ok",
+        "elapsed_s": 0.14763827199999469,
+        "cpu_s": 0.025405999999999984,
+        "peak_bytes": 113033216
+      },
+      "fault": {
+        "not_observed": "No fault trigger matched a proxied request"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F1",
+          "at": 1795585936.1263056,
+          "status": 200,
+          "ended": 1795585936.1411424
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F1",
+          "at": 1795585936.145483,
+          "status": 200,
+          "ended": 1795585936.1577241
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F1",
+          "at": 1795585936.1588502,
+          "status": 200,
+          "ended": 1795585936.1705925
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F1",
+          "at": 1795585936.1720788,
+          "status": 200,
+          "ended": 1795585936.1872172
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F1",
+          "at": 1795585936.2186728,
+          "status": 200,
+          "ended": 1795585936.2333975
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F1",
+          "at": 1795585936.2443633,
+          "status": 200,
+          "ended": 1795585936.2670217
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 0.4241725920001045,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            5798570278872610195,
+            null,
+            "append"
+          ],
+          [
+            8324812452867965912,
+            5798570278872610195,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/commit_reset_1/data/00000-155-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/00001-156-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/00002-157-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/00003-158-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/part-3fc997c3-8c1d-4a84-a351-f14a02c2bd38-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/commit_reset_1/data/00000-155-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/00001-156-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/00002-157-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/00003-158-a655de6c-b63c-4312-ba7d-0575de3f59a8-0-00001.parquet",
+          "test/commit_reset_1/data/part-3fc997c3-8c1d-4a84-a351-f14a02c2bd38-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    },
+    "p3fault.test.commit_reset_2": {
+      "sql": "INSERT INTO p3fault.test.commit_reset_2 SELECT id + 10000, 1 FROM p3fault.test.commit_reset_2",
+      "client": {
+        "status": "ok",
+        "elapsed_s": 0.14542346000007456,
+        "cpu_s": 0.024710999999999983,
+        "peak_bytes": 113385472
+      },
+      "fault": {
+        "not_observed": "No fault trigger matched a proxied request"
+      },
+      "catalog": [
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F2",
+          "at": 1795585971.131226,
+          "status": 200,
+          "ended": 1795585971.146467
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F2",
+          "at": 1795585971.1501682,
+          "status": 200,
+          "ended": 1795585971.1628373
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F2",
+          "at": 1795585971.164105,
+          "status": 200,
+          "ended": 1795585971.1759906
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F2",
+          "at": 1795585971.177147,
+          "status": 200,
+          "ended": 1795585971.1899583
+        },
+        {
+          "method": "GET",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F2",
+          "at": 1795585971.2236574,
+          "status": 200,
+          "ended": 1795585971.237695
+        },
+        {
+          "method": "POST",
+          "path": "/api/catalog/v1/p3fault/namespaces/test/tables/commit%5Freset%5F2",
+          "at": 1795585971.249171,
+          "status": 200,
+          "ended": 1795585971.2703245
+        }
+      ],
+      "validation": {
+        "status": "ok",
+        "elapsed_s": 0.3647349299999405,
+        "rows": [
+          [
+            20000,
+            199990000,
+            10000
+          ]
+        ],
+        "integrity_verdict": "after_one",
+        "snapshots": [
+          [
+            1769535101507757323,
+            null,
+            "append"
+          ],
+          [
+            2186665183586475946,
+            1769535101507757323,
+            "append"
+          ]
+        ],
+        "snapshot_chain_valid": true,
+        "data_objects": [
+          "test/commit_reset_2/data/00000-164-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/00001-165-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/00002-166-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/00003-167-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/part-554f7406-ed7c-4690-881b-4f29e4ffa620-00000000000000000000.parquet"
+        ],
+        "referenced_files": [
+          "test/commit_reset_2/data/00000-164-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/00001-165-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/00002-166-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/00003-167-b60f0f7d-94d9-4f12-926d-644a1d29b3be-0-00001.parquet",
+          "test/commit_reset_2/data/part-554f7406-ed7c-4690-881b-4f29e4ffa620-00000000000000000000.parquet"
+        ],
+        "orphan_data_candidates": [],
+        "missing_data_files": []
+      }
+    }
+  },
   "proxy_routes": {
     "s3": {
       "toxiproxy": 19000,
@@ -117,5 +2345,94 @@
       "http_relay": 18182,
       "service": 8181
     }
+  },
+  "reference": {
+    "scan": {
+      "rows": 1,
+      "sha256": "b5358ec23ed290df69be06f48e9b174e13ab79d74d3e2c2c1b8ba597df4b625e"
+    },
+    "p3fault.test.commit_reset_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.commit_reset_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.commit_reset_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_0": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_1": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "p3fault.test.catalog_down_2": {
+      "before": {
+        "rows": 1,
+        "sha256": "398a7bbf6a412376581fccc9f833ca8bce6948d18b66eaf2a84ede845cd34f69"
+      },
+      "after_one": {
+        "rows": 1,
+        "sha256": "01b3a86755a3f7e47dd8931376f31c92596bcf27a5f50c6f14c754f8ebf0fe9d"
+      }
+    },
+    "token": {
+      "rows": 1,
+      "sha256": "3aad269d873e022370382ceacbce2d8f69556a6fea9f4b9aeec35bb7ed72a27e"
+    }
+  },
+  "fault_observed": {
+    "baseline": true,
+    "latency-20": true,
+    "latency-100": true,
+    "http-503": true,
+    "scan-reset": true
+  },
+  "median_valid_s": {
+    "baseline": 0.5179766570000766,
+    "latency-20": 1.0783865650000735,
+    "latency-100": 3.6552793569999267,
+    "http-503": 0.5165754350000498,
+    "scan-reset": 2.255907494999974
+  },
+  "post_fault_scan": {
+    "status": "ok",
+    "elapsed_s": 2.083127147000141,
+    "matches_spark": true
   }
 }

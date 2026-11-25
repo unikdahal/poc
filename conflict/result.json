@@ -1,0 +1,1259 @@
+{
+  "task": "iceberg-deep",
+  "variant": "conflict",
+  "revision": "cc014d3404c1089bd94bab14769f02e491bac709",
+  "run_id": "45553493787",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.iceberg_deep"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464306176,
+    "disk": "/dev/mapper/cow-root 154894188544 44081000448 110796410880  29% /"
+  },
+  "engines": {
+    "prepare-serializable_spark_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 6.759412527084351,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8657924240000057
+      }
+    },
+    "writer-serializable_spark_0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.180776767999987,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.005991741999991973
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 3821,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:09.643125331Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:09.643125331Z",
+        "FinishedAt": "2026-11-25T05:29:27.040739314Z"
+      }
+    },
+    "peer-serializable_spark_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15191
+      },
+      "listen_s": 2.505690336227417,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.899572620000015
+      }
+    },
+    "verify-serializable_spark_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15211
+      },
+      "listen_s": 2.5038278102874756,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8251345639999954
+      }
+    },
+    "prepare-serializable_spark_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.5059869289398193,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8272336999999652
+      }
+    },
+    "writer-serializable_spark_1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10019739000000527,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00694565999998531
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5312,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:43.21440725Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:43.21440725Z",
+        "FinishedAt": "2026-11-25T05:30:00.398391701Z"
+      }
+    },
+    "peer-serializable_spark_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15191
+      },
+      "listen_s": 2.5043344497680664,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8786283030000277
+      }
+    },
+    "verify-serializable_spark_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15212
+      },
+      "listen_s": 2.505302667617798,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.932295675999967
+      }
+    },
+    "prepare-serializable_spark_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.5046520233154297,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.7827032400000462
+      }
+    },
+    "writer-serializable_spark_2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.1037471119999509,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007212739000010515
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6802,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:30:16.592999003Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:30:16.592999003Z",
+        "FinishedAt": "2026-11-25T05:30:33.837938371Z"
+      }
+    },
+    "peer-serializable_spark_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15191
+      },
+      "listen_s": 2.504836320877075,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8864625659999774
+      }
+    },
+    "verify-serializable_spark_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15213
+      },
+      "listen_s": 2.503617525100708,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.7700628270000038
+      }
+    },
+    "prepare-serializable_sail_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.504093885421753,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.7843599109999673
+      }
+    },
+    "writer-serializable_sail_0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10054073300000255,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00733733800001346
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8261,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:30:49.875042011Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:30:49.875042011Z",
+        "FinishedAt": "2026-11-25T05:31:02.668588844Z"
+      }
+    },
+    "verify-serializable_sail_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15211
+      },
+      "listen_s": 2.5044631958007812,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.9012600810000322
+      }
+    },
+    "prepare-serializable_sail_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.504441022872925,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8348074939999606
+      }
+    },
+    "writer-serializable_sail_1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.09422505899999578,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006850326999995104
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 9499,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:31:18.927546567Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:31:18.927546567Z",
+        "FinishedAt": "2026-11-25T05:31:31.673061839Z"
+      }
+    },
+    "verify-serializable_sail_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15212
+      },
+      "listen_s": 2.5043632984161377,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.7928987490000168
+      }
+    },
+    "prepare-serializable_sail_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.50510835647583,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.928463284999964
+      }
+    },
+    "writer-serializable_sail_2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10189261800002214,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00643349599999965
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 10738,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:31:47.831457871Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:31:47.831457871Z",
+        "FinishedAt": "2026-11-25T05:31:57.251113032Z"
+      }
+    },
+    "verify-serializable_sail_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15213
+      },
+      "listen_s": 2.504695415496826,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.828297587999998
+      }
+    },
+    "prepare-snapshot_spark_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.503272294998169,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8125428089999787
+      }
+    },
+    "writer-snapshot_spark_0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10212285800002974,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006260405000034552
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 11905,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:32:13.343306841Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:32:13.343306841Z",
+        "FinishedAt": "2026-11-25T05:32:30.308276165Z"
+      }
+    },
+    "peer-snapshot_spark_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15191
+      },
+      "listen_s": 2.5032644271850586,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8129650959999708
+      }
+    },
+    "verify-snapshot_spark_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15211
+      },
+      "listen_s": 2.5079538822174072,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.8390076460000273
+      }
+    },
+    "prepare-snapshot_spark_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.5072057247161865,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.7736793090000447
+      }
+    },
+    "writer-snapshot_spark_1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10455674500002488,
+      "readiness_select1": {
+        "status": "error",
+        "error": "ValueError: Pool not running",
+        "elapsed_s": 0.006383275000018784
+      },
+      "error": "RuntimeError: {'status': 'error', 'error': 'ValueError: Pool not running', 'elapsed_s': 0.006383275000018784}",
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 13311,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:32:46.258717952Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:32:46.258717952Z",
+        "FinishedAt": "2026-11-25T05:32:58.901645587Z"
+      }
+    },
+    "verify-snapshot_spark_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15212
+      },
+      "listen_s": 2.5041439533233643,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00130610300005
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00130610300005}"
+    },
+    "prepare-snapshot_spark_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.503314733505249,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00151316000006
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00151316000006}"
+    },
+    "prepare-snapshot_sail_0": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.504770278930664,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00113800300005
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00113800300005}"
+    },
+    "prepare-snapshot_sail_1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.5031633377075195,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00127039300003
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00127039300003}"
+    },
+    "prepare-snapshot_sail_2": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 2.502939224243164,
+      "readiness_select1": {
+        "status": "timeout",
+        "error": "TimeoutError: 90s deadline, client active=True",
+        "elapsed_s": 93.00116520200004
+      },
+      "error": "RuntimeError: {'status': 'timeout', 'error': 'TimeoutError: 90s deadline, client active=True', 'elapsed_s': 93.00116520200004}"
+    }
+  },
+  "cases": {
+    "serializable_spark_0": {
+      "peer": {
+        "status": "error",
+        "error": "SparkConnectGrpcException: (org.apache.iceberg.exceptions.ValidationException) Found conflicting files that can contain records matching true: [s3://warehouse/poc/p3_iceberg/conflict_serializable_spark_0/data/part-ce7d126b-7088-401d-b5e4-45fef9e6ae4e-00000000000000000000.parquet]",
+        "elapsed_s": 2.824518562999998,
+        "started": 249.672261453
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.3096717999999896,
+        "started": 249.672693708
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.2130189420000193,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_spark_0 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.45507980700000417,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_spark_0 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-serializable_spark_0": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.2130189420000193,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_spark_0 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.45507980700000417,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_spark_0 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "serializable_spark_1": {
+      "peer": {
+        "status": "error",
+        "error": "SparkConnectGrpcException: (org.apache.iceberg.exceptions.ValidationException) Found conflicting files that can contain records matching true: [s3://warehouse/poc/p3_iceberg/conflict_serializable_spark_1/data/part-483e3bf0-af8b-4547-9307-a95ab5bee6b9-00000000000000000000.parquet]",
+        "elapsed_s": 2.6013319830000228,
+        "started": 283.251783935
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.22313831900004288,
+        "started": 283.253358162
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.2663711339999963,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_spark_1 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.3614397079999776,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_spark_1 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-serializable_spark_1": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.2663711339999963,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_spark_1 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3614397079999776,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_spark_1 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "serializable_spark_2": {
+      "peer": {
+        "status": "error",
+        "error": "SparkConnectGrpcException: (org.apache.iceberg.exceptions.ValidationException) Found conflicting files that can contain records matching true: [s3://warehouse/poc/p3_iceberg/conflict_serializable_spark_2/data/part-d6ca66a6-9194-4fc8-beea-302962848fe8-00000000000000000000.parquet]",
+        "elapsed_s": 2.6445448169999963,
+        "started": 316.651973895
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.20399590299996362,
+        "started": 316.652053877
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.1803849750000381,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_spark_2 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.4074544730000298,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_spark_2 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-serializable_spark_2": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.1803849750000381,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_spark_2 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.4074544730000298,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_spark_2 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "serializable_sail_0": {
+      "peer": {
+        "status": "error",
+        "error": "AnalysisException: Iceberg commit failed: reference 'main' expected snapshot Some(7918414943120318954) but found Some(7048978120314254669)",
+        "elapsed_s": 0.14514532699996607,
+        "started": 348.395137099
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.13168354800001225,
+        "started": 348.395180736
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.2589228049999974,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_sail_0 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.37138930600002595,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_sail_0 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-serializable_sail_0": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.2589228049999974,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_sail_0 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.37138930600002595,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_sail_0 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "serializable_sail_1": {
+      "peer": {
+        "status": "ok",
+        "elapsed_s": 0.11030411799998774,
+        "started": 377.417022607
+      },
+      "sail": {
+        "status": "error",
+        "error": "AnalysisException: Iceberg commit failed: reference 'main' expected snapshot Some(2535118155059549281) but found Some(7415324542915494904)",
+        "elapsed_s": 0.12523276100000658,
+        "started": 377.417311196
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.225251951999951,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_sail_1 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.40474671999999146,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_sail_1 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-serializable_sail_1": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.225251951999951,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_sail_1 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.40474671999999146,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_sail_1 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "serializable_sail_2": {
+      "peer": {
+        "status": "error",
+        "error": "AnalysisException: Iceberg commit failed: reference 'main' expected snapshot Some(7226598478765859258) but found Some(2100507610453504541)",
+        "elapsed_s": 0.12731934300001058,
+        "started": 402.996156429
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.11038486000001058,
+        "started": 402.99642663
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.2070363370000337,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_sail_2 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.3647124549999603,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_sail_2 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-serializable_sail_2": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.2070363370000337,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_serializable_sail_2 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3647124549999603,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_serializable_sail_2 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "snapshot_spark_0": {
+      "peer": {
+        "status": "error",
+        "error": "SparkConnectGrpcException: (org.apache.iceberg.exceptions.ValidationException) Found new conflicting delete files that can apply to records matching true: [s3://warehouse/poc/p3_iceberg/conflict_snapshot_spark_0/data/delete-3df7f4a3-24d3-4325-a236-091bff17f553.parquet]",
+        "elapsed_s": 2.511928313999988,
+        "started": 433.25533666
+      },
+      "sail": {
+        "status": "ok",
+        "elapsed_s": 0.2287230579999573,
+        "started": 433.25564044
+      },
+      "distribution": [
+        {
+          "v": 1,
+          "n": 100
+        }
+      ],
+      "matches_committed_increments": true,
+      "retry": [
+        {
+          "status": "ok",
+          "elapsed_s": 1.173318829999971,
+          "sql": "MERGE INTO polaris.p3_iceberg.conflict_snapshot_spark_0 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+          "output": []
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.356780027999946,
+          "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_snapshot_spark_0 WHERE id<100 GROUP BY v",
+          "output": [
+            {
+              "v": 2,
+              "n": 100
+            }
+          ]
+        }
+      ]
+    },
+    "retry-snapshot_spark_0": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.173318829999971,
+        "sql": "MERGE INTO polaris.p3_iceberg.conflict_snapshot_spark_0 t USING (SELECT id FROM range(0,100)) s ON t.id=s.id WHEN MATCHED THEN UPDATE SET v=t.v+1",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.356780027999946,
+        "sql": "SELECT v,count(*) AS n FROM polaris.p3_iceberg.conflict_snapshot_spark_0 WHERE id<100 GROUP BY v",
+        "output": [
+          {
+            "v": 2,
+            "n": 100
+          }
+        ]
+      }
+    ],
+    "snapshot_spark_1": {},
+    "snapshot_spark_2": {},
+    "snapshot_sail_0": {},
+    "snapshot_sail_1": {},
+    "snapshot_sail_2": {}
+  }
+}

@@ -1,0 +1,116 @@
+:: loading settings :: url = jar:file:/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.3.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/runner/.ivy2/cache
+The jars for the packages stored in: /home/runner/.ivy2/jars
+org.apache.spark#spark-connect_2.12 added as a dependency
+org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+org.apache.iceberg#iceberg-aws-bundle added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-be1afb87-78ab-4e60-9a4c-c6f8f5306684;1.0
+	confs: [default]
+	found org.apache.spark#spark-connect_2.12;3.5.10 in central
+	found org.spark-project.spark#unused;1.0.0 in central
+	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0 in central
+	found org.apache.iceberg#iceberg-aws-bundle;1.12.0 in central
+:: resolution report :: resolve 151ms :: artifacts dl 6ms
+	:: modules in use:
+	org.apache.iceberg#iceberg-aws-bundle;1.12.0 from central in [default]
+	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.12.0 from central in [default]
+	org.apache.spark#spark-connect_2.12;3.5.10 from central in [default]
+	org.spark-project.spark#unused;1.0.0 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   4   |   0   |   0   |   0   ||   4   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-be1afb87-78ab-4e60-9a4c-c6f8f5306684
+	confs: [default]
+	0 artifacts copied, 4 already retrieved (0kB/4ms)
+26/11/25 05:33:00 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/25 05:33:00 INFO SparkConnectServer: Starting Spark session.
+26/11/25 05:33:00 INFO SparkContext: Running Spark version 3.5.10
+26/11/25 05:33:00 INFO SparkContext: OS info Linux, 7.0.0-1014-aws, amd64
+26/11/25 05:33:00 INFO SparkContext: Java version 17.0.21
+26/11/25 05:33:00 INFO ResourceUtils: ==============================================================
+26/11/25 05:33:00 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/11/25 05:33:00 INFO ResourceUtils: ==============================================================
+26/11/25 05:33:00 INFO SparkContext: Submitted application: org.apache.spark.sql.connect.service.SparkConnectServer
+26/11/25 05:33:00 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/11/25 05:33:00 INFO ResourceProfile: Limiting resource is cpu
+26/11/25 05:33:00 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/11/25 05:33:00 INFO SecurityManager: Changing view acls to: runner
+26/11/25 05:33:00 INFO SecurityManager: Changing modify acls to: runner
+26/11/25 05:33:00 INFO SecurityManager: Changing view acls groups to: 
+26/11/25 05:33:00 INFO SecurityManager: Changing modify acls groups to: 
+26/11/25 05:33:00 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: runner; groups with view permissions: EMPTY; users with modify permissions: runner; groups with modify permissions: EMPTY
+26/11/25 05:33:00 INFO Utils: Successfully started service 'sparkDriver' on port 39531.
+26/11/25 05:33:00 INFO SparkEnv: Registering MapOutputTracker
+26/11/25 05:33:00 INFO SparkEnv: Registering BlockManagerMaster
+26/11/25 05:33:00 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/11/25 05:33:00 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/11/25 05:33:00 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/11/25 05:33:00 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-66ef1e5e-88c7-4173-a88d-7d78faa1bbaa
+26/11/25 05:33:00 INFO MemoryStore: MemoryStore started with capacity 5.2 GiB
+26/11/25 05:33:00 INFO SparkEnv: Registering OutputCommitCoordinator
+26/11/25 05:33:00 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar at spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar at spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar at spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO SparkContext: Added JAR file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar at spark://ip-10-0-132-107.ec2.internal:39531/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar at file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 05:33:00 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar at file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 05:33:00 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar at file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Copying /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 05:33:00 INFO SparkContext: Added file file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar at file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Copying /home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 05:33:00 INFO Executor: Starting executor ID driver on host ip-10-0-132-107.ec2.internal
+26/11/25 05:33:00 INFO Executor: OS info Linux, 7.0.0-1014-aws, amd64
+26/11/25 05:33:00 INFO Executor: Java version 17.0.21
+26/11/25 05:33:00 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/11/25 05:33:00 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@276cc8dc for default.
+26/11/25 05:33:00 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 05:33:00 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: /home/runner/.ivy2/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 05:33:00 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: /home/runner/.ivy2/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 05:33:00 INFO Executor: Fetching file:///home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: /home/runner/.ivy2/jars/org.spark-project.spark_unused-1.0.0.jar has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 05:33:00 INFO Executor: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO TransportClientFactory: Successfully created connection to ip-10-0-132-107.ec2.internal/10.0.132.107:39531 after 14 ms (0 ms spent in bootstraps)
+26/11/25 05:33:00 INFO Utils: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.spark_spark-connect_2.12-3.5.10.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp10655103837016126967.tmp
+26/11/25 05:33:00 INFO Utils: /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp10655103837016126967.tmp has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.spark_spark-connect_2.12-3.5.10.jar
+26/11/25 05:33:00 INFO Executor: Adding file:/tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.spark_spark-connect_2.12-3.5.10.jar to class loader default
+26/11/25 05:33:00 INFO Executor: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp1782822652523106439.tmp
+26/11/25 05:33:00 INFO Utils: /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp1782822652523106439.tmp has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar
+26/11/25 05:33:00 INFO Executor: Adding file:/tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-aws-bundle-1.12.0.jar to class loader default
+26/11/25 05:33:00 INFO Executor: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.spark-project.spark_unused-1.0.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.spark-project.spark_unused-1.0.0.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp12608421364117883321.tmp
+26/11/25 05:33:00 INFO Utils: /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp12608421364117883321.tmp has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.spark-project.spark_unused-1.0.0.jar
+26/11/25 05:33:00 INFO Executor: Adding file:/tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.spark-project.spark_unused-1.0.0.jar to class loader default
+26/11/25 05:33:00 INFO Executor: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar with timestamp 1795584780280
+26/11/25 05:33:00 INFO Utils: Fetching spark://ip-10-0-132-107.ec2.internal:39531/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp8328097316257042585.tmp
+26/11/25 05:33:01 INFO Utils: /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/fetchFileTemp8328097316257042585.tmp has been previously copied to /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar
+26/11/25 05:33:01 INFO Executor: Adding file:/tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa/userFiles-3e5d019a-02d7-4ffd-82c6-90ed4ceb105a/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.12.0.jar to class loader default
+26/11/25 05:33:01 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 33069.
+26/11/25 05:33:01 INFO NettyBlockTransferService: Server created on ip-10-0-132-107.ec2.internal:33069
+26/11/25 05:33:01 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/11/25 05:33:01 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, ip-10-0-132-107.ec2.internal, 33069, None)
+26/11/25 05:33:01 INFO BlockManagerMasterEndpoint: Registering block manager ip-10-0-132-107.ec2.internal:33069 with 5.2 GiB RAM, BlockManagerId(driver, ip-10-0-132-107.ec2.internal, 33069, None)
+26/11/25 05:33:01 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, ip-10-0-132-107.ec2.internal, 33069, None)
+26/11/25 05:33:01 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, ip-10-0-132-107.ec2.internal, 33069, None)
+26/11/25 05:33:01 INFO SparkConnectServer: Spark Connect server started at: 0:0:0:0:0:0:0:0%0:15212
+26/11/25 05:33:01 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/11/25 05:33:01 INFO SharedState: Warehouse path is 'file:/home/runner/work/poc/poc/spark-warehouse'.
+26/11/25 05:34:35 INFO SparkContext: Invoking stop() from shutdown hook
+26/11/25 05:34:35 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/11/25 05:34:35 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/11/25 05:34:35 INFO MemoryStore: MemoryStore cleared
+26/11/25 05:34:35 INFO BlockManager: BlockManager stopped
+26/11/25 05:34:35 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/11/25 05:34:35 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/11/25 05:34:35 INFO SparkContext: Successfully stopped SparkContext
+26/11/25 05:34:35 INFO ShutdownHookManager: Shutdown hook called
+26/11/25 05:34:35 INFO ShutdownHookManager: Deleting directory /tmp/spark-6335e181-8898-4a89-96a1-1f9df1981faa
+26/11/25 05:34:35 INFO ShutdownHookManager: Deleting directory /tmp/spark-6f93dc88-2d40-468c-96be-cd3bea195f9c

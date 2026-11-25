@@ -1,0 +1,374 @@
+{
+  "task": "iceberg-deep",
+  "variant": "evolution",
+  "revision": "cc014d3404c1089bd94bab14769f02e491bac709",
+  "run_id": "45553493787",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.iceberg_deep"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   10 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464302080,
+    "disk": "/dev/mapper/cow-root 154894188544 44081012736 110796398592  29% /"
+  },
+  "engines": {
+    "spark-evolution": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {},
+        "port": 15002
+      },
+      "listen_s": 6.511141777038574,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 1.951936331000013
+      }
+    },
+    "sail-evolution": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.19669317700004285,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.0060574790000487155
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4240,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:11.049869425Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:11.049869425Z",
+        "FinishedAt": "2026-11-25T05:29:20.462531901Z"
+      }
+    }
+  },
+  "cases": {
+    "nested-changes": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.39611577600004466,
+        "sql": "CREATE NAMESPACE polaris.p3_iceberg",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 2.473908220999988,
+        "sql": "CREATE TABLE polaris.p3_iceberg.nested USING iceberg AS SELECT id,\n              named_struct('name','name','w',CAST(1 AS INT),'obsolete',1) AS s,\n              map('key', named_struct('decimal_value', CAST(1.25 AS DECIMAL(6,2)))) AS m,\n              array(named_struct('amount', CAST(0.5 AS FLOAT), 'other', 2)) AS a FROM range(4)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.27435272200000327,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested RENAME COLUMN s.name TO label",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.22778128800001696,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested ADD COLUMN s.added STRING",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.15489834499999233,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested DROP COLUMN s.obsolete",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.15360002599999234,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested ALTER COLUMN s.w FIRST",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.17434559199995192,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested ALTER COLUMN s.w TYPE BIGINT",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.13925174500002413,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested ALTER COLUMN a.element.amount TYPE DOUBLE",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.13628513199995496,
+        "sql": "ALTER TABLE polaris.p3_iceberg.nested ALTER COLUMN m.value.decimal_value TYPE DECIMAL(12,2)",
+        "output": []
+      }
+    ],
+    "partition-evolution": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.13217352399999527,
+        "sql": "CREATE TABLE polaris.p3_iceberg.transforms (id BIGINT, v STRING, ts TIMESTAMP, region INT) USING iceberg PARTITIONED BY (bucket(8,id), truncate(3,v), hours(ts), region)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.8031456260000027,
+        "sql": "INSERT INTO polaris.p3_iceberg.transforms SELECT id,'abcdef',TIMESTAMP '2024-01-01 12:00:00',CAST(id%2 AS INT) FROM range(80)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.11980974200002947,
+        "sql": "ALTER TABLE polaris.p3_iceberg.transforms DROP PARTITION FIELD truncate(3,v)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.09102363699997795,
+        "sql": "ALTER TABLE polaris.p3_iceberg.transforms ADD PARTITION FIELD truncate(4,v)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3712815750000118,
+        "sql": "INSERT INTO polaris.p3_iceberg.transforms SELECT 42,'abcdef',TIMESTAMP '2024-01-02 12:00:00',0",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.9421397429999843,
+        "sql": "SELECT spec_id, count(*) AS files FROM polaris.p3_iceberg.transforms.files GROUP BY spec_id ORDER BY spec_id",
+        "output": [
+          {
+            "spec_id": 0,
+            "files": 16
+          },
+          {
+            "spec_id": 2,
+            "files": 1
+          }
+        ]
+      }
+    ],
+    "spark-nested": {
+      "status": "ok",
+      "elapsed_s": 0.5756790060000299,
+      "result": {
+        "rows": 4,
+        "sha256": "cf3ebb8d29f146f745940d07f410c04630bfa994747b4595a53f12a1a66b92f3"
+      }
+    },
+    "spark-pruning": {
+      "status": "ok",
+      "elapsed_s": 0.6719638910000185,
+      "result": {
+        "rows": 2,
+        "sha256": "743708cd0fa7f2560cdbc22ee0e7de47259874a968af0dc309ea7c191ca7e141"
+      }
+    },
+    "reference-plan": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.13745348399999102,
+        "sql": "EXPLAIN FORMATTED SELECT id,v FROM polaris.p3_iceberg.transforms WHERE id=42 AND v='abcdef' ORDER BY id",
+        "output": [
+          {
+            "plan": "== Physical Plan ==\nAdaptiveSparkPlan (5)\n+- Sort (4)\n   +- Exchange (3)\n      +- Filter (2)\n         +- BatchScan polaris.p3_iceberg.transforms (1)\n\n\n(1) BatchScan polaris.p3_iceberg.transforms\nOutput [2]: [id#257L, v#258]\npolaris.p3_iceberg.transforms (branch=null) [filters=id IS NOT NULL, v IS NOT NULL, id = 42, v = 'abcdef', groupedBy=]\n\n(2) Filter\nInput [2]: [id#257L, v#258]\nCondition : ((isnotnull(v#258) AND (id#257L = 42)) AND (v#258 = abcdef))\n\n(3) Exchange\nInput [2]: [id#257L, v#258]\nArguments: rangepartitioning(id#257L ASC NULLS FIRST, 8), ENSURE_REQUIREMENTS, [plan_id=436]\n\n(4) Sort\nInput [2]: [id#257L, v#258]\nArguments: [id#257L ASC NULLS FIRST], true, 0\n\n(5) AdaptiveSparkPlan\nOutput [2]: [id#257L, v#258]\nArguments: isFinalPlan=false\n\n"
+          }
+        ]
+      }
+    ],
+    "sail-nested": {
+      "status": "ok",
+      "elapsed_s": 0.05491307200003348,
+      "matches_spark": true,
+      "rows": [
+        [
+          0,
+          "name",
+          1,
+          null,
+          {
+            "key": [
+              "1.25"
+            ]
+          },
+          [
+            [
+              0.5,
+              2
+            ]
+          ]
+        ],
+        [
+          1,
+          "name",
+          1,
+          null,
+          {
+            "key": [
+              "1.25"
+            ]
+          },
+          [
+            [
+              0.5,
+              2
+            ]
+          ]
+        ],
+        [
+          2,
+          "name",
+          1,
+          null,
+          {
+            "key": [
+              "1.25"
+            ]
+          },
+          [
+            [
+              0.5,
+              2
+            ]
+          ]
+        ],
+        [
+          3,
+          "name",
+          1,
+          null,
+          {
+            "key": [
+              "1.25"
+            ]
+          },
+          [
+            [
+              0.5,
+              2
+            ]
+          ]
+        ]
+      ]
+    },
+    "sail-pruning": {
+      "status": "ok",
+      "elapsed_s": 0.02823072000001048,
+      "matches_spark": true,
+      "rows": [
+        [
+          42,
+          "abcdef"
+        ],
+        [
+          42,
+          "abcdef"
+        ]
+      ]
+    },
+    "sail-plan": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.028073726999991777,
+        "sql": "EXPLAIN ANALYZE SELECT id,v FROM polaris.p3_iceberg.transforms WHERE id=42 AND v='abcdef' ORDER BY id",
+        "output": [
+          {
+            "plan": "== Physical Plan ==\nProjectionExec: expr=[#4@0 as id, #5@1 as v], metrics=[output_rows=2, elapsed_compute=813ns, output_bytes=64.0 KB, output_batches=1, expr_0_eval_time=370ns, expr_1_eval_time=85ns], statistics=[Rows=Inexact(1), Bytes=Inexact(5), [(Col[0]: Min=Exact(Int64(42)) Max=Exact(Int64(42)) Null=Exact(0) Distinct=Exact(1) ScanBytes=Inexact(2)),(Col[1]: Min=Exact(Utf8(\"abcdef\")) Max=Exact(Utf8(\"abcdef\")) Null=Inexact(0) Distinct=Exact(1) ScanBytes=Inexact(4))]], schema=[id:Int64;N, v:Utf8;N]\n  CoalescePartitionsExec, metrics=[], statistics=[Rows=Inexact(1), Bytes=Inexact(5), [(Col[0]: Min=Exact(Int64(42)) Max=Exact(Int64(42)) Null=Exact(0) Distinct=Exact(1) ScanBytes=Inexact(2)),(Col[1]: Min=Exact(Utf8(\"abcdef\")) Max=Exact(Utf8(\"abcdef\")) Null=Inexact(0) Distinct=Exact(1) ScanBytes=Inexact(4))]], schema=[#4:Int64;N, #5:Utf8;N]\n    ProjectionExec: expr=[id@0 as #4, v@1 as #5], metrics=[output_rows=2, elapsed_compute=1.50\u00b5s, output_bytes=64.0 KB, output_batches=1, expr_0_eval_time=480ns, expr_1_eval_time=387ns], statistics=[Rows=Inexact(1), Bytes=Inexact(5), [(Col[0]: Min=Exact(Int64(42)) Max=Exact(Int64(42)) Null=Exact(0) Distinct=Exact(1) ScanBytes=Inexact(2)),(Col[1]: Min=Exact(Utf8(\"abcdef\")) Max=Exact(Utf8(\"abcdef\")) Null=Inexact(0) Distinct=Exact(1) ScanBytes=Inexact(4))]], schema=[#4:Int64;N, #5:Utf8;N]\n      FilterExec: id@0 = 42, metrics=[output_rows=2, elapsed_compute=49.78\u00b5s, output_bytes=64.0 KB, output_batches=1, selectivity=16.67% (2/12)], statistics=[Rows=Inexact(1), Bytes=Inexact(5), [(Col[0]: Min=Exact(Int64(42)) Max=Exact(Int64(42)) Null=Exact(0) Distinct=Exact(1) ScanBytes=Inexact(2)),(Col[1]: Min=Exact(Utf8(\"abcdef\")) Max=Exact(Utf8(\"abcdef\")) Null=Inexact(0) Distinct=Exact(1) ScanBytes=Inexact(4))]], schema=[id:Int64;N, v:Utf8;N]\n        DataSourceExec: file_groups={1 group: [[poc/p3_iceberg/transforms/data/id_bucket=6/v_trunc=abc/ts_hour=2024-01-01-12/region=1/00000-9-12738370-a646-4569-8a6e-3f8d0b2fb3af-0-00011.parquet:4..1313, poc/p3_iceberg/transforms/data/id_bucket=6/v_trunc=abc/ts_hour=2024-01-01-12/region=0/00000-9-12738370-a646-4569-8a6e-3f8d0b2fb3af-0-00008.parquet:4..1309, poc/p3_iceberg/transforms/data/id_bucket=6/ts_hour=2024-01-02-12/region=0/v_trunc_4=abcd/00000-11-84c52782-225d-4af6-8b2f-0111d1cb0253-0-00001.parquet:4..1153]]}, projection=[id, v], file_type=parquet, predicate=id@0 = 42, pruning_predicate=id_null_count@2 != row_count@3 AND id_min@0 <= 42 AND 42 <= id_max@1, required_guarantees=[id in (42)], metrics=[output_rows=12, elapsed_compute=7.75\u00b5s, output_bytes=262.0 B, output_batches=3, files_ranges_pruned_statistics=3 total \u2192 3 matched, row_groups_pruned_statistics=3 total \u2192 3 matched -> 1 fully matched, row_groups_pruned_bloom_filter=3 total \u2192 3 matched, page_index_pages_pruned=2 total \u2192 2 matched, page_index_pages_skipped_by_fully_matched=1, page_index_rows_pruned=11 total \u2192 11 matched, limit_pruned_row_groups=0 total \u2192 0 matched, batches_split=0, bytes_scanned=362, file_open_errors=0, file_scan_errors=0, files_opened=3, files_processed=3, num_predicate_creation_errors=0, page_index_load_skipped=1, predicate_evaluation_errors=0, pushdown_rows_matched=0, pushdown_rows_pruned=0, row_groups_pruned_dynamic_filter=0, predicate_cache_inner_records=0, predicate_cache_records=0, bloom_filter_eval_time=72.62\u00b5s, metadata_load_time=36.39\u00b5s, page_index_eval_time=19.83\u00b5s, row_pushdown_eval_time=9ns, statistics_eval_time=83.13\u00b5s, time_elapsed_opening=376.11\u00b5s, time_elapsed_processing=630.76\u00b5s, time_elapsed_scanning_total=2.30ms, time_elapsed_scanning_until_data=2.19ms, output_rows_skew=0%, scan_efficiency_ratio=31.4% (362/1.15 K)], statistics=[Rows=Inexact(12), Bytes=Inexact(345), [(Col[0]: Min=Inexact(Int64(4)) Max=Inexact(Int64(77)) Null=Inexact(0) ScanBytes=Inexact(96)),(Col[1]: Min=Inexact(Utf8(\"abcdef\")) Max=Inexact(Utf8(\"abcdef\")) Null=Inexact(0) ScanBytes=Inexact(249))]], schema=[id:Int64;N, v:Utf8;N]\n"
+          }
+        ]
+      }
+    ]
+  }
+}

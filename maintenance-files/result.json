@@ -1,0 +1,1591 @@
+{
+  "task": "iceberg-deep",
+  "variant": "maintenance-files",
+  "revision": "e48d8fc75ab77f574d023c41f5589ab758d7d1b6",
+  "run_id": "45574287311",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+    "-m",
+    "harness.p3.iceberg_deep"
+  ],
+  "versions": {
+    "spark": "3.5.10",
+    "iceberg": "1.12.0",
+    "comet": "1.2.0",
+    "adbc": "1.13.0",
+    "python": "3.11.18",
+    "sail_sha": "790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f",
+    "sail_image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+    "java": "openjdk version \"17.0.21\" 2026-10-20",
+    "images": [
+      "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
+      "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   13 hours ago   777MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
+      "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
+      "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
+      "ghcr.io/github/gh-aw-firewall/api-proxy      latest    sha256:136785634c9207d7328c701d31d53941542ef307840bda6b348274c8842557c0   0e559b513243   10 days ago    377MB",
+      "apache/polaris                               <none>    sha256:bc548500f5ba8e798b7f8e107ad0b8fbd5b5c6d0c5437f56c5ca101219b796d0   e50de8fbe0f7   11 days ago    736MB",
+      "amazon/aws-cli                               <none>    sha256:eccdb3ec77e159d43ca6a750a70738c546883138be7f094498294a1477ec7e42   939eff2d43c1   2 weeks ago    460MB",
+      "ghcr.io/github/github-mcp-server             latest    sha256:f6056fc10bfffcc8c81a6417a2e9ca12808647e8dd6049642a4feaadee0e0f8a   84e9c718c0fa   3 weeks ago    50.2MB",
+      "rustfs/rustfs                                <none>    sha256:fa19210ac4697c79d7ccca1ec9b0eb91aebacc6691991ffb14014bb3c67e6cc3   df6c9c7205c6   5 months ago   317MB"
+    ],
+    "python_dependencies": [
+      "adbc-driver-flightsql==1.13.0",
+      "adbc-driver-manager==1.13.0",
+      "boto3==1.44.11",
+      "botocore==1.44.11",
+      "certifi==2026.11.20",
+      "charset-normalizer==3.5.3",
+      "duckdb==1.4.4",
+      "duckdb_extension_tpcds==1.4.4",
+      "duckdb_extensions==1.4.4",
+      "googleapis-common-protos==1.76.0",
+      "grpcio==1.85.4",
+      "grpcio-status==1.85.4",
+      "idna==3.20",
+      "jmespath==1.1.0",
+      "numpy==1.26.4",
+      "pandas==2.2.3",
+      "protobuf==7.36.2",
+      "psutil==7.2.2",
+      "py4j==0.10.9.9",
+      "pyarrow==17.0.0",
+      "pyspark==3.5.10",
+      "python-dateutil==2.9.0.post0",
+      "pytz==2026.6",
+      "PyYAML==6.0.4",
+      "requests==2.34.2",
+      "s3transfer==0.19.3",
+      "six==1.17.0",
+      "tpchgen-cli==4.0.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.6",
+      "urllib3==2.8.0"
+    ]
+  },
+  "runner": {
+    "cpu_count": 4,
+    "total_memory_bytes": 16464302080,
+    "disk": "/dev/mapper/cow-root 154894188544 44086759424 110790651904  29% /"
+  },
+  "engines": {
+    "spark-maintenance-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15002
+      },
+      "listen_s": 8.517781734466553,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.0952254689999563
+      }
+    },
+    "sail-merge-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50220,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.11115801700003658,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.00662861600000042
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4019,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:16:43.416249627Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:16:43.416249627Z",
+        "FinishedAt": "2026-11-25T08:16:53.156079839Z"
+      }
+    },
+    "spark-files-1": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15220
+      },
+      "listen_s": 2.7565882205963135,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.135613338999974
+      }
+    },
+    "sail-merge-5": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50221,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.105541981999977,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.008255821000034302
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5059,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:17:04.617540639Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:17:04.617540639Z",
+        "FinishedAt": "2026-11-25T08:17:14.7025916Z"
+      }
+    },
+    "spark-files-5": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15221
+      },
+      "listen_s": 2.7557215690612793,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.049848713000017
+      }
+    },
+    "sail-merge-20": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50222,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.1067363720000003,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006883410000000367
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6094,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:17:26.496844163Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:17:26.496844163Z",
+        "FinishedAt": "2026-11-25T08:17:38.94292986Z"
+      }
+    },
+    "spark-files-20": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15222
+      },
+      "listen_s": 2.755535840988159,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.0588738350000426
+      }
+    },
+    "sail-merge-50": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50223,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn",
+          "SAIL_EXECUTION__DEFAULT_PARALLELISM": "4"
+        }
+      },
+      "listen_s": 0.10736019099999794,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006925886999965769
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7266,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:17:52.243922536Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:17:52.243922536Z",
+        "FinishedAt": "2026-11-25T08:18:17.97429854Z"
+      }
+    },
+    "spark-files-50": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15223
+      },
+      "listen_s": 2.755786657333374,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.083425513999998
+      }
+    },
+    "spark-compaction": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.jars.ivySettings": "/home/runner/work/poc/poc/harness/p3/tools/ivysettings.xml"
+        },
+        "port": 15250
+      },
+      "listen_s": 2.7557153701782227,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.1440530190000118
+      }
+    },
+    "sail-after-compaction": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50250,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\", name=\"polaris\", uri=\"http://polaris:8181/api/catalog\", warehouse=\"poc\", bearer_access_token_file=\"/tokens/polaris\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "polaris",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.10784637099999372,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.008073247999959676
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 9405,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:18:48.798591429Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T08:18:48.798591429Z",
+        "FinishedAt": "2026-11-25T08:18:58.70882247Z"
+      }
+    }
+  },
+  "cases": {
+    "create-maintenance-table": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.3261478640000064,
+        "sql": "CREATE NAMESPACE polaris.p3_iceberg",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 2.4109179699999572,
+        "sql": "CREATE TABLE polaris.p3_iceberg.merge_history USING iceberg TBLPROPERTIES ('format-version'='2','write.merge.mode'='merge-on-read','write.distribution-mode'='hash','write.target-file-size-bytes'='1048576') AS SELECT id, CAST(0 AS BIGINT) AS v FROM range(12000)",
+        "output": []
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3226951320000353,
+        "sql": "ALTER TABLE polaris.p3_iceberg.merge_history WRITE ORDERED BY id",
+        "output": []
+      }
+    ],
+    "merge_attempts": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.13727509400001736
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.13698366700003817
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.09845752600000424
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.11335368199996765
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.13281028200003675
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.12940680500003054
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.10698970500004634
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.12065519000003633
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.1292824669999959
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.13890649300003588
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.15791427699997485
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.15710732899998447
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.1513973030000102
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.16015731600003846
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.16987913199994864
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.18349321600004487
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.19209857300000976
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.20963570599997183
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.2221193700000299
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.21384537500000533
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.24962371100002656
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.250601827999958
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.24082128000003422
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.25707172199997785
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.2631490939999708
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.2829407229999674
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.29972479500003146
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3073039329999574
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.32260867299999063
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.34218011100000467
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3502716319999877
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.36976337300001205
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.40123912699999664
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.38521292499996207
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.41254756000000725
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.49398810700000695
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5439485210000043
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5269688070000029
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.5756417239999791
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.6131757050000033
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.6113828569999669
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.6354509679999865
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.6682169689999569
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.7069685600000071
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.7428844870000262
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.742998947999979
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.72254362700005
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.6303839899999844
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.673279124999965
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.6936505959999977
+      }
+    ],
+    "sail-after-1": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.028739490999953432,
+          "cpu_s": 0.012701999999999991,
+          "peak_bytes": 110608384,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.03268760899999279,
+          "cpu_s": 0.01105600000000001,
+          "peak_bytes": 110870528,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.03218967300000486,
+          "cpu_s": 0.012037999999999993,
+          "peak_bytes": 110870528,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.032438640999998825,
+        "cpu_s": 0.011547000000000002,
+        "peak_bytes": 110870528.0
+      }
+    },
+    "spark-after-1": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 2.222066154999993,
+          "cpu_s": 6.039999999999999,
+          "peak_bytes": 617799680,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.3661430070000051,
+          "cpu_s": 0.990000000000002,
+          "peak_bytes": 644378624,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.3366591879999987,
+          "cpu_s": 0.9199999999999982,
+          "peak_bytes": 661905408,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.3514010975000019,
+        "cpu_s": 0.9550000000000001,
+        "peak_bytes": 653142016.0
+      }
+    },
+    "files-after-1": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.7669970970000008,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 1,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 1,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2171
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.367957505999982,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 3
+          }
+        ]
+      }
+    ],
+    "data-delete-links-1": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.1782992060000197,
+        "sql": "SELECT data.file_path, count(DISTINCT deletes.delete_file_path) AS delete_files\n            FROM polaris.p3_iceberg.merge_history.data_files data LEFT JOIN polaris.p3_iceberg.merge_history.position_deletes deletes\n            ON data.file_path = deletes.file_path\n            GROUP BY data.file_path ORDER BY data.file_path",
+        "output": [
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00000-1-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00001-2-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00002-3-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00003-4-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-eb30708d-99f7-412e-825f-6f38540d490a-00000000000000000000.parquet",
+            "delete_files": 0
+          }
+        ]
+      }
+    ],
+    "sail-after-5": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.06133194299997058,
+          "cpu_s": 0.030515999999999988,
+          "peak_bytes": 131715072,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.05306988500001353,
+          "cpu_s": 0.030146000000000006,
+          "peak_bytes": 131973120,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.05174456600002486,
+          "cpu_s": 0.03026200000000001,
+          "peak_bytes": 133804032,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.052407225500019194,
+        "cpu_s": 0.03020400000000001,
+        "peak_bytes": 132888576.0
+      }
+    },
+    "spark-after-5": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 2.2885119869999926,
+          "cpu_s": 6.290000000000001,
+          "peak_bytes": 663179264,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.45665169000000105,
+          "cpu_s": 1.4800000000000004,
+          "peak_bytes": 709140480,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.42453128699997933,
+          "cpu_s": 1.4499999999999993,
+          "peak_bytes": 734138368,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.4405914884999902,
+        "cpu_s": 1.4649999999999999,
+        "peak_bytes": 721639424.0
+      }
+    },
+    "files-after-5": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.8041416810000328,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 5,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 5,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2181
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.4030881140000133,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 11
+          }
+        ]
+      }
+    ],
+    "data-delete-links-5": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.1861765780000155,
+        "sql": "SELECT data.file_path, count(DISTINCT deletes.delete_file_path) AS delete_files\n            FROM polaris.p3_iceberg.merge_history.data_files data LEFT JOIN polaris.p3_iceberg.merge_history.position_deletes deletes\n            ON data.file_path = deletes.file_path\n            GROUP BY data.file_path ORDER BY data.file_path",
+        "output": [
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00000-1-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00001-2-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00002-3-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00003-4-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-3731a8d0-5263-4263-8598-5196585cfc43-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-81aa6f4c-0278-45a3-a81a-ef2d6649bcd0-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-cc370f7c-a89c-4a55-a13e-a662a9bf8cd9-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d8b538f3-15dd-4151-a0df-932679ffcd34-00000000000000000000.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-eb30708d-99f7-412e-825f-6f38540d490a-00000000000000000000.parquet",
+            "delete_files": 1
+          }
+        ]
+      }
+    ],
+    "sail-after-20": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.1745745329999977,
+          "cpu_s": 0.1352390000000001,
+          "peak_bytes": 168038400,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.2050423599999931,
+          "cpu_s": 0.13859200000000005,
+          "peak_bytes": 168022016,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.16759802099994658,
+          "cpu_s": 0.14155099999999998,
+          "peak_bytes": 167866368,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.18632019049996984,
+        "cpu_s": 0.14007150000000002,
+        "peak_bytes": 167944192.0
+      }
+    },
+    "spark-after-20": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 2.78230008700001,
+          "cpu_s": 8.309999999999997,
+          "peak_bytes": 719867904,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.7468545489999769,
+          "cpu_s": 2.66,
+          "peak_bytes": 791388160,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.7141788409999776,
+          "cpu_s": 2.240000000000002,
+          "peak_bytes": 806125568,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.7305166949999773,
+        "cpu_s": 2.450000000000001,
+        "peak_bytes": 798756864.0
+      }
+    },
+    "files-after-20": [
+      {
+        "status": "ok",
+        "elapsed_s": 0.9677227440000138,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 20,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 20,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2181
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3919018029999961,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 41
+          }
+        ]
+      }
+    ],
+    "data-delete-links-20": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.553622755000049,
+        "sql": "SELECT data.file_path, count(DISTINCT deletes.delete_file_path) AS delete_files\n            FROM polaris.p3_iceberg.merge_history.data_files data LEFT JOIN polaris.p3_iceberg.merge_history.position_deletes deletes\n            ON data.file_path = deletes.file_path\n            GROUP BY data.file_path ORDER BY data.file_path",
+        "output": [
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00000-1-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00001-2-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00002-3-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00003-4-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-0f753c4b-fbc4-4ceb-9e91-6118ffa5e1c9-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-133337c8-68bc-43c9-be72-9087dea2208b-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-31782655-e2ff-4686-8269-9074496a4e30-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-3263a7b7-1013-49a2-8be8-4e15fa93fd3c-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-3731a8d0-5263-4263-8598-5196585cfc43-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-4913ab2c-c048-4d4c-8420-7fd399eea0a0-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7661ec80-aa60-4bc2-b19b-6b70c475fbcd-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7e2ccff0-c149-4f50-802b-ed89bf80efd4-00000000000000000000.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7edc2d3f-1c8f-4f95-ab15-1218cea41123-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-81aa6f4c-0278-45a3-a81a-ef2d6649bcd0-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-9207732c-1c68-498c-b926-df6fabfc16c7-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-96eea4e7-8f4c-48d4-8a50-fe59821455aa-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-9f9e7404-f07d-4b74-9c85-4049eaa8e007-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-a62e3270-4da3-4878-b58a-4b9ee4c4c680-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-c51f54af-9cbe-4f5e-b8fc-d7cf1bc0be94-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-cc370f7c-a89c-4a55-a13e-a662a9bf8cd9-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d21d8ec0-921d-42ca-982f-f32f7c91ee91-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d8b538f3-15dd-4151-a0df-932679ffcd34-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-e9adc1bc-77e2-42a8-ac00-76159c4e4526-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-eb30708d-99f7-412e-825f-6f38540d490a-00000000000000000000.parquet",
+            "delete_files": 1
+          }
+        ]
+      }
+    ],
+    "sail-after-50": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.6552958230000172,
+          "cpu_s": 0.5875540000000008,
+          "peak_bytes": 195989504,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.6408662929999878,
+          "cpu_s": 0.5766569999999991,
+          "peak_bytes": 195571712,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.6428482910000071,
+          "cpu_s": 0.5486470000000008,
+          "peak_bytes": 159076352,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.6418572919999974,
+        "cpu_s": 0.5626519999999999,
+        "peak_bytes": 177324032.0
+      }
+    },
+    "spark-after-50": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 3.541828848000023,
+          "cpu_s": 10.46,
+          "peak_bytes": 722223104,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 1.2581915580000214,
+          "cpu_s": 4.140000000000001,
+          "peak_bytes": 748642304,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 1.1209456129999467,
+          "cpu_s": 3.719999999999999,
+          "peak_bytes": 823144448,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 1.189568585499984,
+        "cpu_s": 3.9299999999999997,
+        "peak_bytes": 785893376.0
+      }
+    },
+    "files-after-50": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.2510661190000292,
+        "sql": "SELECT content,spec_id,sort_order_id,count(*) files,min(file_size_in_bytes),max(file_size_in_bytes) FROM polaris.p3_iceberg.merge_history.files GROUP BY 1,2,3",
+        "output": [
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 0,
+            "files": 4,
+            "min(file_size_in_bytes)": 3793,
+            "max(file_size_in_bytes)": 5928
+          },
+          {
+            "content": 0,
+            "spec_id": 0,
+            "sort_order_id": 1,
+            "files": 50,
+            "min(file_size_in_bytes)": 1199,
+            "max(file_size_in_bytes)": 1199
+          },
+          {
+            "content": 1,
+            "spec_id": 0,
+            "sort_order_id": null,
+            "files": 50,
+            "min(file_size_in_bytes)": 2171,
+            "max(file_size_in_bytes)": 2181
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.3415449749999766,
+        "sql": "SELECT count(*) FROM polaris.p3_iceberg.merge_history.manifests",
+        "output": [
+          {
+            "count(1)": 101
+          }
+        ]
+      }
+    ],
+    "data-delete-links-50": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.7193793700000128,
+        "sql": "SELECT data.file_path, count(DISTINCT deletes.delete_file_path) AS delete_files\n            FROM polaris.p3_iceberg.merge_history.data_files data LEFT JOIN polaris.p3_iceberg.merge_history.position_deletes deletes\n            ON data.file_path = deletes.file_path\n            GROUP BY data.file_path ORDER BY data.file_path",
+        "output": [
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00000-1-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00001-2-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00002-3-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00003-4-fa9cf7e1-3832-423b-933d-cf0a3cffe120-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-09efa52d-fb87-4222-b124-7a127bc545df-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-0f753c4b-fbc4-4ceb-9e91-6118ffa5e1c9-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-12d8f914-1777-420d-95e2-b7f190329b70-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-133337c8-68bc-43c9-be72-9087dea2208b-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-1668374d-191d-4407-8eb9-4a60bcb23161-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-1834ef67-9390-4ee2-967a-b5e92f8a903b-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-19e04017-bc5d-433c-9d5c-45241eb32acb-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-1e7fc8d0-df90-42a9-bf5d-e56b874e52b0-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-2ae6c039-ebc2-4265-a86a-d5722d2fc93f-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-2aea0f01-ca84-468f-8d26-9906ab7a1bac-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-2ce70df3-112a-4113-a8a9-1463f45dec9e-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-31782655-e2ff-4686-8269-9074496a4e30-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-31e4dc74-7bd8-47d3-a97f-9c81bfbf660e-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-3263a7b7-1013-49a2-8be8-4e15fa93fd3c-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-3731a8d0-5263-4263-8598-5196585cfc43-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-43772777-3c24-45ac-b58e-4fd2f6f61b86-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-463364e4-2f98-428b-92b0-b63ab5a244d6-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-48f1f6df-902e-4358-9139-7c7b4e391abd-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-4913ab2c-c048-4d4c-8420-7fd399eea0a0-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-53ec1722-e860-4c70-936d-bf4a4d1d6937-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-6db34829-4035-453a-9e06-afcb1c38f088-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-75738e54-e8f6-40e2-8f1c-011873a40a9f-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7661ec80-aa60-4bc2-b19b-6b70c475fbcd-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7e2ccff0-c149-4f50-802b-ed89bf80efd4-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7eb46b02-cb50-4316-8808-7fa03a106297-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-7edc2d3f-1c8f-4f95-ab15-1218cea41123-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-81aa6f4c-0278-45a3-a81a-ef2d6649bcd0-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-9207732c-1c68-498c-b926-df6fabfc16c7-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-96eea4e7-8f4c-48d4-8a50-fe59821455aa-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-9f9e7404-f07d-4b74-9c85-4049eaa8e007-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-a1680f35-3521-4863-9f1f-9a03858b53ab-00000000000000000000.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-a46025a2-df6f-4bd7-8c52-5b5444fd3765-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-a5020a1f-88f4-4b0f-89c7-f3f65b316277-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-a62e3270-4da3-4878-b58a-4b9ee4c4c680-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-aafe3194-f1ce-4d25-ba32-caa6a1fe2800-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-b901a3a0-022a-4d5a-83fd-a87ab1866ca6-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-c343aace-f7e2-4a54-bd2b-003a5662b046-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-c51f54af-9cbe-4f5e-b8fc-d7cf1bc0be94-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-c6d92f82-1793-4793-ba60-982fdffec80a-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-cbbfee1a-3fd4-4314-b648-fe3f76e87c25-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-cc370f7c-a89c-4a55-a13e-a662a9bf8cd9-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-cdbaf9b5-12b2-4915-ae59-18f7e838d6be-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d21d8ec0-921d-42ca-982f-f32f7c91ee91-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d2652010-63e0-4bf8-a0ff-df928a6ece59-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d68bc481-a3ef-48f9-b8ac-00d1de463866-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-d8b538f3-15dd-4151-a0df-932679ffcd34-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-e9adc1bc-77e2-42a8-ac00-76159c4e4526-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-eb30708d-99f7-412e-825f-6f38540d490a-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-eeb523d1-2aff-403c-bf7c-13dc5717d80b-00000000000000000000.parquet",
+            "delete_files": 1
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/part-fe9632b3-affa-4de3-b9f9-cec231519a32-00000000000000000000.parquet",
+            "delete_files": 1
+          }
+        ]
+      }
+    ],
+    "compaction": [
+      {
+        "status": "ok",
+        "elapsed_s": 5.238960366000015,
+        "sql": "CALL polaris.system.rewrite_data_files(table => 'p3_iceberg.merge_history', options => map('rewrite-all','true'))",
+        "output": [
+          {
+            "rewritten_data_files_count": 54,
+            "added_data_files_count": 2,
+            "rewritten_bytes_count": 77263,
+            "failed_data_files_count": 0,
+            "removed_delete_files_count": 0
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 0.22217819200000122,
+        "sql": "CALL polaris.system.rewrite_position_delete_files(table => 'p3_iceberg.merge_history')",
+        "output": [
+          {
+            "rewritten_delete_files_count": 0,
+            "added_delete_files_count": 0,
+            "rewritten_bytes_count": 0,
+            "added_bytes_count": 0
+          }
+        ]
+      },
+      {
+        "status": "ok",
+        "elapsed_s": 1.2346178149999787,
+        "sql": "SELECT content,count(*) FROM polaris.p3_iceberg.merge_history.files GROUP BY content",
+        "output": [
+          {
+            "content": 0,
+            "count(1)": 2
+          },
+          {
+            "content": 1,
+            "count(1)": 1
+          }
+        ]
+      }
+    ],
+    "spark-after-compaction": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.5926352470000325,
+          "cpu_s": 2.1099999999999994,
+          "peak_bytes": 1156104192,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.36302176499998495,
+          "cpu_s": 1.1700000000000017,
+          "peak_bytes": 1167601664,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.3524143829999957,
+          "cpu_s": 1.1899999999999977,
+          "peak_bytes": 1187274752,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.35771807399999034,
+        "cpu_s": 1.1799999999999997,
+        "peak_bytes": 1177438208.0
+      }
+    },
+    "data-delete-links-compacted": [
+      {
+        "status": "ok",
+        "elapsed_s": 1.3119437740000421,
+        "sql": "SELECT data.file_path, count(DISTINCT deletes.delete_file_path) AS delete_files\n            FROM polaris.p3_iceberg.merge_history.data_files data LEFT JOIN polaris.p3_iceberg.merge_history.position_deletes deletes\n            ON data.file_path = deletes.file_path\n            GROUP BY data.file_path ORDER BY data.file_path",
+        "output": [
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00000-1-f138a9f3-05a8-4a60-8252-cb318040c5f6-0-00001.parquet",
+            "delete_files": 0
+          },
+          {
+            "file_path": "s3://warehouse/poc/p3_iceberg/merge_history/data/00001-2-f138a9f3-05a8-4a60-8252-cb318040c5f6-0-00001.parquet",
+            "delete_files": 0
+          }
+        ]
+      }
+    ],
+    "sail-after-compaction": {
+      "samples": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.12592819800005373,
+          "cpu_s": 0.06517499999999998,
+          "peak_bytes": 97230848,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.11505705000001853,
+          "cpu_s": 0.053144,
+          "peak_bytes": 99553280,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.10917111199995588,
+          "cpu_s": 0.05158499999999999,
+          "peak_bytes": 106332160,
+          "matches_spark": true
+        }
+      ],
+      "warm_median": {
+        "elapsed_s": 0.11211408099998721,
+        "cpu_s": 0.052364499999999994,
+        "peak_bytes": 102942720.0
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "task": "tenancy",
   "variant": "isolation",
-  "revision": "4890574f2d87ee4408858e4a2e0066efe4314a39",
-  "run_id": "45551015271",
+  "revision": "c9d0fc85443e3b85ab8340237d32feb37a22b998",
+  "run_id": "45553201626",
   "command": [
     "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
     "-m",
@@ -20,7 +20,7 @@
     "images": [
       "REPOSITORY                                   TAG       DIGEST                                                                    IMAGE ID       CREATED        SIZE",
       "ghcr.io/unikdahal/poc/sail                   <none>    sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767   5d049339ae61   10 hours ago   777MB",
-      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     853MB",
+      "ghcr.io/dependabot/dependabot-updater-core   latest    sha256:0db1b35c7649a933f69802029c5316502a958bb6a584a40dcaba5cac9a2a660f   d0683050653b   9 days ago     852MB",
       "ghcr.io/github/gh-aw-mcpg                    latest    sha256:629ddcd68a48ab02e7db8af527d2756c6db563b00c1d31d8aa8fcbac96f01c59   4a62ff99bb92   10 days ago    186MB",
       "ghcr.io/github/gh-aw-firewall/squid          latest    sha256:878b9c1aaeca076004bf2157dd2be28586b68b2b3d69c3ff8fd2b5add2a3126c   7c8c9dff3252   10 days ago    57.5MB",
       "ghcr.io/github/gh-aw-firewall/agent          latest    sha256:7f649a02f2cc235325ab512f546854e0fad32b7abdc6c24c5475ddc0639e0aaa   e1cc8445e3f5   10 days ago    1.04GB",
@@ -66,18 +66,4680 @@
   },
   "runner": {
     "cpu_count": 4,
-    "total_memory_bytes": 16464306176,
-    "disk": "/dev/mapper/cow-root 154894188544 44078891008 110798520320  29% /"
+    "total_memory_bytes": 16760348672,
+    "disk": "/dev/root      154894188544 47527043072 107350368256  31% /"
   },
-  "engines": {},
+  "engines": {
+    "spark-reference": {
+      "settings": {
+        "comet": false,
+        "cores": 4,
+        "driver_memory": "9g",
+        "catalog_cache": false,
+        "overrides": {
+          "spark.sql.catalog.tenant_a": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.tenant_a.type": "rest",
+          "spark.sql.catalog.tenant_a.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.tenant_a.warehouse": "tenant_a",
+          "spark.sql.catalog.tenant_a.credential": "root:s3cr3t",
+          "spark.sql.catalog.tenant_a.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.tenant_a.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.tenant_a.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.tenant_a.s3.path-style-access": "true",
+          "spark.sql.catalog.tenant_a.s3.access-key-id": "admin",
+          "spark.sql.catalog.tenant_a.s3.secret-access-key": "password",
+          "spark.sql.catalog.tenant_a.client.region": "us-east-1",
+          "spark.sql.catalog.tenant_a.cache-enabled": "false",
+          "spark.sql.catalog.tenant_b": "org.apache.iceberg.spark.SparkCatalog",
+          "spark.sql.catalog.tenant_b.type": "rest",
+          "spark.sql.catalog.tenant_b.uri": "http://localhost:8181/api/catalog",
+          "spark.sql.catalog.tenant_b.warehouse": "tenant_b",
+          "spark.sql.catalog.tenant_b.credential": "root:s3cr3t",
+          "spark.sql.catalog.tenant_b.scope": "PRINCIPAL_ROLE:ALL",
+          "spark.sql.catalog.tenant_b.io-impl": "org.apache.iceberg.aws.s3.S3FileIO",
+          "spark.sql.catalog.tenant_b.s3.endpoint": "http://localhost:9000",
+          "spark.sql.catalog.tenant_b.s3.path-style-access": "true",
+          "spark.sql.catalog.tenant_b.s3.access-key-id": "admin",
+          "spark.sql.catalog.tenant_b.s3.secret-access-key": "password",
+          "spark.sql.catalog.tenant_b.client.region": "us-east-1",
+          "spark.sql.catalog.tenant_b.cache-enabled": "false"
+        },
+        "port": 15002
+      },
+      "listen_s": 9.269080877304077,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 2.049439528999983
+      }
+    },
+    "connect-global": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50051,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 1.2602246390000005,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006112538999957451
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4260,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:00.413620377Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:00.413620377Z",
+        "FinishedAt": "2026-11-25T05:28:10.550680771Z"
+      }
+    },
+    "connect-aliases": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 50052,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_b\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.13175070400001232,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006068603000016992
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 4691,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:10.747553572Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:10.747553572Z",
+        "FinishedAt": "2026-11-25T05:28:21.335870233Z"
+      }
+    },
+    "flight-global": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "12g",
+        "port": 32010,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.13878909999999678,
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5115,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:21.517119143Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:21.517119143Z",
+        "FinishedAt": "2026-11-25T05:28:29.706341671Z"
+      }
+    },
+    "fairness-local-8g-0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50500,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.12943794099999195,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006830463999961012
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 5477,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:29.862690868Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:29.862690868Z",
+        "FinishedAt": "2026-11-25T05:28:39.978829994Z"
+      }
+    },
+    "fairness-local-8g-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50501,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.2730292670000267,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006660659999965901
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6081,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:40.161309964Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:40.161309964Z",
+        "FinishedAt": "2026-11-25T05:28:50.333645128Z"
+      }
+    },
+    "fairness-local-8g-2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50502,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.1673694389999696,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006748650999952588
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 6654,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:50.540871284Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:28:50.540871284Z",
+        "FinishedAt": "2026-11-25T05:29:00.762133744Z"
+      }
+    },
+    "fairness-local-cluster-8g-0": {
+      "settings": {
+        "mode": "local-cluster",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50500,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local-cluster",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.17666249600000583,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007573885999988761
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7257,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:00.931936053Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:00.931936053Z",
+        "FinishedAt": "2026-11-25T05:29:10.97522761Z"
+      }
+    },
+    "fairness-local-cluster-8g-1": {
+      "settings": {
+        "mode": "local-cluster",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50501,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local-cluster",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.1331935919999978,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.0073004089999813004
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 7737,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:11.139235791Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:11.139235791Z",
+        "FinishedAt": "2026-11-25T05:29:24.505180691Z"
+      }
+    },
+    "fairness-local-cluster-8g-2": {
+      "settings": {
+        "mode": "local-cluster",
+        "cores": 4,
+        "memory": "8g",
+        "port": 50502,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local-cluster",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.26291884399995524,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.007816692000005787
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8262,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:24.67471504Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:24.67471504Z",
+        "FinishedAt": "2026-11-25T05:29:33.756247542Z"
+      }
+    },
+    "fairness-local-2g-0": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "2g",
+        "port": 50500,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.24284920799999554,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006317605000049298
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 8752,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:34.033495321Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:34.033495321Z",
+        "FinishedAt": "2026-11-25T05:29:47.6484797Z"
+      }
+    },
+    "fairness-local-2g-1": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "2g",
+        "port": 50501,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.13070820299998331,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006580919999976231
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 9404,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:47.818867389Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:29:47.818867389Z",
+        "FinishedAt": "2026-11-25T05:30:01.819368677Z"
+      }
+    },
+    "fairness-local-2g-2": {
+      "settings": {
+        "mode": "local",
+        "cores": 4,
+        "memory": "2g",
+        "port": 50502,
+        "image": "ghcr.io/unikdahal/poc/sail:790c622e5c4d@sha256:c0257770f6faf19e1947ace80947067308af569e5338c3428adef251fe35a767",
+        "docker_options": [],
+        "env": {
+          "SAIL_MODE": "local",
+          "SAIL_CATALOG__LIST": "[{type=\"iceberg-rest\",name=\"tenant_a\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_a\",bearer_access_token_file=\"/tokens/tenant_a\"},{type=\"iceberg-rest\",name=\"tenant_b\",uri=\"http://polaris:8181/api/catalog\",warehouse=\"tenant_b\",bearer_access_token_file=\"/tokens/tenant_a\"}]",
+          "SAIL_CATALOG__DEFAULT_CATALOG": "tenant_a",
+          "AWS_REGION": "us-east-1",
+          "AWS_ENDPOINT": "http://minio:9000",
+          "AWS_ALLOW_HTTP": "true",
+          "RUST_LOG": "warn"
+        }
+      },
+      "listen_s": 0.38637837999999647,
+      "readiness_select1": {
+        "status": "ok",
+        "elapsed_s": 0.006520859999966433
+      },
+      "before_shutdown": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 10063,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:30:02.004185959Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "exit_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-11-25T05:30:02.004185959Z",
+        "FinishedAt": "2026-11-25T05:30:16.043631659Z"
+      }
+    }
+  },
   "cases": {
     "provision-tenant_a": [
       {
         "method": "POST",
         "path": "catalogs",
-        "status": 400,
-        "error": "{\"error\":{\"message\":\"Cannot create Catalog tenant_a. One or more of its locations overlaps with an existing catalog\",\"type\":\"ValidationException\",\"code\":400}}"
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "principals",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "principal-roles",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "PUT",
+        "path": "principals/tenant_a/principal-roles",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "PUT",
+        "path": "principal-roles/tenant_a/catalog-roles/tenant_a",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "PUT",
+        "path": "catalogs/tenant_a/catalog-roles/catalog_admin/grants",
+        "status": 201,
+        "error": null
       }
-    ]
+    ],
+    "provision-tenant_b": [
+      {
+        "method": "POST",
+        "path": "catalogs",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "principals",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "principal-roles",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "PUT",
+        "path": "principals/tenant_b/principal-roles",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "PUT",
+        "path": "principal-roles/tenant_b/catalog-roles/tenant_b",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "PUT",
+        "path": "catalogs/tenant_b/catalog-roles/catalog_admin/grants",
+        "status": 201,
+        "error": null
+      }
+    ],
+    "rest-tenant_a-tenant_a-ordinary": {
+      "http": 200,
+      "vended_storage_config_keys": [
+        "client.region",
+        "s3.endpoint",
+        "s3.path-style-access"
+      ],
+      "storage_credentials_count": 0,
+      "error": null
+    },
+    "rest-tenant_a-tenant_a-vended": {
+      "http": 200,
+      "vended_storage_config_keys": [
+        "client.refresh-credentials-endpoint",
+        "client.region",
+        "s3.access-key-id",
+        "s3.endpoint",
+        "s3.path-style-access",
+        "s3.secret-access-key",
+        "s3.session-token",
+        "s3.session-token-expires-at-ms"
+      ],
+      "storage_credentials_count": 1,
+      "error": null
+    },
+    "rest-tenant_a-tenant_b-ordinary": {
+      "http": 403,
+      "vended_storage_config_keys": [],
+      "storage_credentials_count": 0,
+      "error": "Principal 'tenant_a' with activated PrincipalRoles '[tenant_a]' and activated grants via '[tenant_a]' is not authorized for op LOAD_TABLE"
+    },
+    "rest-tenant_a-tenant_b-vended": {
+      "http": 403,
+      "vended_storage_config_keys": [],
+      "storage_credentials_count": 0,
+      "error": "Principal 'tenant_a' with activated PrincipalRoles '[tenant_a]' and activated grants via '[tenant_a]' is not authorized for op LOAD_TABLE_WITH_READ_DELEGATION"
+    },
+    "rest-tenant_b-tenant_a-ordinary": {
+      "http": 403,
+      "vended_storage_config_keys": [],
+      "storage_credentials_count": 0,
+      "error": "Principal 'tenant_b' with activated PrincipalRoles '[tenant_b]' and activated grants via '[tenant_b]' is not authorized for op LOAD_TABLE"
+    },
+    "rest-tenant_b-tenant_a-vended": {
+      "http": 403,
+      "vended_storage_config_keys": [],
+      "storage_credentials_count": 0,
+      "error": "Principal 'tenant_b' with activated PrincipalRoles '[tenant_b]' and activated grants via '[tenant_b]' is not authorized for op LOAD_TABLE_WITH_READ_DELEGATION"
+    },
+    "rest-tenant_b-tenant_b-ordinary": {
+      "http": 200,
+      "vended_storage_config_keys": [
+        "client.region",
+        "s3.endpoint",
+        "s3.path-style-access"
+      ],
+      "storage_credentials_count": 0,
+      "error": null
+    },
+    "rest-tenant_b-tenant_b-vended": {
+      "http": 200,
+      "vended_storage_config_keys": [
+        "client.refresh-credentials-endpoint",
+        "client.region",
+        "s3.access-key-id",
+        "s3.endpoint",
+        "s3.path-style-access",
+        "s3.secret-access-key",
+        "s3.session-token",
+        "s3.session-token-expires-at-ms"
+      ],
+      "storage_credentials_count": 1,
+      "error": null
+    },
+    "sts-assume-role": {
+      "status": "ok",
+      "elapsed_s": 0.008506825999972989
+    },
+    "connect-tenant_a-session-option": {
+      "status": "ok",
+      "elapsed_s": 0.018742554000027667
+    },
+    "connect-tenant_a-tenant_a-read": {
+      "status": "ok",
+      "elapsed_s": 0.058992584000009174,
+      "rows": [
+        [
+          1
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_a.isolated.connect_a"
+    },
+    "connect-tenant_a-tenant_a-write": {
+      "status": "ok",
+      "elapsed_s": 0.0874000289999799,
+      "rows": [],
+      "sql": "INSERT INTO tenant_a.isolated.connect_a VALUES (99)"
+    },
+    "connect-tenant_a-tenant_a-drop": {
+      "status": "ok",
+      "elapsed_s": 0.012218416999985493,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "DROP TABLE tenant_a.isolated.connect_a"
+    },
+    "connect-tenant_a-tenant_b-read": {
+      "status": "error",
+      "error": "AnalysisException: Failed to load table isolated.connect_a: response error: status code 403 Forbidden",
+      "elapsed_s": 0.012894491999986712,
+      "sql": "SELECT id FROM tenant_b.isolated.connect_a"
+    },
+    "connect-tenant_a-tenant_b-write": {
+      "status": "error",
+      "error": "AnalysisException: Failed to load table isolated.connect_a: response error: status code 403 Forbidden",
+      "elapsed_s": 0.008295869999983552,
+      "sql": "INSERT INTO tenant_b.isolated.connect_a VALUES (99)"
+    },
+    "connect-tenant_a-tenant_b-drop": {
+      "status": "error",
+      "error": "AnalysisException: external error: Failed to drop table: response error: status code 403 Forbidden",
+      "elapsed_s": 0.007150554000020293,
+      "sql": "DROP TABLE tenant_b.isolated.connect_a"
+    },
+    "connect-tenant_b-session-option": {
+      "status": "ok",
+      "elapsed_s": 0.01676685299997871
+    },
+    "connect-tenant_b-tenant_a-read": {
+      "status": "ok",
+      "elapsed_s": 0.040900163999992856,
+      "rows": [
+        [
+          1
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_a.isolated.connect_b"
+    },
+    "connect-tenant_b-tenant_a-write": {
+      "status": "ok",
+      "elapsed_s": 0.08117474100004074,
+      "rows": [],
+      "sql": "INSERT INTO tenant_a.isolated.connect_b VALUES (99)"
+    },
+    "connect-tenant_b-tenant_a-drop": {
+      "status": "ok",
+      "elapsed_s": 0.008237643000029493,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "DROP TABLE tenant_a.isolated.connect_b"
+    },
+    "connect-tenant_b-tenant_b-read": {
+      "status": "error",
+      "error": "AnalysisException: Failed to load table isolated.connect_b: response error: status code 403 Forbidden",
+      "elapsed_s": 0.013620097999989866,
+      "sql": "SELECT id FROM tenant_b.isolated.connect_b"
+    },
+    "connect-tenant_b-tenant_b-write": {
+      "status": "error",
+      "error": "AnalysisException: Failed to load table isolated.connect_b: response error: status code 403 Forbidden",
+      "elapsed_s": 0.0044635980000293785,
+      "sql": "INSERT INTO tenant_b.isolated.connect_b VALUES (99)"
+    },
+    "connect-tenant_b-tenant_b-drop": {
+      "status": "error",
+      "error": "AnalysisException: external error: Failed to drop table: response error: status code 403 Forbidden",
+      "elapsed_s": 0.004627985000013268,
+      "sql": "DROP TABLE tenant_b.isolated.connect_b"
+    },
+    "session-a-CREATE": {
+      "status": "ok",
+      "elapsed_s": 0.003897670000014841,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "CREATE TEMPORARY VIEW tenant_marker AS SELECT 71 AS v"
+    },
+    "session-a-SET": {
+      "status": "ok",
+      "elapsed_s": 0.003328657999986717,
+      "rows": [
+        [
+          "spark.sql.session.timeZone",
+          "Pacific/Honolulu"
+        ]
+      ],
+      "sql": "SET spark.sql.session.timeZone=Pacific/Honolulu"
+    },
+    "python-udf-register-a": {
+      "status": "ok",
+      "elapsed_s": 0.0027584530000126506
+    },
+    "session-a-view": {
+      "status": "ok",
+      "elapsed_s": 0.005448974999978873,
+      "rows": [
+        [
+          71
+        ]
+      ],
+      "sql": "SELECT * FROM tenant_marker"
+    },
+    "session-a-zone": {
+      "status": "error",
+      "error": "UnsupportedOperationException: show property",
+      "elapsed_s": 0.0013675280000029488,
+      "sql": "SET spark.sql.session.timeZone"
+    },
+    "session-a-context": {
+      "status": "ok",
+      "elapsed_s": 0.004634284000019306,
+      "rows": [
+        [
+          "tenant_a",
+          "isolated"
+        ]
+      ],
+      "sql": "SELECT current_catalog(), current_database()"
+    },
+    "session-a-udf": {
+      "status": "error",
+      "error": "IllegalArgumentException: invalid argument: Python version used to compile the UDF (3.11) does not match the Python version at runtime (3.14.10 (main, Nov 24 2026, 04:58:47) [GCC 14.2.0])",
+      "elapsed_s": 0.002291433000038978,
+      "sql": "SELECT tenant_increment(1)"
+    },
+    "session-b-view": {
+      "status": "error",
+      "error": "AnalysisException: Table not found: [TABLE_OR_VIEW_NOT_FOUND] Table or view not found: default.tenant_marker",
+      "elapsed_s": 0.011873961999981475,
+      "sql": "SELECT * FROM tenant_marker"
+    },
+    "session-b-zone": {
+      "status": "error",
+      "error": "UnsupportedOperationException: show property",
+      "elapsed_s": 0.0009184060000393401,
+      "sql": "SET spark.sql.session.timeZone"
+    },
+    "session-b-context": {
+      "status": "ok",
+      "elapsed_s": 0.0037569790000020475,
+      "rows": [
+        [
+          "tenant_a",
+          "default"
+        ]
+      ],
+      "sql": "SELECT current_catalog(), current_database()"
+    },
+    "session-b-udf": {
+      "status": "error",
+      "error": "UnsupportedOperationException: unknown function: tenant_increment",
+      "elapsed_s": 0.002237632999992911,
+      "sql": "SELECT tenant_increment(1)"
+    },
+    "aliases-tenant_a-session-option": {
+      "status": "ok",
+      "elapsed_s": 0.019315124000002015
+    },
+    "aliases-tenant_a-tenant_a-read": {
+      "status": "ok",
+      "elapsed_s": 0.04707114500001808,
+      "rows": [
+        [
+          1
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_a.isolated.aliases_a"
+    },
+    "aliases-tenant_a-tenant_a-write": {
+      "status": "ok",
+      "elapsed_s": 0.07517072199999575,
+      "rows": [],
+      "sql": "INSERT INTO tenant_a.isolated.aliases_a VALUES (99)"
+    },
+    "aliases-tenant_a-tenant_a-drop": {
+      "status": "ok",
+      "elapsed_s": 0.008299085999965428,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "DROP TABLE tenant_a.isolated.aliases_a"
+    },
+    "aliases-tenant_a-tenant_b-read": {
+      "status": "ok",
+      "elapsed_s": 0.03624138699996138,
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_b.isolated.aliases_a"
+    },
+    "aliases-tenant_a-tenant_b-write": {
+      "status": "ok",
+      "elapsed_s": 0.0890088090000063,
+      "rows": [],
+      "sql": "INSERT INTO tenant_b.isolated.aliases_a VALUES (99)"
+    },
+    "aliases-tenant_a-tenant_b-drop": {
+      "status": "ok",
+      "elapsed_s": 0.009571983000000728,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "DROP TABLE tenant_b.isolated.aliases_a"
+    },
+    "aliases-tenant_b-session-option": {
+      "status": "ok",
+      "elapsed_s": 0.016087096000035217
+    },
+    "aliases-tenant_b-tenant_a-read": {
+      "status": "ok",
+      "elapsed_s": 0.04101002300001255,
+      "rows": [
+        [
+          1
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_a.isolated.aliases_b"
+    },
+    "aliases-tenant_b-tenant_a-write": {
+      "status": "ok",
+      "elapsed_s": 0.08820276000000149,
+      "rows": [],
+      "sql": "INSERT INTO tenant_a.isolated.aliases_b VALUES (99)"
+    },
+    "aliases-tenant_b-tenant_a-drop": {
+      "status": "ok",
+      "elapsed_s": 0.007695762000025752,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "DROP TABLE tenant_a.isolated.aliases_b"
+    },
+    "aliases-tenant_b-tenant_b-read": {
+      "status": "ok",
+      "elapsed_s": 0.047165345999985675,
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "sql": "SELECT id FROM tenant_b.isolated.aliases_b"
+    },
+    "aliases-tenant_b-tenant_b-write": {
+      "status": "ok",
+      "elapsed_s": 0.08102207999996835,
+      "rows": [],
+      "sql": "INSERT INTO tenant_b.isolated.aliases_b VALUES (99)"
+    },
+    "aliases-tenant_b-tenant_b-drop": {
+      "status": "ok",
+      "elapsed_s": 0.007738415000005716,
+      "rows": [
+        [
+          true
+        ]
+      ],
+      "sql": "DROP TABLE tenant_b.isolated.aliases_b"
+    },
+    "flight-tenant_a-tenant_a-read": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
+      "elapsed_s": 0.0007375360000310138,
+      "sql": "SELECT id FROM tenant_a.isolated.flight_a"
+    },
+    "flight-tenant_a-tenant_a-write": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
+      "elapsed_s": 7.967999999891617e-05,
+      "sql": "INSERT INTO tenant_a.isolated.flight_a VALUES (99)"
+    },
+    "flight-tenant_a-tenant_a-drop": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
+      "elapsed_s": 9.243800002423086e-05,
+      "sql": "DROP TABLE tenant_a.isolated.flight_a"
+    },
+    "flight-tenant_a-tenant_b-read": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
+      "elapsed_s": 6.971400000566064e-05,
+      "sql": "SELECT id FROM tenant_b.isolated.flight_a"
+    },
+    "flight-tenant_a-tenant_b-write": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
+      "elapsed_s": 6.981500001757013e-05,
+      "sql": "INSERT INTO tenant_b.isolated.flight_a VALUES (99)"
+    },
+    "flight-tenant_a-tenant_b-drop": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: recvmsg:Connection reset by peer",
+      "elapsed_s": 0.00010175199997775053,
+      "sql": "DROP TABLE tenant_b.isolated.flight_a"
+    },
+    "flight-tenant_b-tenant_a-read": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: Socket closed",
+      "elapsed_s": 0.0020287699999812503,
+      "sql": "SELECT id FROM tenant_a.isolated.flight_b"
+    },
+    "flight-tenant_b-tenant_a-write": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: Socket closed",
+      "elapsed_s": 8.808199999066346e-05,
+      "sql": "INSERT INTO tenant_a.isolated.flight_b VALUES (99)"
+    },
+    "flight-tenant_b-tenant_a-drop": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: Socket closed",
+      "elapsed_s": 8.74210000461062e-05,
+      "sql": "DROP TABLE tenant_a.isolated.flight_b"
+    },
+    "flight-tenant_b-tenant_b-read": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: Socket closed",
+      "elapsed_s": 6.957400000828784e-05,
+      "sql": "SELECT id FROM tenant_b.isolated.flight_b"
+    },
+    "flight-tenant_b-tenant_b-write": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: Socket closed",
+      "elapsed_s": 8.250400003362302e-05,
+      "sql": "INSERT INTO tenant_b.isolated.flight_b VALUES (99)"
+    },
+    "flight-tenant_b-tenant_b-drop": {
+      "status": "error",
+      "error": "FlightUnavailableError: Flight returned unavailable error, with message: failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:32010: Socket closed",
+      "elapsed_s": 6.82220000385314e-05,
+      "sql": "DROP TABLE tenant_b.isolated.flight_b"
+    },
+    "fairness-local-8g-0": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.019325899000023128,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033222929999965345,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003274802000021282,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003297035999992204,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032054490000064106,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034635650000041096,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029373469999995905,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032819830000221373,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003115563999983806,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030396310000355697,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031620430000316446,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031859300000292023,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003213840999990225,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029239569999504056,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003793718999986595,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0028884829999924477,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003236363999974401,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034457479999900897,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030544520000148623,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030998999999951593,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003259730000024774,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003108662999977696,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0028633050000053117,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003652829000031943,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0041732569999908264,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034478809999995974,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003181752999978471,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033697439999968992,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003365567999992436,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003169684999988931,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031075919999921098,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003258869000035247,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032188779999842154,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030378479999626506,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029707169999824146,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032411320000278465,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003429162999964319,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030930400000102054,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00324158199998692,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031105560000241894,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.005727794000051745,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.010315561999959755,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.12590221700003212,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007974877999970431,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004083723000007922,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006996443999980784,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.010988969999971232,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005446161999998367,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0090215550000039,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004581608000023607,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006296394999992572,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004551713999944695,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003946417000008751,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004870702000005167,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004639204999989488,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004767597000011392,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004441437999957998,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005383317999985593,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005806923999955416,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004188859999999295,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004788507999990088,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006973878999986027,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005804449000038403,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004494168000007903,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004534527999965121,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.009473390999971798,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005133945000011408,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0048851120000108494,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0045210769999926015,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005531008999980713,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005514124000001175,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00359729500002004,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005448766000029082,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004304112999989229,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006283144999997603,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0049457729999744515,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004899765000004663,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004456319999974312,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004768828000010217,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034322180000003755,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0050368600000183505,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005481725999970877,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004528758999981619,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004335480000008829,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0049836000000027525,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034458080000376867,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037720170000170583,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038703139999825,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003600428999959604,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035877710000136176,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003381741999987753,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037254569999731757,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00422304199997825,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.5969913540000107,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.019325899000023128,
+      "p99_under_load_s": 0.12590221700003212
+    },
+    "fairness-local-8g-1": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.018564234000052693,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034249310000404876,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034089469999685207,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003071322000039345,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030846509999946647,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035106500000097185,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003348617000028753,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030096899999989546,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00331946300002528,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030839400000104433,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002948668000044563,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030840610000382185,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003220334999980423,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031586719999836532,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029921530000365237,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033305399999790097,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031779409999899144,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003247185000020636,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031135450000192577,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030147869999836985,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003345502000001943,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00308881799998062,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031262729999639305,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032115820000058193,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003384671000048911,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0028604770000129065,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033481859999824337,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00316982999999027,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031834590000130447,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003306603999988056,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033315919999949983,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003065612999989753,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031676760000323156,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0026973610000027293,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036055119999787166,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003139915000019755,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003041085999996085,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031178309999972953,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035042599999997037,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003109988999995039,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.012511205000009795,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.12412502999995922,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006829421999952956,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004550016999985473,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005203476000019691,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005121233000011216,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005508412999972734,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005040121999968505,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004548515000010411,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004377708999982133,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004765188999954262,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0051116279999519065,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005922022999982346,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004930566999973962,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005258617999970738,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004513893000023472,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005166991999999482,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004963906999989831,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005773099000009552,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005428293000022677,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00558155299995633,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004915185000015754,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00417523600003733,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004546261000029972,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005428583000025355,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004883957000004102,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00441926199999898,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005473942000037368,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004362555999989581,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004143667999983336,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004545459999974355,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005476325000017823,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005024547000004986,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005381092999982684,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004887441999983366,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00443907100003571,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006291626000006545,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005186008999999103,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004291669999986425,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005244136999976945,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004856737000011435,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035284260000025824,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004108024999993631,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004003248000003623,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003382117000001017,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034868050000227413,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004007824999973764,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00385621799995306,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003697019000014734,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004339420999997401,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.5657373860000234,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.018564234000052693,
+      "p99_under_load_s": 0.12412502999995922
+    },
+    "fairness-local-8g-2": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.019144114000027912,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033032590000061646,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032286069999827305,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00326746500002173,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003217430000006516,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003002659000003405,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003295848999982809,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002847826999982317,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003212683000015204,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002967376000015065,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031609860000116896,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032226280000031693,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003134846000023117,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030009559999939484,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030909820000033505,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003241736999996192,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00320396099999698,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003197840999973778,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00318274799997198,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00324793699996917,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030460039999979927,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003115298000011535,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003107286000044951,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032978709999724742,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003375357999971129,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030029999999783286,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032359379999888915,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033405859999788845,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031207860000108667,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002812543999993977,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003034906999971554,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00340715499999078,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032600750000142398,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029064459999972314,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003278523000005862,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032920930000273074,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029950379999945653,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003094296000028862,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003471031000003677,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029262850000009166,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.12205005299995264,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005102233999991768,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0045070630000054734,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004259282000020903,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0052475219999905676,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004994774000010693,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0049668620000034025,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003927864999980102,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004467402999978276,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004366783000023133,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0047060100000066996,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0047849000000042,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005781713000033051,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0048231569999757085,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004962175000002844,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004420062999997754,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005600120999986302,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005029426000021431,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005175714999950287,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004840853000018797,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004887082999971426,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004329525999992256,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004525740999952177,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0048489650000078655,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005791949000013119,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004854793999982121,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004252572000041255,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00424104400002534,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005468373999974574,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0049066519999882985,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004330379000009543,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005587591999983488,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.011918006999962927,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.012582793000035508,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005096165999987079,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00494966700000532,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006109404000028462,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005237437999994654,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004768714999954682,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036018870000020797,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037684160000139855,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004074666000008165,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004105009999989306,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003569098000014037,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003536709000002247,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037147159999904034,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003586785000038617,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004418639999983043,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.5581676850000008,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.019144114000027912,
+      "p99_under_load_s": 0.12205005299995264
+    },
+    "fairness-local-cluster-8g-0": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.020649682999987817,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035828970000011395,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036159370000063973,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038648089999924196,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035542539999937617,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034770190000017465,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003461995999998635,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00352227700000185,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003626873000030173,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003433111999981975,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036609439999892857,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003624798999965151,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035794419999888305,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035847799999828567,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033914499999809777,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036540940000122646,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003684780000014598,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035456010000416427,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003592019999985041,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036349449999875105,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003640313000005335,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003968866000036542,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038150039999891305,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003622746999951687,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003563899000027959,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00354950700000245,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033225170000150683,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038381809999918914,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003519332999985636,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033792930000231536,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003630690000022696,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003893354000013005,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035858530000041355,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036652019999792174,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036629280000397557,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003889046999972834,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003689558000019133,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035421870000504896,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036158780000050683,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035472750000167252,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.22813720300001705,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.015875274999984867,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.012015622000035364,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006451486000003115,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.010424479000050724,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007282291000024088,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005092258999980004,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.4852145260000498,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.020649682999987817,
+      "p99_under_load_s": 0.22813720300001705
+    },
+    "fairness-local-cluster-8g-1": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.020598251999956574,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036994120000031216,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033959380000396777,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003533033999985946,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003672511999980088,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003696278000006714,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003672822999988057,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037378399999852263,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003911539999990055,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00346879699998226,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003989848000003349,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035383219999971516,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037846609999974135,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003442026000016085,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036246909999704258,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003597088999981679,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003414745999975821,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003505060999998477,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037680859999795757,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003838802000018404,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003759352000031413,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036600440000142953,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037866029999804596,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00366784599998482,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036311399999817695,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036091469999632864,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035232990000508835,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033998540000084176,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036778709999794046,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036155180000037035,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033909210000047096,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036612150000223664,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032991839999567674,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003321605999985877,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003635136000013972,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034968190000199684,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003742416999955367,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038044199999944794,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003684902000031798,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003380554999978358,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.2331258400000138,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.01122352600003751,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0052825950000396915,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.013475199000026805,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004552069999988362,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.010733551999976498,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004168816000003517,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00560938400002442,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.4879922449999867,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.020598251999956574,
+      "p99_under_load_s": 0.2331258400000138
+    },
+    "fairness-local-cluster-8g-2": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.020992071000023316,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003419844000006833,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036299090000397882,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003531842000029428,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036236789999861685,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035831080000434667,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003647063000016715,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003722686999992675,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003611660999979449,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003653874999997697,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037379510000050686,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003349507999985235,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035953070000118714,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033228290000124616,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0039359570000101485,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003896949000022687,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035555069999873012,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037114410000071985,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036864030000174353,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036716519999799857,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035687260000258902,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003897328999983074,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003363399000022582,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036154470000155925,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00475351199997931,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0054013220000115325,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00474419800002579,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004503726999985247,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004026482000028864,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004719951999959449,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003719062000016038,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004499130999988665,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00486277599998175,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004668615000014142,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038182710000000952,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037056410000104734,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038446200000521458,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003655487000003177,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037371299999904295,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038473440000075243,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.2478531309999994,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0055878619999703005,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004290778000040518,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004630697999971289,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004862995999985742,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004171419999977388,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004756757000052403,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004800772000010056,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.47922020199996496,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.020992071000023316,
+      "p99_under_load_s": 0.2478531309999994
+    },
+    "fairness-local-2g-0": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.01866356999994423,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034140050000246447,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003003229000000829,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034220769999819822,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002871671999969294,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032859830000120382,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003243908999991163,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0028386729999851923,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003389609000009841,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003226693999977215,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003236408000020674,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029373709999731545,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002986364000037156,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002793323999981112,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004010829000037575,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003417699999999968,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003608046000010745,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034009350000019367,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031756480000240117,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003006233999997221,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035706190000155402,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003146614000002046,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002968707999968956,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003250449999995908,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003187846000002992,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032490270000380406,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030674559999965822,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003098092000016095,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031755269999962366,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00322457099997564,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003466563000017686,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002939602999958879,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030595540000035726,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030959879999841178,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003155957999979364,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003039143000023614,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031141560000378377,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031312299999513016,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002988937999987229,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030407859999854736,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.007367848000001231,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.12546603399999867,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004886259999977938,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006429382000021633,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005362753999975212,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005290935999994417,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004146381999987625,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004991146999998364,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004416416999958983,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004453892000015003,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004859430999999859,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004789024999979574,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004377027000032285,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003962015000013253,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004675093999992441,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004416345999970872,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0046977769999898555,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004340392000017346,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005553931000008561,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005096696000009615,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005308012000000417,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005072859999984303,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004302595999945424,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00460376700004872,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004965098000013768,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004656225000019276,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0052865999999767155,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005988411000032556,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004766151000012542,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004030298000031962,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0046453790000100526,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006412385999965409,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004683496999973613,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005606017999980395,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0045606730000145035,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004777547000003324,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0066437319999863576,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.012150463000011769,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007840977000000748,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.009105551999994077,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.008197370000004867,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004351528000029248,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005926247999980205,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006623833999981343,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004706710999982988,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0035305689999631795,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004223636999995506,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0043574179999836815,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.5752029020000009,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.01866356999994423,
+      "p99_under_load_s": 0.12546603399999867
+    },
+    "fairness-local-2g-1": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.018962782000016887,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003512553999996726,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030175510000276518,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003400975000033668,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032222180000189837,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003179223999950409,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00288776700000426,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036133239999571742,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031697300000246287,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031201749999922868,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032288079999602814,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029673160000243115,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033477869999956056,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030513429999814434,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034179410000092503,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003035258000011254,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003198052000016105,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003321787000004406,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029390330000182985,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003167316000030951,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003200935999984722,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030971809999869038,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002981726999962575,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033444309999595134,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029116729999714153,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003286954000031983,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031497289999720124,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029206460000068546,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032310209999764083,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003031022000016037,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003154326000014862,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003358161999983622,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00312483200002589,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032134740000060447,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002959565000026032,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003421847000026901,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029433299999936935,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031419879999816658,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030151369999771305,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032641110000213303,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.005254643000000669,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004441826000004312,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.12794414000001098,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00505978099999993,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004392360999986522,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005038518999981534,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004623347000006106,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004286061999948743,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006524997000042276,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004174784999975145,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005117197000004126,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005017508000037196,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004924248000008902,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004797988999996505,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0050254390000077365,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004599942000027113,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007681579999996302,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004298120000044037,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004174093999949946,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005484617999968577,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006089895000002343,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0044924510000328155,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0044511700000384735,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004387774000008449,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005335674999969342,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005390277000003607,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005047142999956122,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005873570000005657,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004365281000048071,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037108399999965513,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004918679000013526,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0040012349999756225,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004395836000014697,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0037919709999982842,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005209935999971549,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033467750000113483,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006394290000002911,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005331898999997975,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004549958000040988,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0071179239999992205,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006245777999993152,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004106453000019883,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006101030999957402,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004865569999992658,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036709400000063397,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0036506299999814473,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0034410259999617665,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003292873999953372,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038369189999798436,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004245532000027197,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.5644440730000042,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.018962782000016887,
+      "p99_under_load_s": 0.12794414000001098
+    },
+    "fairness-local-2g-2": {
+      "idle": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.01934796099999403,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003238843000019642,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003433274999963487,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031576709999967534,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033299399999577872,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031144060000087848,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031469250000100146,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003064140999981646,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003045814000017799,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031724940000117385,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031418880000160243,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031538049999539908,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003129688999990776,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030069449999814424,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003041757999994843,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032350280000059684,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031690789999743174,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030517829999894275,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003198462999989715,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030793540000217945,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032148170000141363,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0027175320000196734,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031575309999993806,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0031106310000268422,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003138022000030105,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0032619170000316444,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0028751790000001165,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033370700000432407,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003236039000000801,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030445810000401252,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003371242000014263,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.002971733000038057,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003196599000034439,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0030054729999733354,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003411951999964913,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0029917530000034276,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003016190000039387,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003301096999962283,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033344860000283916,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003103469999985009,
+          "matches_spark": true
+        }
+      ],
+      "under_load": [
+        {
+          "status": "ok",
+          "elapsed_s": 0.1366292220000105,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.010151391000022159,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.009266944999978932,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004108416000008219,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005509736000021803,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004396286999963195,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005122346000007383,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0047814239999866,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004410278000023027,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005301763999966624,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00446835499997178,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005731028000013794,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004338620999988052,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004194825000013225,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038958779999802573,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.005177368000033766,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0054072919999725855,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004359762999968098,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0033721629999945435,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006450024000002941,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004351100000008046,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004383817999951134,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.008092084999987037,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007435481000015898,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007360609999977896,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.00796891999999616,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.009013406000008217,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.009534346000009464,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0052476220000130525,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.007426608000002943,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006875782999998137,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.006790104000003794,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004423708999979681,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004144289999999273,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0062068500000123095,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004770848000021033,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004761125000015909,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.004398500999968746,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003848806999997123,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0043856109999751425,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038236190000020542,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.003779933999965124,
+          "matches_spark": true
+        },
+        {
+          "status": "ok",
+          "elapsed_s": 0.0038714309999932084,
+          "matches_spark": true
+        }
+      ],
+      "heavy": {
+        "status": "ok",
+        "elapsed_s": 0.5686925549999842,
+        "matches_spark": true
+      },
+      "p99_idle_s": 0.01934796099999403,
+      "p99_under_load_s": 0.1366292220000105
+    }
+  },
+  "fairness_medians": {
+    "local-8g": {
+      "p99_idle_s": 0.018854174000040302,
+      "p99_under_load_s": 0.12308754149995593
+    },
+    "local-cluster-8g": {
+      "p99_idle_s": 0.020795161499989945,
+      "p99_under_load_s": 0.2404894855000066
+    },
+    "local-2g": {
+      "p99_idle_s": 0.019155371500005458,
+      "p99_under_load_s": 0.13228668100001073
+    }
+  },
+  "source_candidates": {
+    "flight_session": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-flight/src/service.rs#L54",
+    "spark_session": "https://github.com/lakehq/sail/blob/790c622e5c4d9a9e2b87bdfb8e5cb5a3a720035f/crates/sail-session/src/session_manager/actor/handler.rs#L45"
   }
 }

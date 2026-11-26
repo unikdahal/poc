@@ -1,0 +1,79 @@
+name: k8s-manifest-test
+# Applies k8s/sail-poc.yaml (the DevOps setup guide's manifests) to a kind cluster, following the
+# guide's order: Polaris principal, token CronJob, server; then runs k8s/verify.py.
+on: {workflow_dispatch: {}}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions: {contents: write, packages: read}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: {sail-tag: "latest"}
+      - name: Tables to read (TPC-H SF1, written by Spark)
+        run: |
+          python -m harness.services spark
+          python -m harness.data --sf 1
+          python -m harness.services stop-spark
+      - name: kind cluster
+        run: |
+          curl -sLo kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
+          printf 'kind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nnodes:\n- role: control-plane\n- role: worker\n- role: worker\n' > kind.yaml
+          kind create cluster --name poc --config kind.yaml --wait 180s
+          docker network connect kind poc-polaris-1 && docker network connect kind poc-minio-1
+          docker build -q -t poc-tools:latest -f k8s/tools.Dockerfile k8s
+          kind load docker-image "$SAIL_IMAGE" --name poc && kind load docker-image poc-tools:latest --name poc
+      - name: Step 3 - Polaris principal (guide script, run as admin)
+        run: |
+          ADMIN_TOKEN=$(cat /tmp/poc-tokens/polaris)
+          POLARIS=http://localhost:8181 CATALOG=poc ADMIN_TOKEN="$ADMIN_TOKEN" READ_NAMESPACES=tpch_sf1 \
+            WRITE_NAMESPACE=sail_poc sh k8s/polaris-principal.sh | tee out/principal.txt
+          jq -r .client_id out/principal.txt > /tmp/cid && jq -r .client_secret out/principal.txt > /tmp/csec
+          sed -i 's/"client_secret": ".*"/"client_secret": "***"/' out/principal.txt
+      - name: Steps 1-5 - apply manifests
+        run: |
+          kip() { docker inspect -f '{{(index .NetworkSettings.Networks "kind").IPAddress}}' "$1"; }
+          POLARIS_IP=$(kip poc-polaris-1) S3_IP=$(kip poc-minio-1) CLIENT_ID=$(cat /tmp/cid) CLIENT_SECRET=$(cat /tmp/csec) \
+            python k8s/render-test.py k8s/sail-poc.yaml > /tmp/rendered.yaml
+          grep -v -i -E 'secret_access|client_secret' /tmp/rendered.yaml > out/rendered-redacted.yaml
+          kubectl apply -f /tmp/rendered.yaml
+          kubectl -n sail-poc create job first-token --from=cronjob/polaris-token-refresher
+          kubectl -n sail-poc wait --for=condition=complete job/first-token --timeout=120s
+          kubectl -n sail-poc logs job/first-token
+          test "$(kubectl -n sail-poc get secret polaris-token -o jsonpath='{.data.token}' | base64 -d)" != pending
+          kubectl -n sail-poc rollout restart deployment/sail-spark-server
+          kubectl -n sail-poc rollout status deployment/sail-spark-server --timeout=180s
+      - name: Verify (guide section 5)
+        run: |
+          kubectl -n sail-poc port-forward service/sail-spark-server 50051:50051 > /tmp/pf.log 2>&1 &
+          sleep 5
+          cd out && timeout 900 python ../k8s/verify.py sc://localhost:50051 tpch_sf1 lineitem sail_poc 2>&1 | tee verify.txt
+          kubectl -n sail-poc get pods -l app.kubernetes.io/component=worker -o wide | tee worker-pods.txt
+      - name: Token rotation keeps queries working
+        run: |
+          OLD=$(kubectl -n sail-poc get secret polaris-token -o jsonpath='{.data.token}')
+          sleep 2; kubectl -n sail-poc create job second-token --from=cronjob/polaris-token-refresher
+          kubectl -n sail-poc wait --for=condition=complete job/second-token --timeout=120s
+          NEW=$(kubectl -n sail-poc get secret polaris-token -o jsonpath='{.data.token}')
+          [ "$OLD" != "$NEW" ] && echo "token rotated" | tee out/rotation.txt
+          sleep 90   # kubelet propagates Secret volume updates within about a minute
+          kubectl -n sail-poc exec deploy/sail-spark-server -- sh -c 'cat /tokens/token | cut -c1-12' >> out/rotation.txt
+          python - <<'PY' | tee -a out/rotation.txt
+          from pyspark.sql import SparkSession
+          s = SparkSession.builder.remote("sc://localhost:50051").getOrCreate()
+          print("after rotation:", s.sql("SELECT count(*) FROM polaris.tpch_sf1.nation").collect()[0][0])
+          PY
+      - name: Diagnostics
+        if: always()
+        run: |
+          kubectl -n sail-poc get all,cm,secret,quota -o wide > out/resources.txt 2>&1 || true
+          kubectl -n sail-poc get events --sort-by=.lastTimestamp > out/events.txt 2>&1 || true
+          kubectl -n sail-poc logs deploy/sail-spark-server --tail=300 > out/server.log 2>&1 || true
+          for p in $(kubectl -n sail-poc get pods -l app.kubernetes.io/component=worker -o name 2>/dev/null | head -2); do
+            kubectl -n sail-poc get "$p" -o yaml > "out/$(basename $p).yaml" 2>&1 || true
+            kubectl -n sail-poc logs "$p" --tail=100 > "out/$(basename $p).log" 2>&1 || true; done
+          kubectl get pods -A -l app.kubernetes.io/part-of=sail-poc -o wide >> out/resources.txt 2>&1 || true
+      - uses: ./.github/actions/publish
+        if: always()
+        with: {name: k8s-manifest}

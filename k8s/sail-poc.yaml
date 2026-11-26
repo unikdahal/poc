@@ -1,0 +1,247 @@
+# ---------- 1. Namespace, service accounts, RBAC, quota ----------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <NAMESPACE>
+  labels: {app.kubernetes.io/part-of: sail-poc}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sail
+  namespace: <NAMESPACE>
+  annotations:
+    # IRSA. Remove if you use EKS Pod Identity or static keys instead (step 4).
+    eks.amazonaws.com/role-arn: <S3_ROLE_ARN>
+---
+# The Sail server creates and deletes its own worker pods, in this namespace only.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: sail-manage-pods, namespace: <NAMESPACE>}
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: sail-manage-pods, namespace: <NAMESPACE>}
+subjects: [{kind: ServiceAccount, name: sail, namespace: <NAMESPACE>}]
+roleRef: {kind: Role, name: sail-manage-pods, apiGroup: rbac.authorization.k8s.io}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: polaris-token-refresher, namespace: <NAMESPACE>}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: polaris-token-writer, namespace: <NAMESPACE>}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["polaris-token"]
+    verbs: ["get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: polaris-token-writer, namespace: <NAMESPACE>}
+subjects: [{kind: ServiceAccount, name: polaris-token-refresher, namespace: <NAMESPACE>}]
+roleRef: {kind: Role, name: polaris-token-writer, apiGroup: rbac.authorization.k8s.io}
+---
+# Read-only access for the POC owner, plus port-forward to reach the server.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: sail-poc-viewer, namespace: <NAMESPACE>}
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "events", "services", "configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps", "batch"]
+    resources: ["deployments", "replicasets", "cronjobs", "jobs"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/portforward"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: sail-poc-viewer, namespace: <NAMESPACE>}
+subjects: [{kind: User, name: <POC_OWNER_IDENTITY>, apiGroup: rbac.authorization.k8s.io}]
+roleRef: {kind: Role, name: sail-poc-viewer, apiGroup: rbac.authorization.k8s.io}
+---
+# Safety net: Sail creates worker pods on its own. This caps what it can take.
+apiVersion: v1
+kind: ResourceQuota
+metadata: {name: sail-poc-quota, namespace: <NAMESPACE>}
+spec:
+  hard:
+    pods: "<MAX_WORKERS_PLUS_5>"
+    requests.cpu: "<QUOTA_CPU>"
+    requests.memory: "<QUOTA_MEMORY>"
+---
+# ---------- 2. Polaris credentials and token ----------
+apiVersion: v1
+kind: Secret
+metadata: {name: polaris-client, namespace: <NAMESPACE>}
+type: Opaque
+stringData:
+  client_id: <POLARIS_CLIENT_ID>
+  client_secret: <POLARIS_CLIENT_SECRET>
+---
+# Filled by the CronJob below. Sail re-reads this file on every catalog request.
+apiVersion: v1
+kind: Secret
+metadata: {name: polaris-token, namespace: <NAMESPACE>}
+type: Opaque
+stringData:
+  token: "pending"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata: {name: polaris-token-refresher, namespace: <NAMESPACE>}
+spec:
+  schedule: "*/20 * * * *"          # Polaris tokens usually last 1 h; refresh well before expiry
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          serviceAccountName: polaris-token-refresher
+          restartPolicy: OnFailure
+          nodeSelector: {<ONDEMAND_NODE_SELECTOR>}
+          containers:
+            - name: refresh
+              image: <TOOLS_IMAGE>        # any image with sh, curl, jq and kubectl
+              envFrom: [{secretRef: {name: polaris-client}}]
+              env:
+                - {name: POLARIS_URI, value: "<POLARIS_URI>"}
+                - {name: POLARIS_SCOPE, value: "<POLARIS_SCOPE>"}
+                - {name: NS, value: "<NAMESPACE>"}
+              command: ["/bin/sh", "-ec"]
+              args:
+                - |
+                  TOKEN=$(curl -sf -X POST "$POLARIS_URI/v1/oauth/tokens" \
+                    --data-urlencode grant_type=client_credentials \
+                    --data-urlencode client_id="$client_id" \
+                    --data-urlencode client_secret="$client_secret" \
+                    --data-urlencode scope="$POLARIS_SCOPE" | jq -r .access_token)
+                  [ -n "$TOKEN" ] && [ "$TOKEN" != "null" ] || { echo "no token from Polaris"; exit 1; }
+                  kubectl -n "$NS" patch secret polaris-token --type merge \
+                    -p "{\"stringData\":{\"token\":\"$TOKEN\"}}"
+                  echo "token refreshed at $(date -u +%FT%TZ)"
+---
+# ---------- 3. Sail configuration ----------
+# Shared by the server and every worker pod.
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: sail-common, namespace: <NAMESPACE>}
+data:
+  RUST_LOG: "info"
+  AWS_REGION: "<AWS_REGION>"
+  SAIL_CATALOG__LIST: '[{type="iceberg-rest", name="polaris", uri="<POLARIS_URI>", warehouse="<POLARIS_CATALOG>", bearer_access_token_file="/tokens/token"}]'
+  SAIL_CATALOG__DEFAULT_CATALOG: "polaris"
+  SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE: "flight"
+  # For the storage-shuffle tests only: switch the type above to "storage" and set
+  # SAIL_CLUSTER__SHUFFLE_BACKEND__STORAGE__PATH: "s3://<WAREHOUSE_BUCKET>/sail-poc-shuffle/"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: sail-server, namespace: <NAMESPACE>}
+data:
+  SAIL_MODE: "kubernetes-cluster"
+  SAIL_CLUSTER__DRIVER_LISTEN_HOST: "0.0.0.0"
+  SAIL_KUBERNETES__IMAGE: "<REGISTRY>:790c622e5c4d"
+  SAIL_KUBERNETES__IMAGE_PULL_POLICY: "IfNotPresent"
+  SAIL_KUBERNETES__NAMESPACE: "<NAMESPACE>"
+  SAIL_KUBERNETES__WORKER_SERVICE_ACCOUNT_NAME: "sail"
+  SAIL_CLUSTER__WORKER_INITIAL_COUNT: "2"
+  SAIL_CLUSTER__WORKER_MAX_COUNT: "<MAX_WORKERS>"
+  SAIL_CLUSTER__WORKER_TASK_SLOTS: "<WORKER_CPU>"
+  SAIL_CLUSTER__WORKER_MAX_IDLE_TIME_SECS: "120"
+  # Merged by Sail into every worker pod it creates.
+  SAIL_KUBERNETES__WORKER_POD_TEMPLATE: |
+    {"metadata": {"labels": {"app.kubernetes.io/part-of": "sail-poc", "app.kubernetes.io/component": "worker"}},
+     "spec": {
+       "nodeSelector": {<WORKER_NODE_SELECTOR_JSON>},
+       "tolerations": [<WORKER_TOLERATIONS_JSON>],
+       "containers": [{
+         "name": "worker",
+         "envFrom": [{"configMapRef": {"name": "sail-common"}}],
+         "env": [
+           {"name": "SAIL_RUNTIME__MEMORY_POOL__TYPE", "value": "fair"},
+           {"name": "SAIL_RUNTIME__MEMORY_POOL__FAIR__MAX_SIZE", "value": "<WORKER_POOL_BYTES>"},
+           {"name": "SAIL_RUNTIME__TEMPORARY_FILES__PATHS", "value": "[\"/spill\"]"}
+         ],
+         "resources": {"requests": {"cpu": "<WORKER_CPU>", "memory": "<WORKER_MEM>"},
+                       "limits": {"memory": "<WORKER_MEM>"}},
+         "volumeMounts": [{"name": "tokens", "mountPath": "/tokens", "readOnly": true},
+                          {"name": "spill", "mountPath": "/spill"}]
+       }],
+       "volumes": [{"name": "tokens", "secret": {"secretName": "polaris-token"}},
+                   {"name": "spill", "emptyDir": {"sizeLimit": "50Gi"}}]
+     }}
+---
+# ---------- 4. Sail server ----------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sail-spark-server
+  namespace: <NAMESPACE>
+  labels: {app.kubernetes.io/part-of: sail-poc, app.kubernetes.io/component: server}
+spec:
+  replicas: 1                      # must stay 1: each client session lives in one server pod
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app.kubernetes.io/part-of: sail-poc, app.kubernetes.io/component: server}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/part-of: sail-poc, app.kubernetes.io/component: server}
+    spec:
+      serviceAccountName: sail
+      nodeSelector: {<ONDEMAND_NODE_SELECTOR>}
+      containers:
+        - name: server
+          image: <REGISTRY>:790c622e5c4d
+          command: ["sail"]
+          args: ["spark", "server", "--ip", "0.0.0.0", "--port", "50051"]
+          ports: [{name: spark-connect, containerPort: 50051}]
+          envFrom:
+            - configMapRef: {name: sail-common}
+            - configMapRef: {name: sail-server}
+          env:
+            - name: SAIL_CLUSTER__DRIVER_EXTERNAL_HOST
+              valueFrom: {fieldRef: {fieldPath: status.podIP}}
+            - name: SAIL_KUBERNETES__DRIVER_POD_NAME
+              valueFrom: {fieldRef: {fieldPath: metadata.name}}
+          resources:
+            requests: {cpu: "2", memory: 8Gi}
+            limits: {memory: 8Gi}
+          readinessProbe:
+            tcpSocket: {port: 50051}
+            periodSeconds: 10
+          volumeMounts: [{name: tokens, mountPath: /tokens, readOnly: true}]
+      volumes: [{name: tokens, secret: {secretName: polaris-token}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: sail-spark-server, namespace: <NAMESPACE>}
+spec:
+  type: ClusterIP
+  selector: {app.kubernetes.io/part-of: sail-poc, app.kubernetes.io/component: server}
+  ports: [{name: spark-connect, port: 50051, targetPort: 50051}]
+---
+# Spark Connect has no authentication: only allow traffic from inside the namespace
+# (server <-> workers use random ports) and from the agreed client source to 50051.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: sail-poc-ingress, namespace: <NAMESPACE>}
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+  ingress:
+    - from: [{podSelector: {}}]
+    - from: [<CLIENT_SOURCE_SELECTOR>]
+      ports: [{protocol: TCP, port: 50051}]

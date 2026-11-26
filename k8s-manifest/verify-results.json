@@ -1,0 +1,44 @@
+[
+  {
+    "check": "1. server answers SELECT 1",
+    "ok": true,
+    "seconds": 0.638,
+    "detail": "1"
+  },
+  {
+    "check": "2. Polaris catalog lists namespaces",
+    "ok": true,
+    "seconds": 0.045,
+    "detail": "['tpch_sf1', 'sail_poc']"
+  },
+  {
+    "check": "3. read polaris.tpch_sf1.lineitem",
+    "ok": true,
+    "seconds": 0.085,
+    "detail": "6001215"
+  },
+  {
+    "check": "4. worker pods run a shuffle query",
+    "ok": true,
+    "seconds": 0.046,
+    "detail": "6001215"
+  },
+  {
+    "check": "5. create + write polaris.sail_poc.sail_smoke",
+    "ok": true,
+    "seconds": 0.976,
+    "detail": "[1, 3]"
+  },
+  {
+    "check": "6. write to tpch_sf1 is refused",
+    "ok": true,
+    "seconds": 0.045,
+    "detail": "external error: Failed to create table: response error: status code 403 Forbidden"
+  },
+  {
+    "check": "7. drop polaris.sail_poc.sail_smoke",
+    "ok": true,
+    "seconds": 0.021,
+    "detail": "[Row(value=True)]"
+  }
+]

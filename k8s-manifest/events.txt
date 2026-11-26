@@ -1,0 +1,50 @@
+LAST SEEN   TYPE      REASON              OBJECT                                    MESSAGE
+2m49s       Normal    Scheduled           pod/sail-spark-server-56d6fc8945-rrl27    Successfully assigned sail-poc/sail-spark-server-56d6fc8945-rrl27 to poc-worker
+2m49s       Normal    SuccessfulCreate    replicaset/sail-spark-server-56d6fc8945   Created pod: sail-spark-server-56d6fc8945-rrl27
+2m49s       Normal    ScalingReplicaSet   deployment/sail-spark-server              Scaled up replica set sail-spark-server-56d6fc8945 from 0 to 1
+2m49s       Warning   FailedMount         pod/sail-spark-server-56d6fc8945-rrl27    MountVolume.SetUp failed for volume "tokens" : secret "polaris-token" not found
+2m48s       Normal    Created             pod/sail-spark-server-56d6fc8945-rrl27    Created container: server
+2m48s       Normal    Scheduled           pod/first-token-rvsf6                     Successfully assigned sail-poc/first-token-rvsf6 to poc-worker2
+2m48s       Normal    SuccessfulCreate    job/first-token                           Created pod: first-token-rvsf6
+2m48s       Normal    Pulled              pod/sail-spark-server-56d6fc8945-rrl27    Container image "ghcr.io/unikdahal/poc/sail:latest" already present on machine
+2m48s       Normal    Started             pod/sail-spark-server-56d6fc8945-rrl27    Started container server
+2m47s       Normal    Started             pod/first-token-rvsf6                     Started container refresh
+2m47s       Normal    Created             pod/first-token-rvsf6                     Created container: refresh
+2m47s       Normal    Pulled              pod/first-token-rvsf6                     Container image "poc-tools:v1" already present on machine
+2m43s       Normal    Completed           job/first-token                           Job completed
+2m43s       Warning   UnexpectedJob       cronjob/polaris-token-refresher           Saw a job that the controller did not create or forgot: first-token
+2m43s       Normal    ScalingReplicaSet   deployment/sail-spark-server              Scaled down replica set sail-spark-server-56d6fc8945 from 1 to 0
+2m43s       Normal    Killing             pod/sail-spark-server-56d6fc8945-rrl27    Stopping container server
+2m43s       Normal    SuccessfulDelete    replicaset/sail-spark-server-56d6fc8945   Deleted pod: sail-spark-server-56d6fc8945-rrl27
+2m12s       Normal    ScalingReplicaSet   deployment/sail-spark-server              Scaled up replica set sail-spark-server-5b44df7d97 from 0 to 1
+2m12s       Normal    SuccessfulCreate    replicaset/sail-spark-server-5b44df7d97   Created pod: sail-spark-server-5b44df7d97-l62gv
+2m12s       Normal    Scheduled           pod/sail-spark-server-5b44df7d97-l62gv    Successfully assigned sail-poc/sail-spark-server-5b44df7d97-l62gv to poc-worker2
+2m11s       Normal    Created             pod/sail-spark-server-5b44df7d97-l62gv    Created container: server
+2m11s       Normal    Started             pod/sail-spark-server-5b44df7d97-l62gv    Started container server
+2m11s       Normal    Pulled              pod/sail-spark-server-5b44df7d97-l62gv    Container image "ghcr.io/unikdahal/poc/sail:latest" already present on machine
+2m5s        Normal    Scheduled           pod/sail-worker-0mg5y7ujd2-1              Successfully assigned sail-poc/sail-worker-0mg5y7ujd2-1 to poc-worker
+2m5s        Normal    Scheduled           pod/sail-worker-0mg5y7ujd2-2              Successfully assigned sail-poc/sail-worker-0mg5y7ujd2-2 to poc-worker2
+2m4s        Normal    Started             pod/sail-worker-0mg5y7ujd2-2              Started container worker
+2m4s        Normal    Pulled              pod/sail-worker-0mg5y7ujd2-1              Container image "ghcr.io/unikdahal/poc/sail:latest" already present on machine
+2m4s        Normal    Created             pod/sail-worker-0mg5y7ujd2-1              Created container: worker
+2m4s        Normal    Started             pod/sail-worker-0mg5y7ujd2-1              Started container worker
+2m4s        Normal    Pulled              pod/sail-worker-0mg5y7ujd2-2              Container image "ghcr.io/unikdahal/poc/sail:latest" already present on machine
+2m4s        Normal    Created             pod/sail-worker-0mg5y7ujd2-2              Created container: worker
+2m1s        Normal    Scheduled           pod/second-token-5qs6g                    Successfully assigned sail-poc/second-token-5qs6g to poc-worker
+2m1s        Normal    SuccessfulCreate    job/second-token                          Created pod: second-token-5qs6g
+2m          Normal    Pulled              pod/second-token-5qs6g                    Container image "poc-tools:v1" already present on machine
+2m          Normal    Created             pod/second-token-5qs6g                    Created container: refresh
+2m          Normal    Started             pod/second-token-5qs6g                    Started container refresh
+118s        Normal    Completed           job/second-token                          Job completed
+118s        Normal    SuccessfulDelete    cronjob/polaris-token-refresher           Deleted job first-token
+118s        Warning   UnexpectedJob       cronjob/polaris-token-refresher           Saw a job that the controller did not create or forgot: second-token
+27s         Warning   FailedScheduling    pod/sail-worker-k4q3codtjo-2              0/3 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/control-plane: }, 2 Insufficient cpu. no new claims to deallocate, preemption: 0/3 nodes are available: 1 Preemption is not helpful for scheduling, 2 No preemption victims found for incoming pod.
+2s          Warning   FailedScheduling    pod/sail-worker-k4q3codtjo-1              0/3 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/control-plane: }, 2 Insufficient cpu. no new claims to deallocate, preemption: 0/3 nodes are available: 1 Preemption is not helpful for scheduling, 2 No preemption victims found for incoming pod.
+2s          Normal    Scheduled           pod/sail-worker-k4q3codtjo-2              Successfully assigned sail-poc/sail-worker-k4q3codtjo-2 to poc-worker
+1s          Normal    Created             pod/sail-worker-k4q3codtjo-1              Created container: worker
+1s          Normal    Started             pod/sail-worker-k4q3codtjo-2              Started container worker
+1s          Normal    Created             pod/sail-worker-k4q3codtjo-2              Created container: worker
+1s          Normal    Pulled              pod/sail-worker-k4q3codtjo-2              Container image "ghcr.io/unikdahal/poc/sail:latest" already present on machine
+1s          Normal    Started             pod/sail-worker-k4q3codtjo-1              Started container worker
+1s          Normal    Pulled              pod/sail-worker-k4q3codtjo-1              Container image "ghcr.io/unikdahal/poc/sail:latest" already present on machine
+1s          Normal    Scheduled           pod/sail-worker-k4q3codtjo-1              Successfully assigned sail-poc/sail-worker-k4q3codtjo-1 to poc-worker2

@@ -1,0 +1,233 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-11-26T23:29:17Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/instance: 0mg5y7ujd2-1
+    app.kubernetes.io/name: sail
+    app.kubernetes.io/part-of: sail-poc
+    sail.lakesail.com/worker-manager: 0mg5y7ujd2
+  name: sail-worker-0mg5y7ujd2-1
+  namespace: sail-poc
+  ownerReferences:
+  - apiVersion: v1
+    kind: Pod
+    name: sail-spark-server-5b44df7d97-l62gv
+    uid: fb1f0d63-e515-4ae9-9c90-bfb47e21ebb2
+  resourceVersion: "1060"
+  uid: 1539951c-b595-4d05-a404-4ca4cc3bd732
+spec:
+  containers:
+  - args:
+    - worker
+    command:
+    - sail
+    env:
+    - name: RUST_LOG
+      value: info
+    - name: SAIL_CLUSTER__ENABLE_TLS
+      value: "false"
+    - name: SAIL_EXECUTION__BATCH_SIZE
+      value: "8192"
+    - name: SAIL_CLUSTER__DRIVER_EXTERNAL_HOST
+      value: 10.244.2.3
+    - name: SAIL_CLUSTER__DRIVER_EXTERNAL_PORT
+      value: "35897"
+    - name: SAIL_CLUSTER__DRIVER_ID
+      value: "1"
+    - name: SAIL_CLUSTER__SESSION_ID
+      value: 0366cf7b-7034-4351-9e66-d14701106899
+    - name: SAIL_CLUSTER__WORKER_ID
+      value: "1"
+    - name: SAIL_CLUSTER__WORKER_LISTEN_HOST
+      value: 0.0.0.0
+    - name: SAIL_CLUSTER__WORKER_EXTERNAL_HOST
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.podIP
+    - name: SAIL_CLUSTER__WORKER_HEARTBEAT_INTERVAL_SECS
+      value: "10"
+    - name: SAIL_CLUSTER__TASK_STREAM_BUFFER
+      value: "16"
+    - name: SAIL_CLUSTER__TASK_STREAM_MEMORY_LIMIT
+      value: "0"
+    - name: SAIL_CLUSTER__SHUFFLE_WRITE_BUFFER_SIZE
+      value: "33554432"
+    - name: SAIL_CLUSTER__TASK_STREAM_STALL_TIMEOUT_SECS
+      value: "300"
+    - name: SAIL_CLUSTER__TASK_STREAM_CREATION_TIMEOUT_SECS
+      value: "60"
+    - name: SAIL_CLUSTER__RPC_RETRY_STRATEGY
+      value: '{ fixed = { max_count = 3, delay_secs = 5 } }'
+    - name: SAIL_CLUSTER__SHUFFLE_BACKEND__TYPE
+      value: flight
+    - name: SAIL_CLUSTER__SHUFFLE_BACKEND__FLIGHT__COMPRESSION
+      value: zstd
+    - name: SAIL_CLUSTER__SHUFFLE_BACKEND__FLIGHT__CONNECTION_COUNT
+      value: "1"
+    - name: SAIL_CLUSTER__SHUFFLE_BACKEND__FLIGHT__INITIAL_STREAM_WINDOW_SIZE
+      value: "0"
+    - name: SAIL_CLUSTER__SHUFFLE_BACKEND__FLIGHT__INITIAL_CONNECTION_WINDOW_SIZE
+      value: "2147483647"
+    - name: TRACEPARENT
+      value: 00-e7ffbde4ff75dca70f9cbec41c8fbdca-b62c8aac00000007-01
+    - name: SAIL_RUNTIME__MEMORY_POOL__TYPE
+      value: fair
+    - name: SAIL_RUNTIME__MEMORY_POOL__FAIR__MAX_SIZE
+      value: "2147483648"
+    - name: SAIL_RUNTIME__TEMPORARY_FILES__PATHS
+      value: '["/spill"]'
+    envFrom:
+    - configMapRef:
+        name: sail-common
+    image: ghcr.io/unikdahal/poc/sail:latest
+    imagePullPolicy: IfNotPresent
+    name: worker
+    resources:
+      limits:
+        memory: 3Gi
+      requests:
+        cpu: "2"
+        memory: 3Gi
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tokens
+      name: tokens
+      readOnly: true
+    - mountPath: /spill
+      name: spill
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-tfr2x
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: poc-worker
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: sail
+  serviceAccountName: sail
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: tokens
+    secret:
+      defaultMode: 420
+      secretName: polaris-token
+  - emptyDir:
+      sizeLimit: 50Gi
+    name: spill
+  - name: kube-api-access-tfr2x
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-11-26T23:31:20Z"
+    observedGeneration: 1
+    status: "False"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-11-26T23:29:17Z"
+    observedGeneration: 1
+    reason: PodCompleted
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-11-26T23:31:19Z"
+    observedGeneration: 1
+    reason: PodCompleted
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-11-26T23:31:19Z"
+    observedGeneration: 1
+    reason: PodCompleted
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-11-26T23:29:17Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - allocatedResources:
+      cpu: "2"
+      memory: 3Gi
+    containerID: containerd://a45690348e5dd4d94a31fd7408986df6dbca096bbc030bedfbe45a0d0e325402
+    image: ghcr.io/unikdahal/poc/sail:latest
+    imageID: sha256:5d049339ae618f423d744451705a79fc17a362a4fa27804f5e7377a21ef33b53
+    lastState: {}
+    name: worker
+    ready: false
+    resources:
+      limits:
+        memory: 3Gi
+      requests:
+        cpu: "2"
+        memory: 3Gi
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://a45690348e5dd4d94a31fd7408986df6dbca096bbc030bedfbe45a0d0e325402
+        exitCode: 0
+        finishedAt: "2026-11-26T23:31:19Z"
+        reason: Completed
+        startedAt: "2026-11-26T23:29:18Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 0
+    volumeMounts:
+    - mountPath: /tokens
+      name: tokens
+      readOnly: true
+      recursiveReadOnly: Disabled
+    - mountPath: /spill
+      name: spill
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-tfr2x
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 172.19.0.3
+  hostIPs:
+  - ip: 172.19.0.3
+  observedGeneration: 1
+  phase: Succeeded
+  podIP: 10.244.1.3
+  podIPs:
+  - ip: 10.244.1.3
+  qosClass: Burstable
+  startTime: "2026-11-26T23:29:17Z"

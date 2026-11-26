@@ -110,6 +110,7 @@ spec:
           containers:
             - name: refresh
               image: <TOOLS_IMAGE>        # any image with sh, curl, jq and kubectl
+              resources: {requests: {cpu: 50m, memory: 64Mi}, limits: {memory: 128Mi}}   # the quota requires requests
               envFrom: [{secretRef: {name: polaris-client}}]
               env:
                 - {name: POLARIS_URI, value: "<POLARIS_URI>"}

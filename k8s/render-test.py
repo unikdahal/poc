@@ -11,7 +11,7 @@ v = {
     "NAMESPACE": "sail-poc", "POLARIS_URI": f"http://{os.environ['POLARIS_IP']}:8181/api/catalog",
     "POLARIS_CATALOG": "poc", "POLARIS_SCOPE": "PRINCIPAL_ROLE:ALL",
     "POLARIS_CLIENT_ID": os.environ["CLIENT_ID"], "POLARIS_CLIENT_SECRET": os.environ["CLIENT_SECRET"],
-    "AWS_REGION": "us-east-1", "WAREHOUSE_BUCKET": "warehouse", "TOOLS_IMAGE": "poc-tools:latest",
+    "AWS_REGION": "us-east-1", "WAREHOUSE_BUCKET": "warehouse", "TOOLS_IMAGE": "poc-tools:v1",
     "MAX_WORKERS": "3", "MAX_PODS": "8", "WORKER_CPU": "2", "WORKER_MEM": "3Gi",
     "WORKER_POOL_BYTES": "2147483648", "QUOTA_CPU": "20", "QUOTA_MEMORY": "40Gi",
     "POC_OWNER_IDENTITY": "poc-owner", "S3_ROLE_ARN": "unused-in-test",

@@ -22,8 +22,8 @@ jobs:
           printf 'kind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nnodes:\n- role: control-plane\n- role: worker\n- role: worker\n' > kind.yaml
           kind create cluster --name poc --config kind.yaml --wait 180s
           docker network connect kind poc-polaris-1 && docker network connect kind poc-minio-1
-          docker build -q -t poc-tools:latest -f k8s/tools.Dockerfile k8s
-          kind load docker-image "$SAIL_IMAGE" --name poc && kind load docker-image poc-tools:latest --name poc
+          docker build -q -t poc-tools:v1 -f k8s/tools.Dockerfile k8s
+          kind load docker-image "$SAIL_IMAGE" --name poc && kind load docker-image poc-tools:v1 --name poc
       - name: Step 3 - Polaris principal (guide script, run as admin)
         run: |
           ADMIN_TOKEN=$(cat /tmp/poc-tokens/polaris)

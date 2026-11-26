@@ -12,7 +12,7 @@ v = {
     "POLARIS_CATALOG": "poc", "POLARIS_SCOPE": "PRINCIPAL_ROLE:ALL",
     "POLARIS_CLIENT_ID": os.environ["CLIENT_ID"], "POLARIS_CLIENT_SECRET": os.environ["CLIENT_SECRET"],
     "AWS_REGION": "us-east-1", "WAREHOUSE_BUCKET": "warehouse", "TOOLS_IMAGE": "poc-tools:latest",
-    "MAX_WORKERS": "3", "MAX_WORKERS_PLUS_5": "8", "WORKER_CPU": "2", "WORKER_MEM": "3Gi",
+    "MAX_WORKERS": "3", "MAX_PODS": "8", "WORKER_CPU": "2", "WORKER_MEM": "3Gi",
     "WORKER_POOL_BYTES": "2147483648", "QUOTA_CPU": "20", "QUOTA_MEMORY": "40Gi",
     "POC_OWNER_IDENTITY": "poc-owner", "S3_ROLE_ARN": "unused-in-test",
 }
@@ -20,7 +20,7 @@ src = open(sys.argv[1]).read()
 src = src.replace("<REGISTRY>:790c622e5c4d", os.environ["SAIL_IMAGE"])
 src = src.replace("{<ONDEMAND_NODE_SELECTOR>}", "{}").replace("{<WORKER_NODE_SELECTOR_JSON>}", "{}")
 src = src.replace("[<WORKER_TOLERATIONS_JSON>]", "[]").replace("[<CLIENT_SOURCE_SELECTOR>]", "[{ipBlock: {cidr: 0.0.0.0/0}}]")
-src = re.sub(r"<([A-Z_]+)>", lambda m: v[m.group(1)], src)
+src = re.sub(r"<([A-Z0-9_]+)>", lambda m: v[m.group(1)], src)
 docs = [d for d in yaml.safe_load_all(src) if d]
 for d in docs:
     if d["kind"] == "ConfigMap" and d["metadata"]["name"] == "sail-common":

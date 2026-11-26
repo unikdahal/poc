@@ -38,6 +38,8 @@ jobs:
             python k8s/render-test.py k8s/sail-poc.yaml > /tmp/rendered.yaml
           grep -v -i -E 'secret_access|client_secret' /tmp/rendered.yaml > out/rendered-redacted.yaml
           kubectl apply -f /tmp/rendered.yaml
+          kubectl -n sail-poc create secret generic polaris-token --from-literal=token=pending
+          kubectl apply -f /tmp/rendered.yaml   # re-applying must not reset the token
           kubectl -n sail-poc create job first-token --from=cronjob/polaris-token-refresher
           kubectl -n sail-poc wait --for=condition=complete job/first-token --timeout=120s
           kubectl -n sail-poc logs job/first-token

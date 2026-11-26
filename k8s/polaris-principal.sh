@@ -46,4 +46,4 @@ done
 api POST "/api/catalog/v1/$CATALOG/namespaces" "{\"namespace\":$(printf '%s' "$WRITE_NAMESPACE" | jq -R 'split(".")')}"
 for p in NAMESPACE_READ_PROPERTIES TABLE_LIST TABLE_CREATE TABLE_DROP TABLE_READ_PROPERTIES \
          TABLE_WRITE_PROPERTIES TABLE_READ_DATA TABLE_WRITE_DATA; do grant "$WRITE_NAMESPACE" "$p"; done
-echo "done: principal $PRINCIPAL, read: $READ_NAMESPACES, write: $WRITE_NAMESPACE"
+echo "done: principal $PRINCIPAL, read: $READ_NAMESPACES, write: $WRITE_NAMESPACE" >&2

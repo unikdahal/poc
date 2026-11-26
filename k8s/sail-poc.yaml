@@ -75,7 +75,7 @@ kind: ResourceQuota
 metadata: {name: sail-poc-quota, namespace: <NAMESPACE>}
 spec:
   hard:
-    pods: "<MAX_WORKERS_PLUS_5>"
+    pods: "<MAX_PODS>"
     requests.cpu: "<QUOTA_CPU>"
     requests.memory: "<QUOTA_MEMORY>"
 ---
@@ -87,14 +87,9 @@ type: Opaque
 stringData:
   client_id: <POLARIS_CLIENT_ID>
   client_secret: <POLARIS_CLIENT_SECRET>
----
-# Filled by the CronJob below. Sail re-reads this file on every catalog request.
-apiVersion: v1
-kind: Secret
-metadata: {name: polaris-token, namespace: <NAMESPACE>}
-type: Opaque
-stringData:
-  token: "pending"
+# Secret "polaris-token" is NOT in this file on purpose: re-applying this file would reset the
+# token. Create it once (step 3):  kubectl -n <NAMESPACE> create secret generic polaris-token --from-literal=token=pending
+# The CronJob below keeps it filled. Sail re-reads it on every catalog request.
 ---
 apiVersion: batch/v1
 kind: CronJob
